@@ -41,11 +41,6 @@ class ProductRepository implements ProductRepositoryInterface
      */
     protected static $resolved = [];
 
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
     public function getIdProductByConcreteSku(string $sku): int
     {
         if (!isset(static::$resolved[$sku])) {
@@ -55,11 +50,6 @@ class ProductRepository implements ProductRepositoryInterface
         return static::$resolved[$sku][static::ID_PRODUCT];
     }
 
-    /**
-     * @param string $sku
-     *
-     * @return string
-     */
     public function getAbstractSkuByConcreteSku(string $sku): string
     {
         if (!isset(static::$resolved[$sku])) {
@@ -70,10 +60,24 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param string $sku
+     * @param array<string> $productConcreteSkuList
      *
-     * @return int
+     * @return array<string, string>
      */
+    public function getAbstractSkusByConcreteSkus(array $productConcreteSkuList): array
+    {
+        $productEntityCollection = SpyProductQuery::create()
+            ->joinWithSpyProductAbstract()
+            ->filterBySku_In($productConcreteSkuList);
+
+        $result = [];
+        foreach ($productEntityCollection as $productEntity) {
+            $result[$productEntity->getSku()] = $productEntity->getSpyProductAbstract()->getSku();
+        }
+
+        return $result;
+    }
+
     public function getIdProductAbstractByAbstractSku(string $sku): int
     {
         if (!isset(static::$resolved[$sku])) {
@@ -83,11 +87,6 @@ class ProductRepository implements ProductRepositoryInterface
         return static::$resolved[$sku][static::ID_PRODUCT_ABSTRACT];
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Propel\Runtime\Collection\ArrayCollection
-     */
     public function getProductConcreteAttributesCollection(PaginationTransfer $paginationTransfer): ArrayCollection
     {
         $productQuery = SpyProductQuery::create()
@@ -101,11 +100,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param string $sku
-     *
      * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
-     * @return void
      */
     private function resolveProductByConcreteSku(string $sku): void
     {
@@ -124,11 +119,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param string $sku
-     *
      * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
-     * @return void
      */
     private function resolveProductByAbstractSku(string $sku): void
     {
@@ -144,11 +135,6 @@ class ProductRepository implements ProductRepositoryInterface
         ];
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return void
-     */
     public function addProductAbstract(SpyProductAbstract $productAbstractEntity): void
     {
         static::$resolved[$productAbstractEntity->getSku()] = [
@@ -156,12 +142,6 @@ class ProductRepository implements ProductRepositoryInterface
         ];
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     * @param string|null $abstractSku
-     *
-     * @return void
-     */
     public function addProductConcrete(SpyProduct $productEntity, ?string $abstractSku = null): void
     {
         static::$resolved[$productEntity->getSku()] = [
@@ -210,20 +190,11 @@ class ProductRepository implements ProductRepositoryInterface
         return $skuProductConcreteList;
     }
 
-    /**
-     * @return void
-     */
     public function flush(): void
     {
         static::$resolved = [];
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
     protected function applyPagination(SpyProductQuery $productQuery, PaginationTransfer $paginationTransfer): SpyProductQuery
     {
         if ($paginationTransfer->getOffset() === null || $paginationTransfer->getLimit() === null) {

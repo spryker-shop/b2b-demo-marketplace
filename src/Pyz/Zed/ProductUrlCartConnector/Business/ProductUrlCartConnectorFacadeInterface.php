@@ -20,10 +20,6 @@ interface ProductUrlCartConnectorFacadeInterface
      * - Returns the expanded CartChangeTransfer.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

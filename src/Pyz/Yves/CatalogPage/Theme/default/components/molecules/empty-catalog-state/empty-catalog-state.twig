@@ -1,0 +1,47 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'empty-catalog-state',
+} %}
+
+{% define data = {
+    heading: '',
+    message: '',
+    suggestionLabel: '',
+    suggestionTerm: '',
+    suggestionUrl: '',
+    ctaLabel: '',
+    ctaUrl: '',
+    tip: '',
+} %}
+
+{% block body %}
+    <div class="{{ config.name }}__content">
+        <div class="{{ config.name }}__message">
+            {% if data.heading is not empty %}
+                <p class="{{ config.name }}__heading">{{ data.heading }}</p>
+            {% endif %}
+
+            {% if data.message is not empty %}
+                <p class="{{ config.name }}__text">{{ data.message }}</p>
+            {% endif %}
+
+            {% if data.suggestionTerm is not empty %}
+                <p class="{{ config.name }}__suggestion">
+                    {{ data.suggestionLabel }}
+                    <a class="{{ config.name }}__suggestion-link" href="{{ data.suggestionUrl }}">"{{ data.suggestionTerm }}"</a>?
+                </p>
+            {% endif %}
+        </div>
+
+        {% if data.ctaLabel is not empty %}
+            <div class="{{ config.name }}__actions">
+                <a class="button button--secondary button--sm" href="{{ data.ctaUrl }}">{{ data.ctaLabel }}</a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if data.tip is not empty %}
+        <p class="{{ config.name }}__tip">{{ data.tip }}</p>
+    {% endif %}
+{% endblock %}

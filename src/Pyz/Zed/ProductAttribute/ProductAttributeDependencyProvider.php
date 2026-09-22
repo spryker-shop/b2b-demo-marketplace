@@ -9,18 +9,40 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ProductAttribute;
 
-use Spryker\Zed\ProductAttribute\Communication\Plugin\ProductAttribute\MultiSelectProductAttributeDataFormatterPlugin;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider as SprykerProductAttributeDependencyProvider;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Plugin\ProductAttribute\VisibilityProductAttributeQueryExpanderPlugin;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Plugin\ProductAttribute\VisibilitySuggestKeysExpanderPlugin;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Plugin\ProductAttribute\VisibilitySuggestKeysQueryExpanderPlugin;
 
 class ProductAttributeDependencyProvider extends SprykerProductAttributeDependencyProvider
 {
     /**
-     * @return list<\Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeDataFormatterPluginInterface>
+     * @return list<\Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeQueryExpanderPluginInterface>
      */
-    protected function getProductAttributeDataFormatterPlugins(): array
+    protected function getProductAttributeQueryExpanderPlugins(): array
     {
         return [
-            new MultiSelectProductAttributeDataFormatterPlugin(),
+            new VisibilityProductAttributeQueryExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\SuggestKeysQueryExpanderPluginInterface>
+     */
+    protected function getSuggestKeysQueryExpanderPlugins(): array
+    {
+        return [
+            new VisibilitySuggestKeysQueryExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\SuggestKeysExpanderPluginInterface>
+     */
+    protected function getSuggestKeysExpanderPlugins(): array
+    {
+        return [
+            new VisibilitySuggestKeysExpanderPlugin(),
         ];
     }
 }

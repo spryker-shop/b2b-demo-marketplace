@@ -16,6 +16,9 @@ use Spryker\Glue\GlueApplication\Plugin\EventDispatcher\ResponseSecurityHeadersE
 use Spryker\Glue\Http\Plugin\EventDispatcher\CacheControlHeaderEventDispatcherPlugin;
 use Spryker\Glue\Http\Plugin\EventDispatcher\StrictTransportSecurityHeaderEventDispatcherPlugin;
 use Spryker\Glue\Kernel\Plugin\EventDispatcher\AutoloaderCacheEventDispatcherPlugin;
+use Spryker\Glue\Monitoring\Plugin\EventDispatcher\BackendMonitoringRequestTransactionEventDispatcherPlugin;
+use Spryker\Glue\Monitoring\Plugin\EventDispatcher\StorefrontMonitoringRequestTransactionEventDispatcherPlugin;
+use Spryker\Glue\Profiler\Plugin\EventDispatcher\ProfilerRequestEventDispatcherPlugin;
 use Spryker\Glue\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Glue\Storage\Plugin\EventDispatcher\StorageKeyCacheEventDispatcherPlugin;
 use Spryker\Shared\Http\Plugin\EventDispatcher\ResponseListenerEventDispatcherPlugin;
@@ -27,7 +30,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
      */
     protected function getEventDispatcherPlugins(): array
     {
-        return [
+        $plugins = [
             new GlueRestControllerListenerEventDispatcherPlugin(),
             new StorageKeyCacheEventDispatcherPlugin(),
             new AutoloaderCacheEventDispatcherPlugin(),
@@ -36,7 +39,14 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseSecurityHeadersEventDispatcherPlugin(),
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new StorefrontMonitoringRequestTransactionEventDispatcherPlugin(),
         ];
+
+        if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {
+            $plugins[] = new ProfilerRequestEventDispatcherPlugin();
+        }
+
+        return $plugins;
     }
 
     /**
@@ -44,7 +54,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
      */
     protected function getBackendEventDispatcherPlugins(): array
     {
-        return [
+        $plugins = [
             new GlueRestControllerListenerEventDispatcherPlugin(),
             new StorageKeyCacheEventDispatcherPlugin(),
             new AutoloaderCacheEventDispatcherPlugin(),
@@ -54,7 +64,14 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
             new EventBehaviorEventDispatcherPlugin(),
+            new BackendMonitoringRequestTransactionEventDispatcherPlugin(),
         ];
+
+        if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {
+            $plugins[] = new ProfilerRequestEventDispatcherPlugin();
+        }
+
+        return $plugins;
     }
 
     /**
@@ -62,7 +79,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
      */
     protected function getStorefrontEventDispatcherPlugins(): array
     {
-        return [
+        $plugins = [
             new GlueRestControllerListenerEventDispatcherPlugin(),
             new StorageKeyCacheEventDispatcherPlugin(),
             new AutoloaderCacheEventDispatcherPlugin(),
@@ -71,6 +88,13 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseSecurityHeadersEventDispatcherPlugin(),
             new StrictTransportSecurityHeaderEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
+            new StorefrontMonitoringRequestTransactionEventDispatcherPlugin(),
         ];
+
+        if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {
+            $plugins[] = new ProfilerRequestEventDispatcherPlugin();
+        }
+
+        return $plugins;
     }
 }

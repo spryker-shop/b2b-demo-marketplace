@@ -28,7 +28,8 @@ suites:
                 - \SprykerTest\Glue\AuthRestApi\Helper\AuthRestApiHelper
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
+                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper
                 - \SprykerTest\Shared\StockAddress\Helper\StockAddressDataHelper
                 - \SprykerTest\Shared\Stock\Helper\StockDataHelper
@@ -52,6 +53,7 @@ suites:
                 - \SprykerTest\Zed\Country\Helper\CountryDataHelper
                 - \SprykerTest\Zed\Company\Helper\CompanyHelper
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper
                 - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
                 - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper
                 - \SprykerTest\Shared\MerchantRelationRequest\Helper\MerchantRelationRequestHelper
@@ -59,6 +61,8 @@ suites:
                 - \SprykerTest\Shared\Discount\Helper\DiscountDataHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\ProductCategory\Helper\ProductCategoryDataHelper
+                - \SprykerTest\Zed\Navigation\Helper\NavigationDataHelper
+                - \SprykerTest\Shared\ProductRelation\Helper\ProductRelationDataHelper
                 - \SprykerTest\Shared\MerchantCommission\Helper\MerchantCommissionHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
@@ -66,6 +70,39 @@ suites:
                 - \SprykerTest\Shared\ProductBundle\Helper\ProductBundleHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Zed\Workflow\Helper\WorkflowHelper
+                - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\FileManager\Helper\FileManagerHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
+                - \SprykerFeatureTest\Shared\PurchasingControl\Helper\PurchasingControlHelper
+                - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
+                - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
+                - \SprykerTest\Shared\ProductOfferShipmentType\Helper\ProductOfferShipmentTypeHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\ProductOfferServicePoint\Helper\ProductOfferServiceHelper
+                - \SprykerTest\Shared\ShipmentTypeServicePoint\Helper\ShipmentTypeServicePointHelper
+                - \PyzTest\Shared\OrderExperienceManagement\Helper\RecurringScheduleHelper
+                - \SprykerTest\Shared\ProductAlternative\Helper\ProductAlternativeDataHelper
+                - \SprykerTest\Shared\ProductRelation\Helper\ProductRelationDataHelper
+                - \SprykerTest\Zed\Navigation\Helper\NavigationDataHelper
+                - \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper
+                - \SprykerTest\Shared\ConfigurableBundle\Helper\ConfigurableBundleDataHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \PyzTest\Shared\Currency\Helper\CurrencyDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Zed\SalesPayment\Helper\SalesPaymentHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
+                - \SprykerTest\Shared\ShoppingList\Helper\ShoppingListHelper
+                - \SprykerTest\Zed\Cms\Helper\CmsPageDataHelper
+                - \SprykerTest\Zed\Navigation\Helper\NavigationDataHelper
+                - \SprykerTest\Shared\ProductRelation\Helper\ProductRelationDataHelper
+                - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
+                - \SprykerTest\Shared\CmsPagesRestApi\Helper\CmsPagesRestApiDataHelper
+                - \SprykerTest\Shared\ProductReview\Helper\ProductReviewDataHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
                       twigPlugins:
                           - \Spryker\Zed\Application\Communication\Plugin\Twig\ApplicationTwigPlugin

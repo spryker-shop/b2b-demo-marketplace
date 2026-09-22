@@ -1,0 +1,22 @@
+{% extends molecule('schedule-error-popover', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block popup %}
+    {% include molecule('main-popup') with {
+        class: config.name ~ '__main-popup',
+        data: {
+            title: 'recurring_orders.scheduled.order.errors.title' | trans,
+            content: block('errors'),
+        },
+        attributes: {
+            'content-id': data.orderUid,
+            'trigger-class-name': triggerClassName,
+        },
+    } only %}
+{% endblock %}
+
+{% block errors %}
+    {% set errorsListClassName = 'list list--alert list--bullet' %}
+    {% set errorsListItemClassName = 'list__item' %}
+
+    {{ parent() }}
+{% endblock %}

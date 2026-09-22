@@ -1,9 +1,8 @@
-@import '../../atoms/radio/radio';
-
 @mixin shop-ui-toggler-radio($name: '.toggler-radio') {
     @include shop-ui-radio($name) {
         &__label {
             color: $setting-color-text;
+            font-size: calc(var(--label-md-size) / 16px * 1rem);
 
             &--secondary {
                 color: $setting-color-gray-4;

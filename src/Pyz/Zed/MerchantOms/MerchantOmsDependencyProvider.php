@@ -14,7 +14,7 @@ use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\CancelReturnMarketplaceOrderIte
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\DeliverMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\DeliverReturnMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ExecuteReturnMarketplaceOrderItemCommandPlugin;
-use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\RefundMarketplaceOrderItemCommandPlugin;
+use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\RefundMarketplaceOrderCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ShipByMerchantMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ShipReturnMarketplaceOrderItemCommandPlugin;
 use Spryker\Zed\Kernel\Container;
@@ -36,7 +36,7 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
 
     /**
-     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface|\Spryker\Zed\StateMachine\Dependency\Plugin\CommandByItemsPluginInterface>
      */
     protected function getStateMachineCommandPlugins(): array
     {
@@ -44,7 +44,7 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
             'MarketplaceOrder/ShipOrderItem' => new ShipByMerchantMarketplaceOrderItemCommandPlugin(),
             'MarketplaceOrder/DeliverOrderItem' => new DeliverMarketplaceOrderItemCommandPlugin(),
             'MarketplaceOrder/CancelOrderItem' => new CancelMarketplaceOrderItemCommandPlugin(),
-            'MarketplaceOrder/Refund' => new RefundMarketplaceOrderItemCommandPlugin(),
+            'MarketplaceOrder/Refund' => new RefundMarketplaceOrderCommandPlugin(),
             'MarketplaceReturn/CancelReturnForOrderItem' => new CancelReturnMarketplaceOrderItemCommandPlugin(),
             'MarketplaceReturn/DeliverReturnForOrderItem' => new DeliverReturnMarketplaceOrderItemCommandPlugin(),
             'MarketplaceReturn/ExecuteReturnForOrderItem' => new ExecuteReturnMarketplaceOrderItemCommandPlugin(),
@@ -52,11 +52,6 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
         ];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -67,11 +62,6 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function addOmsFacade(Container $container): Container
     {
         $container->set(static::FACADE_OMS, function (Container $container) {
@@ -81,11 +71,6 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function addSalesReturnFacade(Container $container): Container
     {
         $container->set(static::FACADE_SALES_RETURN, function (Container $container) {

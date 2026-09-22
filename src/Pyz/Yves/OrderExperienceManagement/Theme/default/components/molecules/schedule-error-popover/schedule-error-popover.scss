@@ -1,0 +1,16 @@
+@mixin order-experience-management-schedule-error-popover($name: '.schedule-error-popover') {
+    #{$name} {
+        &__button {
+            background: none;
+            cursor: pointer;
+        }
+
+        &__main-popup {
+            @include typography(body-md);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-schedule-error-popover;

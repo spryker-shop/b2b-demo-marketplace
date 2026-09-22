@@ -1,24 +1,16 @@
 name: Generate and Publish API Specs
 
 on:
-  workflow_run:
-    # The name of the workflow to watch
-    workflows: ["B2B-MP-CI"]
-    # The event type that triggers this workflow
-    types:
-      - completed
-    # Optional but recommended: only run for the main/master branch
-    branches:
-      - main
-      - master
+  push:
+    branches: [main, master]
+  workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: generate-api-specs-main
   cancel-in-progress: true
 
 jobs:
   generate-and-publish:
-    if: github.event.workflow_run.conclusion == 'success'
     name: Generate and Publish API Specs
     runs-on: ubuntu-latest
 
@@ -35,7 +27,7 @@ jobs:
         with:
           # --- Configure Inputs ---
           app-type: 'b2b_marketplace'
-          deploy-file: 'deploy.ci.api.mariadb.yml'
+          deploy-file: '.github/deploy/deploy.ci.api.mariadb.yml'
           s3-bucket: ${{ vars.API_UPLOAD_S3_AWS_BUCKET }}
           aws-region: ${{ vars.API_UPLOAD_S3_AWS_REGION }}
           aws-access-key-id: ${{ secrets.API_UPLOAD_S3_AWS_ACCESS_KEY_ID }}

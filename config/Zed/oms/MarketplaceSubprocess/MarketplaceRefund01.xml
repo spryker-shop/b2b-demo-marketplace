@@ -6,19 +6,19 @@
 
     <process name="MarketplaceRefund">
         <states>
-            <state name="refunded"/>
+            <state name="refund pending"/>
         </states>
 
         <transitions>
             <transition>
                 <source>delivered</source>
-                <target>refunded</target>
+                <target>refund pending</target>
                 <event>refund</event>
             </transition>
 
             <transition>
                 <source>returned</source>
-                <target>refunded</target>
+                <target>refund pending</target>
                 <event>refund</event>
             </transition>
         </transitions>

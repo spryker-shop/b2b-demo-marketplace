@@ -2,9 +2,27 @@
 
 {% define config = {
     name: 'switch',
-    tag: 'a'
+} %}
+
+{% define data = {
+    id: null,
+    name: null,
+    label: null,
 } %}
 
 {% block body %}
-    <span class="{{ config.name }}__handle"></span>
+    <label class="{{ config.name }}__track">
+        <input
+            type="checkbox"
+            class="{{ config.name }}__input"
+            {{ data.id ? 'id=' ~ data.id }}
+            {{ data.name ? 'name=' ~ data.name }}
+            {{ modifiers is defined and 'active' in modifiers ? 'checked' }}
+            {{ modifiers is defined and 'disabled' in modifiers ? 'disabled' }}
+        >
+    </label>
+
+    {% if data.label is defined %}
+        <span class="{{ config.name }}__label">{{ data.label }}</span>
+    {% endif %}
 {% endblock %}

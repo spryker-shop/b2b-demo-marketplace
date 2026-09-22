@@ -86,11 +86,6 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
      */
     protected $currencyFacade;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository $productRepository
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Currency\Business\CurrencyFacadeInterface $currencyFacade
-     */
     public function __construct(
         ProductRepository $productRepository,
         StoreFacadeInterface $storeFacade,
@@ -101,11 +96,6 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
         $this->currencyFacade = $currencyFacade;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function write(DataSetInterface $dataSet): void
     {
         $priceTypeEntity = $this->findOrCreatePriceType($dataSet);
@@ -115,8 +105,6 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceType
      */
     protected function findOrCreatePriceType(DataSetInterface $dataSet): SpyPriceType
@@ -136,7 +124,6 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceType $priceTypeEntity
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
@@ -179,8 +166,6 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet $dataSet
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $spyPriceProduct
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
      */
     protected function findOrCreatePriceProductStore(
         DataSetInterface $dataSet,
@@ -206,11 +191,6 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
         return $priceProductStoreEntity;
     }
 
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStore
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault
-     */
     protected function findOrCreatePriceProductDefault(SpyPriceProductStore $priceProductStore): SpyPriceProductDefault
     {
         $priceProductDefault = SpyPriceProductDefaultQuery::create()
@@ -222,9 +202,6 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
         return $priceProductDefault;
     }
 
-    /**
-     * @return void
-     */
     public function flush(): void
     {
         DataImporterPublisher::triggerEvents();

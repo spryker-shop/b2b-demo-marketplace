@@ -1,0 +1,31 @@
+namespace: PyzTest\Glue\OauthBackendApi
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    output: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    BackendApiIntegration:
+        path: BackendApi/Integration
+        actor: OauthBackendApiBackendApiIntegrationTester
+        modules:
+            enabled:
+                - \SprykerTest\ApiPlatform\Helper\BackendApiIntegrationHelper:
+                      environmentModule: '\PyzTest\Shared\Testify\Helper\Environment'
+                      projectNamespaces: ['Pyz']
+                - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\MerchantUser\Helper\MerchantUserHelper
+                - \SprykerTest\ApiPlatform\Helper\BackendApiLoginHelper
+                - \SprykerTest\ApiPlatform\Helper\ApiPlatformHelper:
+                      mode: 'project'
+                      apiType: 'Backend'
+                      bootOnce: true
+                      reuseApplicationContainer: true

@@ -8,8 +8,10 @@ declare(strict_types = 1);
 
 use Monolog\Logger;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\FileSystem\FileSystemConstants;
+use Spryker\Shared\Flysystem\FlysystemConstants;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueJsonApiConvention\GlueJsonApiConventionConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
@@ -18,6 +20,8 @@ use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Redis\RedisConstants;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
+use SprykerShop\Shared\ShopUi\ShopUiConstants;
 
 require 'config_default-docker.dev.php';
 
@@ -58,6 +62,11 @@ $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
 
 $config[RedisConstants::REDIS_IS_DEV_MODE] = false;
 
+$localMediaFileSystemConfig = [
+    'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+    'root' => APPLICATION_ROOT_DIR . '/public/Yves/assets/static/images',
+    'path' => '',
+];
 // >>> FILESYSTEM
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'merchant-product-data-import-files' => [
@@ -70,4 +79,54 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/merchant-product-offer-data-import-files',
     ],
+    'ssp-inquiry' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/files/',
+    ],
+    'ssp-asset-image' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/ssp-asset-image',
+    ],
+    'ssp-model-image' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-model-image',
+    ],
+    'files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
+        'path' => 'files/',
+    ],
+    'import-files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/import',
+        'path' => '/',
+    ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-imports',
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-exports',
+    ],
+    'backoffice-media' => $localMediaFileSystemConfig,
+    'storefront-media' => $localMediaFileSystemConfig,
+    'merchant-portal-media' => $localMediaFileSystemConfig,
 ];
+$config[SelfServicePortalConstants::STORAGE_NAME] = 'files';
+
+$publicUrl = sprintf(
+    '%s%s',
+    $config[ApplicationConstants::BASE_URL_YVES],
+    '/assets/static/images',
+);
+
+$config[FlysystemConstants::FLYSYSTEM_OPTIONS] = [
+    'public_url' => $publicUrl,
+];
+$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = true;

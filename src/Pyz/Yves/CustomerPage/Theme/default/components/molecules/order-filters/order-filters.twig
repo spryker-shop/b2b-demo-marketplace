@@ -41,36 +41,27 @@
                 {% set dateToId = 'dateFrom' in filter.vars.id ? 'orderSearchForm_filters_dateTo' : false %}
 
                 <div class="{{ filter.vars.attr.class }}">
-                    {% widget 'LanguageSwitcherWidget' args [data.pathInfo, data.queryString, data.requestUri] with {
-                        data: {
-                            field: filter,
-                        },
-                        embed: {
-                            fieldClass: data.jsPrefix ~ filter.vars.name ~ '-target',
-                            dateFromId: dateFromId,
-                            dateToId: dateToId,
-                        },
-                    } only %}
-                        {% block body %}
-                            {% include molecule('date-time-picker') with {
-                                data: {
-                                    field: data.field,
-                                    fieldClass: embed.fieldClass,
-                                },
-                                attributes: {
-                                    language: data.currentLanguage,
-                                    config: '{
-                                        "format": "Y-m-d H:i",
-                                        "defaultHour": 8,
-                                        "time_24hr": true
-                                    }',
-                                    'formatted-date-time': data.field.vars.value | date('Y-m-d H:i'),
-                                    'date-from-id': embed.dateFromId,
-                                    'date-to-id': embed.dateToId,
-                                },
-                            } only %}
-                        {% endblock %}
-                    {% endwidget %}
+                    {% if filter.vars.type is defined and filter.vars.type === 'datetime-local' %}
+                        {% include molecule('date-time-picker') with {
+                            data: {
+                                field: filter,
+                                fieldClass: data.jsPrefix ~ filter.vars.name ~ '-target',
+                            },
+                            attributes: {
+                                language: app.locale | slice(0,2),
+                                config: '{
+                                    "format": "Y-m-d H:i",
+                                    "defaultHour": 8,
+                                    "time_24hr": true
+                                }',
+                                'formatted-date-time': filter.vars.value | date('Y-m-d H:i'),
+                                'date-from-id': dateFromId,
+                                'date-to-id': dateToId,
+                            },
+                        } only %}
+                    {% else %}
+                        {{ form_row(filter)}}
+                    {% endif %}
                 </div>
             {% endif %}
         {% endfor %}
@@ -84,6 +75,7 @@
             },
         }) }}
     </div>
+    {% widget 'CostCenterBudgetFilterWidget' only %}{% endwidget %}
 {% endblock %}
 
 {% block filterModeRow %}

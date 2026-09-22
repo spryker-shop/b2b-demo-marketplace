@@ -37,6 +37,9 @@ sections:
         propel-build:
             command: 'vendor/bin/console propel:model:build'
 
+        acl-entity-metadata-validate:
+            command: 'vendor/bin/console acl-entity:metadata:validate'
+
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
@@ -51,6 +54,29 @@ sections:
 
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
+
+        provider-processor-glue:
+            command: 'vendor/bin/glue api:generate'
+
+        provider-processor-glue-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+
+        provider-processor-glue-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
+
+        # api:generate's own boot compiles each container before the generated classes exist, and
+        # with debug=false nothing recompiles it (see the ApiPlatform README for the full contract).
+        cache-glue-api-clear:
+            command: 'vendor/bin/glue cache:clear'
+
+        cache-storefront-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
+
+        cache-backend-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
+
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync'
 
     build-development:
         generate-transfers:
@@ -78,8 +104,8 @@ sections:
             command: 'vendor/bin/console frontend:mp:build -e production'
             timeout: 1600
 
-        date-time-product-configurator:
-            command: 'vendor/bin/console frontend:date-time-product-configurator:build'
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
     build-static-development:
         yves-build-frontend:
@@ -92,8 +118,8 @@ sections:
             command: 'vendor/bin/console frontend:mp:build'
             timeout: 1600
 
-        date-time-product-configurator:
-            command: 'vendor/bin/console frontend:date-time-product-configurator:build'
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
     init-storages-per-store:
         queue-setup:
@@ -154,6 +180,12 @@ sections:
 
         controller-cache-warmup:
             command: 'vendor/bin/glue glue-api:controller:cache:warm-up'
+
+        api-router-cache-warmup-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:warmup'
+
+        api-router-cache-warmup-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:warmup'
 
         api-generate-documentation:
             command: 'vendor/bin/glue api:generate:documentation'

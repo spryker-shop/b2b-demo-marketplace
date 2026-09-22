@@ -26,16 +26,8 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
  */
 class ConcreteAlternativeProductsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\AlternativeProducts\RestApi\ConcreteAlternativeProductsRestApiFixtures
-     */
     protected ConcreteAlternativeProductsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\AlternativeProducts\AlternativeProductsRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(AlternativeProductsRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\AlternativeProducts\RestApi\ConcreteAlternativeProductsRestApiFixtures $fixtures */
@@ -46,10 +38,6 @@ class ConcreteAlternativeProductsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\AlternativeProducts\AlternativeProductsRestApiTester $I
-     *
-     * @return void
      */
     public function requestConcreteAlternativeProducts(AlternativeProductsRestApiTester $I): void
     {
@@ -62,7 +50,7 @@ class ConcreteAlternativeProductsRestApiCest
 
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Response data contains resource collection')
             ->whenI()
@@ -79,10 +67,6 @@ class ConcreteAlternativeProductsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\AlternativeProducts\AlternativeProductsRestApiTester $I
-     *
-     * @return void
      */
     public function requestConcreteAlternativeProductsByNotExistingProductConcreteSku(
         AlternativeProductsRestApiTester $I,
@@ -93,6 +77,6 @@ class ConcreteAlternativeProductsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 }

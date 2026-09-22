@@ -5,6 +5,10 @@
     tag: 'custom-select',
 } %}
 
+{% define data = {
+    icon: null,
+} %}
+
 {% define attributes = {
     'config-width': 'resolve',
     'config-theme': 'default',
@@ -14,3 +18,13 @@
 } %}
 
 {% block selectClass %}{{ config.jsName }}{% endblock %}
+
+{% block body %}
+    {% if data.icon %}
+        {% include atom('font-icon') with {
+            class: config.name ~ '__icon',
+            data: { name: data.icon },
+        } only %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

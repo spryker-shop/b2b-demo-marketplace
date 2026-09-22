@@ -26,16 +26,8 @@ use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
  */
 class ProductAbstractProductLabelsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\ProductLabels\RestApi\ProductLabelsRestApiFixtures
-     */
     protected ProductLabelsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(ProductLabelsApiTester $I): void
     {
         /** @var \PyzTest\Glue\ProductLabels\RestApi\ProductLabelsRestApiFixtures $fixtures */
@@ -46,10 +38,6 @@ class ProductAbstractProductLabelsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithProductLabelsRelationship(ProductLabelsApiTester $I): void
     {
@@ -68,7 +56,7 @@ class ProductAbstractProductLabelsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource has product-labels relationship')
             ->whenI()
@@ -95,10 +83,6 @@ class ProductAbstractProductLabelsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithoutProductLabelsRelationship(ProductLabelsApiTester $I): void
     {
@@ -116,7 +100,7 @@ class ProductAbstractProductLabelsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource does not have product-labels includes')
             ->whenI()
@@ -125,10 +109,6 @@ class ProductAbstractProductLabelsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithProductLabelsRelationshipByPost(ProductLabelsApiTester $I): void
     {
@@ -144,16 +124,12 @@ class ProductAbstractProductLabelsRestApiCest
         $I->sendPOST($url);
 
         // Assert
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseCodeIs(HttpCode::METHOD_NOT_ALLOWED);
         $I->seeResponseIsJson();
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductLabels\ProductLabelsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractWithProductLabelRelationshipByPatch(ProductLabelsApiTester $I): void
     {
@@ -169,7 +145,7 @@ class ProductAbstractProductLabelsRestApiCest
         $I->sendPATCH($url);
 
         // Assert
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseCodeIs(HttpCode::METHOD_NOT_ALLOWED);
         $I->seeResponseIsJson();
     }
 }

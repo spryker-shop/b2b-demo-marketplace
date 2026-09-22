@@ -5,8 +5,7 @@
     <!-- CMS_BLOCK_PLACEHOLDER : "imageUrl" -->
 
     {% embed organism('section') with {
-        modifiers: ['secondary', 'full-width'],
-        class: 'spacing-top spacing-top--inner spacing-top--big',
+        modifiers: ['no-bottom-indent'],
         data: {
             blockTitle: spyCmsBlockPlaceholder('title'),
             blockContent: spyCmsBlockPlaceholder('content'),
@@ -17,10 +16,9 @@
         {% block inner %}
             {{ data.blockTitle | raw }}
 
-            <div class="grid grid--left grid--middle">
+            <div class="grid grid--left grid--middle is-hidden-sm-md">
                 <div class="col col--sm-12">
                     {% include molecule('banner') with {
-                        modifiers: ['spacing-bottom-reset'],
                         data: {
                             imageUrl: data.imageUrl,
                             clickUrl: data.link,

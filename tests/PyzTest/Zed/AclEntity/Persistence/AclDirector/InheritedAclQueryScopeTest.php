@@ -79,9 +79,6 @@ class InheritedAclQueryScopeTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -108,8 +105,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityCreate
-     *
-     * @return void
      */
     public function testInspectCreateWithCreatePermission(): void
     {
@@ -154,8 +149,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithUpdatePermissionAndSegmentScopeRuleForRootEntity(): void
     {
@@ -223,8 +216,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityDelete
-     *
-     * @return void
      */
     public function testInspectDeleteWithDeletePermission(): void
     {
@@ -282,8 +273,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRuleOnSelectQueryWithReadPermission(): void
     {
@@ -339,8 +328,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityCreate
-     *
-     * @return void
      */
     public function testInspectCreateWithCreatePermissionAndReferenceBasedRelation(): void
     {
@@ -377,8 +364,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithUpdatePermissionAndReferenceBasedRelation(): void
     {
@@ -422,8 +407,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityDelete
-     *
-     * @return void
      */
     public function testInspectDeleteWithDeletePermissionAndReferenceBasedRelation(): void
     {
@@ -467,8 +450,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRuleOnSelectQueryWithReadPermissionAndReferenceBasedRelation(): void
     {
@@ -515,8 +496,6 @@ class InheritedAclQueryScopeTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRuleRuleWithReadPermissionAndMultipleRoles(): void
     {

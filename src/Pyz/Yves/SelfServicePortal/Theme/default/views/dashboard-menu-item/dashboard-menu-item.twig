@@ -1,0 +1,26 @@
+{% extends view('dashboard-menu-item', '@SprykerFeature:SelfServicePortal') %}
+
+{% define data = {
+    url: url('customer/ssp-dashboard'),
+    label: 'ssp_dashboard.index.widget.title' | trans,
+    name: 'ssp-dashboard',
+} %}
+
+{% block body %}
+    {% if data.canViewFiles %}
+        {% set modifiers = data.modifiers | default([]) %}
+
+        {% block content %}
+            {% include molecule('navigation-sidebar-item') with {
+                data: {
+                    url: data.url,
+                    icon: 'dashboard',
+                    label: data.label,
+                    name: data.name,
+                },
+                qa: 'dashboard',
+                modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+            } only %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

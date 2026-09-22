@@ -1,10 +1,90 @@
 {% extends molecule('schedule-list', '@SprykerShop:MerchantOpeningHoursWidget') %}
 
-{% block schedule %}
-    {% include molecule('date-information-item', 'MerchantOpeningHoursWidget') with {
-        data: {
-            title: data.title,
-            scheduleList: scheduleList,
-        },
-    } only %}
+{% define data = {
+    scheduleData: required,
+    itemsLimit: 2,
+    title: required,
+    holidaysTitle: required,
+} %}
+
+{% block extraClass %}
+    box box--alternative spacing-bottom--biggest
+{% endblock %}
+
+{% macro scheduleTime(scheduleItem, scheduleList, key) %}
+    {% if scheduleItem.timeFrom and scheduleItem.timeTo %}
+        {% set defaultTime = scheduleItem.timeFrom | date('H:i', false) ~ ' - ' ~ scheduleItem.timeTo | date('H:i', false) %}
+    {% else %}
+        {% set defaultTime = 'merchant_opening_hours.opening_hours_closed' | trans %}
+    {% endif %}
+
+    {% if key in scheduleList | keys %}
+        {{ scheduleList[key].time ~ ' | ' ~ defaultTime }}
+    {% else %}
+        {{ defaultTime }}
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% block component %}
+    {% if data.scheduleData %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% set scheduleList = [] %}
+    {% set holidayList = [] %}
+    {% set scheduleItemCounter = 0 %}
+    {% set holidayItemCounter = 0 %}
+
+    {% for scheduleItem in data.scheduleData %}
+        {% set isWorkingHours = scheduleItem.timeTo and scheduleItem.timeFrom %}
+        {% set localizedDay = 'merchant_opening_hours.day.title.' ~ scheduleItem.date | date('l') | capitalize %}
+        {% set date = scheduleItem.date | date('d.m.Y, ', false) ~ localizedDay | trans %}
+
+        {% if isWorkingHours %}
+            {% if scheduleItemCounter < data.itemsLimit or data.itemsLimit is null %}
+                {% set scheduleItemCounter = scheduleItemCounter + 1 %}
+                {% set scheduleList = scheduleList | merge({
+                    (scheduleItem.date): {
+                        noteGlossaryKey: scheduleItem.noteGlossaryKey | trans,
+                        date: date,
+                        time: macros.scheduleTime(scheduleItem, scheduleList, scheduleItem.date),
+                    },
+                }) %}
+            {% endif %}
+        {% else %}
+            {% if holidayItemCounter < data.itemsLimit or data.itemsLimit is null %}
+                {% set holidayItemCounter = holidayItemCounter + 1 %}
+                {% set holidayList = holidayList | merge({
+                    (scheduleItem.date): {
+                        noteGlossaryKey: scheduleItem.noteGlossaryKey | trans,
+                        date: date,
+                        time: '',
+                    },
+                }) %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% block schedule %}
+        {% include molecule('date-information-item', 'MerchantOpeningHoursWidget') with {
+            data: {
+                title: data.title,
+                scheduleList: scheduleList,
+            },
+        } only %}
+    {% endblock %}
+
+    {% block holidays %}
+        {% include molecule('date-information-item', 'MerchantOpeningHoursWidget') with {
+            data: {
+                title: '',
+                subTitle: data.holidaysTitle,
+                scheduleList: holidayList,
+            },
+        } only %}
+    {% endblock %}
 {% endblock %}

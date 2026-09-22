@@ -11,14 +11,20 @@
     isGrouped: false
 } %}
 
-{% block attributes %}{% endblock %}
+{% block attributes %}
+    {%- for attrname, attrvalue in attr | default({}) -%}
+        {%- if attrvalue is same as(true) -%} {{ attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%} {{ attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{% endblock %}
 
 {% block option %}
     {% set isSelected = option.selected | default(false) %}
     {% set isDisabled = option.disabled | default(false) %}
 
     <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
-        {{option.label}}
+        {{- option.label -}}
     </option>
 {% endblock %}
 
@@ -43,12 +49,15 @@
             {% endblock %}
         {% endif %}
     </select>
+
     {% block caret %}
-        {% include atom('icon') with {
-            class: config.name ~ '__caret',
-            data: {
-                name: 'caret-down'
-            }
-        } only %}
+        <span class="{{ config.name }}__caret">
+            {% include atom('font-icon') with {
+                modifiers: ['size-inherit'],
+                data: {
+                    name: 'keyboard_arrow_down',
+                },
+            } only %}
+        </span>
     {% endblock %}
 {% endblock %}

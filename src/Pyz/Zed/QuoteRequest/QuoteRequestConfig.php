@@ -21,7 +21,6 @@ class QuoteRequestConfig extends SprykerQuoteRequestConfig
     {
         return array_merge(parent::getQuoteFieldsAllowedForSaving(), [
             QuoteTransfer::CUSTOMER_REFERENCE,
-            QuoteTransfer::CUSTOMER,
             QuoteTransfer::STORE,
             QuoteTransfer::ITEMS,
             QuoteTransfer::TOTALS,
@@ -36,6 +35,8 @@ class QuoteRequestConfig extends SprykerQuoteRequestConfig
             QuoteTransfer::BILLING_ADDRESS,
             QuoteTransfer::SHIPMENT,
             QuoteTransfer::SHIPPING_ADDRESS,
+            QuoteTransfer::ID_COST_CENTER,
+            QuoteTransfer::ID_BUDGET,
         ]);
     }
 }

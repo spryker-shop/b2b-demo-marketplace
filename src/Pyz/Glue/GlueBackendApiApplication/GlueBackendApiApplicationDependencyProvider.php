@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
+use Spryker\Glue\AclEntity\Plugin\Application\AclEntityApplicationPlugin;
 use Spryker\Glue\DynamicEntityBackendApi\Plugin\GlueApplication\DynamicEntityRouteProviderPlugin;
 use Spryker\Glue\EventDispatcher\Plugin\GlueBackendApiApplication\EventDispatcherApplicationPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
@@ -28,15 +29,16 @@ use Spryker\Glue\MultiFactorAuth\Plugin\GlueBackendApiApplication\MultiFactorAut
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueBackendApiApplication\MultiFactorAuthTypeDeactivateBackendResourcePlugin;
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueBackendApiApplication\MultiFactorAuthTypeVerifyBackendResourcePlugin;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\BackendApiAccessTokenValidatorPlugin;
-use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\OauthBackendApiTokenResource;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\UserRequestValidatorPlugin;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueBackendApiApplication\UserRequestBuilderPlugin;
 use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin as ClientStoreApplicationPlugin;
 use Spryker\Glue\StoresBackendApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin;
 use Spryker\Glue\TestifyBackendApi\Plugin\GlueBackendApiApplication\DynamicFixturesBackendResourcePlugin;
+use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
+use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueBackendApiApplication\SspAssetsBackendResourcePlugin;
 
 class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiApplicationDependencyProvider
 {
@@ -45,7 +47,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
      */
     protected function getApplicationPlugins(): array
     {
-        return [
+        $plugins = [
             new HttpApplicationPlugin(),
             new PropelApplicationPlugin(),
             new ClientStoreApplicationPlugin(),
@@ -54,7 +56,14 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new EventDispatcherApplicationPlugin(),
             new LocaleApplicationPlugin(),
             new TwigApplicationPlugin(),
+            new AclEntityApplicationPlugin(),
         ];
+
+        if (class_exists(WebProfilerApplicationPlugin::class)) {
+            $plugins[] = new WebProfilerApplicationPlugin();
+        }
+
+        return $plugins;
     }
 
     /**
@@ -110,12 +119,12 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getResourcePlugins(): array
     {
         $plugins = [
-            new OauthBackendApiTokenResource(),
             new MultiFactorAuthBackendResourcePlugin(),
             new MultiFactorAuthTriggerBackendResourcePlugin(),
             new MultiFactorAuthTypeActivateBackendResourcePlugin(),
             new MultiFactorAuthTypeDeactivateBackendResourcePlugin(),
             new MultiFactorAuthTypeVerifyBackendResourcePlugin(),
+            new SspAssetsBackendResourcePlugin(),
         ];
 
         if (class_exists(DynamicFixturesBackendResourcePlugin::class)) {

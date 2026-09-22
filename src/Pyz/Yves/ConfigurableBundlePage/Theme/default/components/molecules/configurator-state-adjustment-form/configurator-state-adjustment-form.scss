@@ -1,0 +1,13 @@
+@mixin configurable-bundle-page-configurator-state-adjustment-form($name: '.configurator-state-adjustment-form') {
+    #{$name} {
+        width: 100%;
+
+        @include helper-breakpoint-media-min($md) {
+            width: rem(140);
+        }
+
+        @content;
+    }
+}
+
+@include configurable-bundle-page-configurator-state-adjustment-form();

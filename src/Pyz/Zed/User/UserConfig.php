@@ -53,6 +53,12 @@ class UserConfig extends SprykerUserConfig
                 'username' => 'martha@office-king.nl',
             ],
             [
+                'firstName' => 'Martha',
+                'lastName' => 'Farmer',
+                'password' => 'change123',
+                'username' => 'martha@thermotech.nl',
+            ],
+            [
                 'firstName' => 'Jason',
                 'lastName' => 'Weidmann',
                 'password' => 'change123',
@@ -63,6 +69,30 @@ class UserConfig extends SprykerUserConfig
                 'lastName' => 'Nemeth',
                 'password' => 'change123',
                 'username' => 'michele@computer-experts.com',
+            ],
+            [
+                'firstName' => 'Thomas',
+                'lastName' => 'Becker',
+                'password' => 'change123',
+                'username' => 'thomas.becker@ecoheat-systems.de',
+            ],
+            [
+                'firstName' => 'Ben',
+                'lastName' => 'Foster',
+                'password' => 'change123',
+                'username' => 'ben.foster@boilerexpertsltd.com',
+            ],
+            [
+                'firstName' => 'Greta',
+                'lastName' => 'Lindqvist',
+                'password' => 'change123',
+                'username' => 'greta.lindqvist@greensteamsupplies.com',
+            ],
+            [
+                'firstName' => 'Ivo',
+                'lastName' => 'Petrov',
+                'password' => 'change123',
+                'username' => 'ivo.petrov@industrialthermalco.com',
             ],
             [
                 'firstName' => 'Vitaliy',
@@ -77,6 +107,13 @@ class UserConfig extends SprykerUserConfig
                 'password' => 'change123',
                 'username' => 'agent-merchant@spryker.com',
                 'isMerchantAgent' => 1,
+                'localeName' => 'en_US',
+            ],
+            [
+                'firstName' => 'Diego',
+                'lastName' => 'Fernandez',
+                'password' => 'change123',
+                'username' => 'diego@spryker.com',
                 'localeName' => 'en_US',
             ],
         ];

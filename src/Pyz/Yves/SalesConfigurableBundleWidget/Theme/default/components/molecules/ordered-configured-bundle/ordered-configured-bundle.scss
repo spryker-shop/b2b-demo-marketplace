@@ -2,7 +2,6 @@
     #{$name} {
         border: rem(1) solid $setting-color-gray-7;
         margin-bottom: rem(22);
-        padding-bottom: rem(32);
         overflow: hidden;
 
         &__col {
@@ -44,7 +43,7 @@
         }
 
         &__products {
-            padding: rem(20);
+            padding: var(--scale-8);
         }
 
         &__title,

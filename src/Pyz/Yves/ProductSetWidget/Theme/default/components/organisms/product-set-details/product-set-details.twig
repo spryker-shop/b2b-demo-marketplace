@@ -115,7 +115,7 @@
         {% if data.products | length %}
             <form method="GET">
                 {% embed molecule('slick-carousel') with {
-                    modifiers: ['product-set', 'equal-height'],
+                    modifiers: ['equal-height'],
                     data: {
                         slides: data.products,
                     },

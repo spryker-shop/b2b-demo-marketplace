@@ -6,9 +6,12 @@
 } %}
 
 {% define data = {
-    field: required,
+    field: null,
+    input: {},
     fieldClass: '',
     iconName: 'calendar',
+    inputQa: '',
+    labelIsHidden: false,
 } %}
 
 {% define attributes = {
@@ -18,34 +21,54 @@
     'formatted-date-time': '',
     'date-from-id': false,
     'date-to-id': false,
+    'enable-time': true,
 } %}
 
 {% block body %}
     <div class="{{ config.name }}__content">
         {% block input %}
-            {{ form_row(data.field, {
-                attr: {
-                    class: config.name ~ '__field' ~ (data.fieldClass ? ' ' ~ data.fieldClass),
-                },
-            }) }}
+            {% set class = config.name ~ '__field' ~ (data.fieldClass ? ' ' ~ data.fieldClass) %}
+
+            {% if data.field  %}
+                {% set resolvedQa = data.inputQa ?: (data.field.vars.attr['data-qa'] | default('')) %}
+                {{ form_row(data.field, {
+                    attr: {
+                        class: config.name ~ '__field' ~ (data.fieldClass ? ' ' ~ data.fieldClass),
+                        'data-qa': resolvedQa,
+                    },
+                    label: data.labelIsHidden ? false : null,
+                }) }}
+            {% else %}
+                {% if data.input.label %}
+                    <div class="spacing-bottom--big">
+                        <label {% if data.input.attrs.id %}for="{{ data.input.attrs.id }}"{% endif %} class="label">{{ data.input.label | trans }}</label>
+                    </div>
+                {% endif %}
+
+                <input type="text" class="input input--expand {{ class }}" {{ _self.renderAttributes(data.input.attrs) }}>
+            {% endif %}
         {% endblock %}
 
         {% block calendar %}
             <div class="{{ config.name }}__calendar">
                 {% block calendarButton %}
-                    <button type="button" class="{{ config.name }}__calendar-button">
-                        {% include atom('icon') with {
-                            class: config.name ~ '__icon',
-                            data: {
-                                name: data.iconName,
-                            },
-                        } only %}
-                    </button>
+                    {% if data.iconName %}
+                        <button type="button" class="{{ config.name }}__calendar-button">
+                            {% include atom('icon') with {
+                                class: config.name ~ '__icon',
+                                data: {
+                                    name: data.iconName,
+                                },
+                            } only %}
+                        </button>
+                    {% endif %}
                 {% endblock %}
 
                 {% block calendarInput %}
+                    {% set id = data.field ? data.field.vars.id : data.input.attrs.id %}
+
                     <input aria-label="{{ 'shop_ui.aria_label.choose-date' | trans }}"
-                           class="{{ config.name }}__datepicker-input" data-id="{{ data.field.vars.id }}" tabindex="-1">
+                        class="{{ config.name }}__datepicker-input" data-id="{{ id }}" tabindex="-1">
                 {% endblock %}
             </div>
         {% endblock %}

@@ -1,0 +1,53 @@
+{% extends molecule('form') %}
+
+{% define config = {
+    name: 'merchant-registration-request-subform',
+} %}
+
+{% define data = {
+    fieldNames: required,
+    layout: required,
+    form: required,
+    subformTitle: required,
+    subformText: required,
+    renderParent: false,
+} %}
+
+{% block body %}
+    <div class="form__field col col--sm-12">
+        <h2 class="title--h3">{{ data.subformTitle }}</h2>
+        <p>{{ data.subformText }}</p>
+    </div>
+    {% for fieldName in data.fieldNames %}
+        {% set field = attribute(data.form.children, fieldName) %}
+
+        {% if not field.isRendered %}
+            {% set fieldLayoutClass = 'col col--sm-12' %}
+
+            {% if fieldName in data.layout | keys %}
+                {% set fieldLayoutClass = attribute(data.layout, fieldName) %}
+            {% endif %}
+
+            {{ block('field') }}
+        {% endif %}
+    {% endfor %}
+    {% if data.renderParent %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block field %}
+    {% set fieldLayoutClass = 'form__field ' ~ fieldLayoutClass %}
+    {% if fieldName == 'accept_terms' %}
+        <div class="grid grid--middle grid--justify col col--sm-12">
+            <div class="col col--sm-12 col--lg-7">
+                {{ parent() }}
+            </div>
+            <div class="col col--sm-12 col--lg-5 form__field text-right">
+                <button class="button button--wider button--medium button--expand-mobile">{{ data.submit.text }}</button>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

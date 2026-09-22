@@ -56,8 +56,8 @@ class MerchantProductDataImportConfig extends SprykerMerchantProductDataImportCo
      * @var list<string>
      */
     protected const POSSIBLE_CSV_STOCK_HEADERS = [
-        'product.{stock}.quantity',
-        'product.{stock}.is_never_out_of_stock',
+        'product_stock.{stock}.quantity',
+        'product_stock.{stock}.is_never_out_of_stock',
     ];
 
     /**
@@ -77,6 +77,9 @@ class MerchantProductDataImportConfig extends SprykerMerchantProductDataImportCo
         'product_image.DEFAULT.default.sort_order',
         'product_image.DEFAULT.default.external_url_large',
         'product_image.DEFAULT.default.external_url_small',
+        'product_image.{locale}.default.sort_order',
+        'product_image.{locale}.default.external_url_large',
+        'product_image.{locale}.default.external_url_small',
         'abstract_product_image.DEFAULT.default.sort_order',
         'abstract_product_image.DEFAULT.default.external_url_small',
         'abstract_product_image.DEFAULT.default.external_url_large',

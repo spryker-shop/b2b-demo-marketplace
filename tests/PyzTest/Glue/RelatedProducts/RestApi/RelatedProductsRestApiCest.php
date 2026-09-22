@@ -26,16 +26,8 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
  */
 class RelatedProductsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\RelatedProducts\RestApi\RelatedProductsRestApiFixtures
-     */
     protected RelatedProductsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\RelatedProducts\RelatedProductsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(RelatedProductsApiTester $I): void
     {
         /** @var \PyzTest\Glue\RelatedProducts\RestApi\RelatedProductsRestApiFixtures $fixtures */
@@ -46,10 +38,6 @@ class RelatedProductsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\RelatedProducts\RelatedProductsApiTester $I
-     *
-     * @return void
      */
     public function requestRelatedProducts(RelatedProductsApiTester $I): void
     {
@@ -63,7 +51,7 @@ class RelatedProductsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema
 
         $I->amSure('Response data contains abstract-products resource collection')
             ->whenI()

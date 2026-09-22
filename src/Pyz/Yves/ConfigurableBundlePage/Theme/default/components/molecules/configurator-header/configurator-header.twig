@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-header',
+} %}
+
+{% define data = {
+    title: required,
+    backUrl: required,
+    backLabel: required,
+} %}
+
+{% block body %}
+    {% block title %}
+        <h1 class="{{ config.name }}__title">{{ data.title }}</h1>
+    {% endblock %}
+
+    {% block back %}
+        <a href="{{ data.backUrl }}" class="{{ config.name }}__back button button--hollow">{{ data.backLabel }}</a>
+    {% endblock %}
+{% endblock %}

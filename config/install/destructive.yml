@@ -7,7 +7,7 @@ command-timeout: 7200
 sections:
     scheduler-clean:
         scheduler-clean:
-            command: 'vendor/bin/console scheduler:clean -vvv --no-ansi || true'
+            command: 'vendor/bin/console scheduler:clean -vvv --no-ansi'
 
     clean-storage:
         clean-storage:
@@ -41,6 +41,10 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
+    configuration:
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+
     setup-queue:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
@@ -65,8 +69,14 @@ sections:
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
 
+        stripe:
+            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
+
+        punchout:
+            command: 'vendor/bin/console punchout-gateway:demo-connection:create'
+
     scheduler-start:
         trigger-events:
             command: 'vendor/bin/console publish:trigger-events'
         scheduler-setup:
-            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi || true'
+            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'

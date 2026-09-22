@@ -1,53 +1,28 @@
 @mixin shop-ui-label($name: '.label') {
     #{$name} {
-        display: block;
-        font-size: map_get($setting-font-size, tiny);
-        font-weight: map_get($setting-font-weight, bold);
-        margin-bottom: 0.4rem;
-        text-transform: uppercase;
-        color: $setting-color-gray-5;
+        @include typography(label-sm);
+        color: var(--text-primary);
 
-        &--required {
-            &::after {
-                content: '*';
-                margin-left: 0.2rem;
-                color: $setting-color-main;
-            }
+        &--required::after {
+            content: '*';
+            margin-left: 0.2rem;
+            color: var(--text-state-error);
         }
 
-        &--title {
-            &::after {
-                display: none;
-            }
+        &--sm {
+            @include typography(label-md);
         }
 
-        &--browse-file {
-            @include helper-effect-transition(border-color);
-            display: flex;
-            align-items: center;
-            width: 100%;
-            min-height: rem(120);
-            padding: rem(10);
-            border: rem(2) dashed $setting-color-gray-2;
-            border-radius: rem(2);
-            background-color: $setting-color-white;
-            text-transform: initial;
-            font-weight: fw(regular);
-            cursor: pointer;
+        // &--title {
+        //     &::after {
+        //         display: none;
+        //     }
+        // }
 
-            &:hover {
-                border-color: $setting-color-main;
-            }
-        }
-
-        &--browse-file-cursor-default {
-            cursor: default;
-        }
-
-        &--small {
-            text-transform: none;
-            font-weight: fw(medium);
-        }
+        // &--small {
+        //     text-transform: none;
+        //     font-weight: fw(medium);
+        // }
 
         @content;
     }

@@ -1,0 +1,12 @@
+import './review-shipment-selection.scss';
+import register from 'ShopUi/app/registry';
+
+export default register(
+    'review-shipment-selection',
+    () =>
+        import(
+            /* webpackMode: "lazy", */
+            /* webpackChunkName: "review-shipment-selection" */
+            './review-shipment-selection'
+        ),
+);

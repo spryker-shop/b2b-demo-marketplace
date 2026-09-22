@@ -1,0 +1,36 @@
+{% extends view('customer-autocomplete', '@SprykerShop:AgentWidget') %}
+
+{% block body %}
+    {% set isError = data.errors | length > 0 %}
+    {% set customersFound = data.customers | length > 0 %}
+
+    {% if isError %}
+        <div class="customer-list customer-list--empty customer-list--error">
+            <span class="customer-list__icon">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'error' },
+                } only %}
+            </span>
+            <span class="customer-list__message">{{ data.errors }}</span>
+        </div>
+    {% elseif customersFound %}
+        {% include molecule('customer-list', 'AgentWidget') with {
+            data: {
+                customers: data.customers
+            }
+        } only %}
+    {% else %}
+        <div class="customer-list customer-list--empty">
+            <span class="customer-list__icon">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'search_off' },
+                } only %}
+            </span>
+            <span class="customer-list__message">
+                {{ 'agent.autocomplete.no_results' | trans }}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

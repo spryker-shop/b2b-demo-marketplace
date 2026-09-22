@@ -1,0 +1,21 @@
+<br>
+{% for key, configuration in data | slice(0, 3) %}
+    <div class="spacing-bottom">
+        <strong>{{ key }}:</strong> {{ configuration }}
+    </div>
+{% endfor %}
+
+{% if data | length > 3 %}
+    <div id="attribute_details_configured-{{ IdSalesOrderItem }}" class="hidden">
+        {% for key, configuration in data | slice(3) %}
+            <div class="spacing-bottom">
+                <strong>{{ key }}:</strong> {{ configuration }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <a id="attribute-details-btn-configured-{{ IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" data-id="configured-{{ IdSalesOrderItem }}">
+        <span class="show-more">{{ 'Show more' | trans }}</span>
+        <span class="show-less">{{ 'Show less' | trans }}</span>
+    </a>
+{% endif %}

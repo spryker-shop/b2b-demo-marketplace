@@ -2,10 +2,8 @@
 
 {% block salesReturnContentTitle %}
     {% include molecule('action-bar') with {
-        modifiers: ['first'],
         data: {
             title: 'return_page.list.title' | trans,
-            actions: [],
         },
     } only %}
 {% endblock %}
@@ -13,7 +11,17 @@
 {% block salesReturnContent %}
     {% set contentWrapperClass = '' %}
 
-    {{ parent() }}
+    <div class="{{ contentWrapperClass }}">
+        {% block salesReturnContentInner %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block salesReturnContentEmptyMessage %}
+    {% block emptyState %}
+        {{ parent() }}
+    {% endblock %}
 {% endblock %}
 
 {% block salesReturnTableUnderline %}{% endblock %}

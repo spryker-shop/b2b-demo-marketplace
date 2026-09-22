@@ -1,0 +1,23 @@
+@mixin order-experience-management-review-summary-banner($name: '.review-summary-banner') {
+    #{$name} {
+        @include typography(body-md);
+        border: rem(1) solid var(--border-default);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--scale-12);
+        padding: var(--scale-12) var(--scale-16);
+        background: var(--background-surface);
+
+        &__new-price,
+        &__title {
+            @include typography(label-md);
+        }
+
+        &__old-price {
+            @include typography(label-md);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-review-summary-banner;

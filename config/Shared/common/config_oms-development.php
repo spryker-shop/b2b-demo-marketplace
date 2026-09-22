@@ -7,6 +7,7 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 
 // ----------------------------------------------------------------------------
 // ------------------------------ OMS -----------------------------------------
@@ -23,9 +24,6 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
         'DummyMarketplacePayment',
         NopaymentConfig::PAYMENT_PROVIDER_NAME,
     ],
-    'Oms' => [
-        'DummyPayment',
-    ],
 ];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = array_merge([
@@ -40,3 +38,5 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = array_replace(
         NopaymentConfig::PAYMENT_PROVIDER_NAME => 'Nopayment01',
     ],
 );
+
+$config[SelfServicePortalConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING];

@@ -8,6 +8,7 @@
     searchResultLimit: _widget.searchResultLimit,
     injectorsExtraQueryValueClassName: '',
     autocompleteFormClassName: '',
+    suggestionsUrl: path('product-search/product-concrete-search'),
 } %}
 
 {% block body %}
@@ -21,7 +22,7 @@
             placeholder: 'quick-order.input.placeholder',
         },
         attributes: {
-            'suggestion-url': path('product-search/product-concrete-search'),
+            'suggestion-url': data.suggestionsUrl,
             'item-class-name': 'products-list__item',
             'query-param-name': 'limit=' ~ data.searchResultLimit ~ '&searchString',
             'value-data-attribute': 'data-value',

@@ -19,9 +19,6 @@ use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessPersistenceFactory as S
  */
 class CustomerAccessPersistenceFactory extends SprykerCustomerAccessPersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery
-     */
     public function getUnauthenticatedCustomerAccessQuery(): SpyUnauthenticatedCustomerAccessQuery
     {
         return SpyUnauthenticatedCustomerAccessQuery::create();

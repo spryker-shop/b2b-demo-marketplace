@@ -1,0 +1,9 @@
+@mixin tabs-widget-search-tabs($name: '.search-tabs') {
+    #{$name} {
+        border: none;
+
+        @content;
+    }
+}
+
+@include tabs-widget-search-tabs();

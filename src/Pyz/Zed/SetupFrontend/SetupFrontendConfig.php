@@ -15,11 +15,17 @@ class SetupFrontendConfig extends SprykerSetupFrontendConfig
 {
     /**
      * @api
-     *
-     * @return string
      */
     public function getProjectInstallCommand(): string
     {
         return 'npm ci --prefer-offline --legacy-peer-deps';
+    }
+
+    /**
+     * @api
+     */
+    public function getStorybookBuildCommand(): string
+    {
+        return 'npm run storybook:build';
     }
 }

@@ -1,0 +1,41 @@
+{% extends molecule('review-substitute-picker', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block head %}
+    <p class="{{ config.name }}__head">
+        {{ 'recurring_orders.review.substitute.modal.description' | trans({
+            '%product%': data.itemReview.recurringScheduleItem.productName,
+        }) }}
+    </p>
+{% endblock %}
+
+{% block optionName %}
+    <strong class="{{ config.name }}__option-name">{{ option.productName }}</strong>
+    {% if option.sku %}
+        <small class="text-muted {{ config.name }}__option-sku">({{ option.sku }})</small>
+    {% endif %}
+{% endblock %}
+
+{% block merchantSelect %}
+    <span class="{{ autocompleteClass }} {{ data.hiddenClass }}"></span>
+    <div class="{{ config.name }}__offer {{ config.jsName }}__offer" {{ qa('recurring-order-review-substitute-offer') }}>
+        {% widget 'MerchantProductOffersSelectWidget' with {
+            data: {
+                id: offersWidgetId,
+                submitButtonClassName: data.confirmClass,
+                autocompleteFormClassName: autocompleteClass,
+                mounAfterRender: true,
+            },
+        } only %}{% endwidget %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div class="grid grid--right {{ config.name }}__footer">
+        <button type="button" class="button button--hollow {{ data.cancelClass }}">
+            {{ 'global.cancel' | trans }}
+        </button>
+        <button type="button" class="button spacing-left {{ data.confirmClass }}" data-qa="recurring-order-review-substitute-confirm">
+            {{ 'recurring_orders.review.substitute.modal.confirm' | trans }}
+        </button>
+    </div>
+{% endblock %}

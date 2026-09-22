@@ -20,8 +20,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
 {
     /**
      * @param string $contentType
-     *
-     * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
     public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer // phpcs:ignore
     {
@@ -39,9 +37,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
             ->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity, new ContentTypeAccessTransfer());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
     public function getUnrestrictedContentTypes(): CustomerAccessTransfer
     {
         /**
@@ -57,9 +52,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
             ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
     public function getAllContentTypes(): CustomerAccessTransfer
     {
         /**
@@ -75,9 +67,6 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
             ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
     public function getRestrictedContentTypes(): CustomerAccessTransfer
     {
         /**

@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=../../src/Spryker/Configuration/resources/configuration/configuration-schema-v1.json
+features:
+    - key: catalog
+      name: Catalog
+      description: Catalog-related configuration.
+      enabled: true
+      order: 0
+      tabs:
+          - key: inventory
+            name: Inventory
+            description: Inventory-related configuration.
+            enabled: true
+            order: 0
+            groups:
+                - key: stock_options
+                  name: Stock Options
+                  description: Controls how product stock is displayed to customers.
+                  enabled: true
+                  order: 0
+                  scopes:
+                      - global
+                      - store
+                  settings:
+                      - key: display_stock_availability
+                        name: Display Stock Availability
+                        description: When enabled, stock availability information is shown to customers on product pages and in the cart.
+                        type: boolean
+                        default_value: 'true'
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        scopes:
+                            - global
+                            - store

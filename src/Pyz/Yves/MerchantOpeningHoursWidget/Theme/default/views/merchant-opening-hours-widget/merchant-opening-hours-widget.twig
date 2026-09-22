@@ -1,9 +1,19 @@
 {% extends view('merchant-opening-hours-widget', '@SprykerShop:MerchantOpeningHoursWidget') %}
 
 {% block body %}
-    <div class="box box--smaller">
-        <div class="grid grid--gap">
-            {{ block('schedulelInner') }}
-        </div>
-    </div>
+    {{ block('weekdaySchedule') }}
+
+    {{ block('specialOpeningHours') }}
 {% endblock %}
+
+{% block specialOpeningHours %}
+    {% include molecule('schedule-list', 'MerchantOpeningHoursWidget') with {
+        data: {
+            scheduleData: data.merchantOpeningHours.dateSchedule | default([]),
+            title: 'merchant_opening_hours.special_opening_hours_title' | trans,
+            holidaysTitle: 'merchant_opening_hours.public_holidays_title' | trans,
+        },
+    } only %}
+{% endblock %}
+
+{% block holidays %}{% endblock %}

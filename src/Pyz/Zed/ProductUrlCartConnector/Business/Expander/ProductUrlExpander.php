@@ -27,10 +27,6 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
      */
     protected $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
-     */
     public function __construct(
         ProductFacadeInterface $productFacade,
         LocaleFacadeInterface $localeFacade,
@@ -39,11 +35,6 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
         $this->localeFacade = $localeFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
@@ -53,11 +44,6 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
         return $cartChangeTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
     protected function expandItemsWithUrl(ItemTransfer $itemTransfer): void
     {
         $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();

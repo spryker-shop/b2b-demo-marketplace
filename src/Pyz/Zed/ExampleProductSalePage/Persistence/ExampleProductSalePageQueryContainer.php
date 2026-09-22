@@ -33,10 +33,6 @@ class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implem
 
     /**
      * @api
-     *
-     * @param string $labelName
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
     public function queryProductLabelByName(string $labelName): SpyProductLabelQuery
     {
@@ -47,10 +43,6 @@ class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implem
 
     /**
      * @api
-     *
-     * @param int $idProductLabel
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryRelationsBecomingInactive(int $idProductLabel): SpyProductLabelProductAbstractQuery
     {
@@ -113,10 +105,6 @@ class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implem
 
     /**
      * @api
-     *
-     * @param int $idProductLabel
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryRelationsBecomingActive(int $idProductLabel): SpyProductAbstractQuery
     {
@@ -167,11 +155,7 @@ class ExampleProductSalePageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
-     * @param string $clause
      * @param \Propel\Runtime\Map\ColumnMap|string $column
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\BasicModelCriterion
      */
     protected function getBasicModelCriterion(Criteria $criteria, string $clause, $column): BasicModelCriterion
     {

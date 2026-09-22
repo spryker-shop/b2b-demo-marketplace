@@ -16,6 +16,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiDepen
 class DocumentationGeneratorRestApiDependencyProvider extends SprykerDocumentationGeneratorRestApiDependencyProvider
 {
     /**
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
+     *
      * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface>
      */
     protected function getResourceRoutePluginProviderPlugins(): array
@@ -26,6 +28,8 @@ class DocumentationGeneratorRestApiDependencyProvider extends SprykerDocumentati
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
+     *
      * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface>
      */
     protected function getResourceRelationshipCollectionProviderPlugins(): array

@@ -1,52 +1,104 @@
 @mixin shop-ui-input-extended($name: '.input') {
-    @include shop-ui-input($name) {
-        border-radius: $setting-border-radius;
-        color: $setting-color-gray-4;
-        font: fw(regular) rem(15) / rem(19) $setting-font-family;
-        padding: rem(14) rem(20) rem(13);
+    #{$name} {
+        @include helper-effect-transition(background-color border-color box-shadow color);
+        @include typography(label-md);
+        display: inline-flex;
+        height: rem(36);
+        padding: 0 var(--scale-16);
+        align-items: center;
+        gap: var(--scale-8);
+        width: 100%;
+        border-radius: var(--radius-sm);
+        border: var(--stroke-sm) solid var(--input-border-default);
+        background: var(--input-background-default);
+        color: var(--input-text-value);
 
-        &::placeholder {
-            color: $setting-color-gray-4;
-            opacity: 1;
+        ::placeholder {
+            color: var(--input-text-placeholder);
         }
 
-        &--small {
-            font-size: rem(14);
-            line-height: rem(18);
-            padding: rem(10) rem(16);
+        &:hover {
+            border-color: var(--input-border-hover);
         }
 
-        &--measurement-unit {
-            max-width: rem(90);
-            appearance: none;
+        &:focus-visible,
+        &:focus {
+            border-color: var(--input-border-focus);
+            box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                var(--shadows-focus-spread) var(--shadows-focus-color);
+            outline: none;
+        }
 
-            &::-webkit-inner-spin-button,
-            &::-webkit-outer-spin-button {
-                appearance: none;
-                margin: 0;
+        &[invalid],
+        &--error {
+            border-color: var(--input-border-error);
+
+            &:focus {
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color-error);
             }
         }
 
-        &--filter-range {
-            font-weight: fw(medium);
-            color: $setting-color-gray-4;
-            padding-right: rem(24);
-            padding-left: rem(8);
+        &--disabled:hover,
+        &--disabled,
+        &[disabled]:hover,
+        &[disabled] {
+            color: var(--input-text-disabled);
+            border-color: var(--input-border-disabled);
+            background: var(--input-background-disabled);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
-            @include helper-breakpoint-media-min($md) {
-                padding-left: rem(12);
+        &--readonly,
+        &[readonly] {
+            color: var(--input-text-value);
+            border-color: var(--input-border-default);
+            background: var(--input-background-disabled);
+        }
+
+        &--sm {
+            @include typography(label-sm);
+            height: rem(32);
+        }
+
+        &--xs {
+            @include typography(body-sm);
+            height: auto;
+            padding: var(--scale-4) var(--scale-8);
+            gap: var(--scale-6);
+        }
+
+        &--search {
+            @include typography(body-sm);
+            border-radius: var(--radius-md);
+            padding-right: var(--scale-40);
+            color: var(--input-text-value);
+
+            &:focus,
+            &:focus-visible {
+                background: var(--background-surface);
+                box-shadow: none;
             }
         }
 
-        &--transparent[disabled] {
-            background-color: $setting-color-transparent;
-        }
-
-        &--inline {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            padding-left: rem(10);
-            padding-right: rem(10);
+        &-search-icon {
+            position: absolute;
+            top: 50%;
+            right: var(--scale-4);
+            transform: translateY(-50%);
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: rem(28);
+            height: rem(28);
+            padding: 0;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--background-subtle);
+            font-size: rem(16);
+            color: var(--icon-primary);
         }
 
         @content;

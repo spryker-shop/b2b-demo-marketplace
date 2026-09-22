@@ -51,9 +51,6 @@ class TestController extends AbstractController
         ];
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function addItemAction(): RedirectResponse
     {
         $this->getFacade()->createExampleItem();
@@ -61,11 +58,6 @@ class TestController extends AbstractController
         return new RedirectResponse('/example-state-machine/test/list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function deleteItemAction(Request $request): RedirectResponse
     {
         $idStateMachineItem = $this->castId($request->query->get('id'));
