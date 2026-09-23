@@ -1616,6 +1616,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         return new ShipmentExpander(
             $this->getShipmentFacade(),
             $this->getCalculationFacade(),
+            $this->createSalesOrderAddressResolver(),
         );
     }
 

@@ -21,7 +21,7 @@ class QuoteApprovalConfig extends SprykerQuoteApprovalConfig
     {
         return [
             QuoteTransfer::BILLING_ADDRESS,
-            QuoteTransfer::PAYMENT,
+            QuoteTransfer::PAYMENTS,
         ];
     }
 
