@@ -15,9 +15,9 @@ use Spryker\Client\MerchantProductOfferSearch\Plugin\Search\MerchantNameSearchCo
 use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantProductMerchantNameSearchConfigExpanderPlugin;
 use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
 use Spryker\Client\Search\SearchDependencyProvider as SprykerSearchDependencyProvider;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchContextExpanderPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
 use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSearchAdapterPlugin;
 
 class SearchDependencyProvider extends SprykerSearchDependencyProvider

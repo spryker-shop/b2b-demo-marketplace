@@ -80,8 +80,11 @@ class ShipmentExpander
         return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
-    protected function createShipmentByMethodKey(string $shipmentMethodKey, QuoteTransfer $quoteTransfer, AddressTransfer $shippingAddressTransfer): ShipmentTransfer
-    {
+    protected function createShipmentByMethodKey(
+        string $shipmentMethodKey,
+        QuoteTransfer $quoteTransfer,
+        AddressTransfer $shippingAddressTransfer,
+    ): ShipmentTransfer {
         $shipmentMethodTransfer = $this->shipmentFacade->findShipmentMethodByKey($shipmentMethodKey);
 
         if (!$shipmentMethodTransfer) {
@@ -98,8 +101,11 @@ class ShipmentExpander
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
      */
-    protected function createShipmentForShipmentType(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer, AddressTransfer $shippingAddressTransfer): ShipmentTransfer
-    {
+    protected function createShipmentForShipmentType(
+        ItemTransfer $itemTransfer,
+        QuoteTransfer $quoteTransfer,
+        AddressTransfer $shippingAddressTransfer,
+    ): ShipmentTransfer {
         $shipmentTypeTransfer = $itemTransfer->getShipmentTypeOrFail();
 
         $shipmentMethodEntity = SpyShipmentMethodQuery::create()
@@ -130,8 +136,11 @@ class ShipmentExpander
         return $shipmentTransfer;
     }
 
-    protected function createShipment(ShipmentMethodTransfer $shipmentMethodTransfer, QuoteTransfer $quoteTransfer, AddressTransfer $shippingAddressTransfer): ShipmentTransfer
-    {
+    protected function createShipment(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        QuoteTransfer $quoteTransfer,
+        AddressTransfer $shippingAddressTransfer,
+    ): ShipmentTransfer {
         $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             $quoteTransfer,
