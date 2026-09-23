@@ -10,11 +10,11 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Product;
 
 use Spryker\Shared\ProductBundleStorage\ProductBundleStorageConfig;
+use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\Product\ProductConfig as SprykerProductConfig;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
-use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
 use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 
@@ -32,8 +32,8 @@ class ProductConfig extends SprykerProductConfig
             ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE,
             ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_DELETE,
 
-            ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE,
-            ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE,
+            ProductLabelStorageConfig::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE,
+            ProductLabelStorageConfig::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE,
 
             PriceProductEvents::PRICE_ABSTRACT_PUBLISH,
             PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE,
