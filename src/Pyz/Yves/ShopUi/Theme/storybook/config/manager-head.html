@@ -1,0 +1,13 @@
+<style>
+    /* Storybook 8.6 ignores `addons.setConfig({ showPanel: false })` — the empty
+       addon panel (with the "Explore integrations catalog" placeholder) still
+       renders. Remove it at the manager-UI level and give its grid row back to
+       the canvas. */
+    div:has(> #storybook-panel-root) {
+        display: none !important;
+    }
+
+    div:has(> div > #storybook-panel-root) {
+        grid-template-rows: 1fr 0 !important;
+    }
+</style>

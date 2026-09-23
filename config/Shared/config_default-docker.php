@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
@@ -14,13 +15,13 @@ use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiCo
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\Event\EventConstants;
+use Spryker\Shared\FileSystem\FileSystemConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -40,11 +41,13 @@ use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
+use Spryker\Shared\SymfonyMessenger\SymfonyMessengerConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\CalculationPage\CalculationPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
@@ -73,7 +76,7 @@ $config[ApplicationConstants::BASE_URL_SSL_ZED] = sprintf(
     $backofficePort,
 );
 $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
-    '%s:%s',
+    '%s%s',
     getenv('SPRYKER_ZED_HOST'),
     $config[ApplicationConstants::PORT_ZED],
 );
@@ -128,11 +131,6 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
 ];
 
 $config[EventConstants::LOGGER_ACTIVE] = true;
-
-//Check how to generate https://oauth2.thephpleague.com/installation/
-$config[OauthConstants::PRIVATE_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_private.key';
-$config[OauthConstants::PUBLIC_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_public.key';
-$config[OauthConstants::ENCRYPTION_KEY] = 'lxZFUEsBCJ2Yb14IF2ygAHI5N4+ZAUXXaSeeJm6+twsUmIen';
 
 $config[OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER] = 'frontend';
 $config[OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET] = 'abc123';
@@ -244,6 +242,15 @@ $defaultConnection = [
 
 $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [];
 
+$connectionKeys = array_keys($rabbitConnections);
+$defaultKey = reset($connectionKeys);
+if (getenv('SPRYKER_CURRENT_REGION')) {
+    $defaultKey = getenv('SPRYKER_CURRENT_REGION');
+}
+if (getenv('APPLICATION_STORE') && (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
+    $defaultKey = getenv('APPLICATION_STORE');
+}
+
 foreach ($rabbitConnections as $key => $connection) {
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key] = $defaultConnection;
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_CONNECTION_NAME] = $key . '-connection';
@@ -253,7 +260,17 @@ foreach ($rabbitConnections as $key => $connection) {
         $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][constant(RabbitMqEnv::class . '::' . $constant)] = $value;
     }
 
-    $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION] = $key === APPLICATION_STORE;
+    $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION] = $key === $defaultKey;
+
+    if ($key !== $defaultKey) {
+        continue;
+    }
+
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
 }
 /* End Broker */
 
@@ -276,9 +293,10 @@ $config[StorageConstants::STORAGE_KV_SOURCE] = strtolower(getenv('SPRYKER_KEY_VA
  */
 //$config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = [];
 
+$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
 $config[StorageRedisConstants::STORAGE_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
-$config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
+$config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
 
 $config[SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL] = 'tcp';
 $config[SessionRedisConstants::YVES_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_FE_HOST');
@@ -298,10 +316,9 @@ $config[MailConstants::SMTP_PORT] = getenv('SPRYKER_SMTP_PORT');
 /* End Mail */
 
 /* Logging */
+$logDir = (getenv('SPRYKER_LOG_DIRECTORY') ?: APPLICATION_ROOT_DIR . '/data') . '/logs';
 $config[LogConstants::LOGGER_CONFIG] = SprykerLoggerConfig::class;
-$config[LogConstants::LOG_FILE_PATH] = (getenv('SPRYKER_LOG_DIRECTORY') ?: APPLICATION_ROOT_DIR . '/data') . '/logs';
-
-$logDir = (getenv('SPRYKER_LOG_DIRECTORY') ?: APPLICATION_ROOT_DIR . '/data') . '/' . APPLICATION_STORE;
+$config[LogConstants::LOG_FILE_PATH] = $logDir;
 
 $config[EventConstants::LOG_FILE_PATH] = $logDir . '/ZED/application_events.log';
 $config[QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME] = $logDir . '/ZED/queue.log';
@@ -335,3 +352,27 @@ $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GE
 
 // ----------- HTTP Security
 $config[KernelConstants::DOMAIN_WHITELIST] = [];
+
+$config[SelfServicePortalConstants::STORAGE_NAME] = 'files';
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = array_merge($config[FileSystemConstants::FILESYSTEM_SERVICE] ?? [], [
+    'files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/files/',
+    ],
+    'ssp-inquiry' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/files/',
+    ],
+    'ssp-asset-image' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/ssp-asset-image',
+    ],
+    'ssp-model-image' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-model-image',
+    ],
+]);

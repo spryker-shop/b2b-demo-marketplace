@@ -17,14 +17,11 @@ use Spryker\Zed\CustomerAccess\Business\CustomerAccessBusinessFactory as Spryker
 
 /**
  * @method \Pyz\Zed\CustomerAccess\CustomerAccessConfig getConfig()
- * @method \Pyz\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface getRepository()
  * @method \Pyz\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface getEntityManager()
  */
 class CustomerAccessBusinessFactory extends SprykerCustomerAccessBusinessFactory
 {
-    /**
-     * @return \Pyz\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessFilterInterface
-     */
     public function createCustomerAccessFilter(): CustomerAccessFilterInterface
     {
         return new CustomerAccessFilter(
@@ -32,9 +29,6 @@ class CustomerAccessBusinessFactory extends SprykerCustomerAccessBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessUpdaterInterface
-     */
     public function createCustomerAccessUpdater(): CustomerAccessUpdaterInterface
     {
         return new CustomerAccessUpdater(

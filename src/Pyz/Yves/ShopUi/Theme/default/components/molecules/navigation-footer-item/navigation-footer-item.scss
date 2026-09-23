@@ -1,18 +1,16 @@
 @mixin shop-ui-navigation-footer-item($name: '.navigation-footer-item') {
     #{$name} {
-        border-top: solid 1px $setting-color-white;
-
-        @include helper-breakpoint-media-min($md) {
-            border-top: 0;
-            padding-bottom: 1.5rem;
-        }
-
-        @include helper-breakpoint-media-min($lg) {
-            padding-bottom: 0;
-        }
-
         &--social {
             border-top: none;
+        }
+
+        &--footer-logo {
+            @include helper-breakpoint-media-min($md) {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: var(--scale-32);
+            }
         }
 
         @content;

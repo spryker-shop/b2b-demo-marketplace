@@ -1,0 +1,1 @@
+import './notification-area.scss';

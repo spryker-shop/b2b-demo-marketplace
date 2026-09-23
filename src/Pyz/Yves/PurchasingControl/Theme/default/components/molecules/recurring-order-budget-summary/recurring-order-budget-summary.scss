@@ -1,0 +1,62 @@
+@include purchasing-control-recurring-order-budget-summary {
+    &__headline {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--scale-8);
+        margin-bottom: var(--scale-8);
+    }
+
+    &__amount {
+        @include typography('heading-sm');
+        color: var(--text-primary);
+    }
+
+    &__progress {
+        height: var(--scale-8);
+        border-radius: var(--radius-full);
+        background: var(--background-muted);
+        overflow: hidden;
+    }
+
+    &__bar {
+        height: 100%;
+        border-radius: var(--radius-full);
+        background: var(--background-brand-primary);
+        transition: width 0.24s ease-out;
+    }
+
+    &__figures {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--scale-2) var(--scale-16);
+        margin-top: var(--scale-8);
+    }
+
+    &__figure {
+        display: flex;
+        align-items: baseline;
+        gap: var(--scale-4);
+
+        &--end {
+            margin-left: auto;
+        }
+    }
+
+    &__key {
+        @include typography('caption');
+        color: var(--text-tertiary);
+    }
+
+    &__value {
+        @include typography('label-sm');
+        color: var(--text-secondary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &__bar {
+            transition: none;
+        }
+    }
+}

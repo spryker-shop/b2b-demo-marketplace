@@ -1,0 +1,159 @@
+name: _cypress
+
+on:
+    workflow_call:
+        inputs:
+            platform-image:
+                description: "PHP platform image the shards boot on."
+                type: string
+                default: "spryker/php:8.5"
+            deploy-file:
+                description: "Deploy file the shards boot."
+                type: string
+                default: ".github/deploy/deploy.ci.acceptance.mariadb.cypress.yml"
+            repository-ids:
+                description: "JSON array of Cypress repository ids each core shard runs for."
+                type: string
+                default: '["b2b-mp", "b2b"]'
+            artifact-platform:
+                # Kept in step with platform-image and deploy-file; it only names the
+                # S3 folder the screenshots land in.
+                description: "Platform segment of the screenshot upload path."
+                type: string
+                default: "PHP8.5MariaDB"
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
+
+jobs:
+    cypress-shards:
+        name: "Cypress / Shards"
+        runs-on: ubuntu-latest
+        outputs:
+            cells: ${{ steps.compute.outputs.cells }}
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    # Nothing downstream needs the checkout token; every repo cloned or
+                    # composer-installed in these jobs is public.
+                    persist-credentials: false
+
+            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   id: compute
+                name: Generate shard matrix
+                env:
+                    REPOSITORY_IDS: ${{ inputs.repository-ids }}
+                # jq crosses each generated shard with the repository_ids that must run it:
+                # the SSP shard is marketplace-only, every core shard runs for all requested ids.
+                run: |
+                    CORE=$(.github/workflows/scripts/generate-cypress-shards.py)
+                    CELLS=$(printf '%s' "$CORE" | jq -c --argjson repos "$REPOSITORY_IDS" '[ .[] as $s
+                        | (if $s.mode == "ssp" then ($repos | map(select(. == "b2b-mp"))) else $repos end)[] as $repo
+                        | $s + {repository_id: $repo, label: "\($repo) \($s.label)"}
+                    ]')
+                    echo "cells=${CELLS}" >> "$GITHUB_OUTPUT"
+                    echo "Computed Cypress cells: ${CELLS}"
+
+    cypress:
+        name: "Cypress / UI ${{ matrix.cell.label }}"
+        needs: cypress-shards
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                cell: ${{ fromJson(needs.cypress-shards.outputs.cells) }}
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: ${{ inputs.platform-image }}
+            TRAVIS: 1
+            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+            DEPLOY_FILE: ${{ inputs.deploy-file }}
+            ARTIFACT_PLATFORM: ${{ inputs.artifact-platform }}
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    persist-credentials: false
+
+            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
+            -   name: Run project in Docker
+                # Deliberately imports demodata rather than restoring the shared dump: the
+                # restore bought a minute or two per cell and cost correctness. Sharding is
+                # where this lane's wall-clock win comes from.
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    if [ "${{ matrix.cell.repository_id }}" = "b2b" ]; then
+                        chmod +x uninstall-marketplace-modules.sh
+                        chmod +x uninstall-frontend-marketplace.sh
+                        ./uninstall-frontend-marketplace.sh
+                        ./uninstall-marketplace-modules.sh
+                    fi
+                    docker/sdk boot "$DEPLOY_FILE"
+                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
+                    docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Run Tests
+                id: run_tests
+                run: |
+                    docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
+                    docker/sdk exec cypress-tests npx cypress install
+                    if [ "${{ matrix.cell.mode }}" = "ssp" ]; then
+                        docker/sdk exec --env "ENV_REPOSITORY_ID=${{ matrix.cell.repository_id }}" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:ssp
+                    else
+                        docker/sdk exec --env "ENV_REPOSITORY_ID=${{ matrix.cell.repository_id }}" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npx cypress run --headless --browser chrome --config retries=2 --spec "${{ matrix.cell.specs }}"
+                    fi
+
+            -   name: Upload Screenshots
+                # Scoped to a test failure: on a failed boot `.cypress` does not exist yet, and
+                # the upload would add a second red step pointing away from the real cause.
+                if: failure() && steps.run_tests.outcome == 'failure'
+                run: |
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/${{ matrix.cell.repository_id }}/dms-on/cypress/${GITHUB_RUN_ID}/${ARTIFACT_PLATFORM}/shard-${{ matrix.cell.shard }}/ --recursive
+
+            -   name: Generate Cypress Test Summary
+                if: always() && steps.run_tests.outcome == 'failure'
+                run: |
+                    python3 tests/cypress-tests/generate_failure_summary.py .cypress > /tmp/cypress-summary.md 2>/dev/null || true
+                    cat /tmp/cypress-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            -   name: Save PHP logs
+                if: always() && steps.run_tests.outcome == 'failure'
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts."
+
+            -   name: Upload PHP logs
+                if: always() && steps.run_tests.outcome == 'failure'
+                uses: actions/upload-artifact@v6
+                with:
+                    name: cypress-ui-${{ matrix.cell.repository_id }}-${{ matrix.cell.shard }}-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        .cypress/
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()

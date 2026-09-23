@@ -1,0 +1,29 @@
+@include order-experience-management-review-add-product-picker {
+    &__product-col,
+    &__quantity-col {
+        margin-bottom: var(--scale-8);
+    }
+
+    &__actions {
+        margin-top: var(--scale-16);
+    }
+
+    &__price {
+        @include typography(label-md);
+        right: var(--scale-2);
+        z-index: $setting-zi-dropdown;
+        background: var(--white);
+        padding: 0 var(--scale-6);
+        border-left: 1px solid var(--border-default);
+
+        &::after {
+            content: '';
+            position: absolute;
+            right: calc(100% + 1px);
+            top: 0;
+            height: 100%;
+            width: var(--scale-16);
+            background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 80%);
+        }
+    }
+}

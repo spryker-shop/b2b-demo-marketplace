@@ -1,0 +1,81 @@
+# Configuration
+
+
+This directory contains the configuration for the whole Spryker Framework as well as configurations for Symfony Bundles.
+
+
+## Application Configuration
+
+
+Each application has its own directory where specific to that application configurations are stored. The main applications are:
+
+
+- `Yves`: The front-end application.
+- `Zed`: The back-end application.
+- `Glue`: The API application.
+- `GlueBackend`: The Backend API application.
+- `GlueStorefront`: The Storefront API application.
+- `Shared`: Configuration shared across all applications.
+
+
+On top of that, there is a directory (`config/install/`) that contains install configurations.
+
+
+Each Application can have the following configuration files:
+- `config/{Application}/ApplicationServices.php`: Configuration for the application where services are defined which are available through the Dependency Injection container.
+- `config/{Application}/bundles.php`: Configuration for the bundles that are provided from Symfony, 3rd party provider, or Spryker.
+
+
+## Symfony Bundle Configuration
+
+
+Symfony Bundle configurations are stored in the `config/{Application}/packages/` directory. Each bundle has its own configuration file named after the bundle, for example:
+
+
+- `config/Zed/packages/framework.yaml`: Configuration for the Symfony FrameworkBundle in the Zed application.
+
+
+### Bundle Configuration
+
+
+Each bundle that get registered in the `config/{Application}/bundles.php` can have it's own configuration file in the `config/{Application}/packages/` directory. The configuration file is named after the bundle and uses the appropriate format (YAML, XML, PHP) based on the project's configuration preferences.
+
+
+Spryker promotes using the PHP format for configuration files, as it allows for more complex logic and better integration with the Spryker ecosystem.
+
+
+A configuration file written in PHP might look like this:
+
+
+```php
+<?php
+
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+
+declare(strict_types=1);
+
+
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+
+use Symfony\Config\FrameworkConfig;
+
+
+return static function (FrameworkConfig $framework, ContainerConfigurator $containerConfigurator): void {
+    $framework->secret('Your Framework secret');
+}
+```
+
+
+There are a couple of things to note in this example:
+- This callback function receives two parameters: an instance of `FrameworkConfig` and an instance of `ContainerConfigurator`; Those are optional and can be defined on demand.
+- The `FrameworkConfig` instance does not exist and is created right before the callback is called. This is Symfony specific and uses `\Symfony\Component\Config\Definition\Builder\TreeBuilder` provided inside the respective bundle which is used to generate this specific class on the fly.
+- The `ContainerConfigurator` instance is created by Symfony and can be used to configure services, parameters, and other container-related settings.
+
+
+It is up to you to you what you request to be passed into the callback. You can omit the generated config as well as the `ContainerConfigurator` when not needed.

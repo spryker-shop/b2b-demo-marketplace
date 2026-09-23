@@ -1,0 +1,81 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'breadcrumb',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    steps: [],
+    category: null,
+    filterPath: null,
+    startWithHome: true,
+    size: 'md',
+    separator: 'slash'
+} %}
+
+{% set modifiers = (modifiers ?? []) | merge([data.size]) %}
+
+{% macro categorySteps(categoryNode, isLastLeaf, filterPath) %}
+    {% import _self as self %}
+
+    {% set categoryUrl = categoryNode.url | default %}
+    {% set categoryUrl = filterPath is not empty ? url(filterPath, { categoryPath: categoryUrl | trimLocale }) : categoryUrl %}
+    {% set categoryParentNodes = categoryNode.parents | default %}
+
+    {% if categoryParentNodes is not empty %}
+        {{ self.categorySteps(categoryParentNodes | first, false, filterPath) }}
+
+        {% include molecule('breadcrumb-step') with {
+            modifiers: isLastLeaf ? ['current'] : [],
+            data: {
+                url: isLastLeaf ? null : (functionExists('generatePath') ? generatePath(categoryUrl) : categoryUrl),
+                label: categoryNode.name | default,
+                isCurrent: isLastLeaf,
+                withChevron: not isLastLeaf,
+            }
+        } only %}
+    {% endif %}
+{% endmacro %}
+
+{% block body %}
+    {% set stepsCount = data.category is not empty ? 1 : (data.steps | length) %}
+
+    {% if data.startWithHome %}
+        {% include molecule('breadcrumb-step') with {
+            modifiers: stepsCount == 0 ? ['current'] : [],
+            data: {
+                url: path('home'),
+                label: 'global.home' | trans,
+                iconName: 'house',
+                iconModifiers: ['filled'],
+                separator: data.separator,
+                isCurrent: stepsCount == 0,
+            }
+        } only %}
+    {% endif %}
+
+    {% block breadcrumbs %}
+        {% import _self as self %}
+
+        {% if data.category is not empty %}
+            {{ self.categorySteps(data.category, true, data.filterPath) }}
+        {% else %}
+            {% for step in data.steps %}
+                {% include molecule('breadcrumb-step') with {
+                    modifiers: loop.last ? ['current'] : [],
+                    data: {
+                        url: step.url | default,
+                        label: step.label | default,
+                        itemProp: step.itemProp | default,
+                        iconName: step.iconName | default,
+                        separator: data.separator,
+                        isCurrent: loop.last,
+                        formName: step.formName | default,
+                        tokenFieldName: step.tokenFieldName | default,
+                    }
+                } only %}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

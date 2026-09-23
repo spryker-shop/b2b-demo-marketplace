@@ -12,6 +12,8 @@
             headline: data.banner.title,
             subHeadline: data.banner.subtitle,
             btnTitle: 'main_slider.btn.title',
+            label: data.banner.altText | default(''),
+            containerMode: true,
         },
     } only %}
 {% endblock %}

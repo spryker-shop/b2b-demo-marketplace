@@ -18,9 +18,6 @@ class CartItemsProductProvider implements CartItemsProductProviderInterface
      */
     protected $productStorageClient;
 
-    /**
-     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productStorageClient
-     */
     public function __construct(CartPageToProductStorageClientInterface $productStorageClient)
     {
         $this->productStorageClient = $productStorageClient;
@@ -28,7 +25,6 @@ class CartItemsProductProvider implements CartItemsProductProviderInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $cartItems
-     * @param string $locale
      *
      * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */

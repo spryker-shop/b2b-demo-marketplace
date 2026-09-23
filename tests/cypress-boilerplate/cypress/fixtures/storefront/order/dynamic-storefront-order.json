@@ -1,0 +1,259 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveStore",
+          "key": "store",
+          "arguments": [{ "name": "{{STORE_NAME}}" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocale",
+          "key": "storeLocale",
+          "arguments": [{ "locale_name": "{{LOCALE_NAME}}" }]
+        },
+        {
+          "type": "helper",
+          "name": "getCurrencyByIsoCode",
+          "key": "currencyTransfer",
+          "arguments": ["{{CURRENCY_CODE}}"]
+        },
+        {
+          "type": "helper",
+          "name": "haveTaxSet",
+          "key": "taxSet",
+          "arguments": [{}]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale_name": "{{LOCALE_NAME}}",
+              "password": "{{DEFAULT_PASSWORD}}"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fkCompany": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUnitAddress",
+          "key": "businessUnitAddress",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company",
+              "iso2Code": "{{COUNTRY_ISO2}}"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "CompanyUnitAddressCollectionTransfer",
+          "key": "businessUnitAddressCollection",
+          "arguments": { "companyUnitAddresses": ["#businessUnitAddress"] }
+        },
+        {
+          "type": "transfer",
+          "name": "CompanyBusinessUnitTransfer",
+          "key": "businessUnitWithAddress",
+          "arguments": {
+            "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit",
+            "addressCollection": "#businessUnitAddressCollection"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUnitAddressToCompanyBusinessUnitRelation",
+          "arguments": ["#businessUnitWithAddress"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "addCartItemPermission",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "changeCartItemPermission",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "removeCartItemPermission",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company.id_company" },
+            [
+              "#addCartItemPermission",
+              "#changeCartItemPermission",
+              "#removeCartItemPermission",
+              "#placeOrderPermission",
+              "#placeOrderWithAmountUpToPermission"
+            ]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": "#taxSet.id_tax_set",
+              "localizedAttributes": [
+                { "locale": "#storeLocale", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "key": "productPrice",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "skuProduct": "#product.sku",
+              "moneyValue": {
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductAbstract",
+          "arguments": [
+            "#product.fk_product_abstract",
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "moneyValue": {
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            { "sku": "#product.sku", "isNeverOutOfStock": "1" }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant",
+          "arguments": [
+            { "storeRelation": { "idStores": ["#store.id_store"] } }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idMerchant": "#merchant.id_merchant",
+              "idProductAbstract": "#product.fk_product_abstract"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentMethod",
+          "key": "shipmentMethod",
+          "arguments": [
+            { "isActive": true },
+            {},
+            {
+              "{{STORE_NAME}}": {
+                "{{CURRENCY_CODE}}": { "netAmount": 590, "grossAmount": 590 }
+              }
+            },
+            ["#store.id_store"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCostCenter",
+          "key": "costCenter",
+          "arguments": [
+            { "companyBusinessUnit": "#businessUnit", "isActive": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveBudget",
+          "key": "budget",
+          "arguments": [
+            "#costCenter.id_cost_center",
+            {
+              "isActive": true,
+              "amount": 100000000,
+              "currencyIsoCode": "{{CURRENCY_CODE}}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

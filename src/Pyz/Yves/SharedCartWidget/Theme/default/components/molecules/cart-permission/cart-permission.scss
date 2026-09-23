@@ -1,9 +1,8 @@
 @mixin share-cart-widget-cart-permission($name: '.cart-permission') {
     #{$name} {
         &--widget {
-            font-size: rem(11);
-            font-weight: fw(bold);
-            text-transform: uppercase;
+            @include typography(body-sm);
+            color: var(--text-secondary);
         }
 
         &__read {

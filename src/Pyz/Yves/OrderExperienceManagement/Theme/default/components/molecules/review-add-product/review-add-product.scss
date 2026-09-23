@@ -1,0 +1,62 @@
+$name: '.review-add-product';
+
+@include order-experience-management-review-add-product {
+    @include typography(body-md);
+
+    &__lines {
+        margin: 0 calc(var(--scale-12) * -1);
+    }
+
+    &__line {
+        padding: var(--scale-12);
+        align-items: center;
+        border-bottom: rem(1) solid var(--border-subtle);
+
+        &:last-child {
+            margin-bottom: var(--scale-12);
+        }
+    }
+
+    &__line-name-text {
+        @include typography(body-md);
+    }
+
+    &__line-meta {
+        flex-grow: 1;
+    }
+
+    &__line-price,
+    &__line-sku {
+        @include typography(body-md);
+    }
+
+    &__summary {
+        @include typography(label-md);
+        margin: 0 0 var(--scale-12);
+        position: relative;
+        padding-right: var(--scale-24);
+        list-style: none;
+    }
+
+    &__summary-icon {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        translate: 0 -50%;
+
+        [open] & {
+            rotate: 180deg;
+        }
+    }
+
+    &__box {
+        border: rem(1) solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--scale-24);
+        padding: var(--scale-12);
+
+        &:has(#{$name}__line) {
+            padding-top: 0;
+        }
+    }
+}

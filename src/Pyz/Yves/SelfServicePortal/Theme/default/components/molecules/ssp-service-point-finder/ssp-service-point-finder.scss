@@ -1,0 +1,20 @@
+@include self-service-portal-ssp-service-point-finder {
+    &__search {
+        position: relative;
+    }
+
+    &__search-field {
+        padding-left: var(--scale-40);
+    }
+
+    &__icon {
+        position: absolute;
+        top: 50%;
+        left: var(--scale-12);
+        width: var(--scale-20);
+        height: var(--scale-20);
+        transform: translateY(-50%);
+        color: var(--icon-secondary);
+        pointer-events: none;
+    }
+}

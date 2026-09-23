@@ -32,21 +32,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerUpdateCest
 {
-    /**
-     * @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures
-     */
     protected CustomerRestApiFixtures $fixtures;
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function _before(CustomerApiTester $I): void
     {
         /** @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures $fixtures */
@@ -66,11 +55,6 @@ class CustomerUpdateCest
         $I->amBearerAuthenticated($oauthResponseTransfer->getAccessToken());
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerUpdatesCustomerProfile(CustomerApiTester $I): void
     {
         // Arrange
@@ -101,7 +85,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeSingleResourceHasSelfLink(
             $I->formatFullUrl(
@@ -130,11 +114,6 @@ class CustomerUpdateCest
             );
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerFailsToUseAnotherCustomersEmail(CustomerApiTester $I): void
     {
         // Arrange
@@ -171,18 +150,13 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseErrorsHaveDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS);
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerFailsToUseAnotherCustomersCustomerReference(CustomerApiTester $I): void
     {
         // Arrange
@@ -219,18 +193,13 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_FORBIDDEN);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_FORBIDDEN);
         $I->seeResponseErrorsHaveDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerFailsWithoutCustomerReference(CustomerApiTester $I): void
     {
         // Arrange
@@ -267,11 +236,6 @@ class CustomerUpdateCest
         $I->seeResponseErrorsHaveDetail('Resource id is not specified.');
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerFailsWhenPasswordsDoNotMatch(CustomerApiTester $I): void
     {
         // Arrange
@@ -302,7 +266,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -315,11 +279,6 @@ class CustomerUpdateCest
 
     /**
      * @dataProvider requestPatchCustomerFailsValidationDataProvider
-     *
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     * @param \Codeception\Example $example
-     *
-     * @return void
      */
     public function requestPatchCustomerFailsValidation(CustomerApiTester $I, Example $example): void
     {
@@ -344,7 +303,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs($example[RestErrorMessageTransfer::STATUS]);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         foreach ($example['errors'] as $index => $error) {
             $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], (string)$index);
@@ -353,9 +312,6 @@ class CustomerUpdateCest
         }
     }
 
-    /**
-     * @return array
-     */
     protected function requestPatchCustomerFailsValidationDataProvider(): array
     {
         return [

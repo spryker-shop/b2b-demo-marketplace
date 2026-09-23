@@ -23,9 +23,6 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
 
 class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
 {
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
     protected function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return new StoreRelationToggleFormTypePlugin();
@@ -37,9 +34,9 @@ class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
     protected function getMerchantFormExpanderPlugins(): array
     {
         return [
-            new MerchantProfileFormExpanderPlugin(),
-            new MerchantStockMerchantFormExpanderPlugin(),
-            new IsOpenForRelationRequestMerchantFormExpanderPlugin(),
+        new MerchantProfileFormExpanderPlugin(),
+        new MerchantStockMerchantFormExpanderPlugin(),
+        new IsOpenForRelationRequestMerchantFormExpanderPlugin(),
         ];
     }
 
@@ -49,10 +46,10 @@ class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
     protected function getMerchantFormTabsExpanderPlugins(): array
     {
         return [
-            new MerchantProfileContactPersonFormTabExpanderPlugin(),
-            new MerchantProfileFormTabExpanderPlugin(),
-            new MerchantProfileLegalInformationFormTabExpanderPlugin(),
-            new MerchantUserTabMerchantFormTabExpanderPlugin(),
+        new MerchantProfileContactPersonFormTabExpanderPlugin(),
+        new MerchantProfileFormTabExpanderPlugin(),
+        new MerchantProfileLegalInformationFormTabExpanderPlugin(),
+        new MerchantUserTabMerchantFormTabExpanderPlugin(),
         ];
     }
 
@@ -62,7 +59,7 @@ class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
     protected function getMerchantUpdateFormViewExpanderPlugins(): array
     {
         return [
-            new MerchantUserViewMerchantUpdateFormViewExpanderPlugin(),
+        new MerchantUserViewMerchantUpdateFormViewExpanderPlugin(),
         ];
     }
 
@@ -72,7 +69,7 @@ class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
     protected function getMerchantViewFormViewExpanderPlugins(): array
     {
         return [
-            new MerchantUserViewMerchantUpdateFormViewExpanderPlugin(),
+        new MerchantUserViewMerchantUpdateFormViewExpanderPlugin(),
         ];
     }
 }

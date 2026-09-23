@@ -1,0 +1,22 @@
+@use 'sass:meta';
+
+@mixin order-experience-management-recurring-order-form($name: '.recurring-order-form') {
+    #{$name} {
+        @if meta.mixin-exists(order-experience-management-recurring-order-form-base-hook) {
+            @include order-experience-management-recurring-order-form-base-hook;
+        }
+
+        &__tooltip-trigger {
+            position: relative;
+
+            &:hover,
+            &:focus-within {
+                #{$name}__tooltip-message {
+                    @include helper-visibility-visible;
+                }
+            }
+        }
+
+        @content;
+    }
+}

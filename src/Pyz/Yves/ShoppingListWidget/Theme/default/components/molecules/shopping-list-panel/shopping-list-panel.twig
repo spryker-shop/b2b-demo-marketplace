@@ -1,0 +1,49 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-panel',
+} %}
+
+{% define data = {
+    shoppingLists: [],
+} %}
+
+{% block body %}
+    <div class="{{ config.name }}__header">
+        <span class="{{ config.name }}__title">{{ 'shopping_list_panel.title' | trans }}</span>
+    </div>
+
+    <div class="{{ config.name }}__divider"></div>
+
+    <div class="{{ config.name }}__rows">
+        {% if data.shoppingLists is not empty %}
+            {% for shoppingList in data.shoppingLists %}
+                {% set hasWriteAccess = can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
+                <a class="{{ config.name }}__row link--no-decoration" href="{{ path('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">
+                    <span class="{{ config.name }}__row-info">
+                        <span class="{{ config.name }}__name">{{ shoppingList.name }}</span>
+                        <span class="{{ config.name }}__meta">
+                            <span class="{{ config.name }}__meta-left">
+                                <span>{{ shoppingList.numberOfItems | default(0) }} {{ 'shopping_list_widget.items' | trans }}</span>
+                                <span class="{{ config.name }}__meta-dot">&middot;</span>
+                                <span>{{ (hasWriteAccess ? 'shopping_list_widget.full_access' : 'shopping_list_widget.read_only') | trans }}</span>
+                            </span>
+                            <span class="{{ config.name }}__meta-owner">{{ shoppingList.owner }}</span>
+                        </span>
+                    </span>
+                </a>
+            {% endfor %}
+        {% else %}
+            <div class="{{ config.name }}__empty">{{ 'shopping_list.no_lists_created' | trans }}</div>
+        {% endif %}
+    </div>
+
+    <div class="{{ config.name }}__footer">
+        <a href="{{ url('shopping-list') }}" class="button button--expand button--secondary">
+            {{ 'shopping_list.all_shopping_lists' | trans }}
+        </a>
+        <a href="{{ url('shopping-list') }}" class="button button--expand button--secondary">
+            {{ 'shopping_list.create_new_list' | trans }}
+        </a>
+    </div>
+{% endblock %}

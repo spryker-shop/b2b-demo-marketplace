@@ -1,0 +1,100 @@
+{% extends molecule('recurring-order-form', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block form%}
+    {% embed molecule('form') with {
+        data: {
+            form: data.form,
+            options: {
+                attr: {
+                    action: path('recurring-order/save'),
+                },
+            },
+            submit: {
+                enable: true,
+                attributes: ajaxTriggerAttribute,
+                text: 'recurring_orders.checkout.confirm_button' | trans,
+                qa: 'recurring-order-confirm-button',
+            },
+        },
+        embed: {
+            configJsName: config.jsName,
+            configName: config.name,
+        }
+    } only %}
+        {% block field %}
+            {% if fieldName == 'scheduleName' %}
+                {{ form_row(field, {
+                    attr: {
+                        'data-qa': 'recurring-order-schedule-name-input',
+                    },
+                    rowAttr: {class: "#{config.name}__field #{fieldLayoutClass}"},
+                }) }}
+            {% elseif fieldName == 'cadenceType' %}
+                {{ form_row(field, {
+                    attr: {
+                        class: "#{embed.configJsName}__type",
+                        'data-qa': 'recurring-order-cadence-type-select',
+                    },
+                    rowAttr: {
+                        class: "#{config.name}__field #{fieldLayoutClass}"
+                    },
+                }) }}
+            {% elseif fieldName == 'cadenceValue' %}
+                {{ form_row(field, {
+                    attr: {
+                        'data-qa': 'recurring-order-cadence-value-input',
+                    },
+                    rowAttr: {class: "#{config.name}__field #{fieldLayoutClass} #{embed.configJsName}__value-wrapper"},
+                }) }}
+            {% elseif fieldName == 'startDate' %}
+                {% set tooltipId = "#{embed.configName}__start-date-tooltip" %}
+                <div class="{{ config.name }}__field {{ fieldLayoutClass }}">
+                    {{ form_label(field) }}
+                    <span class="{{ embed.configName }}__tooltip-trigger" tabindex="0" role="button"
+                        data-qa="recurring-order-start-date-tooltip"
+                        aria-label="{{ 'recurring_orders.checkout.start_date_tooltip_label' | trans }}"
+                        aria-describedby="{{ tooltipId }}">
+                        {% include atom('icon') with {
+                            data: {
+                                name: 'action-default',
+                            },
+                        } only %}
+
+                        {% include molecule('tooltip-message') with {
+                            class: "#{embed.configName}__tooltip-message",
+                            modifiers: ['top'],
+                            attributes: {
+                                id: tooltipId,
+                            },
+                            data: {
+                                text: 'recurring_orders.checkout.start_date_tooltip' | trans,
+                            },
+                        } only %}
+                    </span>
+                    {{ form_errors(field) }}
+
+                    {% include molecule('date-time-picker') with {
+                        modifiers: ['with-icon'],
+                        data: {
+                            field: field,
+                            labelIsHidden: true,
+                            inputQa: 'recurring-order-start-date-input',
+                        },
+                        attributes: {
+                            language: app.locale | slice(0, 2),
+                            config: '{
+                                "format": "Y-m-d",
+                                "enableTime": false,
+                                "minDate": "today",
+                                "scrollInput": false,
+                                "scrollMonth": false
+                            }',
+                        },
+                    } only %}
+                </div>
+            {% else %}
+                {{ parent() }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

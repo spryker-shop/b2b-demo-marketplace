@@ -6,77 +6,53 @@
 } %}
 
 {% set benefits = [
-    'global.benefit.free_returns',
     'global.benefit.warranty',
-    'global.benefit.competitive_prices'
+    'global.benefit.free_returns',
 ] %}
 
-{% block benefit %}
-    {% include molecule('panel-info-item') with {
-        class: 'col',
-        data: {
-            info: text,
-        },
-    } only %}
-{% endblock %}
-
 {% block body %}
+    <div class="container">
+        <div class="{{ config.name }}__inner">
+            <div class="{{ config.name }}__benefits">
+                {% for text in benefits %}
+                    {% include molecule('panel-info-item') with {
+                        data: {
+                            info: text,
+                        },
+                    } only %}
 
-    {% for text in benefits %}
-        {% if not loop.last %}
-            {{ block('benefit') }}
-        {% elseif not is_granted('ROLE_USER') %}
-            {{ block('benefit') }}
-        {% endif %}
-    {% endfor %}
+                    {% if not loop.last %}
+                        <span class="{{ config.name }}__divider"></span>
+                    {% endif %}
+                {% endfor %}
+            </div>
 
-    <ul class="col grid grid--nowrap grid--stretch navigation-top__actions">
-        <li class="col {{ config.name }}__action-item {{ config.name }}__action-item--tel">
-            {% include atom('icon') with {
-                modifiers: ['phone'],
-                data: {
-                    name: 'phone'
-                }
-            } only %}
-            {{ 'global.phone.number' | trans }}
-        </li>
-
-        {% if can('SeePricePermissionPlugin') %}
-            <li class="col {{ config.name }}__action-item">
-                {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
-            </li>
-            <li class="col {{ config.name }}__action-item">
-                {% widget 'CurrencyWidget' only %}{% endwidget %}
-            </li>
-        {% endif %}
-
-        <li class="col {{ config.name }}__action-item">
-            {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
-        </li>
-
-        {% widget 'StoreSwitcher' with {
-            embed: {
-                configName: config.name,
-            },
-        } only %}
-            {% block body %}
-                <li class="col {{ embed.configName }}__action-item">
-                    {{ parent() }}
-                </li>
-            {% endblock %}
-        {% endwidget %}
-
-        {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
-        {% set hasCompanyAccess = menuItemCompanyWidget.hasCompanyAccess %}
-
-        {% if is_granted('ROLE_USER') and hasCompanyAccess %}
-            {% widget menuItemCompanyWidget %}
-                {% block template %}
-                    <li class="col {{ config.name }}__action-item">
-                        {% apply spaceless %}{{ parent() }}{% endapply %}
+            <ul class="{{ config.name }}__selectors">
+                {% if can('SeePricePermissionPlugin') %}
+                    <li class="{{ config.name }}__selector-item">
+                        {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
                     </li>
-                {% endblock %}
-            {% endwidget %}
-        {% endif %}
-    </ul>
+                    <li class="{{ config.name }}__selector-item">
+                        {% widget 'CurrencyWidget' only %}{% endwidget %}
+                    </li>
+                {% endif %}
+
+                <li class="{{ config.name }}__selector-item">
+                    {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
+                </li>
+
+                {% widget 'StoreSwitcher' with {
+                    embed: {
+                        configName: config.name,
+                    },
+                } only %}
+                    {% block body %}
+                        <li class="{{ embed.configName }}__selector-item">
+                            {{ parent() }}
+                        </li>
+                    {% endblock %}
+                {% endwidget %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}

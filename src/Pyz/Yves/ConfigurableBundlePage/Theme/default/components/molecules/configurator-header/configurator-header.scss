@@ -1,0 +1,29 @@
+@mixin configurable-bundle-page-configurator-header($name: '.configurator-header') {
+    #{$name} {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--scale-16);
+        margin-bottom: var(--scale-24);
+
+        @include helper-breakpoint-media-min($md) {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        &__title {
+            @include typography(heading-lg);
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        &__back {
+            flex: 0 0 auto;
+        }
+
+        @content;
+    }
+}
+
+@include configurable-bundle-page-configurator-header();

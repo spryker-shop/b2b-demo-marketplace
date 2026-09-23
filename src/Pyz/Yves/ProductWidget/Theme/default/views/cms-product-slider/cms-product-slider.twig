@@ -10,7 +10,7 @@
         modifiers: ['stretch'],
         data: {
             product: data.product,
-            category: 'category.office.furniture' | trans,
+            category: data.product.categories|first ? data.product.categories|first.name : '' ,
         },
     } only %}
 

@@ -1,0 +1,39 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'catalog-collapse-all',
+    tag: 'catalog-collapse-all',
+} %}
+
+{% define data = {
+    sectionSelector: '.filter-section',
+    unitClass: 'js-collapsible',
+    triggerClass: 'js-collapsible-trigger',
+    collapsedClass: 'is-collapsed',
+} %}
+
+{% define attributes = {
+    'section-selector': data.sectionSelector,
+    'unit-class': data.unitClass,
+    'trigger-class': data.triggerClass,
+    'collapsed-class': data.collapsedClass,
+} %}
+
+{% block body %}
+    <button type="button" class="{{ config.name }}__trigger {{ config.jsName }}__trigger">
+        <span class="{{ config.name }}__label {{ config.name }}__label--collapse">{{ 'catalog.filter.collapseAll' | trans }}</span>
+        <span class="{{ config.name }}__label {{ config.name }}__label--expand">{{ 'catalog.filter.expandAll' | trans }}</span>
+        {% include atom('font-icon') with {
+            class: config.name ~ '__icon ' ~ config.name ~ '__icon--collapse',
+            data: {
+                name: 'unfold_less',
+            },
+        } only %}
+        {% include atom('font-icon') with {
+            class: config.name ~ '__icon ' ~ config.name ~ '__icon--expand',
+            data: {
+                name: 'unfold_more',
+            },
+        } only %}
+    </button>
+{% endblock %}

@@ -4,7 +4,24 @@
     metaTitle: _view.productSet.metaTitle,
 } %}
 
-{% block pageInfo %}{% endblock %}
+{% block pageInfo %}
+    <div class="page-info">
+        <div class="container">
+            {% block breadcrumbs %}
+                {% include molecule('breadcrumb') with {
+                    data: {
+                        steps: [
+                            {
+                                label: 'product.sets' | trans,
+                                url: url('product-sets')
+                            },
+                        ]
+                    }
+                } only %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
     {% set images = [] %}
@@ -48,27 +65,30 @@
             } only %}
                 {% block slides %}
                     {% for image in embed.images %}
-                        {% embed molecule('banner') with {
-                            class: embed.configName,
-                            data: {
-                                imageUrl: image,
-                                title: embed.title,
-                            },
-                        } only %}
-                            {% block content %}
-                                <h1 class="title title--light title--product-set-details">{{ data.title }}</h1>
-                                <p class="{{ config.name }}__text {{ config.name }}__text--subtitle">
-                                    {{- 'product.set' | trans -}}
-                                </p>
-                            {% endblock %}
+                        <div>
+                            {% embed molecule('banner') with {
+                                class: embed.configName,
+                                data: {
+                                    imageUrl: image,
+                                    title: embed.title,
+                                },
+                            } only %}
+                                {% block content %}
+                                    <h1 class="{{ config.name }}__title">{{ data.title }}</h1>
+                                    <p class="{{ config.name }}__text {{ config.name }}__text--subtitle">
+                                        {{- 'product.set' | trans -}}
+                                    </p>
+                                {% endblock %}
 
-                            {% block body %}
-                                {% set containerClass = config.name ~ '__container grid grid--column grid--middle grid--center' %}
-                                {% set contentClass = contentClass ~ ' text-center' %}
+                                {% block body %}
+                                    {% set containerClass = config.name ~ '__container grid grid--column grid--middle grid--center' %}
+                                    {# default('') must bind to contentClass (undefined here); the | filter has higher precedence than ~, so keep it directly on the variable #}
+                                    {% set contentClass = contentClass | default('') ~ ' ' ~ 'text-center' %}
 
-                                {{ parent() }}
-                            {% endblock %}
-                        {% endembed %}
+                                    {{ parent() }}
+                                {% endblock %}
+                            {% endembed %}
+                        </div>
                     {% endfor %}
                 {% endblock %}
             {% endembed %}

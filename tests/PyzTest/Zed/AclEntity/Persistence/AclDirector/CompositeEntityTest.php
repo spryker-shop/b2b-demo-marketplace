@@ -44,20 +44,15 @@ class CompositeEntityTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
-
+        $this->tester->clearAclQueryScopeResolverCache();
         $this->tester->deleteTestData();
     }
 
     /**
      * @group AclEntityCreate
-     *
-     * @return void
      */
     public function testInspectCreateWithCreatePermissionInRootEntity(): void
     {
@@ -85,8 +80,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithUpdatePermissionInRootEntity(): void
     {
@@ -127,8 +120,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityDelete
-     *
-     * @return void
      */
     public function testInspectDeleteWithDeletePermissionInRootEntity(): void
     {
@@ -169,8 +160,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityCreate
-     *
-     * @return void
      */
     public function testInspectCreateWithNoCreatePermissionInRootEntity(): void
     {
@@ -204,8 +193,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithNoUpdatePermissionInRootEntity(): void
     {
@@ -250,8 +237,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityDelete
-     *
-     * @return void
      */
     public function testInspectDeleteWithNoDeletePermissionInRootEntity(): void
     {
@@ -297,8 +282,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesWithReadPermissionInRootEntity(): void
     {
@@ -339,8 +322,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesWithNoReadPermissionInRootEntity(): void
     {
@@ -386,8 +367,6 @@ class CompositeEntityTest extends Unit
 
     /**
      * @group AclEntityCreate
-     *
-     * @return void
      */
     public function testInspectCreateWithNoRootParentDefinitionInConfig(): void
     {

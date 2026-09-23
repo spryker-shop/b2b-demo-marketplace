@@ -1,0 +1,95 @@
+{# @var data.configurableBundleTemplateStorage \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer #}
+{# @var slotStorage \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer #}
+
+{% extends molecule('spr-tabs') %}
+
+{% define config = {
+    tag: 'nav',
+} %}
+
+{% define data = {
+    form: required,
+    configurableBundleTemplateStorage: required,
+    selectedSlotId: null,
+    isSummaryActive: false,
+    isSummaryUnlocked: true,
+} %}
+
+{%- block body -%}
+    {% set stateView = data.form.createView %}
+    {% set idTemplate = data.configurableBundleTemplateStorage.idConfigurableBundleTemplate %}
+    {% set items = [] %}
+
+    {% for slotStorage in data.configurableBundleTemplateStorage.slots %}
+        {% set idSlot = slotStorage.idConfigurableBundleTemplateSlot %}
+
+        {% set items = items | merge([{
+            label: slotStorage.name | trans,
+            icon: stateView.slots[idSlot].vars.value.sku is defined ? 'check' : null,
+            isActive: idSlot == data.selectedSlotId,
+            isDisabled: false,
+            action: path('configurable-bundle/configurator/slots', {
+                'idConfigurableBundleTemplate': idTemplate,
+                'idConfigurableBundleTemplateSlot': idSlot,
+            }),
+        }]) %}
+    {% endfor %}
+
+    {% set items = items | merge([{
+        label: 'configurable_bundle_page.configurator.summary' | trans,
+        icon: null,
+        isActive: data.isSummaryActive,
+        isDisabled: not data.isSummaryUnlocked,
+        action: path('configurable-bundle/configurator/summary', {
+            'idConfigurableBundleTemplate': idTemplate,
+        }),
+    }]) %}
+
+    {% block nav %}
+        <div class="{{ config.name }}__nav {{ config.name }}__nav--with-bar">
+            {% block navInner %}
+                {% for item in items %}
+                    {% block trigger %}
+                        {% set tabForm = data.form.createView %}
+
+                        {{ form_start(tabForm, {
+                            action: item.action,
+                            method: 'GET',
+                            attr: {
+                                class: config.name ~ '__form',
+                            },
+                        }) }}
+
+                        {% for slotForm in tabForm.slots %}
+                            {{ form_row(slotForm.sku, { id: '' }) }}
+                        {% endfor %}
+
+                        <button
+                            class="{{ config.name }}__trigger{% if item.isActive %} {{ config.name }}__trigger--active{% endif %}{% if item.icon %} {{ config.name }}__trigger--complete{% endif %}"
+                            type="submit"
+                            {% if item.isDisabled %}disabled{% endif %}
+                        >
+                            {% block triggerInner %}
+                                <span class="{{ config.name }}__trigger-label">{{ item.label }}</span>
+
+                                {% if item.icon %}
+                                    {% include atom('font-icon') with {
+                                        class: config.name ~ '__icon',
+                                        data: {
+                                            name: item.icon,
+                                        },
+                                    } only %}
+                                {% endif %}
+                            {% endblock %}
+                        </button>
+
+                        {{ form_row(tabForm._token, { id: '' }) }}
+                        {{ form_end(tabForm) }}
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block panels %}{% endblock %}
+{%- endblock -%}

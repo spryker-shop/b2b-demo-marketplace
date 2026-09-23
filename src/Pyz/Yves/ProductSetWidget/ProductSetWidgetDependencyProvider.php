@@ -24,11 +24,6 @@ class ProductSetWidgetDependencyProvider extends SprykerProductSetWidgetDependen
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -38,11 +33,6 @@ class ProductSetWidgetDependencyProvider extends SprykerProductSetWidgetDependen
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addProductStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
@@ -52,11 +42,6 @@ class ProductSetWidgetDependencyProvider extends SprykerProductSetWidgetDependen
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addProductSetStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_SET_STORAGE, function (Container $container) {

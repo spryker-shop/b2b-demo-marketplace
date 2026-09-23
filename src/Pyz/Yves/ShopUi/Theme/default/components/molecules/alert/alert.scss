@@ -1,0 +1,13 @@
+@include shop-ui-flash-message('.alert') {
+    --notification-border: var(--background-state-error-bold);
+    --notification-background: var(--background-state-error-subtle);
+    --notification-icon: var(--icon-state-error);
+    --notification-text: var(--text-state-error);
+    align-items: center;
+    pointer-events: all;
+    translate: 0 0;
+    opacity: 1;
+    max-height: none;
+    margin: var(--scale-8) 0;
+    padding: var(--scale-16) var(--scale-20);
+}

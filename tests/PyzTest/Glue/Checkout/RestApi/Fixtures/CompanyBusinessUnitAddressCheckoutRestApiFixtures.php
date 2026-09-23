@@ -46,76 +46,41 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     protected CompanyUserTransfer $companyUserTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     protected CompanyUnitAddressTransfer $companyUnitAddressTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
     protected ShipmentMethodTransfer $shipmentMethodTransfer;
 
-    /**
-     * @var \Generated\Shared\Transfer\MerchantTransfer
-     */
     protected MerchantTransfer $merchantTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     public function getCustomerTransfer(): CustomerTransfer
     {
         return $this->customerTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     public function getCompanyUserTransfer(): CompanyUserTransfer
     {
         return $this->companyUserTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function getCompanyUnitAddressTransfer(): CompanyUnitAddressTransfer
     {
         return $this->companyUnitAddressTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
     public function getShipmentMethodTransfer(): ShipmentMethodTransfer
     {
         return $this->shipmentMethodTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
     public function getMerchantTransfer(): MerchantTransfer
     {
         return $this->merchantTransfer;
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
-     */
     public function buildFixtures(CheckoutApiTester $I): FixturesContainerInterface
     {
         $I->truncateSalesOrderThresholds();
@@ -138,12 +103,6 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
         return $this;
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
     protected function buildCompanyUserAccount(
         CheckoutApiTester $I,
         CustomerTransfer $customerTransfer,
@@ -184,11 +143,6 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
         $I->assignCompanyRolesToCompanyUser($this->companyUserTransfer);
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
-     */
     protected function buildShipmentMethod(CheckoutApiTester $I): void
     {
         $this->shipmentMethodTransfer = $I->haveShipmentMethod(
@@ -204,11 +158,6 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
         );
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
-     */
     protected function mockCompanyPostSavePlugins(CheckoutApiTester $I): void
     {
         $I->setDependency(CompanyDependencyProvider::COMPANY_POST_SAVE_PLUGINS, []);

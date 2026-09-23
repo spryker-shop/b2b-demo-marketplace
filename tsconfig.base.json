@@ -11,17 +11,17 @@
         "skipDefaultLibCheck": true,
         "removeComments": true,
         "useDefineForClassFields": false,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "target": "es2020",
         "module": "esnext",
         "typeRoots": ["node_modules/@types"],
         "lib": ["dom", "esnext"],
-        "baseUrl": ".",
         "rootDir": ".",
         "paths": {
-            "*": ["*"],
+            "*": ["./*"],
             "ShopUi/*": ["./vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/*"]
-        }
+        },
+        "strict": false
     },
     "include": [
         "./vendor/spryker/**/*",

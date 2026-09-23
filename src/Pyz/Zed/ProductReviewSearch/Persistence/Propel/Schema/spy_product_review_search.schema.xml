@@ -2,6 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductReviewSearch\Persistence" package="src.Orm.Zed.ProductReviewSearch.Persistence">
 
     <table name="spy_product_review_search">
+        <column name="structured_data" type="CLOB" required="true" description="A JSON-encoded string containing structured data for a service point, used for search indexing."/>
         <behavior name="synchronization">
             <parameter name="queue_pool" value="synchronizationPool"/>
         </behavior>

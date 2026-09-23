@@ -11,11 +11,13 @@ export default class CustomSelect extends Component {
     protected isInited = false;
     protected timeout = 300;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.select = <HTMLSelectElement>this.getElementsByClassName(`${this.jsName}`)[0];
         this.$select = $(this.select);
+
+        if (this.configMobileResolution) {
+            this.mobileResolution = this.configMobileResolution;
+        }
 
         this.mapEvents();
 
@@ -67,6 +69,7 @@ export default class CustomSelect extends Component {
     initSelect(): void {
         if (window.innerWidth >= this.mobileResolution && !this.isInited) {
             this.isInited = true;
+            this.removeStaleDropdowns();
             this.$select.select2({
                 minimumResultsForSearch: Infinity,
                 width: this.configWidth,
@@ -77,6 +80,10 @@ export default class CustomSelect extends Component {
             this.isInited = false;
             this.$select.select2('destroy');
         }
+    }
+
+    protected removeStaleDropdowns(): void {
+        Array.from(this.getElementsByClassName('select2-container')).forEach((dropdown: Element) => dropdown.remove());
     }
 
     protected get configWidth(): string {
@@ -97,5 +104,10 @@ export default class CustomSelect extends Component {
 
     protected get autoInit(): boolean {
         return this.select.hasAttribute('auto-init');
+    }
+
+    protected get configMobileResolution(): number {
+        const value = this.select.getAttribute('mobile-resolution');
+        return value ? parseInt(value, 10) : null;
     }
 }

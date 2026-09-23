@@ -2,12 +2,13 @@
     #{$name} {
         display: none;
 
-        @include helper-breakpoint-media-min($xl) {
-            display: block;
-            font-size: rem(11);
-            font-weight: fw(medium);
-            line-height: rem(40);
-            text-transform: uppercase;
+        @include helper-breakpoint-media-min($lg) {
+            @include typography(label-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--scale-6);
+            color: var(--text-inverse);
+            white-space: nowrap;
         }
 
         @content;

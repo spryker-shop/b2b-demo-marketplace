@@ -13,7 +13,8 @@
 
 {% block body %}
     {% if data.shoppingListOptions | length %}
-        {% include atom('select') with {
+        {% include molecule('custom-select') with {
+            modifiers: ['width-auto'],
             attributes: {
                 name: 'idShoppingList',
             },
@@ -23,7 +24,7 @@
         } only %}
     {% endif %}
 
-    <button name="addToShoppingList" class="button button--small button--hollow">
+    <button name="addToShoppingList" class="button button--sm button--hollow">
         {{ 'shopping_list_add_items_widget.add_to_shopping_list' | trans }}
     </button>
 {% endblock %}

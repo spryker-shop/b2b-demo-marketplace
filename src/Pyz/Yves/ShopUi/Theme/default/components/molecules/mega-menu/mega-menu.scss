@@ -1,0 +1,188 @@
+@mixin shop-ui-mega-menu($name: '.mega-menu') {
+    #{$name} {
+        display: none;
+        height: rem(450);
+
+        @include helper-breakpoint-media-min($xl) {
+            display: flex;
+            background: var(--header-main);
+            width: rem(992);
+            max-width: calc(100vw - #{rem(128)});
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadows-lg-x) var(--shadows-lg-y) var(--shadows-lg-blur) var(--shadows-lg-spread)
+                var(--shadows-lg-color);
+            z-index: $setting-zi-element + 2;
+        }
+
+        &__sidebar {
+            display: flex;
+            flex-direction: column;
+            width: rem(260);
+            height: 100%;
+            flex-shrink: 0;
+            border-right: rem(1) solid var(--border-subtle);
+        }
+
+        &__sidebar-header {
+            @include typography(label-sm-semibold);
+            padding: var(--scale-20) var(--scale-16);
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            margin: 0;
+        }
+
+        &__sidebar-items {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            list-style: none;
+            padding: 0 0 var(--scale-4);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-4);
+            min-height: 0;
+        }
+
+        &__sidebar-item {
+            flex-shrink: 0;
+        }
+
+        &__sidebar-link {
+            @include typography(body-md);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            padding: var(--scale-8) var(--scale-16) var(--scale-8) var(--scale-20);
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        &__sidebar-label {
+            flex: 1;
+            min-width: 0;
+        }
+
+        &__sidebar-chevron {
+            font-size: rem(16);
+            flex-shrink: 0;
+        }
+
+        &__sidebar-item.is-active #{$name}__sidebar-link,
+        &__sidebar-item:hover #{$name}__sidebar-link,
+        &__sidebar-item:focus-within #{$name}__sidebar-link {
+            background: var(--background-subtle);
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: rem(3);
+                background: var(--background-brand-primary);
+            }
+        }
+
+        &__footer {
+            padding: var(--scale-12) var(--scale-8);
+            border-top: rem(1) solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        &__footer-link {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            padding: var(--scale-6) var(--scale-8);
+            border-radius: var(--radius-md);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--font-weight-medium);
+            color: var(--text-brand);
+            text-decoration: none;
+
+            &:hover {
+                background: var(--background-subtle);
+            }
+        }
+
+        &__footer-arrow {
+            font-size: rem(16);
+        }
+
+        &__panel {
+            display: none;
+            position: absolute;
+            left: rem(261);
+            top: 0;
+            right: 0;
+            height: 100%;
+            padding: var(--scale-24) rem(40) var(--scale-64);
+            overflow-y: auto;
+        }
+
+        &__sidebar-item.is-active #{$name}__panel,
+        &__sidebar-item:hover #{$name}__panel,
+        &__sidebar-item:focus-within #{$name}__panel {
+            display: block;
+        }
+
+        &__panel-intro {
+            margin-bottom: 0;
+        }
+
+        &__panel-title {
+            @include typography(heading-sm);
+            display: block;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        &__panel-divider {
+            margin: var(--scale-12) 0;
+            border: none;
+            border-top: rem(1) solid var(--border-subtle);
+        }
+
+        &__panel-items {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-6);
+            list-style: none;
+            padding: 0;
+            margin: 0 0 var(--scale-4);
+        }
+
+        &__panel-link {
+            @include typography(body-md);
+            color: var(--text-primary);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--text-brand);
+            }
+        }
+
+        &__panel-show-all {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-4);
+            padding-top: var(--scale-16);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-brand);
+            text-decoration: none;
+        }
+
+        &__panel-arrow {
+            font-size: rem(12);
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-mega-menu();

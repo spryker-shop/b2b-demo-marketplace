@@ -1,66 +1,15 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-auth') %}
 
-{% define data = {
-    forms: {
-        login: _view.loginForm
-    }
-} %}
-
-{% block pageInfo %}
-    <div class="page-info">
-        <div class="container">
-            {% block breadcrumbs %}
-                {% include molecule('breadcrumb') with {
-                    data: {
-                        steps: [{
-                            label: 'agent.login' | trans
-                        }]
-                    }
-                } only %}
-            {% endblock %}
-        </div>
-    </div>
-{% endblock %}
+{% set authErrors = app.session.flashbag.peek('flash.messages.error') %}
 
 {% block content %}
-    {% embed organism('section') with {
+    {% include molecule('auth-login', 'CustomerPage') with {
         data: {
-            title: 'agent.login.title' | trans,
-            innerClass: 'col col--sm-12 col--md-9 col--lg-6'
+            form: _view.loginForm,
+            subtitle: 'agent.login',
+            formQa: 'agent-login-form',
+            hasFlashError: authErrors is not empty,
+            mfaUrl: 'multiFactorAuth/getUserEnabledTypes',
         },
-        modifiers: ['center', 'last'],
-        embed: {
-            form: data.forms.login
-        }
     } only %}
-        {% block inner %}
-            {% include molecule('form') with {
-                class: 'box',
-                data: {
-                    form: embed.form,
-                    submit: {
-                        enable: true,
-                        class: 'button button--big form__action--primary',
-                        text: 'forms.submit.login' | trans
-                    },
-                    options: {
-                        attr: {
-                            'data-qa': 'agent-login-form',
-                        },
-                    },
-                }
-            } only %}
-        {% endblock %}
-    {% endembed %}
-
-    {% widget 'MultiFactorAuthHandlerWidget' with {
-        data: {
-            id: data.forms.login.vars.name,
-            url: 'multiFactorAuth/getUserEnabledTypes',
-            formSelector: '[name="' ~ data.forms.login.vars.name ~ '"]',
-            isLoginFlow: 'true',
-            isJsEnabledHandler: 'true',
-        }
-    } only %}
-    {% endwidget %}
 {% endblock %}

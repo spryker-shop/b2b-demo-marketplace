@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ChartGui;
 
-use Pyz\Zed\ExampleChart\Plugin\ExampleChart;
 use Spryker\Zed\ChartGui\ChartGuiDependencyProvider as SprykerChartGuiDependencyProvider;
 use Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\BarChartTwigPlugin;
 use Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartTwigPlugin;
@@ -30,7 +29,6 @@ class ChartGuiDependencyProvider extends SprykerChartGuiDependencyProvider
             new CountOrderChartPlugin(),
             new StatusOrderChartPlugin(),
             new TopOrdersChartPlugin(),
-            new ExampleChart(),
         ];
     }
 

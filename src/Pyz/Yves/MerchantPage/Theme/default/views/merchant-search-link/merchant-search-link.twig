@@ -1,0 +1,7 @@
+{% extends view('merchant-search-link', '@SprykerShop:MerchantPage') %}
+
+{% block body %}
+    <a href="{{ data.searchButtonUrl }}" class="button button--secondary">
+        {{ 'merchant_profile.shop_merchant_products' | trans }}
+    </a>
+{% endblock %}

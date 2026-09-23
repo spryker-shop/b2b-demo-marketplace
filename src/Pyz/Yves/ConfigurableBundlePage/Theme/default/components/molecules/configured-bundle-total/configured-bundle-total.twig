@@ -1,17 +1,21 @@
 {% extends molecule('configured-bundle-total', '@SprykerShop:ConfigurableBundlePage') %}
 
+{% block extraClass %}{% endblock %}
+
 {% block title %}
-    <h2 class="{{ config.name }}__title title title--h4 col col--sm-8 spacing spacing--reset">{{- 'configurable_bundle_page.configurator.summary_page_total' | trans -}}</h2>
+    <h2 class="{{ config.name }}__title">{{- 'configurable_bundle_page.configurator.summary_page_total' | trans -}}</h2>
 {% endblock %}
 
 {% block price %}
-    <div class="col col--sm-4">
+    {% if can('SeePricePermissionPlugin') %}
         {% include molecule('money-price') with {
-            modifiers: ['block', 'medium'],
-            class: 'text-right spacing spacing--reset',
+            class: config.name ~ '__price',
+            modifiers: ['block'],
             data: {
                 amount: data.total,
             },
         } only %}
-    </div>
+    {% else %}
+        <span class="{{ config.name }}__note">{{- 'customer.access.cannot_see_price' | trans -}}</span>
+    {% endif %}
 {% endblock %}

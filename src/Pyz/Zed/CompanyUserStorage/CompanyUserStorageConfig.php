@@ -10,24 +10,18 @@ declare(strict_types = 1);
 namespace Pyz\Zed\CompanyUserStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig as SprykerSharedCompanyUserStorageConfig;
 use Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig as SprykerCompanyUserStorageConfig;
 
 class CompanyUserStorageConfig extends SprykerCompanyUserStorageConfig
 {
-    /**
-     * @return string|null
-     */
     public function getCompanyUserSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedCompanyUserStorageConfig::PUBLISH_COMPANY_USER_QUEUE;
     }
 }

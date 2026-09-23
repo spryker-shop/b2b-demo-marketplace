@@ -16,8 +16,6 @@ export default class AutocompleteForm extends Component {
     protected eventShowOverlay: CustomEvent<OverlayEventDetail>;
     protected eventHideOverlay: CustomEvent<OverlayEventDetail>;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
         this.suggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__container`)[0];
@@ -114,7 +112,10 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onItemClick(event: Event): void {
-        const dataTarget = <HTMLElement>event.target;
+        const dataTarget = (<HTMLElement>event.target).closest<HTMLElement>(`[${this.valueDataAttribute}]`);
+        if (!dataTarget) {
+            return;
+        }
         const data = dataTarget.getAttribute(this.valueDataAttribute);
         const text = dataTarget.textContent.trim();
 

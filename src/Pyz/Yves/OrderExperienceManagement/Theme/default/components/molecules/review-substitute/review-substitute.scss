@@ -1,0 +1,24 @@
+@include order-experience-management-review-substitute {
+    $name: '.review-substitute';
+    padding: 0 var(--scale-16) 0 var(--scale-24);
+
+    &:has(#{$name}__applied.is-hidden) {
+        display: none;
+    }
+
+    &__summary {
+        @include typography(body-md);
+        background: var(--background-subtle);
+        padding: var(--scale-12) var(--scale-16);
+        border-radius: var(--radius-md);
+        margin: 0;
+    }
+
+    &__summary-name {
+        @include typography(body-md);
+    }
+
+    &__item-meta {
+        @include typography(body-md);
+    }
+}

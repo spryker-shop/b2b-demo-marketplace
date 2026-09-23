@@ -1,0 +1,17 @@
+@mixin order-experience-management-schedule-next-execution($name: '.schedule-next-execution') {
+    #{$name} {
+        margin-bottom: var(--scale-16);
+
+        &__label {
+            @include typography(label-md);
+        }
+
+        &__date {
+            @include typography(heading-sm);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-schedule-next-execution;

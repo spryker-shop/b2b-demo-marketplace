@@ -10,7 +10,11 @@ declare(strict_types = 1);
 namespace PyzTest\Zed\MessageBroker\MessageHandlers\ProductReview\Communication;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AddReviewsTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ReviewTransfer;
 use PyzTest\Zed\MessageBroker\ProductReviewCommunicationTester;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Auto-generated group annotations
@@ -26,21 +30,23 @@ use PyzTest\Zed\MessageBroker\ProductReviewCommunicationTester;
  */
 class AddReviewsMessageTest extends Unit
 {
-    /**
-     * @var \PyzTest\Zed\MessageBroker\ProductReviewCommunicationTester
-     */
     protected ProductReviewCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testAddReviewsMessageIsSuccessfullyHandled(): void
     {
         // Arrange
         $channelName = 'product-review-commands';
-        $addReviewsTransfer = $this->tester->haveAddReviewTransferWithValidProductAndLocale();
+        $productIdentifier = Uuid::uuid4()->toString();
+        $this->tester->haveFullProduct([], [ProductAbstractTransfer::SKU => $productIdentifier]);
 
-        $reviewsTransfer = $addReviewsTransfer->getReviews()->getIterator()->current();
+        $localeNames = array_keys($this->tester->getLocator()->locale()->facade()->getLocaleCollection());
+
+        $reviewsTransfer = $this->tester->haveReviewTransfer([
+            ReviewTransfer::PRODUCT_IDENTIFIER => $productIdentifier,
+            ReviewTransfer::LOCALE => reset($localeNames),
+        ]);
+
+        $addReviewsTransfer = (new AddReviewsTransfer())->addReview($reviewsTransfer);
 
         // Act
         $this->tester->setupMessageBroker($addReviewsTransfer::class, $channelName);

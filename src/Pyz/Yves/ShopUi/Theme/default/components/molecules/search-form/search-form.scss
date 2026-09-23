@@ -1,65 +1,129 @@
 @mixin shop-ui-search-form($name: '.search-form') {
     #{$name} {
-        @include helper-visibility-invisible;
         @include helper-effect-transition(transform visibility opacity);
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         transform: translateY(-100%);
+        visibility: hidden;
+        opacity: 0;
 
         &--main-search {
             z-index: $setting-zi-header + 1;
 
             @include helper-breakpoint-media-min($lg) {
-                @include helper-visibility-visible;
+                visibility: visible;
+                opacity: 1;
                 display: block;
                 position: relative;
                 transform: none;
                 transition: none;
-                z-index: $setting-zi-element;
             }
         }
 
         &--active {
-            @include helper-visibility-visible;
+            visibility: visible;
+            opacity: 1;
             transform: translateY(0);
             z-index: $setting-zi-header-overlay;
         }
 
-        &__button {
+        &__form {
+            position: relative;
+
+            &--disabled {
+                background: var(--input-background-disabled);
+                border-color: var(--input-border-disabled);
+                pointer-events: none;
+
+                #{$name}__input {
+                    color: var(--input-text-disabled);
+
+                    &::placeholder {
+                        color: var(--input-text-disabled);
+                    }
+                }
+            }
+        }
+
+        &__input {
+            padding-right: rem(64);
+        }
+
+        &__clear {
+            @include helper-effect-transition(background-color);
             position: absolute;
-            top: 0;
-            width: rem(45);
-            height: 100%;
+            top: 50%;
+            right: var(--scale-40);
+            transform: translateY(-50%);
+            display: none;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: rem(20);
+            height: rem(20);
             padding: 0;
             border: none;
-            background: $setting-color-transparent;
-            color: $setting-color-gray-4;
-            z-index: $setting-zi-search-suggestions + 3;
+            border-radius: var(--radius-full);
+            background: var(--background-subtle);
+            color: var(--icon-secondary);
             cursor: pointer;
 
-            @include helper-breakpoint-media-min($lg) {
-                width: rem(55);
+            &:hover {
+                background: var(--background-muted);
             }
+            font-size: rem(12);
 
-            &--submit {
-                left: 0;
+            &--visible {
+                display: flex;
             }
+        }
 
-            &--close {
-                right: 0;
-
-                @include helper-breakpoint-media-min($lg) {
-                    display: none;
-                }
-            }
+        &__submit {
+            @include helper-effect-transition(background-color);
+            cursor: pointer;
 
             &:hover {
-                #{$name}__icon {
-                    color: $setting-color-gray-3;
-                    fill: $setting-color-gray-3;
-                }
+                background: var(--background-muted);
+            }
+        }
+
+        &__button-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: rem(45);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: var(--icon-secondary);
+            cursor: pointer;
+            z-index: $setting-zi-search-suggestions + 3;
+
+            @include helper-breakpoint-media-min($lg) {
+                display: none;
+            }
+        }
+
+        &--with-overlay {
+            z-index: $setting-zi-header-overlay + 1;
+        }
+
+        &--drawer {
+            position: relative;
+            transform: none;
+            visibility: visible;
+            opacity: 1;
+            transition: none;
+            width: 100%;
+
+            #{$name}__button-close {
+                display: none;
             }
         }
 

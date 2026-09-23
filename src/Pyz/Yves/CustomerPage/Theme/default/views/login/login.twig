@@ -1,61 +1,15 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-auth') %}
 
-{% block pageInfo %}
-    <div class="page-info">
-        <div class="container">
-            {% block breadcrumbs %}
-                {% include molecule('breadcrumb') with {
-                    data: {
-                        steps: [{
-                            label: 'customer.login' | trans
-                        }],
-                    },
-                } only %}
-            {% endblock %}
-        </div>
-    </div>
-{% endblock %}
+{% set authErrors = app.session.flashbag.peek('flash.messages.error') %}
 
 {% block content %}
-    {% embed organism('section') with {
+    {% include molecule('auth-login', 'CustomerPage') with {
         data: {
-            title: 'customer.login.title' | trans,
-            innerClass: 'col col--sm-12 col--md-9 col--lg-8 col--xl-6',
+            form: _view.loginForm,
+            subtitle: 'customer.login.subtitle',
+            showForgotPassword: true,
+            hasFlashError: authErrors is not empty,
+            mfaUrl: 'multiFactorAuth/getCustomerEnabledTypes',
         },
-        modifiers: ['center', 'last', 'mobile-center'],
     } only %}
-        {% block inner %}
-            {% include molecule('form') with {
-                class: 'box',
-                data: {
-                    form: _view.loginForm,
-                    shouldRequireMessage: true,
-                    submit: {
-                        enable: true,
-                        class: 'button button--big',
-                        text: 'forms.submit.login' | trans,
-                    },
-                    cancel: {
-                        enable: true,
-                        url: url('password/forgotten'),
-                        text: 'forms.forgot-password' | trans,
-                        icon: null,
-                        class: 'link link--action form__action--link',
-                        qa: 'customer-forgot-password-link',
-                    },
-                },
-            } only %}
-        {% endblock %}
-    {% endembed %}
-
-    {% widget 'MultiFactorAuthHandlerWidget' with {
-        data: {
-            id: _view.loginForm.vars.name,
-            url: 'multiFactorAuth/getCustomerEnabledTypes',
-            formSelector: '[name="' ~ _view.loginForm.vars.name ~ '"]',
-            isLoginFlow: 'true',
-            isJsEnabledHandler: 'true',
-        }
-    } only %}
-    {% endwidget %}
 {% endblock %}

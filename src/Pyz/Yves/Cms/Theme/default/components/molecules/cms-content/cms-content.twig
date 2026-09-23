@@ -1,0 +1,13 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cms-content',
+}%}
+
+{% define data = {
+    content: '',
+}%}
+
+{% block body %}
+    {{ data.content | raw }}
+{% endblock %}

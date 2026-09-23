@@ -11,6 +11,7 @@ namespace Pyz\Zed\Payment;
 
 use Spryker\Zed\DummyMarketplacePayment\Communication\Plugin\Payment\MerchantProductItemPaymentMethodFilterPlugin;
 use Spryker\Zed\Payment\PaymentDependencyProvider as SprykerPaymentDependencyProvider;
+use SprykerEco\Zed\Stripe\Communication\Plugin\Payment\StripePaymentMethodFilterPlugin;
 
 class PaymentDependencyProvider extends SprykerPaymentDependencyProvider
 {
@@ -21,6 +22,7 @@ class PaymentDependencyProvider extends SprykerPaymentDependencyProvider
     {
         return [
             new MerchantProductItemPaymentMethodFilterPlugin(),
+            new StripePaymentMethodFilterPlugin(),
         ];
     }
 }

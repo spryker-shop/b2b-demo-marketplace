@@ -9,9 +9,11 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\StateMachine;
 
-use Pyz\Zed\ExampleStateMachine\Communication\Plugin\TestStateMachineHandlerPlugin;
 use Spryker\Zed\MerchantOms\Communication\Plugin\StateMachine\MerchantStateMachineHandlerPlugin;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider as SprykerStateMachineDependencyProvider;
+use Spryker\Zed\Workflow\Communication\Plugin\StateMachine\WorkflowHandlerResolverPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\StateMachine\RecurringOrdersStateMachineHandlerPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\StateMachine\SspInquiryStateMachineHandlerPlugin;
 
 class StateMachineDependencyProvider extends SprykerStateMachineDependencyProvider
 {
@@ -21,8 +23,19 @@ class StateMachineDependencyProvider extends SprykerStateMachineDependencyProvid
     protected function getStateMachineHandlers(): array
     {
         return [
-            new TestStateMachineHandlerPlugin(),
             new MerchantStateMachineHandlerPlugin(),
+            new SspInquiryStateMachineHandlerPlugin(),
+            new RecurringOrdersStateMachineHandlerPlugin(), #RecurringOrdersFeature
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerResolverPluginInterface>
+     */
+    protected function getStateMachineHandlerResolverPlugins(): array
+    {
+        return [
+            new WorkflowHandlerResolverPlugin(),
         ];
     }
 }

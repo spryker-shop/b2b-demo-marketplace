@@ -1,1 +1,0 @@
-import './configurator-button.scss';

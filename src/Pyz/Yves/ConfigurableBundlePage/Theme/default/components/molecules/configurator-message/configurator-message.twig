@@ -1,0 +1,13 @@
+{% extends molecule('configurator-message', '@SprykerShop:ConfigurableBundlePage') %}
+
+{% block message %}
+    {% block messageInner %}
+        {% block messageTitle %}
+            <h2 class="{{ config.name }}__title">{{ data.title }}</h2>
+        {% endblock %}
+
+        {% block messageText %}
+            <p class="{{ config.name }}__text">{{ data.text }}</p>
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,43 @@
+@mixin merchant-page-information-box($name: '.information-box') {
+    #{$name} {
+        @include typography(body-md);
+        margin-bottom: var(--scale-16);
+
+        &__heading {
+            @include typography(heading-sm);
+            margin-bottom: var(--scale-20);
+        }
+
+        &__item {
+            display: flex;
+            gap: var(--scale-20);
+            align-items: flex-start;
+
+            &:not(:last-child) {
+                margin-bottom: var(--scale-16);
+            }
+        }
+
+        &__content {
+            flex-grow: 1;
+        }
+
+        &__title {
+            @include typography(label-sm);
+            color: var(--text-secondary);
+        }
+
+        &__icon {
+            width: var(--scale-16);
+            margin-top: var(--scale-4);
+        }
+
+        &__text {
+            overflow-wrap: break-word;
+        }
+
+        @content;
+    }
+}
+
+@include merchant-page-information-box();

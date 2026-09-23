@@ -5,14 +5,15 @@
     'body-overlay-class-name': 'body-has-overlay',
     'wrapper-class-name': required,
     'wrapper-toggle-class-name': 'is-active',
-    'open-class-name': required,
-    'close-class-name': required,
+    'open-class-name': '',
+    'close-class-name': '',
     'should-close-by-overlay-click': true,
     'overlay-breakpoint': 768,
+    'clear-visible-class': 'search-form__clear--visible',
 } %}
 
 {% block body %}
-    <div class="is-hidden {{ config.name }}__container {{ config.jsName }}__container"></div>
+    <div class="is-hidden {{ _self.renderClass(config.name ~ '__container', modifiers) }} {{ config.jsName }}__container"></div>
 
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__ajax-provider',

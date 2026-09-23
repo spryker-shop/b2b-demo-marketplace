@@ -26,25 +26,17 @@ class TransferConfig extends SprykerTransferConfig
     /**
      * We use strict name validation for core internal usage and enable this by default for all
      * new projects.
-     *
-     * @return bool
      */
     public function isTransferNameValidated(): bool
     {
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function isTransferXmlValidationEnabled(): bool
     {
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function isTransferSuffixCheckStrict(): bool
     {
         return true;

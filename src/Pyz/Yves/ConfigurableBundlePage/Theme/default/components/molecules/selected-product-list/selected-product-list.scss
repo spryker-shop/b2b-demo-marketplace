@@ -1,5 +1,31 @@
 @include configurable-bundle-page-selected-product-list {
-    @include helper-breakpoint-media-min($xl) {
-        margin-right: rem(16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-24);
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-8);
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: var(--scale-4);
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    &__title {
+        @include typography(label-md-semibold);
+        margin: 0;
+        color: var(--text-primary);
+    }
+
+    &__action {
+        display: inline-flex;
+        align-items: center;
     }
 }

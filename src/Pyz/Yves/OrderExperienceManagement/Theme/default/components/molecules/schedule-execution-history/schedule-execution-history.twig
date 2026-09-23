@@ -1,0 +1,33 @@
+{% extends molecule('schedule-execution-history', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block heading %}
+    {% set titleClass = config.name ~ '__title' %}
+    {% set contentClass = config.name ~ '__heading-content' %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block table %}
+    {% set rows = data.history | map(historyItem => {
+        date: historyItem.createdAt | formatDate,
+        status: _self.renderStatusCell(historyItem, data.statusClassMap),
+        orderReference: historyItem.orderReference ?: '—',
+        actions: historyItem.idSalesOrder ? [{
+            url: url('customer/order/details', { id: historyItem.idSalesOrder }),
+            title: 'recurring_orders.detail.history.view_order',
+            icon: 'eye',
+            qa: 'recurring-order-history-view-order',
+        }] : [],
+    }) %}
+
+    {% include molecule('advanced-table') with {
+        data: {
+            columns: columns,
+            rows: rows,
+            emptyText: 'recurring_orders.detail.history.empty',
+            pagination: historyPagination,
+        },
+    } only %}
+{% endblock %}

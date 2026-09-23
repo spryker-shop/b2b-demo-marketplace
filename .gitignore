@@ -37,6 +37,7 @@ FOSS.md
 /data/*
 !/data/import/
 !/data/export/
+!/data/configuration/
 /data/export/merchants/*
 
 # grunt stuff
@@ -48,7 +49,13 @@ config/Yves/cache_bust.php
 
 # public stuff
 public/*/assets/
-public/Configurator/dist/
+
+# design tokens - ignore generated files, keep source
+/frontend/assets/global/default/design-tokens/*
+!/frontend/assets/global/default/design-tokens/design-tokens.json
+/src/Pyz/Yves/ShopUi/Theme/*/styles/design-tokens.css
+
+public/WaterTreatmentConfigurator/dist/
 
 # docker stuff
 /.docker-sync/
@@ -72,7 +79,7 @@ npm-debug.log
 /tests/PyzTest/*/*/_output/*
 /tests/PyzTest/*/*/_support/_generated/*
 
-/.robot/results
+/.robot
 /.cypress
 
 # propel classes
@@ -105,9 +112,12 @@ integrator.lock
 docker
 
 # angular
-/.angular/cache
-/.angular
-.nx/cache
+**/.angular/
 
 # Generated icon sprite
 /frontend/assets/global/default/icons/sprite.svg
+CLAUDE.local.md
+.mcp.json
+
+# Symfony FrameworkBundle auto-generated config reference (PhpConfigReferenceDumpPass, since Symfony 7.4)
+config/*/reference.php

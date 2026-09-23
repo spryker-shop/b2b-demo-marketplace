@@ -1,4 +1,4 @@
-{% extends molecule('information-item', '@SprykerShop:MerchantOpeningHoursWidget') %}
+{% extends model('component') %}
 
 {% define config = {
     name: 'date-information-item',
@@ -6,24 +6,39 @@
 
 {% define data = {
     scheduleList: [],
+    subTitle: '',
 } %}
 
 {% block component %}
     {% if data.scheduleList %}{{ parent() }}{% endif %}
 {% endblock %}
 
-{% block title %}
-    <h5 class="spacing-bottom">{{ data.title }}</h5>
+{% block extraClass %}{% endblock %}
+
+{% block body %}
+    {% block title %}
+        {% if data.title %}
+            <h5 class="{{ config.name }}__title">{{ data.title }}</h5>
+        {% endif %}
+
+        {% if data.subTitle %}
+            <h5 class="{{ config.name }}__subtitle">{{ data.subTitle }}</h5>
+        {% endif %}
+    {% endblock %}
+
+    {% block text %}
+        {% for scheduleItem in data.scheduleList %}
+            {% set date = scheduleItem.noteGlossaryKey ? scheduleItem.date ~ ' (' ~ scheduleItem.noteGlossaryKey ~ ')' : scheduleItem.date %}
+            {% set time = scheduleItem.time ? scheduleItem.time | replace({'|' : ', '}) %}
+            
+            <div class="{{ config.name }}__grid">
+                <div class="{{ config.name }}__date">
+                    {{ scheduleItem.date }}
+                    <span class="{{ config.name }}__date-note">{{ scheduleItem.noteGlossaryKey  }}</span>
+                </div>
+                <div class="{{ config.name }}__time">{{ time | raw }}</div>
+            </div>
+        {% endfor %}
+    {% endblock %}
 {% endblock %}
 
-{% block text %}
-    {% for scheduleItem in data.scheduleList %}
-        {% set date = scheduleItem.noteGlossaryKey ? scheduleItem.date ~ ' (' ~ scheduleItem.noteGlossaryKey ~ ')' : scheduleItem.date %}
-        {% set time = scheduleItem.time ? scheduleItem.time | replace({'|' : '<br>'}) %}
-
-        <div class="grid grid--gap-smaller">
-            <div class="{{ config.name }}__date col col--sm-7">{{ date }}</div>
-            <div class="{{ config.name }}__time col col--sm-5">{{ time | raw }}</div>
-        </div>
-    {% endfor %}
-{% endblock %}
