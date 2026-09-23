@@ -24522,16 +24522,16 @@
         },
         {
             "name": "spryker-shop/store-widget",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/store-widget.git",
-                "reference": "fc93c573a01fb2aacd9b88340e2fc858a10c3b02"
+                "reference": "350ae3c81f9eb1473f793bb34329065664651bef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/store-widget/zipball/fc93c573a01fb2aacd9b88340e2fc858a10c3b02",
-                "reference": "fc93c573a01fb2aacd9b88340e2fc858a10c3b02",
+                "url": "https://api.github.com/repos/spryker-shop/store-widget/zipball/350ae3c81f9eb1473f793bb34329065664651bef",
+                "reference": "350ae3c81f9eb1473f793bb34329065664651bef",
                 "shasum": ""
             },
             "require": {
@@ -24539,8 +24539,8 @@
                 "spryker/application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/session": "^4.0.0",
-                "spryker/store": "^1.19.0",
-                "spryker/store-storage": "^1.0.0",
+                "spryker/store": "^1.40.0",
+                "spryker/store-storage": "^1.6.0",
                 "spryker/symfony": "^3.11.1",
                 "spryker/transfer": "^3.25.0"
             },
@@ -24568,9 +24568,9 @@
             ],
             "description": "StoreWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/store-widget/tree/1.6.0"
+                "source": "https://github.com/spryker-shop/store-widget/tree/1.7.0"
             },
-            "time": "2026-09-11T12:36:51+00:00"
+            "time": "2026-09-22T13:57:48+00:00"
         },
         {
             "name": "spryker-shop/tabs-widget",
@@ -75656,16 +75656,16 @@
         },
         {
             "name": "spryker/store",
-            "version": "1.39.2",
+            "version": "1.40.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/store.git",
-                "reference": "c1293ca4374a563e2cfd55f267c6b45f1c13f097"
+                "reference": "c7dec1c59ecfd7a96ddc822265b54cb98830b33f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/store/zipball/c1293ca4374a563e2cfd55f267c6b45f1c13f097",
-                "reference": "c1293ca4374a563e2cfd55f267c6b45f1c13f097",
+                "url": "https://api.github.com/repos/spryker/store/zipball/c7dec1c59ecfd7a96ddc822265b54cb98830b33f",
+                "reference": "c7dec1c59ecfd7a96ddc822265b54cb98830b33f",
                 "shasum": ""
             },
             "require": {
@@ -75675,6 +75675,7 @@
                 "spryker/cart-reorder-extension": "^1.0.0",
                 "spryker/configuration-extension": "^1.0.0",
                 "spryker/customer-extension": "^1.8.0",
+                "spryker/gui": "^3.30.0 || ^4.0.0 || ^5.6.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/log": "^1.0.0 || ^2.0.0 || ^3.0.0",
                 "spryker/message-broker-extension": "^1.0.0",
@@ -75682,6 +75683,7 @@
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/quote-extension": "^1.4.0",
                 "spryker/store-extension": "^1.0.0",
+                "spryker/store-gui-extension": "^1.0.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.27.0",
                 "spryker/zed-request": "^3.3.0",
@@ -75721,9 +75723,9 @@
             ],
             "description": "Store module",
             "support": {
-                "source": "https://github.com/spryker/store/tree/1.39.2"
+                "source": "https://github.com/spryker/store/tree/1.40.1"
             },
-            "time": "2026-09-16T10:54:40+00:00"
+            "time": "2026-09-23T06:51:53+00:00"
         },
         {
             "name": "spryker/store-context",
@@ -76119,16 +76121,16 @@
         },
         {
             "name": "spryker/store-storage",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/store-storage.git",
-                "reference": "6030e4175709ecf8704ecb340b812b17995f209c"
+                "reference": "3085d7daa014ccfe6f185e4066984369db4cd52b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/store-storage/zipball/6030e4175709ecf8704ecb340b812b17995f209c",
-                "reference": "6030e4175709ecf8704ecb340b812b17995f209c",
+                "url": "https://api.github.com/repos/spryker/store-storage/zipball/3085d7daa014ccfe6f185e4066984369db4cd52b",
+                "reference": "3085d7daa014ccfe6f185e4066984369db4cd52b",
                 "shasum": ""
             },
             "require": {
@@ -76141,7 +76143,7 @@
                 "spryker/propel-orm": "^1.17.0",
                 "spryker/publisher-extension": "^1.0.0",
                 "spryker/storage": "^3.4.0",
-                "spryker/store": "^1.37.0",
+                "spryker/store": "^1.40.0",
                 "spryker/store-extension": "^1.0.0",
                 "spryker/synchronization": "^1.0.0",
                 "spryker/synchronization-behavior": "^1.0.0",
@@ -76173,9 +76175,9 @@
             ],
             "description": "StoreStorage module",
             "support": {
-                "source": "https://github.com/spryker/store-storage/tree/1.5.0"
+                "source": "https://github.com/spryker/store-storage/tree/1.6.0"
             },
-            "time": "2026-09-07T08:34:33+00:00"
+            "time": "2026-09-22T13:57:48+00:00"
         },
         {
             "name": "spryker/stores-api",
@@ -76290,16 +76292,16 @@
         },
         {
             "name": "spryker/stores-rest-api",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/stores-rest-api.git",
-                "reference": "7f399dd3a99b120cc1c190aa6da7a652854043ce"
+                "reference": "7c598766b547e265f90325571a14885ac6547a5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/stores-rest-api/zipball/7f399dd3a99b120cc1c190aa6da7a652854043ce",
-                "reference": "7f399dd3a99b120cc1c190aa6da7a652854043ce",
+                "url": "https://api.github.com/repos/spryker/stores-rest-api/zipball/7c598766b547e265f90325571a14885ac6547a5b",
+                "reference": "7c598766b547e265f90325571a14885ac6547a5b",
                 "shasum": ""
             },
             "require": {
@@ -76310,7 +76312,8 @@
                 "spryker/glue-application": "^1.0.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
-                "spryker/store": "^1.21.0",
+                "spryker/store": "^1.40.0",
+                "spryker/store-storage": "^1.0.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.42.0"
             },
@@ -76339,9 +76342,9 @@
             ],
             "description": "StoresRestApi module",
             "support": {
-                "source": "https://github.com/spryker/stores-rest-api/tree/1.5.1"
+                "source": "https://github.com/spryker/stores-rest-api/tree/1.6.0"
             },
-            "time": "2025-12-04T11:50:23+00:00"
+            "time": "2026-09-22T13:57:48+00:00"
         },
         {
             "name": "spryker/symfony",
@@ -93642,6 +93645,6 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
 }
