@@ -31,19 +31,14 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
      */
     protected function getSecurityPlugins(): array
     {
+        // `agent-security-merchant-portal-gui` and `security-oauth-knpu` are removed on the b2b (non-marketplace)
+        // variant. The agent firewall (narrower pattern) MUST be registered before the base merchant-user firewall
+        // (broader pattern) — Symfony's firewall map matches in registration order, first pattern wins.
         $securityPlugins = [
             new ZedUserSessionHandlerSecurityPlugin(),
             new ZedSystemUserSecurityPlugin(),
-            new ZedMerchantUserSecurityPlugin(),
-            new ZedOauthMerchantPortalSecurityPlugin(),
-            new MultiFactorAuthenticationMerchantUserSecurityPlugin(),
-            new ZedUserSecurityPlugin(),
-            new ZedOauthUserSecurityPlugin(),
-            new ZedValidateSessionUserSecurityPlugin(),
-            new SaveSessionUserSecurityPlugin(),
         ];
 
-        // `agent-security-merchant-portal-gui` and `security-oauth-knpu` are removed on the b2b (non-marketplace) variant.
         if (class_exists(ZedAgentSecurityPlugin::class)) {
             $securityPlugins[] = new ZedAgentSecurityPlugin();
         }
@@ -52,6 +47,10 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
             $securityPlugins[] = new AgentZedMerchantUserSecurityPlugin();
         }
 
+        $securityPlugins[] = new ZedMerchantUserSecurityPlugin();
+        $securityPlugins[] = new ZedOauthMerchantPortalSecurityPlugin();
+        $securityPlugins[] = new MultiFactorAuthenticationMerchantUserSecurityPlugin();
+
         if (class_exists(MultiFactorAuthenticationAgentMerchantUserSecurityPlugin::class)) {
             $securityPlugins[] = new MultiFactorAuthenticationAgentMerchantUserSecurityPlugin();
         }
@@ -59,6 +58,11 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
         if (class_exists(ZedKnpuOauthUserSecurityPlugin::class)) {
             $securityPlugins[] = new ZedKnpuOauthUserSecurityPlugin();
         }
+
+        $securityPlugins[] = new ZedUserSecurityPlugin();
+        $securityPlugins[] = new ZedOauthUserSecurityPlugin();
+        $securityPlugins[] = new ZedValidateSessionUserSecurityPlugin();
+        $securityPlugins[] = new SaveSessionUserSecurityPlugin();
 
         return $securityPlugins;
     }
