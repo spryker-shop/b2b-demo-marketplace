@@ -31,7 +31,7 @@ class CategoryDependencyProvider extends SprykerDependencyProvider
     protected function getRelationDeletePluginStack(): array
     {
         /**
-         * @var array<\Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface> $deletePlugins
+         * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface> $deletePlugins
          */
         $deletePlugins = [
             new RemoveProductCategoryRelationPlugin(),

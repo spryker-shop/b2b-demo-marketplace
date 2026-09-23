@@ -170,7 +170,6 @@ use Spryker\Zed\SetupFrontend\Communication\Console\CleanUpDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallPackageManagerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallProjectDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedBuildFrontendConsole;
 use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
@@ -387,7 +386,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new ExportSynchronizedDataConsole(),
 
             // Setup commands
-            new RunnerConsole(),
             new DeployPreparePropelConsole(),
 
             new DatabaseDropConsole(),
@@ -550,7 +548,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
+     * @return array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     public function getConsolePostRunHookPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
