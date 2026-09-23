@@ -119,7 +119,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
      */
     protected function getRouteProvider(): array
     {
-        return [
+        $routeProviderPlugins = [
             new ErrorPageRouteProviderPlugin(),
             new HomePageRouteProviderPlugin(),
             new CheckoutPageRouteProviderPlugin(),
@@ -199,8 +199,13 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new BudgetRouteProviderPlugin(),
             new RecurringOrderRouteProviderPlugin(),
             new PunchoutGatewayRouteProviderPlugin(),
-            new SecurityOauthKnpuRouteProviderPlugin(),
         ];
+
+        if (class_exists(SecurityOauthKnpuRouteProviderPlugin::class)) {
+            $routeProviderPlugins[] = new SecurityOauthKnpuRouteProviderPlugin();
+        }
+
+        return $routeProviderPlugins;
     }
 
     /**

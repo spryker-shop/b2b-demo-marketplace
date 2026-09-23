@@ -65,8 +65,11 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new ZedSecurityApplicationPlugin(),
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
-            new OauthKnpuApplicationPlugin(),
         ];
+
+        if (class_exists(OauthKnpuApplicationPlugin::class)) {
+            $plugins[] = new OauthKnpuApplicationPlugin();
+        }
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
             $plugins[] = new WebProfilerApplicationPlugin();
@@ -98,8 +101,11 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
             new ConfigurationApplicationPlugin(),
-            new OauthKnpuApplicationPlugin(),
         ];
+
+        if (class_exists(OauthKnpuApplicationPlugin::class)) {
+            $applicationPlugins[] = new OauthKnpuApplicationPlugin();
+        }
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
             $applicationPlugins[] = new WebProfilerApplicationPlugin();

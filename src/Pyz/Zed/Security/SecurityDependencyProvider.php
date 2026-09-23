@@ -31,20 +31,35 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
      */
     protected function getSecurityPlugins(): array
     {
-        return [
+        $securityPlugins = [
             new ZedUserSessionHandlerSecurityPlugin(),
             new ZedSystemUserSecurityPlugin(),
-            new ZedAgentSecurityPlugin(),
-            new AgentZedMerchantUserSecurityPlugin(),
             new ZedMerchantUserSecurityPlugin(),
             new ZedOauthMerchantPortalSecurityPlugin(),
             new MultiFactorAuthenticationMerchantUserSecurityPlugin(),
-            new MultiFactorAuthenticationAgentMerchantUserSecurityPlugin(),
-            new ZedKnpuOauthUserSecurityPlugin(),
             new ZedUserSecurityPlugin(),
             new ZedOauthUserSecurityPlugin(),
             new ZedValidateSessionUserSecurityPlugin(),
             new SaveSessionUserSecurityPlugin(),
         ];
+
+        // `agent-security-merchant-portal-gui` and `security-oauth-knpu` are removed on the b2b (non-marketplace) variant.
+        if (class_exists(ZedAgentSecurityPlugin::class)) {
+            $securityPlugins[] = new ZedAgentSecurityPlugin();
+        }
+
+        if (class_exists(AgentZedMerchantUserSecurityPlugin::class)) {
+            $securityPlugins[] = new AgentZedMerchantUserSecurityPlugin();
+        }
+
+        if (class_exists(MultiFactorAuthenticationAgentMerchantUserSecurityPlugin::class)) {
+            $securityPlugins[] = new MultiFactorAuthenticationAgentMerchantUserSecurityPlugin();
+        }
+
+        if (class_exists(ZedKnpuOauthUserSecurityPlugin::class)) {
+            $securityPlugins[] = new ZedKnpuOauthUserSecurityPlugin();
+        }
+
+        return $securityPlugins;
     }
 }

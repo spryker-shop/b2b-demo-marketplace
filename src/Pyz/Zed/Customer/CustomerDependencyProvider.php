@@ -149,11 +149,16 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
      */
     protected function getOauthCustomerAuthenticationStrategyPlugins(): array
     {
-        return [
-            new KnpuOauthCustomerIdentityStrategyPlugin(),
+        $oauthCustomerAuthenticationStrategyPlugins = [
             new CreateCustomerOauthCustomerAuthenticationStrategyPlugin(),
             new AcceptOnlyOauthCustomerAuthenticationStrategyPlugin(),
         ];
+
+        if (class_exists(KnpuOauthCustomerIdentityStrategyPlugin::class)) {
+            $oauthCustomerAuthenticationStrategyPlugins[] = new KnpuOauthCustomerIdentityStrategyPlugin();
+        }
+
+        return $oauthCustomerAuthenticationStrategyPlugins;
     }
 
     /**
@@ -161,9 +166,13 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
      */
     protected function getOauthCustomerPostResolvePlugins(): array
     {
-        return [
-            new KnpuOauthCustomerIdentityPersistencePlugin(),
-        ];
+        $oauthCustomerPostResolvePlugins = [];
+
+        if (class_exists(KnpuOauthCustomerIdentityPersistencePlugin::class)) {
+            $oauthCustomerPostResolvePlugins[] = new KnpuOauthCustomerIdentityPersistencePlugin();
+        }
+
+        return $oauthCustomerPostResolvePlugins;
     }
 
     /**

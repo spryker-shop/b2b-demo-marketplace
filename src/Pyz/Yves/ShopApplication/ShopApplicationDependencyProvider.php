@@ -521,8 +521,11 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new ValidatorApplicationPlugin(),
             new YvesSecurityApplicationPlugin(),
             new CustomerConfirmationUserCheckerApplicationPlugin(),
-            new OauthKnpuApplicationPlugin(),
         ];
+
+        if (class_exists(OauthKnpuApplicationPlugin::class)) {
+            $applicationPlugins[] = new OauthKnpuApplicationPlugin();
+        }
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
             $applicationPlugins[] = new WebProfilerApplicationPlugin();
