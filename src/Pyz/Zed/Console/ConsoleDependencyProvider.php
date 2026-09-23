@@ -15,7 +15,6 @@ use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
 use Pyz\Zed\PunchoutGateway\Communication\Console\PunchoutDemoConnectionCreateConsole;
 use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
 use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
-use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
 use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
@@ -536,10 +535,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             if (class_exists(AiToolSetupConsole::class)) {
                 $commands[] = new AiToolSetupConsole();
-            }
-
-            if (class_exists(SecurityCheckerCommand::class)) {
-                $commands[] = new SecurityCheckerCommand();
             }
 
             $commands[] = new MessageBrokerDebugConsole();
