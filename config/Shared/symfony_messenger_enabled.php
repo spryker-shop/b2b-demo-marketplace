@@ -11,4 +11,4 @@ declare(strict_types = 1);
  *
  * Must be pulled in with `require`, not `require_once` - it is read by more than one config file per process.
  */
-return false;
+return true;
