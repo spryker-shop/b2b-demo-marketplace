@@ -35,6 +35,8 @@ class PaymentExpander
             ->setPaymentMethodName($paymentMethodEntity->getName())
             ->setAmount($quoteTransfer->getTotalsOrFail()->getGrandTotal());
 
+        $quoteTransfer->setPayment($paymentTransfer);
+
         return $quoteTransfer->addPayment($paymentTransfer);
     }
 }
