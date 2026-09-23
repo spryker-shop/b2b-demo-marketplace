@@ -372,7 +372,7 @@
         "api-platform/metadata": "^4.3.17",
         "api-platform/state": "^4.3.17",
         "api-platform/symfony": "^4.3.17",
-        "behat/gherkin": "4.12.0",
+        "behat/gherkin": "^4.17.0",
         "codeception/codeception": "5.3.5",
         "codeception/module-asserts": "^3.3.0",
         "codeception/module-cli": "^2.0.1",
@@ -420,7 +420,11 @@
             "Orm\\": "src/Orm/",
             "Pyz\\": "src/Pyz/",
             "SprykerConfig\\": "src/SprykerConfig/"
-        }
+        },
+        "exclude-from-classmap": [
+            "src/Generated/**/codeBucket/",
+            "tests/PyzTest/**/_support/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -434,9 +438,6 @@
     "prefer-stable": true,
     "config": {
         "preferred-install": "dist",
-        "platform": {
-            "php": "8.3.13"
-        },
         "use-include-path": true,
         "sort-packages": true,
         "github-protocols": [
