@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "adb325b03743523aa3b83c66b7fe2ff2",
+    "content-hash": "d62fc3761f1085dc446179d9e996c8c2",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -11092,7 +11092,7 @@
         },
         {
             "name": "spryker-feature/customer-experience-management",
-            "version": "0.5.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-experience-management.git",
@@ -11131,6 +11131,7 @@
             "suggest": {
                 "spryker/api-platform": "Required to expose the customers and company-users Backend API resources; without it the resource schemas are never discovered."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -11148,7 +11149,7 @@
             ],
             "description": "CustomerExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/customer-experience-management/tree/0.5.0"
+                "source": "https://github.com/spryker-feature/customer-experience-management/tree/master"
             },
             "time": "2026-09-24T10:50:37+00:00"
         },
@@ -93597,6 +93598,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/customer-experience-management",
+            "version": "9999999-dev",
+            "alias": "202608.0",
+            "alias_normalized": "202608.0"
+        },
+        {
             "package": "spryker-feature/order-experience-management",
             "version": "9999999-dev",
             "alias": "202608.0",
@@ -93617,6 +93624,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/customer-experience-management": 20,
         "spryker-feature/order-experience-management": 20,
         "spryker-feature/product-experience-management": 20,
         "spryker-feature/self-service-portal": 20,
