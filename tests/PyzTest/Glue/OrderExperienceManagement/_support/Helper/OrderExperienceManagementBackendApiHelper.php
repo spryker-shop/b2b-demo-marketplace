@@ -9,16 +9,22 @@ declare(strict_types = 1);
 
 namespace PyzTest\Glue\OrderExperienceManagement\Helper;
 
+use ArrayObject;
 use Codeception\Module;
+use Generated\Shared\DataBuilder\MerchantProfileBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\BudgetTransfer;
 use Generated\Shared\Transfer\CostCenterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
@@ -26,22 +32,29 @@ use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use PDO;
 use Propel\Runtime\Propel;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerFeatureTest\Shared\PurchasingControl\Helper\PurchasingControlHelper;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper;
+use SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper;
 use SprykerTest\Shared\Product\Helper\ProductDataHelper;
+use SprykerTest\Shared\ProductOfferStock\Helper\ProductOfferStockDataHelper;
 use SprykerTest\Shared\Sales\Helper\SalesDataHelper;
 use SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper;
 use SprykerTest\Shared\Stock\Helper\StockDataHelper;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\Merchant\Helper\MerchantHelper;
 use SprykerTest\Zed\Oms\Helper\OmsHelper;
+use SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper;
 use SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper;
 
 /**
@@ -125,9 +138,15 @@ class OrderExperienceManagementBackendApiHelper extends Module
     /**
      * `paymentMethodKey`, not the display name ("Invoice"): the resolver matches on the key.
      *
+     * This shop runs `spryker/dummy-marketplace-payment`, not plain `spryker/dummy-payment`, so the
+     * key is `dummyMarketplacePaymentInvoice` — it also has to match a
+     * `SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING` entry in `config/Shared/config_default.php`
+     * or `OrderStateMachineResolver::resolve()` rejects the order with "You need to provide at least
+     * one state machine process for given method!".
+     *
      * @uses \SprykerFeature\Zed\OrderExperienceManagement\Business\Intake\Resolver\OrderIntakePaymentResolver::findAvailablePaymentMethod()
      */
-    protected const string PAYMENT_METHOD_KEY = 'dummyPaymentInvoice';
+    protected const string PAYMENT_METHOD_KEY = DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE;
 
     protected const string CURRENCY_CODE = 'EUR';
 
@@ -417,8 +436,17 @@ class OrderExperienceManagementBackendApiHelper extends Module
      *
      * Ported from {@see \PyzTest\Glue\Checkout\CheckoutApiTester::haveProductWithStock()}, which
      * is the project's existing recipe for a placeable line.
+     *
+     * The item also needs a merchant offer: this shop runs `spryker/dummy-marketplace-payment`, whose
+     * {@see \Spryker\Zed\DummyMarketplacePayment\Business\Filter\PaymentMethodFilter} only offers
+     * `PAYMENT_METHOD_KEY` when every line in the quote carries a `merchantReference` — an
+     * operator-sold (non-marketplace) line filters the method out and order creation then fails
+     * payment resolution instead of placing the order.
+     *
+     * @return array{0: \Generated\Shared\Transfer\ProductConcreteTransfer, 1: string} The product and
+     * the merchant reference fulfilling it.
      */
-    public function haveOrderableProduct(): ProductConcreteTransfer
+    public function haveOrderableProduct(): array
     {
         $productConcreteTransfer = $this->getProductDataHelper()->haveFullProduct();
 
@@ -427,7 +455,7 @@ class OrderExperienceManagementBackendApiHelper extends Module
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => true,
         ]);
 
-        $this->getPriceProductDataHelper()->havePriceProduct([
+        $priceProductTransfer = $this->getPriceProductDataHelper()->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSkuOrFail(),
             PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcreteOrFail(),
@@ -438,7 +466,61 @@ class OrderExperienceManagementBackendApiHelper extends Module
             ],
         ]);
 
-        return $productConcreteTransfer;
+        $merchantReference = $this->haveMerchantOfferForProduct($productConcreteTransfer, $priceProductTransfer);
+
+        return [$productConcreteTransfer, $merchantReference];
+    }
+
+    /**
+     * A merchant with an active, stocked, priced offer for the given product — what
+     * `PaymentMethodFilter` needs to see on the line for `PAYMENT_METHOD_KEY` to stay available.
+     *
+     * Ported from {@see \PyzTest\Glue\Checkout\CheckoutApiTester::createProductOfferWithStock()}.
+     *
+     * This project registers `MerchantProfileMerchantPostCreatePlugin` as a merchant post-create
+     * plugin, which requires `MerchantTransfer::merchantProfile` to be set — `MerchantHelper::
+     * haveMerchant()`'s own default fixture leaves it unset, so it has to be seeded explicitly here.
+     *
+     * `$priceProductTransfer` is the one {@see haveOrderableProduct()} already created for this SKU:
+     * `PriceProductOfferHelper::havePriceProductOffer()` creates its own base `spy_price_product` row
+     * whenever `fkPriceProductStore` is left unset, and a second row for the same SKU/price type
+     * collides with the one already there.
+     */
+    protected function haveMerchantOfferForProduct(
+        ProductConcreteTransfer $productConcreteTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ): string {
+        $merchantTransfer = $this->getMerchantHelper()->haveMerchant([
+            MerchantTransfer::MERCHANT_PROFILE => (new MerchantProfileBuilder())->build(),
+        ]);
+        $storeTransfer = $this->getCurrentStore();
+
+        $productOfferTransfer = $this->getProductOfferHelper()->haveProductOffer([
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSkuOrFail(),
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcreteOrFail(),
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReferenceOrFail(),
+        ]);
+
+        $productOfferStockTransfer = $this->getProductOfferStockDataHelper()->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            ProductOfferStockTransfer::QUANTITY => 1,
+            ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => true,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStoreOrFail()],
+                ],
+            ],
+        ]);
+
+        $this->getStockDataHelper()->updateStock($productOfferStockTransfer->getStockOrFail()->setIsActive(true));
+
+        $this->getPriceProductOfferHelper()->havePriceProductOffer([
+            PriceProductOfferTransfer::FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            PriceProductOfferTransfer::FK_PRICE_PRODUCT_STORE => $priceProductTransfer->getMoneyValueOrFail()->getIdEntityOrFail(),
+        ]);
+
+        return $merchantTransfer->getMerchantReferenceOrFail();
     }
 
     /**
@@ -516,7 +598,7 @@ class OrderExperienceManagementBackendApiHelper extends Module
     public function haveValidOrderPayload(array $override = []): array
     {
         $customerTransfer = $this->haveOrderingCustomer();
-        $productConcreteTransfer = $this->haveOrderableProduct();
+        [$productConcreteTransfer, $merchantReference] = $this->haveOrderableProduct();
         $this->haveActiveShipmentMethod();
 
         return [
@@ -525,6 +607,7 @@ class OrderExperienceManagementBackendApiHelper extends Module
                 $customerTransfer->getCustomerReferenceOrFail(),
                 $productConcreteTransfer->getSkuOrFail(),
                 $override,
+                $merchantReference,
             ),
         ];
     }
@@ -566,11 +649,15 @@ class OrderExperienceManagementBackendApiHelper extends Module
      * The minimum payload the resource declares as required, with addresses supplied inline rather
      * than by `uuid` so the customer needs no address book.
      *
+     * `$merchantReference` is omitted from the line entirely when null, for an operator-sold item —
+     * {@see haveOrderableProductBelowHardMinimumThreshold()} calls this without one, since that
+     * scenario is rejected on threshold before payment resolution is ever reached.
+     *
      * @param array<string, mixed> $override
      *
      * @return array<string, mixed>
      */
-    public function buildValidOrderAttributes(string $customerReference, string $sku, array $override = []): array
+    public function buildValidOrderAttributes(string $customerReference, string $sku, array $override = [], ?string $merchantReference = null): array
     {
         return $override + [
             'customerReference' => $customerReference,
@@ -583,11 +670,12 @@ class OrderExperienceManagementBackendApiHelper extends Module
             ],
             'billingAddress' => $this->buildInlineAddress(),
             'items' => [
-                [
+                array_filter([
                     'sku' => $sku,
                     'quantity' => 1,
                     'unitPrice' => static::PRODUCT_GROSS_AMOUNT,
-                ],
+                    'merchantReference' => $merchantReference,
+                ], static fn (mixed $value): bool => $value !== null),
             ],
         ];
     }
@@ -944,5 +1032,37 @@ class OrderExperienceManagementBackendApiHelper extends Module
         $omsHelper = $this->getModule('\\' . OmsHelper::class);
 
         return $omsHelper;
+    }
+
+    protected function getMerchantHelper(): MerchantHelper
+    {
+        /** @var \SprykerTest\Zed\Merchant\Helper\MerchantHelper $merchantHelper */
+        $merchantHelper = $this->getModule('\\' . MerchantHelper::class);
+
+        return $merchantHelper;
+    }
+
+    protected function getProductOfferHelper(): ProductOfferHelper
+    {
+        /** @var \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper $productOfferHelper */
+        $productOfferHelper = $this->getModule('\\' . ProductOfferHelper::class);
+
+        return $productOfferHelper;
+    }
+
+    protected function getProductOfferStockDataHelper(): ProductOfferStockDataHelper
+    {
+        /** @var \SprykerTest\Shared\ProductOfferStock\Helper\ProductOfferStockDataHelper $productOfferStockDataHelper */
+        $productOfferStockDataHelper = $this->getModule('\\' . ProductOfferStockDataHelper::class);
+
+        return $productOfferStockDataHelper;
+    }
+
+    protected function getPriceProductOfferHelper(): PriceProductOfferHelper
+    {
+        /** @var \SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper $priceProductOfferHelper */
+        $priceProductOfferHelper = $this->getModule('\\' . PriceProductOfferHelper::class);
+
+        return $priceProductOfferHelper;
     }
 }

@@ -39,6 +39,13 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
                 - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                # This shop's `spryker/dummy-marketplace-payment` only offers its payment method when
+                # every line in the quote carries a merchant reference, so a placeable order needs a
+                # merchant with an active, stocked, priced offer for the line, not just a plain product.
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
+                - \SprykerTest\Shared\ProductOfferStock\Helper\ProductOfferStockDataHelper
+                - \SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper
                 # Self-seeds the hard-minimum-threshold row a rejection test needs: neither this
                 # project's local `docker/sdk` bootstrap nor CI's `codecept fixtures` step imports
                 # `data/import/common/DE/sales_order_threshold.csv`, so the row cannot be assumed
