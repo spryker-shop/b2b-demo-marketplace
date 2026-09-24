@@ -38,10 +38,16 @@
                     {% endwidget %}
                 </div>
             {% elseif not is_granted('ROLE_AGENT') %}
-                <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
-                   class="button {{ config.name }}__header-sign-in">
-                    {{ 'customer.please_login' | trans }}
-                </a>
+                <div class="{{ config.name }}__header-actions">
+                    <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
+                       class="button {{ config.name }}__header-sign-in">
+                        {{ 'customer.please_login' | trans }}
+                    </a>
+                    <a href="{{ url('company/register') }}"
+                       class="button button--secondary {{ config.name }}__header-sign-up">
+                        {{ 'customer.sign_up' | trans }}
+                    </a>
+                </div>
             {% endif %}
         </div>
 

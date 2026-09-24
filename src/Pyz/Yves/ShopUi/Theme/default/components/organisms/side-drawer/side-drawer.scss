@@ -33,7 +33,7 @@
         &__header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: var(--scale-8);
             height: rem(56);
             padding: 0 var(--scale-16);
             flex-shrink: 0;
@@ -54,17 +54,22 @@
         }
 
         &__header-logo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
             height: rem(52);
+            margin-right: auto;
         }
 
         &__header-cart {
             padding: 0;
         }
 
-        &__header-sign-in {
+        &__header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+        }
+
+        &__header-sign-in,
+        &__header-sign-up {
             font-size: var(--button-sm-size);
             line-height: var(--button-sm-line-height);
             min-height: rem(32);
