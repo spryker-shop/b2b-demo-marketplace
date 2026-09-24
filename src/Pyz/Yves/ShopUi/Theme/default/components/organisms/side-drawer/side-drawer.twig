@@ -40,11 +40,11 @@
             {% elseif not is_granted('ROLE_AGENT') %}
                 <div class="{{ config.name }}__header-actions">
                     <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
-                       class="button {{ config.name }}__header-sign-in">
+                       class="button button--sm">
                         {{ 'customer.please_login' | trans }}
                     </a>
                     <a href="{{ url('company/register') }}"
-                       class="button button--secondary {{ config.name }}__header-sign-up">
+                       class="button button--secondary button--sm">
                         {{ 'customer.sign_up' | trans }}
                     </a>
                 </div>
