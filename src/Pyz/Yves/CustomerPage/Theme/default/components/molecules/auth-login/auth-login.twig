@@ -11,6 +11,7 @@
     subtitle: '',
     formQa: null,
     showForgotPassword: false,
+    showRegister: false,
     hasFlashError: false,
     errorText: 'customer.login.error',
     mfaUrl: '',
@@ -31,6 +32,7 @@
             loginForm: data.form,
             formQa: data.formQa,
             showForgotPassword: data.showForgotPassword,
+            showRegister: data.showRegister,
             hasError: hasError,
             errorText: data.errorText,
         },
@@ -99,6 +101,16 @@
                 >
                     {{- 'customer.login.submit' | trans -}}
                 </button>
+
+                {% if embed.showRegister %}
+                    <a
+                        href="{{ url('company/register') }}"
+                        class="button button--secondary button--expand {{ config.name }}__register"
+                        {{ qa('register-link') }}
+                    >
+                        {{- 'customer.register' | trans -}}
+                    </a>
+                {% endif %}
 
                 <a
                     href="{{ url('home') }}"
