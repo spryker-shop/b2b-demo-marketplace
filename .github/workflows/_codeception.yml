@@ -91,12 +91,12 @@ jobs:
             -   name: Run Backend API Tests
                 id: backend-api-tests
                 run: |
-                    docker/sdk testing codecept run -c tests/codeception.api.backend.yml
+                    docker/sdk testing codecept run:filtered '*::BackendApiIntegration'
 
             -   name: Run Storefront API Tests
                 id: storefront-api-tests
                 run: |
-                    docker/sdk testing codecept run -c tests/codeception.api.yml
+                    docker/sdk testing codecept run:filtered -g EndToEnd --include tests/PyzTest/Glue --skip BackendApiIntegration
 
             -   name: Save PHP logs
                 if: always() && (steps.backend-api-tests.outcome == 'failure' || steps.storefront-api-tests.outcome == 'failure')

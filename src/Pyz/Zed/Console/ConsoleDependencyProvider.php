@@ -10,8 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Console;
 
 use Pyz\Zed\DataImport\DataImportConfig;
-use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
-use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
 use Pyz\Zed\PunchoutGateway\Communication\Console\PunchoutDemoConnectionCreateConsole;
 use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
 use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
@@ -493,8 +491,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CodeTestConsole();
             $commands[] = new CodeStyleSnifferConsole();
             $commands[] = new CodeArchitectureSnifferConsole();
-            $commands[] = new FunctionalCodeTestConsole();
-            $commands[] = new ApiCodeTestConsole();
             $commands[] = new CodeFixturesConsole();
             $commands[] = new CodePhpstanConsole();
             $commands[] = new ValidatorConsole();
