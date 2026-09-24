@@ -114,10 +114,8 @@
                         {% else %}
                             <a href="{{ url('login', { 'redirectUri': app.request.uri }) }}"
                             class="button {{ config.name }}__sign-in">{{ 'customer.please_login'|trans }}</a>
-                            {% if app.request.attributes.get('_route') != 'company/register' %}
-                                <a href="{{ url('company/register') }}"
-                                class="button button--secondary {{ config.name }}__register">{{ 'customer.register'|trans }}</a>
-                            {% endif %}
+                            <a href="{{ url('company/register') }}"
+                            class="button button--secondary {{ config.name }}__register">{{ 'customer.register'|trans }}</a>
                         {% endif %}
                     {% endif %}
                 </div>
