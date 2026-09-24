@@ -31,10 +31,6 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
      */
     protected function getSecurityPlugins(): array
     {
-        // The agent firewall (narrower pattern) MUST be registered before the base merchant-user firewall
-        // (broader pattern) — Symfony's firewall map matches in registration order, first pattern wins.
-        // `agent-security-merchant-portal-gui` and `security-oauth-knpu` are stripped for the b2b (non-marketplace)
-        // variant by uninstall-marketplace-config.json — keep this list plain, no class_exists() guards.
         return [
             new ZedUserSessionHandlerSecurityPlugin(),
             new ZedSystemUserSecurityPlugin(),
