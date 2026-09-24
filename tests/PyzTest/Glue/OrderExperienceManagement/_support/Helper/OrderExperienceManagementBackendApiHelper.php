@@ -488,7 +488,7 @@ class OrderExperienceManagementBackendApiHelper extends Module
      */
     protected function haveMerchantOfferForProduct(
         ProductConcreteTransfer $productConcreteTransfer,
-        PriceProductTransfer $priceProductTransfer
+        PriceProductTransfer $priceProductTransfer,
     ): string {
         $merchantTransfer = $this->getMerchantHelper()->haveMerchant([
             MerchantTransfer::MERCHANT_PROFILE => (new MerchantProfileBuilder())->build(),
