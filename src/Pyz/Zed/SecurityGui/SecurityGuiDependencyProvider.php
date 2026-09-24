@@ -52,12 +52,8 @@ class SecurityGuiDependencyProvider extends SprykerSecurityGuiDependencyProvider
      */
     protected function getAuthenticationLinkPlugins(): array
     {
-        $authenticationLinkPlugins = [];
-
-        if (class_exists(KnpuOauthAuthenticationLinkPlugin::class)) {
-            $authenticationLinkPlugins[] = new KnpuOauthAuthenticationLinkPlugin();
-        }
-
-        return $authenticationLinkPlugins;
+        return [
+            new KnpuOauthAuthenticationLinkPlugin(),
+        ];
     }
 }

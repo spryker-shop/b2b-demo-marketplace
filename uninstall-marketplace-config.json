@@ -732,12 +732,14 @@
         "src/Pyz/Zed/Security/SecurityDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MultiFactorAuthenticationAgentMerchantUserSecurityPlugin" },
-                { "type": "remove_use", "class_name": "ZedAgentMerchantUserSecurityPlugin" },
+                { "type": "remove_use", "class_name": "ZedAgentSecurityPlugin" },
+                { "type": "remove_line_containing", "pattern": "as AgentZedMerchantUserSecurityPlugin;" },
                 { "type": "remove_use", "class_name": "MultiFactorAuthenticationMerchantUserSecurityPlugin" },
                 { "type": "remove_use", "class_name": "ZedMerchantUserSecurityPlugin" },
                 { "type": "remove_use", "class_name": "ZedOauthMerchantPortalSecurityPlugin" },
                 { "type": "remove_use", "class_name": "ZedKnpuOauthUserSecurityPlugin" },
-                { "type": "remove_plugin", "plugin_class": "ZedAgentMerchantUserSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedAgentSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "AgentZedMerchantUserSecurityPlugin" },
                 { "type": "remove_plugin", "plugin_class": "ZedMerchantUserSecurityPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MultiFactorAuthenticationMerchantUserSecurityPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MultiFactorAuthenticationAgentMerchantUserSecurityPlugin" },

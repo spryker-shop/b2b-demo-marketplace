@@ -178,13 +178,9 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
      */
     protected function getOauthCustomerClientStrategyPlugins(): array
     {
-        $oauthCustomerClientStrategyPlugins = [];
-
-        if (class_exists(KnpuOauthCustomerClientStrategyPlugin::class)) {
-            $oauthCustomerClientStrategyPlugins[] = new KnpuOauthCustomerClientStrategyPlugin();
-        }
-
-        return $oauthCustomerClientStrategyPlugins;
+        return [
+            new KnpuOauthCustomerClientStrategyPlugin(),
+        ];
     }
 
     /**
@@ -192,12 +188,8 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
      */
     protected function getCustomerAuthenticationLinkPlugins(): array
     {
-        $customerAuthenticationLinkPlugins = [];
-
-        if (class_exists(KnpuCustomerAuthenticationLinkPlugin::class)) {
-            $customerAuthenticationLinkPlugins[] = new KnpuCustomerAuthenticationLinkPlugin();
-        }
-
-        return $customerAuthenticationLinkPlugins;
+        return [
+            new KnpuCustomerAuthenticationLinkPlugin(),
+        ];
     }
 }
