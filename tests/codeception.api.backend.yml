@@ -1,0 +1,45 @@
+namespace: PyzTest
+actor: Tester
+
+include:
+    # Deliberately narrow, unlike codeception.api.yml's `PyzTest/*/*`: Codeception
+    # constructs every included suite's modules up front, regardless of the group
+    # filter below. Any other suite's plain Environment helper would win the race to
+    # define the process-global APPLICATION constant as its default (`docker.devtest`)
+    # before these suites get to claim `GLUE_BACKEND`, and BackendApiIntegrationHelper
+    # would then fail every test with a "APPLICATION is already defined" ModuleException.
+    - PyzTest/Glue/CategoriesBackend
+    - PyzTest/Glue/CustomerExperienceManagement
+    - PyzTest/Glue/GlossaryBackend
+    - PyzTest/Glue/MerchantProfile
+    - PyzTest/Glue/OauthBackendApi
+    - PyzTest/Glue/OrderExperienceManagement
+    - PyzTest/Glue/ProductExperienceManagement
+
+paths:
+    tests: .
+    output: _output
+    data: _data
+    support: _support
+    envs: _envs
+
+settings:
+    suite_class: \PHPUnit_Framework_TestSuite
+    colors: true
+    memory_limit: 1024M
+    log: true
+
+coverage:
+    enabled: true
+    remote: true
+    c3_url: 'http://backoffice.de.shop-suite.local'
+    whitelist: { include: ['src/Pyz/*.php'] }
+
+#extensions:
+#    enabled:
+#        - \SprykerTest\Shared\Testify\Helper\SuiteFilterHelper
+#    config:
+#        \SprykerTest\Shared\Testify\Helper\SuiteFilterHelper:
+#            inclusive:
+#                - Glue
+#                - BackendApi

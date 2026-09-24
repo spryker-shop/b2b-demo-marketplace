@@ -31,3 +31,12 @@ extensions:
             inclusive:
                 - Glue
                 - EndToEnd
+            # The BackendApiIntegration suites (@group BackendApi) don't carry @group
+            # EndToEnd, so the inclusive filter above already excludes them - this is
+            # only here to make that split explicit. They run via
+            # tests/codeception.api.backend.yml instead, in a separate `codecept run`
+            # process: their ApiPlatformHelper boots GLUE_BACKEND into the
+            # process-global APPLICATION constant, which would collide with any other
+            # suite booting a different application in the same run.
+            exclusive:
+                - BackendApi

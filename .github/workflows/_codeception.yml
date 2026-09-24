@@ -88,23 +88,29 @@ jobs:
                     echo "console queue:worker:start --stop-when-empty"
                     docker/sdk testing console queue:worker:start --stop-when-empty
 
-            -   name: Run API Tests
-                id: api-tests
+            -   name: Run Backend API Tests
+                id: backend-api-tests
+                run: |
+                    docker/sdk testing codecept run -c tests/codeception.api.backend.yml
+
+            -   name: Run Storefront API Tests
+                id: storefront-api-tests
                 run: |
                     docker/sdk testing codecept run -c tests/codeception.api.yml
 
             -   name: Save PHP logs
-                if: always() && steps.api-tests.outcome == 'failure'
+                if: always() && (steps.backend-api-tests.outcome == 'failure' || steps.storefront-api-tests.outcome == 'failure')
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
                     docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
                     docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
                     docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_gluebackend_eu_1 > logs/gluebackend_api_app.log 2>&1
                     echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'codeception-failed-artifacts'"
 
             -   name: Upload logs, failed screenshots and HTML
-                if: always() && steps.api-tests.outcome == 'failure'
+                if: always() && (steps.backend-api-tests.outcome == 'failure' || steps.storefront-api-tests.outcome == 'failure')
                 uses: actions/upload-artifact@v5
                 with:
                     name: codeception-failed-artifacts
