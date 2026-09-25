@@ -20,6 +20,7 @@ return static function (FrameworkConfig $framework, ContainerConfigurator $conta
             'base_path' => '/assets',
         ]);
 
-    $framework->test($env === 'dockerdev');
+    $framework->test(in_array($env, ['dockerdev', 'dockerci'], true));
+
     $container->parameters()->set('.container.dumper.inline_factories', $env !== 'dockerdev');
 };

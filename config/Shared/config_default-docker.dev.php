@@ -59,6 +59,9 @@ use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
 
 // >>> Debug
 
+$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = !(bool)getenv('SPRYKER_TESTING_ENABLED');
+$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = !(bool)getenv('SPRYKER_TESTING_ENABLED');
+
 $config[ApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[ShopApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = (bool)getenv('SPRYKER_DEBUG_ENABLED');

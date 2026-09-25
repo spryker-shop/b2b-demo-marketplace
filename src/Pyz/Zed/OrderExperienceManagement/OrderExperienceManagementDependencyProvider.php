@@ -17,6 +17,7 @@ use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\ScheduleVa
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\ScheduleValidator\PriceScheduleValidatorPlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\OrderExperienceManagementDependencyProvider as SprykerOrderExperienceManagementDependencyProvider;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\OrderExperienceManagement\BudgetApprovalRuleRecurringOrderCheckoutValidatorPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\OrderExperienceManagement\BudgetOrderIntakeQuoteExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\OrderExperienceManagement\ServiceProductAddedItemValidatorPlugin;
 
 class OrderExperienceManagementDependencyProvider extends SprykerOrderExperienceManagementDependencyProvider
@@ -62,6 +63,16 @@ class OrderExperienceManagementDependencyProvider extends SprykerOrderExperience
     {
         return [
             new BudgetApprovalRuleRecurringOrderCheckoutValidatorPlugin(), #RecurringOrdersFeature
+        ];
+    }
+
+    /**
+     * @return array<\SprykerFeature\Zed\OrderExperienceManagement\Dependency\Plugin\OrderIntakeQuoteExpanderPluginInterface>
+     */
+    protected function getOrderIntakeQuoteExpanderPlugins(): array
+    {
+        return [
+            new BudgetOrderIntakeQuoteExpanderPlugin(), #PurchasingControlFeature
         ];
     }
 }

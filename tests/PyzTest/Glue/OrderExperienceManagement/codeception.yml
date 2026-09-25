@@ -1,0 +1,45 @@
+namespace: PyzTest\Glue\OrderExperienceManagement
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    output: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    BackendApiIntegration:
+        path: BackendApi/Integration
+        actor: OrderExperienceManagementBackendApiIntegrationTester
+        modules:
+            enabled:
+                - \SprykerTest\ApiPlatform\Helper\BackendApiIntegrationHelper:
+                      environmentModule: '\PyzTest\Shared\Testify\Helper\Environment'
+                      projectNamespaces: ['Pyz']
+                - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper:
+                      isMailFacadeMockEnabled: false
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
+                - \SprykerTest\Shared\ProductOfferStock\Helper\ProductOfferStockDataHelper
+                - \SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper
+                - \SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerFeatureTest\Shared\PurchasingControl\Helper\PurchasingControlHelper
+                - \PyzTest\Glue\OrderExperienceManagement\Helper\OrderExperienceManagementBackendApiHelper
+                - \SprykerTest\ApiPlatform\Helper\BackendApiLoginHelper
+                - \SprykerTest\ApiPlatform\Helper\ApiPlatformHelper:
+                      mode: 'project'
+                      apiType: 'Backend'
+                      bootOnce: true
+                      reuseApplicationContainer: true
