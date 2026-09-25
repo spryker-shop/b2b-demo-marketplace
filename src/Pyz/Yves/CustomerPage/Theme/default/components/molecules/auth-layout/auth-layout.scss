@@ -15,6 +15,10 @@
             gap: var(--scale-40);
             width: 100%;
             max-width: rem(480);
+
+            &--wide {
+                max-width: rem(720);
+            }
         }
 
         &__card {
@@ -123,10 +127,27 @@
             gap: var(--scale-12);
         }
 
+        &__row {
+            display: grid;
+            gap: var(--scale-12);
+
+            @include helper-breakpoint-media-min($md) {
+                grid-auto-columns: minmax(0, 1fr);
+                grid-auto-flow: column;
+            }
+
+            &--name {
+                @include helper-breakpoint-media-min($md) {
+                    grid-template-columns: rem(140) minmax(0, 1fr) minmax(0, 1fr);
+                }
+            }
+        }
+
         &__field {
             display: flex;
             flex-direction: column;
             gap: var(--scale-6);
+            min-width: 0;
         }
 
         &__label-row {
@@ -180,6 +201,16 @@
                 color: var(--text-brand);
                 text-decoration: underline;
             }
+        }
+
+        &__switch {
+            @include typography(body-sm);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--scale-4);
+            margin: 0;
+            color: var(--text-tertiary);
         }
 
         &__footer {
