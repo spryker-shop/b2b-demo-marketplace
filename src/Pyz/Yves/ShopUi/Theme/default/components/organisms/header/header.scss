@@ -33,7 +33,7 @@
         &__mobile-menu {
             display: flex;
             align-items: center;
-            margin-right: var(--scale-12);
+            margin-right: var(--scale-8);
 
             @include helper-breakpoint-media-min($xl) {
                 display: none;
@@ -71,6 +71,7 @@
         &__actions {
             display: flex;
             align-items: center;
+            gap: var(--scale-12);
             margin-left: auto;
         }
 
