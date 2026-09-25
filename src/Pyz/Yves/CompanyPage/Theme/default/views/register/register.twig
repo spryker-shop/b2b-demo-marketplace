@@ -1,32 +1,10 @@
-{% extends template('page-layout-company', 'CompanyPage') %}
-
-{% define data = {
-    forms: {
-        register: _view.registerForm,
-    },
-} %}
-
-{% block pageInfo %}{% endblock %}
+{% extends template('page-layout-auth') %}
 
 {% block content %}
-    {% include molecule('form') with {
-        class: 'box',
+    {% include molecule('auth-register', 'CompanyPage') with {
         data: {
-            title: 'company.account.registration.title' | trans,
-            form: data.forms.register,
-            shouldRequireMessage: true,
-            options: {
-                action: url('company/register'),
-            },
-            layout: {
-                salutation: 'col col--sm-12 col--lg-2',
-                first_name: 'col col--sm-12 col--lg-5',
-                last_name: 'col col--sm-12 col--lg-5',
-            },
-            submit: {
-                enable: true,
-                text: 'forms.submit.register' | trans,
-            },
+            form: _view.registerForm,
+            action: url('company/register'),
         },
     } only %}
 {% endblock %}
