@@ -30,8 +30,11 @@ class PaymentAppWidgetConfig extends SprykerPaymentAppWidgetConfig
     public function getQuoteFieldsToCleanInExpressCheckoutWorkflow(): array
     {
         return [
+            QuoteTransfer::PAYMENT,
             QuoteTransfer::PAYMENTS,
+            QuoteTransfer::SHIPMENT,
             QuoteTransfer::BILLING_ADDRESS,
+            QuoteTransfer::SHIPPING_ADDRESS,
             QuoteTransfer::PRE_ORDER_PAYMENT_DATA,
         ];
     }
