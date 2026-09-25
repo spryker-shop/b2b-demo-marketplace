@@ -106,7 +106,8 @@ jobs:
                     docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
                     docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
                     docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
-                    docker logs spryker_ci_gluebackend_eu_1 > logs/gluebackend_api_app.log 2>&1
+                    docker logs spryker_ci_glue_storefront_eu_1 > logs/glue_storefront_api_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_api_app.log 2>&1
                     echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'codeception-failed-artifacts'"
 
             -   name: Upload logs, failed screenshots and HTML

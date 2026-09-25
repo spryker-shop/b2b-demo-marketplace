@@ -469,7 +469,6 @@ class OrderExperienceManagementBackendApiHelper extends Module
                         [
                             'sku' => $productConcreteTransfer->getSkuOrFail(),
                             'quantity' => 1,
-                            'unitPrice' => static::PRODUCT_BELOW_HARD_MINIMUM_GROSS_AMOUNT,
                         ],
                     ],
                 ],
@@ -498,7 +497,6 @@ class OrderExperienceManagementBackendApiHelper extends Module
                 array_filter([
                     'sku' => $sku,
                     'quantity' => 1,
-                    'unitPrice' => static::PRODUCT_GROSS_AMOUNT,
                     'merchantReference' => $merchantReference,
                 ], static fn (mixed $value): bool => $value !== null),
             ],
@@ -681,6 +679,11 @@ class OrderExperienceManagementBackendApiHelper extends Module
     public function getUnknownBudgetUuid(): string
     {
         return '00000000-0000-4000-8000-000000000000';
+    }
+
+    public function getOrderableProductGrossAmount(): int
+    {
+        return static::PRODUCT_GROSS_AMOUNT;
     }
 
     public function getUnknownSku(): string

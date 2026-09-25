@@ -35,6 +35,11 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         'paymentMethod',
     ];
 
+    /**
+     * Differs from the catalogue price and stays inside the DE/EUR sales-order-threshold window.
+     */
+    protected const int UNIT_CUSTOM_PRICE = 175000;
+
     public function testGivenACreatedOrderWhenItsLinesAreComparedWithTheGetResponseThenTheUuidsMatch(): void
     {
         // Arrange
@@ -216,19 +221,31 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertSame($getAttributes['totals'] ?? [], $postAttributes['totals'] ?? []);
     }
 
-    public function testGivenASubmittedPriceEqualToTheCataloguePriceWhenCreateOrderThenNoOverrideIsReported(): void
+    public function testGivenAUnitCustomPriceDifferentFromTheCataloguePriceWhenCreateOrderThenTheCustomPriceIsCharged(): void
     {
         // Arrange
         [, $attributes] = $this->tester->haveValidOrderPayload();
-        $submittedPrice = $attributes['items'][0]['unitPrice'];
+        $attributes['items'][0]['unitCustomPrice'] = static::UNIT_CUSTOM_PRICE;
         $this->tester->actingAsUser();
 
+        $this->assertNotSame(static::UNIT_CUSTOM_PRICE, $this->tester->getOrderableProductGrossAmount());
+
         // Act
-        $response = $this->createOrderViaApi($attributes);
+        $createResponse = $this->createOrderViaApi($attributes);
 
         // Assert
-        $this->assertRespondsWithStatus($response, Response::HTTP_CREATED);
-        $this->assertSame($submittedPrice, $this->getResourceAttributes($response)['items'][0]['unitPrice'] ?? null);
+        $this->assertRespondsWithStatus($createResponse, Response::HTTP_CREATED);
+        $this->assertSame(static::UNIT_CUSTOM_PRICE, $this->getResourceAttributes($createResponse)['items'][0]['unitPrice'] ?? null);
+
+        $orderReference = (string)($this->decodeJsonApi($createResponse)[static::JSON_API_KEY_DATA][static::JSON_API_KEY_ID] ?? '');
+        $getResponse = $this->handleApiRequest('GET', $this->tester->getOrderUrl($orderReference));
+
+        $this->assertRespondsWithStatus($getResponse, Response::HTTP_OK);
+        $this->assertSame(
+            static::UNIT_CUSTOM_PRICE,
+            $this->getResourceAttributes($getResponse)['items'][0]['unitPrice'] ?? null,
+            'The custom price must survive calculation and checkout, not only the POST response.',
+        );
     }
 
     // ------------------------------------------------------------------ domain rejections
@@ -283,6 +300,22 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
 
         // Assert
         $this->assertRespondsWithStatus($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertNoOrderExistsFor($customerTransfer->getCustomerReferenceOrFail());
+    }
+
+    public function testGivenAMarketplacePaymentMethodForANonMarketplaceLineWhenCreateOrderThenItIsRejected(): void
+    {
+        // Arrange
+        [$customerTransfer, $attributes] = $this->tester->haveValidOrderPayload();
+        unset($attributes['items'][0]['merchantReference']);
+        $this->tester->actingAsUser();
+
+        // Act
+        $response = $this->createOrderViaApi($attributes);
+
+        // Assert — the project's payment method filter only offers marketplace payment when every line has a merchant.
+        $this->assertRespondsWithStatus($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertStringContainsString('paymentMethod', implode(' | ', $this->getErrorDetails($response)));
         $this->assertNoOrderExistsFor($customerTransfer->getCustomerReferenceOrFail());
     }
 
