@@ -40,6 +40,7 @@ use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
+use Spryker\Shared\ProductAttachmentStorage\ProductAttachmentStorageConfig;
 use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
@@ -200,6 +201,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             ProductStorageConstants::PRODUCT_SYNC_STORAGE_QUEUE,
             PriceProductStorageConstants::PRICE_SYNC_STORAGE_QUEUE,
             ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE,
+            ProductAttachmentStorageConfig::PRODUCT_ABSTRACT_ATTACHMENT_SYNC_STORAGE_QUEUE,
             ConfigurableBundleStorageConfig::CONFIGURABLE_BUNDLE_SYNC_STORAGE_QUEUE,
             ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_SEARCH_QUEUE,
             CmsStorageConstants::CMS_SYNC_STORAGE_QUEUE,
