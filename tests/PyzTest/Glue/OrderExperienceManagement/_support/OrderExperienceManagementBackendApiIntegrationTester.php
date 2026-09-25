@@ -14,10 +14,6 @@ use Codeception\Actor;
 /**
  * Actor for the full-layer Backend API integration suite (BackendApiIntegration).
  *
- * Its own actor rather than a shared one: this suite enables a different module stack from the
- * legacy PhpBrowser Glue suites, and two suites sharing an actor name clobber each other's
- * generated actions (last `codecept build` wins).
- *
  * Inherited Methods
  *
  * @method void wantToTest($text)

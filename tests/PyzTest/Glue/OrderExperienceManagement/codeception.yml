@@ -12,9 +12,6 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    # The suite name is load-bearing: `.github/workflows/_codeception.yml` skips
-    # `BackendApiIntegration` in every other lane and runs it in a dedicated step, because
-    # APPLICATION is a process-global constant and this suite needs GLUE_BACKEND.
     BackendApiIntegration:
         path: BackendApi/Integration
         actor: OrderExperienceManagementBackendApiIntegrationTester
@@ -24,43 +21,22 @@ suites:
                       environmentModule: '\PyzTest\Shared\Testify\Helper\Environment'
                       projectNamespaces: ['Pyz']
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
-                # The mail-facade mock this helper installs registers its bridge under the bare
-                # `FACADE_MAIL` key with no factory scope, so every module reading that key gets
-                # Customer's bridge — including CustomerDataChangeRequest, whose factory declares a
-                # different return type and throws a TypeError. Placement updates the customer, so
-                # this suite is the first to reach that plugin.
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper:
                       isMailFacadeMockEnabled: false
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
-                # POST /orders places a real order through the checkout facade, so the payload has
-                # to name a product that is priced and in stock and a shipment method that is active
-                # in the current store — `isPlaceableOrder()` refuses anything less.
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
                 - \SprykerTest\Shared\Stock\Helper\StockDataHelper
-                # This shop's `spryker/dummy-marketplace-payment` only offers its payment method when
-                # every line in the quote carries a merchant reference, so a placeable order needs a
-                # merchant with an active, stocked, priced offer for the line, not just a plain product.
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Shared\ProductOfferStock\Helper\ProductOfferStockDataHelper
                 - \SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper
-                # Self-seeds the hard-minimum-threshold row a rejection test needs: neither this
-                # project's local `docker/sdk` bootstrap nor CI's `codecept fixtures` step imports
-                # `data/import/common/DE/sales_order_threshold.csv`, so the row cannot be assumed
-                # to exist.
                 - \SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
-                # Budget/cost-center fixtures for the PurchasingControl expander plugins, which
-                # this project wires into checkout, the Sales order-hydration stack and the
-                # `orders` resource expander stack.
                 - \SprykerFeatureTest\Shared\PurchasingControl\Helper\PurchasingControlHelper
                 - \PyzTest\Glue\OrderExperienceManagement\Helper\OrderExperienceManagementBackendApiHelper
-                # Order matters: BackendApiLoginHelper::_before() binds the security stubs, and
-                # ApiPlatformHelper::_before() then warms the shared kernel. Reversing them boots
-                # the kernel before the stubs are registered, and every request 401s.
                 - \SprykerTest\ApiPlatform\Helper\BackendApiLoginHelper
                 - \SprykerTest\ApiPlatform\Helper\ApiPlatformHelper:
                       mode: 'project'
