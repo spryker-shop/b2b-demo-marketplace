@@ -10,10 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Merchant;
 
 use Spryker\Zed\AclMerchantPortal\Communication\Plugin\Merchant\MerchantAclEntitiesMerchantPostCreatePlugin;
-use Spryker\Zed\Merchant\Communication\Plugin\Merchant\UniqueEmailMerchantValidatorPlugin;
-use Spryker\Zed\Merchant\Communication\Plugin\Merchant\UniqueMerchantReferenceMerchantValidatorPlugin;
-use Spryker\Zed\Merchant\Communication\Plugin\Merchant\UniqueNameMerchantValidatorPlugin;
-use Spryker\Zed\Merchant\Communication\Plugin\Merchant\UrlMerchantValidatorPlugin;
 use Spryker\Zed\Merchant\MerchantDependencyProvider as SprykerMerchantDependencyProvider;
 use Spryker\Zed\MerchantCategory\Communication\Plugin\Merchant\MerchantCategoryMerchantBulkExpanderPlugin;
 use Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant\MerchantProfileMerchantBulkExpanderPlugin;
@@ -57,19 +53,6 @@ class MerchantDependencyProvider extends SprykerMerchantDependencyProvider
             new MerchantProfileMerchantBulkExpanderPlugin(),
             new MerchantStockMerchantBulkExpanderPlugin(),
             new MerchantCategoryMerchantBulkExpanderPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantValidatorPluginInterface>
-     */
-    protected function getMerchantValidatorPlugins(): array
-    {
-        return [
-            new UniqueEmailMerchantValidatorPlugin(),
-            new UniqueMerchantReferenceMerchantValidatorPlugin(),
-            new UniqueNameMerchantValidatorPlugin(),
-            new UrlMerchantValidatorPlugin(),
         ];
     }
 }
