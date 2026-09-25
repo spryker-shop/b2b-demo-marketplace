@@ -101,6 +101,14 @@
                 </button>
 
                 <a
+                    href="{{ url('company/register') }}"
+                    class="button button--secondary button--expand {{ config.name }}__register"
+                    {{ qa('register-link') }}
+                >
+                    {{- 'customer.sign_up' | trans -}}
+                </a>
+
+                <a
                     href="{{ url('home') }}"
                     class="link link--subtle link--no-decoration link--sm {{ config.name }}__guest"
                     {{ qa('continue-as-guest-link') }}
