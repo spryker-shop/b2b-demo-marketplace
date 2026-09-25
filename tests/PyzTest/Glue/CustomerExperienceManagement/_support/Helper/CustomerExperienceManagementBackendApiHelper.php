@@ -19,6 +19,8 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
@@ -194,6 +196,19 @@ class CustomerExperienceManagementBackendApiHelper extends Module
             CustomerTransfer::LAST_NAME => 'ViaBackendApi',
             CustomerTransfer::STORE_NAME => static::STORE_NAME,
         ];
+    }
+
+    public function clearCompanyBusinessUnitUuid(string $uuid): void
+    {
+        SpyCompanyBusinessUnitQuery::create()->filterByUuid($uuid)->update(['Uuid' => null]);
+    }
+
+    /**
+     * @see static::clearCompanyBusinessUnitUuid()
+     */
+    public function clearCompanyUnitAddressUuid(string $uuid): void
+    {
+        SpyCompanyUnitAddressQuery::create()->filterByUuid($uuid)->update(['Uuid' => null]);
     }
 
     public function findCustomerIdByEmail(string $email): ?int
