@@ -13,13 +13,6 @@ use PyzTest\Glue\OrderExperienceManagement\AbstractOrderExperienceManagementBack
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * `POST /orders/{orderReference}/transitions` over a booted GLUE_BACKEND kernel.
- *
- * These assert the HTTP contract — that the route exists at the intended path, that authorization is
- * enforced, and that the documented status codes come back. The domain behaviour behind them (per-item
- * outcome, the OMS `null` and `isSuccessful=false` branches, lock handling) is asserted against the
- * applier directly, where those branches can actually be provoked.
- *
  * Auto-generated group annotations
  *
  * @group PyzTest
@@ -36,12 +29,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
 
     protected const string RESOURCE_ORDER_TRANSITIONS = 'order-transitions';
 
-    /**
-     * The route-shape assertion: the resource declares `uriTemplate` and per-variable `uriVariables`,
-     * a combination taken on the strength of in-tree precedent rather than direct verification. If the
-     * generated route were wrong this would 404 rather than reaching the domain layer, so any
-     * non-404 status proves the route resolved.
-     */
     public function testGivenAnAuthenticatedOperatorWhenPostTransitionThenTheRouteResolvesToTheProcessor(): void
     {
         // Arrange
@@ -63,11 +50,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         );
     }
 
-    /**
-     * The read/write agreement, end to end: an event taken from `availableEvents` on the GET must
-     * be accepted by the POST. If the two sides ever resolve events differently — for instance if one
-     * of them stopped filtering on-enter events — this is the test that fails.
-     */
     public function testGivenAnEventReadFromAvailableEventsWhenPostTransitionThenItIsApplied(): void
     {
         // Arrange
@@ -98,10 +80,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         }
     }
 
-    /**
-     * Firing the same event twice must not report a second success. The state machine is the
-     * idempotency mechanism: the item has left the source state, so the event is no longer available.
-     */
     public function testGivenTheEventWasAlreadyAppliedWhenPostTransitionAgainThenItIsRejectedRatherThanReportedApplied(): void
     {
         // Arrange
@@ -127,12 +105,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         $this->assertRespondsWithStatus($response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * The D3 round-trip, and the reason `items[].uuid` had to change meaning: a uuid read from the GET
-     * must be accepted by the POST. If the read side ever exposed a different identifier than the
-     * write side addresses, every client chaining these two calls would break — and this is the only
-     * test that would notice.
-     */
     public function testGivenAUuidReadFromTheOrderWhenPostTransitionForThatUuidThenItIsApplied(): void
     {
         // Arrange
@@ -168,11 +140,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         );
     }
 
-    /**
-     * Tenancy, and the half of it that a status-code assertion alone cannot prove: that the rejected
-     * request fired NOTHING. The other order is read back afterwards and its line must be exactly
-     * where it was.
-     */
     public function testGivenAnItemUuidOfAnotherOrderWhenPostTransitionThenTheOtherOrderIsLeftUntouched(): void
     {
         // Arrange
@@ -207,10 +174,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         );
     }
 
-    /**
-     * Firing on a SUBSET must leave the rest of the order alone. The response says so, and the order
-     * is re-read to confirm the untargeted line really did not move.
-     */
     public function testGivenATwoItemOrderWhenPostTransitionForOneUuidThenOnlyThatLineAdvances(): void
     {
         // Arrange
@@ -249,14 +212,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         );
     }
 
-    /**
-     * D6, half one — an OMITTED list is a scope selector. On an order whose lines are in different
-     * states, the eligible ones advance and the rest come back as `skipped`, which is `partiallyApplied`
-     * rather than a flat success or a flat rejection.
-     *
-     * The mixed state is produced by firing the event on one line first, which is also the realistic
-     * shape: an ERP ships part of an order, then sends the rest.
-     */
     public function testGivenAMixedStateOrderWhenPostTransitionWithOmittedListThenEligibleLinesAdvanceAndTheRestAreSkipped(): void
     {
         // Arrange
@@ -294,12 +249,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         $this->assertSame('transitioned', $outcomes[$items[1]['uuid']], 'The remaining line advances.');
     }
 
-    /**
-     * D6, half two — an EXPLICIT list is an assertion. Naming a line the event is not available for
-     * rejects the whole request and fires nothing, so the caller never has to reconcile a partial
-     * write it did not ask for. Same order shape and same event as the test above; only the presence
-     * of the list differs, and the outcome is the opposite.
-     */
     public function testGivenAMixedStateOrderWhenPostTransitionWithAnExplicitListNamingAnIneligibleLineThenNothingIsApplied(): void
     {
         // Arrange
@@ -358,10 +307,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         $this->assertRespondsWithStatus($response, Response::HTTP_NOT_FOUND);
     }
 
-    /**
-     * Tenancy over HTTP: a uuid that is not an item of this order is refused, and refused the same way
-     * whether it does not exist at all or belongs to someone else.
-     */
     public function testGivenAnItemUuidThatIsNotOnThisOrderWhenPostTransitionThenItIsRejected(): void
     {
         // Arrange
@@ -379,9 +324,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         $this->assertRespondsWithStatus($response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * An event no state of the process declares must be a described 4xx, never a 500.
-     */
     public function testGivenAnUnknownEventWhenPostTransitionThenItIsRejectedAsUnprocessable(): void
     {
         // Arrange
@@ -399,10 +341,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         $this->assertRespondsWithStatus($response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * An explicitly empty list is a client bug, not "the whole order" — aliasing it would fire the
-     * event on every line. Rejected by the constraint layer before any domain logic runs.
-     */
     public function testGivenAnEmptyItemUuidsListWhenPostTransitionThenItIsRejected(): void
     {
         // Arrange
@@ -484,10 +422,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
         ]);
     }
 
-    /**
-     * Reads an event the API itself advertises, so these tests never hardcode an assumption about the
-     * fixture's state machine.
-     */
     protected function readFirstAvailableEvent(string $orderReference): ?string
     {
         $response = $this->handleApiRequest('GET', $this->tester->getOrderUrl($orderReference));
@@ -497,12 +431,6 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
     }
 
     /**
-     * The order's lines as the API reports them — uuids, states and per-line available transitions.
-     *
-     * Reading state back through the API rather than the database is deliberate: it is what a client
-     * can actually observe, so an assertion built on it is an assertion about the contract. It also
-     * means the "nothing was fired" checks cannot pass by reading a value the API would never expose.
-     *
      * @return array<int, array<string, mixed>>
      */
     protected function readOrderItems(string $orderReference): array
@@ -515,7 +443,7 @@ class TriggerOrderTransitionBackendApiTest extends AbstractOrderExperienceManage
     /**
      * @param array<int, array<string, mixed>> $items
      *
-     * @return array<string, array<string, mixed>> The same lines, keyed by uuid for direct lookup.
+     * @return array<string, array<string, mixed>>
      */
     protected function indexItemsByUuid(array $items): array
     {

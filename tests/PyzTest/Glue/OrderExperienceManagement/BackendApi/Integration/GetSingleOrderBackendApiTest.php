@@ -13,8 +13,6 @@ use PyzTest\Glue\OrderExperienceManagement\AbstractOrderExperienceManagementBack
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * `GET /orders/{orderReference}` over a booted GLUE_BACKEND kernel.
- *
  * Auto-generated group annotations
  *
  * @group PyzTest
@@ -54,9 +52,6 @@ class GetSingleOrderBackendApiTest extends AbstractOrderExperienceManagementBack
         );
     }
 
-    /**
-     * The item endpoint is the only place line items are served — the collection omits them.
-     */
     public function testGivenAnOrderWithItemsWhenGetOrderByReferenceThenItsLineItemsAreIncluded(): void
     {
         // Arrange
@@ -81,12 +76,6 @@ class GetSingleOrderBackendApiTest extends AbstractOrderExperienceManagementBack
         );
     }
 
-    /**
-     * Every line reports the OMS events legal for its own state. The concrete event names depend on
-     * the state machine the fixture's process defines, so what is asserted is the invariant that
-     * holds for any of them: the per-line sets are present, and the order-level field is exactly
-     * their union.
-     */
     public function testGivenAnOrderWithItemsWhenGetOrderByReferenceThenEachLineCarriesItsAvailableTransitions(): void
     {
         // Arrange
@@ -134,14 +123,6 @@ class GetSingleOrderBackendApiTest extends AbstractOrderExperienceManagementBack
         );
     }
 
-    /**
-     * D3: `items[].uuid` is the sales-order-item uuid — the value `POST /orders/{ref}/transitions`
-     * takes in `orderItemUuids`.
-     *
-     * The shape assertion is the point. Before D3 the provider returned the order item REFERENCE in
-     * this field, a 32-hex string, so a test that only checked "uuid is present" passed against the
-     * wrong value; only the format check distinguishes them.
-     */
     public function testGivenAnOrderWhenGetOrderByReferenceThenEachLineExposesTheSalesOrderItemUuid(): void
     {
         // Arrange
@@ -170,17 +151,6 @@ class GetSingleOrderBackendApiTest extends AbstractOrderExperienceManagementBack
         }
     }
 
-    /**
-     * `availableEvents` promises events a CLIENT may fire, which is a NARROWER set than the
-     * platform's own "manual events" — `Process::getManualEvents()` keeps an event when
-     * `isManual() || isOnEnter()`, and an on-enter event is raised by OMS itself.
-     *
-     * Checked against `OmsFacade::getOrderItemManualEvents()` rather than against a reimplementation
-     * of the API's own filter, so this genuinely cross-checks the API against the platform. It proves
-     * containment and non-emptiness; that on-enter events specifically are excluded is proven by
-     * `AvailableOrderItemTransitionReaderTest`, because the fixture process declares every event
-     * `manual="true"` and so cannot exhibit the difference.
-     */
     public function testGivenAnOrderWhenGetOrderByReferenceThenAvailableEventsAreWithinThePlatformsManualEvents(): void
     {
         // Arrange
@@ -208,9 +178,6 @@ class GetSingleOrderBackendApiTest extends AbstractOrderExperienceManagementBack
         }
     }
 
-    /**
-     * The surrogate key must never reach a client: orders are addressed by reference alone.
-     */
     public function testGivenAnOrderWhenGetOrderByReferenceThenTheInternalOrderIdIsNotExposed(): void
     {
         // Arrange

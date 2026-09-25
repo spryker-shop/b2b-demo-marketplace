@@ -13,21 +13,6 @@ use PyzTest\Glue\OrderExperienceManagement\AbstractOrderExperienceManagementBack
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * `budget` on the `orders` resource, end to end over a booted GLUE_BACKEND kernel.
- *
- * The field belongs to PurchasingControl from end to end and OrderExperienceManagement names it
- * nowhere. Four separate registrations carry it, and the unit tests either side of them each see
- * only one: the intake plugin that resolves `budgetUuid` onto the quote, the checkout saver that
- * writes the assignment onto the order, the Sales order-hydration plugin that reads it back onto
- * `OrderTransfer`, and the `orders` resource expander plugin that shapes it into the payload.
- *
- * That last one is why this suite is the right home for these cases. It reaches the response through
- * the `#[Plugins]` attribute, the `{Organization}\{Layer}\{Module}\{Module}DependencyProvider`
- * namespace convention and the project's `Pyz\Glue\OrderExperienceManagement` override — a chain
- * resolved at container build time, by nothing a unit test constructs. Unregister the plugin, or
- * misname the getter it is registered under, and every unit test still passes while `budget`
- * silently disappears from the API. These cases fail instead.
- *
  * Auto-generated group annotations
  *
  * @group PyzTest
@@ -42,10 +27,6 @@ class OrderBudgetBackendApiTest extends AbstractOrderExperienceManagementBackend
 {
     protected const string ATTRIBUTE_BUDGET = 'budget';
 
-    /**
-     * Write-only on the schema (`writable: true, readable: false`), so it selects the budget and is
-     * never echoed back — the resolved assignment reads back as `budget` instead.
-     */
     protected const string ATTRIBUTE_BUDGET_UUID = 'budgetUuid';
 
     public function testGivenABudgetUuidWhenCreateOrderThenTheResolvedBudgetIsReported(): void
@@ -79,11 +60,6 @@ class OrderBudgetBackendApiTest extends AbstractOrderExperienceManagementBackend
         );
     }
 
-    /**
-     * The read route resolves the budget from the ORDER, not from the request that placed it — which
-     * is the whole reason `budgetUuid` can be write-only. A GET issued after the fact has no request
-     * to echo, so anything it reports came back out of the database through the plugin chain.
-     */
     public function testGivenAnOrderPlacedAgainstABudgetWhenGetOrderThenTheBudgetIsResolvedFromTheOrder(): void
     {
         // Arrange
@@ -112,11 +88,6 @@ class OrderBudgetBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertSame($budgetTransfer->getAmountOrFail(), $budget['amount'] ?? null);
     }
 
-    /**
-     * The POST response and a later GET must describe the same placed order the same way. They are
-     * built from different starting points — the submitted resource on one side, a fresh read on the
-     * other — and `budget` reaches both only because the same expander stack runs over each.
-     */
     public function testGivenAnOrderPlacedAgainstABudgetWhenCreateAndGetAreComparedThenTheyReportTheSameBudget(): void
     {
         // Arrange
@@ -145,11 +116,6 @@ class OrderBudgetBackendApiTest extends AbstractOrderExperienceManagementBackend
         );
     }
 
-    /**
-     * Most orders name no budget, and the plugin must report that as nothing at all rather than an
-     * empty object: `budget` stays null and `skip_null_values` drops the key. A plugin that wrote a
-     * default would show up here.
-     */
     public function testGivenNoBudgetUuidWhenCreateOrderThenNoBudgetIsReported(): void
     {
         // Arrange
@@ -164,11 +130,6 @@ class OrderBudgetBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertArrayNotHasKey(static::ATTRIBUTE_BUDGET, $this->getResourceAttributes($response));
     }
 
-    /**
-     * A uuid naming no budget is reported as a validation issue on the field that carried it, not
-     * ignored — an order placed against no budget at all leaves the spend invisible to whoever set
-     * the budget up.
-     */
     public function testGivenAnUnknownBudgetUuidWhenCreateOrderThenTheOrderIsRejected(): void
     {
         // Arrange

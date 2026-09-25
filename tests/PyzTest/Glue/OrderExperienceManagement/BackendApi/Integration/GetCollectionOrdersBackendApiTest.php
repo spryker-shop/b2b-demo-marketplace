@@ -13,12 +13,6 @@ use PyzTest\Glue\OrderExperienceManagement\AbstractOrderExperienceManagementBack
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * `GET /orders` over a booted GLUE_BACKEND kernel: filtering, sorting, pagination and both
- * authorization layers.
- *
- * The database this runs against is the shared development one and already holds demo orders, so
- * every case filters by a customer reference unique to the test rather than asserting on totals.
- *
  * Auto-generated group annotations
  *
  * @group PyzTest
@@ -80,10 +74,6 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
         );
     }
 
-    /**
-     * The parameter is documented as comma-separatable, which is the only way a caller can resolve
-     * several known references in one call.
-     */
     public function testGivenCommaSeparatedOrderReferencesWhenSearchOrdersThenAllOfThemAreReturned(): void
     {
         // Arrange
@@ -107,11 +97,6 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
         $this->assertContains($secondSaveOrderTransfer->getOrderReferenceOrFail(), $orderReferences);
     }
 
-    /**
-     * `items` is deliberately omitted from the collection representation — `itemsCount` stands in
-     * for it, and item detail is only served by the item endpoint. A regression here would mean the
-     * collection silently starts serialising every line of every order on the page.
-     */
     public function testGivenAnOrderCollectionWhenSearchOrdersThenItemsAreOmittedAndCountedInstead(): void
     {
         // Arrange
@@ -167,8 +152,6 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
     }
 
     /**
-     * Pagination on this resource is JSON:API `page[limit]`/`page[offset]`
-     *
      * @uses \Spryker\ApiPlatform\ResponseTransform\PaginationLinksTransform::resolveItemsPerPage()
      */
     public function testGivenAFlatPageParameterWhenSearchOrdersThenThatPageIsReturnedWithoutError(): void
@@ -214,10 +197,6 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
         );
     }
 
-    /**
-     * The filter is the read counterpart of the `itemStates` attribute: an order matches when AT
-     * LEAST ONE of its items sits in the named state, since items advance independently.
-     */
     public function testGivenAnItemStateFilterWhenSearchOrdersThenOnlyOrdersHoldingThatStateAreReturned(): void
     {
         // Arrange
@@ -253,9 +232,6 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
         );
     }
 
-    /**
-     * Documented as comma-separatable, so an operator can ask one question about several states.
-     */
     public function testGivenCommaSeparatedItemStatesWhenSearchOrdersThenOrdersInAnyOfThemAreReturned(): void
     {
         // Arrange
@@ -286,10 +262,6 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
         $this->assertContains($secondSaveOrderTransfer->getOrderReferenceOrFail(), $orderReferences);
     }
 
-    /**
-     * A multi-line order where only ONE line holds the state still comes back exactly once — the
-     * filter must not multiply the resource out per matching item.
-     */
     public function testGivenOnlyOneLineInTheFilteredStateWhenSearchOrdersThenTheOrderIsReturnedOnce(): void
     {
         // Arrange
@@ -320,10 +292,6 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
         );
     }
 
-    /**
-     * An unknown state name matches nothing rather than erroring — the same contract the other
-     * filters keep, and what stops a caller probing which states exist.
-     */
     public function testGivenAnUnknownItemStateWhenSearchOrdersThenAnEmptyCollectionIsReturned(): void
     {
         // Arrange

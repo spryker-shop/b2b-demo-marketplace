@@ -13,17 +13,6 @@ use PyzTest\Glue\OrderExperienceManagement\AbstractOrderExperienceManagementBack
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * `POST /orders` over a booted GLUE_BACKEND kernel — order intake end to end.
- *
- * The happy path goes all the way through the real intake pipeline: validation, customer and
- * address resolution, quote assembly, item expansion, catalogue pricing, shipment and payment
- * resolution, `CheckoutFacade::isPlaceableOrder()`, and placement. Nothing on that path is stubbed
- * except OAuth introspection and the ACL check, so a passing case means the endpoint really does
- * create an order in the database.
- *
- * That is also why the payload needs arranging rather than merely being well-formed — see
- * {@see \PyzTest\Glue\OrderExperienceManagement\Helper\OrderExperienceManagementBackendApiHelper::haveOrderableProduct()}.
- *
  * Auto-generated group annotations
  *
  * @group PyzTest
@@ -37,9 +26,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackendApiTestCase
 {
     /**
-     * Every attribute the resource declares `required: true` for the `orders:create` group and that
-     * the Symfony validator can reach on an empty payload.
-     *
      * @var array<string>
      */
     protected const REQUIRED_ATTRIBUTES = [
@@ -49,16 +35,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         'paymentMethod',
     ];
 
-    /**
-     * The POST response and a later GET must describe a line the same way, and `items[].uuid` must be
-     * the identifier the rest of the API accepts.
-     *
-     * This is the contract a client actually depends on: create an order, then act on one of its
-     * lines. Before this was fixed the POST returned the order-item REFERENCE in `uuid` while the GET
-     * returned the real uuid, so the value the POST handed back was rejected by
-     * `POST /orders/{ref}/transitions` — and a client had to re-GET the order just to learn how to
-     * address a line it had created a moment earlier.
-     */
     public function testGivenACreatedOrderWhenItsLinesAreComparedWithTheGetResponseThenTheUuidsMatch(): void
     {
         // Arrange
@@ -117,12 +93,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         );
     }
 
-    /**
-     * CC-40616: the order-level `shipment` is only a fallback for items that do not name their own.
-     * Once the sole item covers both `shipmentMethod` and `shippingAddress` itself, the order-level
-     * `shipment` is never consulted, so POST must accept the order even with it omitted entirely —
-     * not just with its two properties individually blank.
-     */
     public function testGivenTheSoleItemNamesItsOwnShipmentWhenTheOrderLevelShipmentIsOmittedThenTheOrderIsCreated(): void
     {
         // Arrange
@@ -138,11 +108,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertRespondsWithStatus($response, Response::HTTP_CREATED);
     }
 
-    /**
-     * The POST response alone cannot prove persistence — it is assembled from the intake response,
-     * not re-read. Following it with a GET is what shows the order is actually in the database and
-     * that both endpoints agree on it.
-     */
     public function testGivenACreatedOrderWhenGetItByReferenceThenTheSameOrderIsReturned(): void
     {
         // Arrange
@@ -218,17 +183,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         );
     }
 
-    /**
-     * The POST response and a later GET must describe the placed order's breakdown the same way,
-     * not just its identity (the sibling uuid-agreement test above covers that).
-     *
-     * Before this test existed, `POST /orders` reported empty `expenses`, `calculatedDiscounts`
-     * and `availableEvents`, and a `totals` missing `taxBreakdown`/`canceledTotal`/
-     * `remunerationTotal` — for the SAME order a `GET` moment later described fully. The data was
-     * already persisted by the time the POST responded; it just was never read back into the
-     * response. A caller building an order confirmation from the POST response alone therefore saw
-     * an order with no shipment cost, no discounts, and nothing left to do with it — all wrong.
-     */
     public function testGivenACreatedOrderWhenComparedWithTheGetResponseThenTheBreakdownFieldsAgree(): void
     {
         // Arrange
@@ -262,12 +216,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertSame($getAttributes['totals'] ?? [], $postAttributes['totals'] ?? []);
     }
 
-    /**
-     * `priceOverrides` — the audit trail for a submitted price that differed from the catalogue
-     * price — was removed from this resource entirely; there is no override-audit signal left to
-     * assert against. The remaining, still-meaningful property: a line whose submitted price equals
-     * the catalogue price resolves to exactly that price, with no discrepancy introduced.
-     */
     public function testGivenASubmittedPriceEqualToTheCataloguePriceWhenCreateOrderThenNoOverrideIsReported(): void
     {
         // Arrange
@@ -300,14 +248,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertNoOrderExistsFor($customerTransfer->getCustomerReferenceOrFail());
     }
 
-    /**
-     * An unknown SKU used to fail validation twice over — the SKU itself is not a real product, AND
-     * price resolution ran anyway and reported it had no price for a line naming no real product,
-     * a message ("send a unitCustomPrice to override") that makes no sense when the product does
-     * not exist at all. `OrderIntakePriceResolver::hasUnknownSkuIssue()` now skips price resolution
-     * for any line whose SKU was already rejected, so only the one, actually actionable problem is
-     * reported.
-     */
     public function testGivenAnUnknownSkuWhenCreateOrderThenOnlyTheUnknownSkuProblemIsReported(): void
     {
         // Arrange
@@ -458,10 +398,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         }
     }
 
-    /**
-     * `currency` must be a real ISO 4217 code — `orders.validation.yml` adds a `Currency` constraint
-     * on top of the plain `NotBlank` the empty-payload test above already covers.
-     */
     public function testGivenAnInvalidCurrencyWhenCreateOrderThenItIsRejected(): void
     {
         // Arrange
@@ -475,10 +411,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertValidationFailedForAttribute($response, 'currency');
     }
 
-    /**
-     * `priceMode` defaults to `GROSS_MODE` when omitted, so this only exercises the `Choice`
-     * constraint when a caller supplies a value outside `[GROSS_MODE, NET_MODE]`.
-     */
     public function testGivenAnInvalidPriceModeWhenCreateOrderThenItIsRejected(): void
     {
         // Arrange
@@ -492,10 +424,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertValidationFailedForAttribute($response, 'priceMode');
     }
 
-    /**
-     * `items` is required to carry at least one line — `Count: min: 1` — distinct from the
-     * empty-payload test above, which covers the attribute being absent entirely.
-     */
     public function testGivenAnEmptyItemsArrayWhenCreateOrderThenItIsRejected(): void
     {
         // Arrange
@@ -545,10 +473,6 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertRespondsWithStatus($response, Response::HTTP_FORBIDDEN);
     }
 
-    /**
-     * A rejected intake must leave nothing behind. Asserted through the collection endpoint rather
-     * than the database so the check stays on the API's own terms.
-     */
     protected function assertNoOrderExistsFor(string $customerReference): void
     {
         $response = $this->handleApiRequest('GET', $this->tester->getOrderCollectionUrl([

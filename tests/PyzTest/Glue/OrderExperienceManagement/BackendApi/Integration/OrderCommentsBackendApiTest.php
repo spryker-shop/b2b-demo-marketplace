@@ -14,15 +14,6 @@ use PyzTest\Glue\OrderExperienceManagement\AbstractOrderExperienceManagementBack
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * `/orders/{orderReference}/comments` over a booted GLUE_BACKEND kernel, plus the `comments`
- * property the orders resource reports alongside it.
- *
- * The whole surface is asserted end to end rather than against the Glue classes directly: the
- * endpoint is a thin adapter over `SalesFacade::saveComment()` / `getOrderCommentsByIdSalesOrder()`,
- * so what is worth proving is exactly what only a booted kernel can show — the routes resolve at the
- * intended paths, authorization is enforced, the documented status codes come back, a write is
- * readable afterwards, and the author is the token's operator and not the request body.
- *
  * Auto-generated group annotations
  *
  * @group PyzTest
@@ -51,11 +42,6 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
 
     protected const string ATTRIBUTE_CREATED_AT = 'createdAt';
 
-    /**
-     * A unique login per created operator. `haveUser()` otherwise builds one from unseeded faker
-     * data, which collides with an existing `spy_user` row often enough to flake the suite. Kept
-     * short on purpose — `spy_user.username` is VARCHAR(45).
-     */
     protected const string ACTING_USER_USERNAME_FORMAT = 'oem-comment-%s@spryker.test';
 
     protected const string ACTING_USER_FIRST_NAME = 'Ada';
@@ -63,22 +49,12 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
     protected const string ACTING_USER_LAST_NAME = 'Operator';
 
     /**
-     * The two names above, composed the way the processor composes an author.
-     *
      * @uses \SprykerFeature\Glue\OrderExperienceManagement\Api\Backend\Processor\OrderCommentsBackendProcessor::AUTHOR_NAME_FORMAT
      */
     protected const string ACTING_USER_DISPLAY_NAME = 'Ada Operator';
 
-    /**
-     * `order-comments.validation.yml` bounds the message at 5000 characters.
-     */
     protected const int MESSAGE_LENGTH_OVER_LIMIT = 5001;
 
-    /**
-     * An order that exists but has no comments yet must answer 200 with an empty collection. A 404
-     * here would make "no comments" indistinguishable from "no such order", which is the one
-     * distinction a client integrating against this endpoint actually needs.
-     */
     public function testGivenAnOrderWithoutCommentsWhenGetCommentsThenEmptyCollectionIsReturned(): void
     {
         // Arrange
@@ -156,10 +132,6 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
         );
     }
 
-    /**
-     * The author is the authenticated operator, and a body-supplied one must not be able to change
-     * that — `username` is declared `writable: false`, so the attribute never reaches the resource.
-     */
     public function testGivenAUsernameInTheBodyWhenPostCommentThenTheActingOperatorIsRecordedInstead(): void
     {
         // Arrange
@@ -213,10 +185,6 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
         $this->assertValidationFailedForAttribute($response, static::ATTRIBUTE_MESSAGE);
     }
 
-    /**
-     * The order is resolved before the write, so an unknown reference is a 404 and not the 500 a
-     * failed INSERT against `spy_sales_order_comment.fk_sales_order` would produce.
-     */
     public function testGivenAnUnknownOrderReferenceWhenPostCommentThenNotFoundIsReturned(): void
     {
         // Arrange
@@ -253,11 +221,6 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
         $this->assertRespondsWithStatus($response, Response::HTTP_FORBIDDEN);
     }
 
-    /**
-     * Persistence does not sort the thread, so the order is imposed by the provider. Asserted here
-     * because a thread read in an arbitrary order is indistinguishable from a correct one on a
-     * single-comment fixture.
-     */
     public function testGivenSeveralCommentsWhenGetCommentsThenTheyAreReportedOldestFirst(): void
     {
         // Arrange
@@ -297,11 +260,6 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
         $this->assertSame(static::ACTING_USER_DISPLAY_NAME, $comments[0][static::ATTRIBUTE_USERNAME] ?? null);
     }
 
-    /**
-     * Reading comments costs one query per order, so the collection route must not report them —
-     * `skip_null_values` drops the key entirely rather than emitting an empty list, which would
-     * suggest the order has none.
-     */
     public function testGivenACommentedOrderWhenGetOrderCollectionThenCommentsAreOmitted(): void
     {
         // Arrange
@@ -326,11 +284,6 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
         );
     }
 
-    /**
-     * The resource declares an explicit `uriTemplate` on every operation. An operation missing one
-     * would fall back to a route minted from `shortName`, publishing a top-level `/order-comments`
-     * with no order in the path — and therefore no order-membership check.
-     */
     public function testGivenTheShortNameRouteWhenRequestedThenItIsNotPublished(): void
     {
         // Arrange
@@ -352,10 +305,6 @@ class OrderCommentsBackendApiTest extends AbstractOrderExperienceManagementBacke
         );
     }
 
-    /**
-     * An operator with a known first and last name, so the display name the endpoint composes can be
-     * asserted exactly instead of merely being non-empty.
-     */
     protected function haveActingUser(): UserTransfer
     {
         return $this->tester->haveUser([
