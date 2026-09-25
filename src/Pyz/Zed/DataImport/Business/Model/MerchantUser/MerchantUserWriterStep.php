@@ -11,6 +11,7 @@ namespace Pyz\Zed\DataImport\Business\Model\MerchantUser;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
@@ -59,9 +60,11 @@ class MerchantUserWriterStep implements DataImportStepInterface
             return;
         }
 
-        $userTransfer = $this->merchantUserFacade->findUser(
-            (new UserCriteriaTransfer())->setIdUser($idUser),
-        );
+        $userTransfer = $this->merchantUserFacade->getUserCollection(
+            (new UserCriteriaTransfer())->setUserConditions(
+                (new UserConditionsTransfer())->setUserIds([$idUser]),
+            ),
+        )->getUsers()->getIterator()->current();
 
         $this->merchantUserFacade->createMerchantUser(
             (new MerchantUserTransfer())

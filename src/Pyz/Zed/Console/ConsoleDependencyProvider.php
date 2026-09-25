@@ -79,9 +79,6 @@ use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole
 use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerDebugConsole;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerWorkerConsole;
-use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerAwsSnsTopicsCreatorConsole;
-use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerAwsSqsQueuesCreatorConsole;
-use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerSqsToSnsSubscriberConsole;
 use Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin;
 use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
 use Spryker\Zed\Oauth\Communication\Console\OauthTokenConsole;
@@ -168,7 +165,6 @@ use Spryker\Zed\SetupFrontend\Communication\Console\CleanUpDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallPackageManagerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallProjectDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedBuildFrontendConsole;
 use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
@@ -385,7 +381,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new ExportSynchronizedDataConsole(),
 
             // Setup commands
-            new RunnerConsole(),
             new DeployPreparePropelConsole(),
 
             new DatabaseDropConsole(),
@@ -534,9 +529,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             }
 
             $commands[] = new MessageBrokerDebugConsole();
-            $commands[] = new MessageBrokerAwsSqsQueuesCreatorConsole();
-            $commands[] = new MessageBrokerAwsSnsTopicsCreatorConsole();
-            $commands[] = new MessageBrokerSqsToSnsSubscriberConsole();
 
             // Punchout Gateway demo connections
             $commands[] = new PunchoutDemoConnectionCreateConsole();
@@ -546,7 +538,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
+     * @return array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     public function getConsolePostRunHookPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
