@@ -14,6 +14,9 @@ use SprykerFeature\Glue\PurchasingControl\Plugin\OrderExperienceManagement\Budge
 
 class OrderExperienceManagementDependencyProvider extends SprykerFeatureOrderExperienceManagementDependencyProvider
 {
+    /**
+     * @return array<\SprykerFeature\Glue\OrderExperienceManagement\Dependency\Plugin\OrderResourceExpanderPluginInterface>
+     */
     protected function getOrderResourceExpanderPlugins(): array
     {
         return [
