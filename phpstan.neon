@@ -1,6 +1,7 @@
 includes:
     - vendor/spryker-sdk/phpstan-spryker/extension.neon
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
 
 parameters:
     level: 6
@@ -22,6 +23,23 @@ parameters:
         - '#Call to an undefined method .+DataSetStepBrokerAwareInterface::addAfterImportHook\(\).#'
         - '#Parameter \#1 \$rawCatalogSearchResultFormatterPlugin of class .+CurrencyAwareSuggestionByTypeResultFormatter constructor expects .+ResultFormatterPluginInterface, .+SuggestionByTypeResultFormatterPlugin given.#'
         - '#Method .+CheckoutPageDependencyProvider::.+\(\) return type has no value type specified in iterable type .+FormInterface.#'
+        - '#Fetching deprecated class constant PERMISSIONS of class Generated\\Shared\\Transfer\\CustomerIdentifierTransfer#'
+        - '#Fetching deprecated class constant (SHIPMENT|SHIPPING_ADDRESS|PAYMENT) of class Generated\\Shared\\Transfer\\QuoteTransfer#'
+        - '#Call to deprecated method getEventFacade\(\) of class Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory#'
+        - '#(Call to method getAllowedStores\(\)|Call to method getInstance\(\)) of deprecated class Spryker\\Shared\\Kernel\\Store#'
+        - '#Instantiation of deprecated class Spryker\\Glue\\ShipmentsRestApi\\Plugin\\CheckoutRestApi\\SelectedShipmentMethodCheckoutDataResponseMapperPlugin#'
+        - '#Instantiation of deprecated class Spryker\\Glue\\ShipmentTypeServicePointsRestApi\\Plugin\\ShipmentsRestApi\\SingleShipmentTypeServicePointShippingAddressValidationStrategyPlugin#'
+        - '#Instantiation of deprecated class Spryker\\Zed\\MerchantProductStorage\\Communication\\Plugin\\Publisher\\Merchant\\MerchantUpdatePublisherPlugin#'
+        - '#Instantiation of deprecated class Spryker\\Zed\\MerchantProductSearch\\Communication\\Plugin\\Publisher\\Merchant\\MerchantProductSearchWritePublisherPlugin#'
+        - '#Instantiation of deprecated class Spryker\\Zed\\MerchantProductOfferSearch\\Communication\\Plugin\\Event\\Subscriber\\MerchantSearchEventSubscriber#'
+        - '#deprecated interface Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface#'
+        - '#deprecated interface Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ValidateRestRequestPluginInterface#'
+        - '#deprecated interface Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\AvailabilityStrategyPluginInterface#'
+        - '#deprecated interface Spryker\\Zed\\OauthExtension\\Dependency\\Plugin\\OauthGrantTypeConfigurationProviderPluginInterface#'
+        - '#Instantiation of deprecated class Spryker\\Zed\\ShipmentsRestApi\\Communication\\Plugin\\CheckoutRestApi\\ShipmentQuoteMapperPlugin#'
+        - '#Instantiation of deprecated class Spryker\\Zed\\ShipmentsRestApi\\Communication\\Plugin\\CheckoutRestApi\\ShipmentMethodCheckoutDataValidatorPlugin#'
+        - '#Call to deprecated method getSaveOrderOrFail\(\) of class Generated\\Shared\\Transfer\\CheckoutResponseTransfer#'
+        - '#Call to deprecated method setPayment\(\) of class Generated\\Shared\\Transfer\\QuoteTransfer#'
 
     reportUnmatchedIgnoredErrors: false
 

@@ -10,10 +10,11 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ExampleProductSalePage\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Pyz\Zed\ExampleProductSalePage\Business\Exception\ProductLabelSaleNotFoundException;
 use Pyz\Zed\ExampleProductSalePage\ExampleProductSalePageConfig;
 use Pyz\Zed\ExampleProductSalePage\Persistence\ExampleProductSalePageQueryContainerInterface;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
@@ -27,12 +28,19 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     protected $productSaleConfig;
 
+    /**
+     * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     */
+    protected $productLabelFacade;
+
     public function __construct(
         ExampleProductSalePageQueryContainerInterface $productSaleQueryContainer,
         ExampleProductSalePageConfig $productSaleConfig,
+        ProductLabelFacadeInterface $productLabelFacade,
     ) {
         $this->productSaleQueryContainer = $productSaleQueryContainer;
         $this->productSaleConfig = $productSaleConfig;
+        $this->productLabelFacade = $productLabelFacade;
     }
 
     /**
@@ -63,36 +71,34 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     /**
      * @throws \Pyz\Zed\ExampleProductSalePage\Business\Exception\ProductLabelSaleNotFoundException
      */
-    protected function getProductLabelNewEntity(): SpyProductLabel
+    protected function getProductLabelNewEntity(): ProductLabelTransfer
     {
         $labelNewName = $this->productSaleConfig->getLabelSaleName();
-        $productLabelNewEntity = $this->productSaleQueryContainer
-            ->queryProductLabelByName($labelNewName)
-            ->findOne();
+        $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($labelNewName);
 
-        if (!$productLabelNewEntity) {
+        if (!$productLabelTransfer) {
             throw new ProductLabelSaleNotFoundException(sprintf(
                 'Product Label "%1$s" doesn\'t exists. You can fix this problem by persisting a new Product Label entity into your database with "%1$s" name.',
                 $labelNewName,
             ));
         }
 
-        return $productLabelNewEntity;
+        return $productLabelTransfer;
     }
 
     /**
      * @return array<int, array<int>>
      */
-    protected function findRelationsBecomingInactive(SpyProductLabel $productLabelEntity): array
+    protected function findRelationsBecomingInactive(ProductLabelTransfer $productLabelTransfer): array
     {
         $relations = [];
 
         $productLabelProductAbstractEntities = $this->productSaleQueryContainer
-            ->queryRelationsBecomingInactive($productLabelEntity->getIdProductLabel())
+            ->queryRelationsBecomingInactive($productLabelTransfer->getIdProductLabelOrFail())
             ->find();
 
         foreach ($productLabelProductAbstractEntities as $productLabelProductAbstractEntity) {
-            $relations[$productLabelEntity->getIdProductLabel()][] = $productLabelProductAbstractEntity->getFkProductAbstract();
+            $relations[$productLabelTransfer->getIdProductLabelOrFail()][] = $productLabelProductAbstractEntity->getFkProductAbstract();
         }
 
         return $relations;
@@ -101,16 +107,16 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     /**
      * @return array<int, array<int>>
      */
-    protected function findRelationsBecomingActive(SpyProductLabel $productLabelEntity): array
+    protected function findRelationsBecomingActive(ProductLabelTransfer $productLabelTransfer): array
     {
         $relations = [];
 
         $productAbstractEntities = $this->productSaleQueryContainer
-            ->queryRelationsBecomingActive($productLabelEntity->getIdProductLabel())
+            ->queryRelationsBecomingActive($productLabelTransfer->getIdProductLabelOrFail())
             ->find();
 
         foreach ($productAbstractEntities as $productAbstractEntity) {
-            $relations[$productLabelEntity->getIdProductLabel()][] = $productAbstractEntity->getIdProductAbstract();
+            $relations[$productLabelTransfer->getIdProductLabelOrFail()][] = $productAbstractEntity->getIdProductAbstract();
         }
 
         return $relations;

@@ -1113,7 +1113,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createProductStockWriterPlugins(): array
     {
@@ -1138,7 +1138,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createCombinedProductPriceDataSetWriterPlugins(): array
     {
@@ -1183,7 +1183,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createCombinedProductImageDataSetWriterPlugins(): array
     {
@@ -1220,7 +1220,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createCombinedProductStockDataSetWriterPlugins(): array
     {
@@ -1257,7 +1257,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createCombinedProductAbstractStoreDataSetWriterPlugins(): array
     {
@@ -1306,7 +1306,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createCombinedProductAbstractDataSetWriterPlugins(): array
     {
@@ -1353,7 +1353,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createCombinedProductConcreteDataSetWriterPlugins(): array
     {
@@ -1409,7 +1409,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createProductAbstractWriterPlugins(): array
     {
@@ -1424,7 +1424,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createProductConcreteWriterPlugins(): array
     {
@@ -1439,7 +1439,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createProductImageWriterPlugins(): array
     {
@@ -1454,7 +1454,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     public function createProductAbstractStoreWriterPlugins(): array
     {
@@ -1616,6 +1616,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         return new ShipmentExpander(
             $this->getShipmentFacade(),
             $this->getCalculationFacade(),
+            $this->createSalesOrderAddressResolver(),
         );
     }
 
