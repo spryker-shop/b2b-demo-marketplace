@@ -30,16 +30,11 @@ class CategoryDependencyProvider extends SprykerDependencyProvider
      */
     protected function getRelationDeletePluginStack(): array
     {
-        /**
-         * @var array<\Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface> $deletePlugins
-         */
-        $deletePlugins = [
+        return [
             new RemoveProductCategoryRelationPlugin(),
             new RemoveCategoryImageSetRelationPlugin(),
             new RemoveMerchantCategoryRelationPlugin(),
         ];
-
-        return $deletePlugins;
     }
 
     /**

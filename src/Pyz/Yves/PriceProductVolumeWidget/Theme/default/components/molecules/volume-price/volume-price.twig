@@ -7,14 +7,16 @@
 
 {% block body %}
     {% block amount %}
-        {% set amountClassName = data.originalAmount is not empty and data.originalAmount > data.amount ? config.name ~ '__amount--text-alt' %}
+        {% if data.amount is not empty %}
+            {% set amountClassName = data.originalAmount is not empty and data.originalAmount > data.amount ? config.name ~ '__amount--text-alt' %}
 
-        <span class="{{ config.name }}__amount {{ amountClassName }}">
-            <span itemprop="price" content="{{ data.amount | moneyRaw }}" class="{{ config.jsName }}__price {{ config.name }}__price">
-                <meta itemprop="priceCurrency" content="{{ currencyIsoCode() }}">
-                <span class="{{ config.jsName }}__amount-value" data-original-price="{{ data.amount | money }}">{{ data.amount | money }}</span>
+            <span class="{{ config.name }}__amount {{ amountClassName }}">
+                <span itemprop="price" content="{{ data.amount | moneyRaw }}" class="{{ config.jsName }}__price {{ config.name }}__price">
+                    <meta itemprop="priceCurrency" content="{{ currencyIsoCode() }}">
+                    <span class="{{ config.jsName }}__amount-value" data-original-price="{{ data.amount | money }}">{{ data.amount | money }}</span>
+                </span>
             </span>
-        </span>
+        {% endif %}
     {% endblock %}
 
     {% block originalAmount %}
