@@ -19,7 +19,11 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
+use RuntimeException;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\CustomerNote\Helper\CustomerNoteDataHelper;
@@ -52,11 +56,19 @@ class CustomerExperienceManagementBackendApiHelper extends Module
 
     public const string RESOURCE_NOTES = 'notes';
 
+    public const string RESOURCE_TYPE_NOTES = 'customer-notes';
+
     public const string OPERATION_SET_STATUS = 'set-status';
 
     public const string OPERATION_SET_DEFAULT = 'set-default';
 
     public const string RESOURCE_COMPANIES = 'companies';
+
+    public const string RESOURCE_CUSTOMER_GROUPS = 'customer-groups';
+
+    public const string RESOURCE_CUSTOMER_GROUP_CUSTOMERS = 'customer-group-customers';
+
+    public const string RESOURCE_CUSTOMER_ACCESS = 'customer-access';
 
     /**
      * Distinguishes the customers of one test method from every other row in the database, so a
@@ -363,7 +375,7 @@ class CustomerExperienceManagementBackendApiHelper extends Module
      */
     public function buildCustomerNoteRequestBody(array $attributes): string
     {
-        return $this->buildRequestBody(static::RESOURCE_NOTES, $attributes);
+        return $this->buildRequestBody(static::RESOURCE_TYPE_NOTES, $attributes);
     }
 
     /**
@@ -707,5 +719,128 @@ class CustomerExperienceManagementBackendApiHelper extends Module
         $userDataHelper = $this->getModule('\\' . UserDataHelper::class);
 
         return $userDataHelper;
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCustomerGroupRequestBody(array $attributes, ?string $uuid = null): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_CUSTOMER_GROUPS, $attributes, $uuid);
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCustomerGroupCustomersRequestBody(array $attributes): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_CUSTOMER_GROUP_CUSTOMERS, $attributes);
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCustomerAccessRequestBody(array $attributes): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_CUSTOMER_ACCESS, $attributes);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCustomerGroupCollectionUrl(array $query = []): string
+    {
+        return sprintf('/%s', static::RESOURCE_CUSTOMER_GROUPS) . $this->formatQuery($query);
+    }
+
+    public function getCustomerGroupUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s', static::RESOURCE_CUSTOMER_GROUPS, $uuid);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCustomerGroupCustomerCollectionUrl(string $uuid, array $query = []): string
+    {
+        return sprintf(
+            '/%s/%s/%s',
+            static::RESOURCE_CUSTOMER_GROUPS,
+            $uuid,
+            static::RESOURCE_CUSTOMERS,
+        ) . $this->formatQuery($query);
+    }
+
+    public function getCustomerGroupCustomerUrl(string $uuid, string $customerReference): string
+    {
+        return sprintf(
+            '/%s/%s/%s/%s',
+            static::RESOURCE_CUSTOMER_GROUPS,
+            $uuid,
+            static::RESOURCE_CUSTOMERS,
+            $customerReference,
+        );
+    }
+
+    public function getCustomerAccessUrl(): string
+    {
+        return sprintf('/%s', static::RESOURCE_CUSTOMER_ACCESS);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getAssignedCustomerReferences(string $uuid): array
+    {
+        $customerReferences = SpyCustomerQuery::create()
+            ->useSpyCustomerGroupToCustomerQuery()
+                ->useCustomerGroupQuery()
+                    ->filterByUuid($uuid)
+                ->endUse()
+            ->endUse()
+            ->orderByCustomerReference()
+            ->select([SpyCustomerTableMap::COL_CUSTOMER_REFERENCE])
+            ->find()
+            ->toArray();
+
+        return array_map('strval', $customerReferences);
+    }
+
+    /**
+     * @throws \RuntimeException
+     */
+    public function setCustomerGroupCreatedAt(string $uuid, string $createdAt): void
+    {
+        $customerGroupEntity = SpyCustomerGroupQuery::create()->findOneByUuid($uuid);
+
+        if ($customerGroupEntity === null) {
+            throw new RuntimeException(sprintf('No customer group with uuid "%s".', $uuid));
+        }
+
+        $customerGroupEntity->setCreatedAt($createdAt)->save();
+    }
+
+    public function countCustomerGroupsWithName(string $name): int
+    {
+        return SpyCustomerGroupQuery::create()->filterByName($name)->count();
+    }
+
+    public function countUnauthenticatedCustomerAccessRows(): int
+    {
+        return SpyUnauthenticatedCustomerAccessQuery::create()->count();
+    }
+
+    /**
+     * @return array<string, bool>
+     */
+    public function getUnauthenticatedCustomerAccessState(): array
+    {
+        $state = [];
+
+        foreach (SpyUnauthenticatedCustomerAccessQuery::create()->orderByIdUnauthenticatedCustomerAccess()->find() as $entity) {
+            $state[$entity->getContentType()] = (bool)$entity->getIsRestricted();
+        }
+
+        return $state;
     }
 }
