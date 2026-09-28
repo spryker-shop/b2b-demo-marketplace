@@ -31,6 +31,13 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
 
     protected const string ITEM_STATE_OTHER = 'test-filter-state-b';
 
+    /**
+     * `paginationMaximumItemsPerPage` of orders.resource.yml.
+     */
+    protected const int PAGE_LIMIT_MAXIMUM = 100;
+
+    protected const int PAGE_LIMIT_ABOVE_MAXIMUM = 500;
+
     public function testGivenAnAuthenticatedOperatorWhenFilterByCustomerReferenceThenOnlyThatCustomersOrdersAreReturned(): void
     {
         // Arrange
@@ -194,6 +201,26 @@ class GetCollectionOrdersBackendApiTest extends AbstractOrderExperienceManagemen
             $firstPageReferences,
             $secondPageReferences,
             'The second page must not repeat the first — that is what a silently ignored offset looks like.',
+        );
+
+        $firstPageDocument = $this->decodeJsonApi($firstPageResponse);
+        $this->assertSame(
+            ['numFound' => 2, 'currentPage' => 1, 'maxPage' => 2, 'currentItemsPerPage' => 1],
+            $firstPageDocument['meta']['pagination'] ?? null,
+        );
+        $this->assertStringContainsString('page[offset]=1', (string)($firstPageDocument['links']['next'] ?? ''));
+
+        // Act — a limit above the resource's paginationMaximumItemsPerPage.
+        $oversizedPageDocument = $this->decodeJsonApi($this->handleApiRequest('GET', $this->tester->getOrderCollectionUrl([
+            'customerReference' => $customerTransfer->getCustomerReferenceOrFail(),
+            'page' => ['limit' => static::PAGE_LIMIT_ABOVE_MAXIMUM, 'offset' => 0],
+        ])));
+
+        // Assert — the links must page with the limit actually applied, or following them skips orders.
+        $this->assertSame(static::PAGE_LIMIT_MAXIMUM, $oversizedPageDocument['meta']['pagination']['currentItemsPerPage'] ?? null);
+        $this->assertStringContainsString(
+            sprintf('page[limit]=%d', static::PAGE_LIMIT_MAXIMUM),
+            (string)($oversizedPageDocument['links']['first'] ?? ''),
         );
     }
 

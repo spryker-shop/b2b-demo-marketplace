@@ -35,10 +35,75 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         'paymentMethod',
     ];
 
-    /**
-     * Differs from the catalogue price and stays inside the DE/EUR sales-order-threshold window.
-     */
     protected const int UNIT_CUSTOM_PRICE = 175000;
+
+    protected const int CONTRACT_GROSS_PRICE = 120000;
+
+    protected const int CONTRACT_NET_PRICE = 100840;
+
+    /**
+     * @var list<string>
+     */
+    protected const array EXPECTED_ORDER_ATTRIBUTES = [
+        'orderReference',
+        'customerReference',
+        'store',
+        'currency',
+        'priceMode',
+        'locale',
+        'createdAt',
+        'customer',
+        'billingAddress',
+        'payments',
+        'items',
+        'itemsCount',
+        'itemStates',
+        'availableEvents',
+        'totals',
+        'expenses',
+        'calculatedDiscounts',
+        'comments',
+    ];
+
+    /**
+     * @var list<string>
+     */
+    protected const array EXPECTED_ORDER_ITEM_ATTRIBUTES = [
+        'uuid',
+        'sku',
+        'name',
+        'quantity',
+        'unitPrice',
+        'sumPrice',
+        'merchantReference',
+        'productOptions',
+        'shipment',
+        'taxRate',
+        'sumTaxAmount',
+        'refundableAmount',
+        'canceledAmount',
+        'calculatedDiscounts',
+        'sumSubtotalAggregation',
+        'sumDiscountAmountFullAggregation',
+        'sumPriceToPayAggregation',
+        'state',
+        'availableEvents',
+    ];
+
+    /**
+     * @var list<string>
+     */
+    protected const array EXPECTED_ORDER_TOTALS_ATTRIBUTES = [
+        'subtotal',
+        'expenseTotal',
+        'discountTotal',
+        'taxTotal',
+        'taxBreakdown',
+        'grandTotal',
+        'canceledTotal',
+        'refundableTotal',
+        'remunerationTotal',
+    ];
 
     public function testGivenACreatedOrderWhenItsLinesAreComparedWithTheGetResponseThenTheUuidsMatch(): void
     {
@@ -146,6 +211,120 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertSame(1, $readAttributes['itemsCount'] ?? null);
     }
 
+    public function testGivenAnOrderCustomReferenceWhenCreateOrderThenTheGetReportsIt(): void
+    {
+        // Arrange
+        $orderCustomReference = uniqid('oem-api-po-');
+        [, $attributes] = $this->tester->haveValidOrderPayload(['orderCustomReference' => $orderCustomReference]);
+        $this->tester->actingAsUser();
+
+        // Act
+        $createResponse = $this->createOrderViaApi($attributes);
+
+        // Assert
+        $this->assertRespondsWithStatus($createResponse, Response::HTTP_CREATED);
+
+        $orderReference = (string)$this->decodeJsonApi($createResponse)[static::JSON_API_KEY_DATA][static::JSON_API_KEY_ID];
+        $getResponse = $this->handleApiRequest('GET', $this->tester->getOrderUrl($orderReference));
+
+        $this->assertRespondsWithStatus($getResponse, Response::HTTP_OK);
+        $this->assertSame(
+            $orderCustomReference,
+            $this->getResourceAttributes($getResponse)['orderCustomReference'] ?? null,
+            'The custom reference is persisted by the project Sales post-save plugins and must be readable afterwards.',
+        );
+    }
+
+    public function testGivenTwoOrdersForTheSameCustomerWithoutAnOrderCustomReferenceWhenCreateOrderThenBothArePlaced(): void
+    {
+        // Arrange
+        [$customerTransfer, $attributes] = $this->tester->haveValidOrderPayload();
+        $this->tester->actingAsUser();
+
+        // Act
+        $firstResponse = $this->createOrderViaApi($attributes);
+        $secondResponse = $this->createOrderViaApi($attributes);
+
+        // Assert — API orders are exempt from the per-customer checkout lock (QuoteCheckoutConnectorConfig).
+        $this->assertRespondsWithStatus($firstResponse, Response::HTTP_CREATED);
+        $this->assertRespondsWithStatus($secondResponse, Response::HTTP_CREATED);
+        $this->assertCount(2, $this->findOrderReferencesFor($customerTransfer->getCustomerReferenceOrFail()));
+    }
+
+    public function testGivenTheSameOrderCustomReferenceTwiceWhenCreateOrderThenTheSecondIsRejected(): void
+    {
+        // Arrange
+        [$customerTransfer, $attributes] = $this->tester->haveValidOrderPayload([
+            'orderCustomReference' => uniqid('oem-api-po-'),
+        ]);
+        $this->tester->actingAsUser();
+
+        // Act
+        $firstResponse = $this->createOrderViaApi($attributes);
+        $secondResponse = $this->createOrderViaApi($attributes);
+
+        // Assert — for API orders the checkout lock is keyed by customer and orderCustomReference.
+        $this->assertRespondsWithStatus($firstResponse, Response::HTTP_CREATED);
+        $this->assertRespondsWithStatus($secondResponse, Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertCount(1, $this->findOrderReferencesFor($customerTransfer->getCustomerReferenceOrFail()));
+    }
+
+    public function testGivenACustomerWithAMerchantRelationshipPriceWhenCreateOrderThenTheContractPriceIsCharged(): void
+    {
+        // Arrange
+        [, $attributes] = $this->tester->haveValidOrderPayloadWithContractPrice(
+            static::CONTRACT_GROSS_PRICE,
+            static::CONTRACT_NET_PRICE,
+        );
+        $this->tester->actingAsUser();
+
+        $this->assertNotSame(static::CONTRACT_GROSS_PRICE, $this->tester->getOrderableProductGrossAmount());
+
+        // Act
+        $createResponse = $this->createOrderViaApi($attributes);
+
+        // Assert
+        $this->assertRespondsWithStatus($createResponse, Response::HTTP_CREATED);
+
+        $orderReference = (string)$this->decodeJsonApi($createResponse)[static::JSON_API_KEY_DATA][static::JSON_API_KEY_ID];
+        $getAttributes = $this->getResourceAttributes($this->handleApiRequest('GET', $this->tester->getOrderUrl($orderReference)));
+
+        $this->assertSame(
+            static::CONTRACT_GROSS_PRICE,
+            $getAttributes['items'][0]['unitPrice'] ?? null,
+            'Only the merchant-relationship price dimension of the buyer\'s business unit yields this price; the default is higher.',
+        );
+        $this->assertSame($attributes['companyBusinessUnitUuid'], $getAttributes['companyBusinessUnitUuid'] ?? null);
+        $this->assertNotEmpty($getAttributes['companyUuid'] ?? null);
+    }
+
+    public function testGivenAVoucherCodeWhenCreateOrderThenItsDiscountIsAppliedAndPersisted(): void
+    {
+        // Arrange
+        [$voucherCode, $discountDisplayName] = $this->tester->haveActiveVoucherCode();
+        [, $attributes] = $this->tester->haveValidOrderPayload(['cartCodes' => [$voucherCode]]);
+        $this->tester->actingAsUser();
+
+        // Act
+        $createResponse = $this->createOrderViaApi($attributes);
+
+        // Assert
+        $this->assertRespondsWithStatus($createResponse, Response::HTTP_CREATED);
+
+        $orderReference = (string)$this->decodeJsonApi($createResponse)[static::JSON_API_KEY_DATA][static::JSON_API_KEY_ID];
+        $getResponse = $this->handleApiRequest('GET', $this->tester->getOrderUrl($orderReference));
+
+        $this->assertContains(
+            $discountDisplayName,
+            array_column($this->getResourceAttributes($createResponse)['calculatedDiscounts'] ?? [], 'displayName'),
+        );
+        $this->assertContains(
+            $discountDisplayName,
+            array_column($this->getResourceAttributes($getResponse)['calculatedDiscounts'] ?? [], 'displayName'),
+            'The voucher discount must be saved with the order, not only calculated for the POST response.',
+        );
+    }
+
     public function testGivenACreatedOrderWhenSearchByItsCustomerThenItAppearsInTheCollection(): void
     {
         // Arrange
@@ -219,6 +398,28 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
         $this->assertSame($getAttributes['availableEvents'] ?? [], $postAttributes['availableEvents'] ?? []);
         $this->assertSame($getAttributes['itemStates'] ?? [], $postAttributes['itemStates'] ?? []);
         $this->assertSame($getAttributes['totals'] ?? [], $postAttributes['totals'] ?? []);
+    }
+
+    public function testGivenACreatedOrderWhenGetItByReferenceThenItIsSerializedAsTheSchemaDeclares(): void
+    {
+        // Arrange
+        [, $attributes] = $this->tester->haveValidOrderPayload();
+        $this->tester->actingAsUser();
+
+        $createResponse = $this->createOrderViaApi($attributes);
+        $this->assertRespondsWithStatus($createResponse, Response::HTTP_CREATED);
+        $orderReference = (string)$this->decodeJsonApi($createResponse)[static::JSON_API_KEY_DATA][static::JSON_API_KEY_ID];
+
+        // Act
+        $getResponse = $this->handleApiRequest('GET', $this->tester->getOrderUrl($orderReference));
+
+        // Assert — keys come from orders.resource.yml and its object files; null values are skipped.
+        $this->assertRespondsWithStatus($getResponse, Response::HTTP_OK);
+        $getAttributes = $this->getResourceAttributes($getResponse);
+
+        $this->assertEqualsCanonicalizing(static::EXPECTED_ORDER_ATTRIBUTES, array_keys($getAttributes));
+        $this->assertEqualsCanonicalizing(static::EXPECTED_ORDER_ITEM_ATTRIBUTES, array_keys($getAttributes['items'][0] ?? []));
+        $this->assertEqualsCanonicalizing(static::EXPECTED_ORDER_TOTALS_ATTRIBUTES, array_keys($getAttributes['totals'] ?? []));
     }
 
     public function testGivenAUnitCustomPriceDifferentFromTheCataloguePriceWhenCreateOrderThenTheCustomPriceIsCharged(): void
@@ -472,6 +673,35 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
 
     // ------------------------------------------------------------------ authorization
 
+    /**
+     * @dataProvider provideWrongTypePayloads
+     *
+     * @param array<string, mixed> $attributes
+     */
+    public function testGivenAWrongTypeValueWhenCreateOrderThenTheOffendingFieldIsNamed(array $attributes, string $expectedField): void
+    {
+        // Arrange
+        $this->tester->actingAsUser();
+
+        // Act
+        $response = $this->createOrderViaApi($attributes);
+
+        // Assert — the API Platform deserializer runs before the processor's own shape check.
+        $this->assertRespondsWithStatus($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertStringContainsString($expectedField, implode(' | ', $this->getErrorDetails($response)));
+    }
+
+    /**
+     * @return array<string, array{array<string, mixed>, string}>
+     */
+    public function provideWrongTypePayloads(): array
+    {
+        return [
+            'string where items belong' => [['items' => 'abc'], '"items"'],
+            'string quantity' => [['items' => [['sku' => 'oem-api-sku', 'quantity' => 'abc']]], '"items[0].quantity"'],
+        ];
+    }
+
     public function testGivenNoAuthenticationWhenCreateOrderThenItRespondsUnauthorized(): void
     {
         // Act — intentionally unauthenticated, and with a payload that would fail validation too,
@@ -514,5 +744,19 @@ class CreateOrderBackendApiTest extends AbstractOrderExperienceManagementBackend
 
         $this->assertRespondsWithStatus($response, Response::HTTP_OK);
         $this->assertSame([], $this->getResourceIds($response), 'A rejected payload places no order.');
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function findOrderReferencesFor(string $customerReference): array
+    {
+        $response = $this->handleApiRequest('GET', $this->tester->getOrderCollectionUrl([
+            'customerReference' => $customerReference,
+        ]));
+
+        $this->assertRespondsWithStatus($response, Response::HTTP_OK);
+
+        return $this->getResourceIds($response);
     }
 }

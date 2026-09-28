@@ -11,15 +11,31 @@ namespace PyzTest\Glue\OrderExperienceManagement\Helper;
 
 use ArrayObject;
 use Codeception\Module;
+use Exception;
 use Generated\Shared\DataBuilder\MerchantProfileBuilder;
+use Generated\Shared\DataBuilder\MerchantRelationshipBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\BudgetTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CostCenterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\DiscountCalculatorTransfer;
+use Generated\Shared\Transfer\DiscountConditionTransfer;
+use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -35,14 +51,21 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use PDO;
 use Propel\Runtime\Propel;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerFeatureTest\Shared\PurchasingControl\Helper\PurchasingControlHelper;
+use SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper;
 use SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper;
@@ -52,6 +75,8 @@ use SprykerTest\Shared\Sales\Helper\SalesDataHelper;
 use SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper;
 use SprykerTest\Shared\Stock\Helper\StockDataHelper;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\Company\Helper\CompanyHelper;
+use SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper;
 use SprykerTest\Zed\Merchant\Helper\MerchantHelper;
 use SprykerTest\Zed\Oms\Helper\OmsHelper;
 use SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper;
@@ -75,6 +100,16 @@ class OrderExperienceManagementBackendApiHelper extends Module
      * @var array<int, int>
      */
     protected array $costCenterIds = [];
+
+    /**
+     * @var array<int, int>
+     */
+    protected array $discountIds = [];
+
+    /**
+     * @var array<int, int>
+     */
+    protected array $merchantRelationshipIds = [];
 
     public const string RESOURCE_ORDERS = 'orders';
 
@@ -120,6 +155,13 @@ class OrderExperienceManagementBackendApiHelper extends Module
     protected const string BUDGET_ENFORCEMENT_RULE = 'block';
 
     protected const string ISO2_CODE = 'DE';
+
+    protected const string COMPANY_STATUS_APPROVED = 'approved';
+
+    /**
+     * 10.00 %, in the hundredths the percentage calculator expects.
+     */
+    protected const string VOUCHER_PERCENTAGE = '1000';
 
     /**
      * @see spy_sales_order_threshold
@@ -303,7 +345,7 @@ class OrderExperienceManagementBackendApiHelper extends Module
     }
 
     /**
-     * @return array{0: \Generated\Shared\Transfer\ProductConcreteTransfer, 1: string}
+     * @return array{0: \Generated\Shared\Transfer\ProductConcreteTransfer, 1: string, 2: \Generated\Shared\Transfer\PriceProductTransfer, 3: \Generated\Shared\Transfer\MerchantTransfer}
      */
     public function haveOrderableProduct(): array
     {
@@ -325,15 +367,15 @@ class OrderExperienceManagementBackendApiHelper extends Module
             ],
         ]);
 
-        $merchantReference = $this->haveMerchantOfferForProduct($productConcreteTransfer, $priceProductTransfer);
+        $merchantTransfer = $this->haveMerchantOfferForProduct($productConcreteTransfer, $priceProductTransfer);
 
-        return [$productConcreteTransfer, $merchantReference];
+        return [$productConcreteTransfer, $merchantTransfer->getMerchantReferenceOrFail(), $priceProductTransfer, $merchantTransfer];
     }
 
     protected function haveMerchantOfferForProduct(
         ProductConcreteTransfer $productConcreteTransfer,
         PriceProductTransfer $priceProductTransfer,
-    ): string {
+    ): MerchantTransfer {
         $merchantTransfer = $this->getMerchantHelper()->haveMerchant([
             MerchantTransfer::MERCHANT_PROFILE => (new MerchantProfileBuilder())->build(),
         ]);
@@ -364,7 +406,7 @@ class OrderExperienceManagementBackendApiHelper extends Module
             PriceProductOfferTransfer::FK_PRICE_PRODUCT_STORE => $priceProductTransfer->getMoneyValueOrFail()->getIdEntityOrFail(),
         ]);
 
-        return $merchantTransfer->getMerchantReferenceOrFail();
+        return $merchantTransfer;
     }
 
     public function haveOrderableProductBelowHardMinimumThreshold(): ProductConcreteTransfer
@@ -545,6 +587,210 @@ class OrderExperienceManagementBackendApiHelper extends Module
         return $budgetTransfer;
     }
 
+    /**
+     * @return array{0: \Generated\Shared\Transfer\CustomerTransfer, 1: array<string, mixed>}
+     */
+    public function haveValidOrderPayloadWithContractPrice(int $contractGrossAmount, int $contractNetAmount): array
+    {
+        $customerTransfer = $this->haveOrderingCustomer();
+        [$productConcreteTransfer, $merchantReference, $priceProductTransfer, $merchantTransfer] = $this->haveOrderableProduct();
+        $this->haveActiveShipmentMethod();
+
+        $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnitForCustomer($customerTransfer);
+        $merchantRelationshipTransfer = $this->haveMerchantRelationship($merchantTransfer, $companyBusinessUnitTransfer);
+        $this->haveMerchantRelationshipPrice(
+            $productConcreteTransfer,
+            $priceProductTransfer,
+            $merchantRelationshipTransfer,
+            $contractGrossAmount,
+            $contractNetAmount,
+        );
+
+        return [
+            $customerTransfer,
+            $this->buildValidOrderAttributes(
+                $customerTransfer->getCustomerReferenceOrFail(),
+                $productConcreteTransfer->getSkuOrFail(),
+                ['companyBusinessUnitUuid' => $companyBusinessUnitTransfer->getUuidOrFail()],
+                $merchantReference,
+            ),
+        ];
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return array{0: string, 1: string} The voucher code and the display name of its discount.
+     */
+    public function haveActiveVoucherCode(): array
+    {
+        $displayName = uniqid('OEM Backend API voucher ', true);
+
+        $discountConfiguratorTransfer = (new DiscountConfiguratorTransfer())
+            ->setDiscountGeneral(
+                (new DiscountGeneralTransfer())
+                    ->setDiscountType(DiscountConstants::TYPE_VOUCHER)
+                    ->setDisplayName($displayName)
+                    ->setIsActive(true)
+                    ->setIsExclusive(false)
+                    ->setValidFrom('2020-01-01 00:00:00')
+                    ->setValidTo('2035-01-01 00:00:00')
+                    ->setStoreRelation(
+                        (new StoreRelationTransfer())->setIdStores([$this->getCurrentStore()->getIdStoreOrFail()]),
+                    ),
+            )
+            ->setDiscountCalculator(
+                (new DiscountCalculatorTransfer())
+                    ->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE)
+                    ->setAmount(static::VOUCHER_PERCENTAGE)
+                    ->setCollectorQueryString("sku = '*'"),
+            )
+            ->setDiscountCondition(
+                (new DiscountConditionTransfer())
+                    ->setDecisionRuleQueryString("sub-total >= '0'")
+                    ->setMinimumItemAmount(1),
+            );
+
+        $discountConfiguratorResponseTransfer = $this->getLocator()->discount()->facade()->createDiscount($discountConfiguratorTransfer);
+
+        if (!$discountConfiguratorResponseTransfer->getIsSuccessful()) {
+            $messages = [];
+
+            foreach ($discountConfiguratorResponseTransfer->getMessages() as $messageTransfer) {
+                $messages[] = (string)$messageTransfer->getValue();
+            }
+
+            throw new Exception(sprintf('Failed to create the voucher discount: %s', implode('; ', $messages)));
+        }
+
+        $idDiscount = $discountConfiguratorResponseTransfer->getDiscountConfiguratorOrFail()
+            ->getDiscountGeneralOrFail()
+            ->getIdDiscountOrFail();
+        $this->discountIds[] = $idDiscount;
+
+        $voucherCode = uniqid('oem-api-');
+        (new SpyDiscountVoucher())
+            ->setFkDiscountVoucherPool(SpyDiscountQuery::create()->findPk($idDiscount)->getFkDiscountVoucherPool())
+            ->setCode($voucherCode)
+            ->setIsActive(true)
+            ->save();
+
+        return [$voucherCode, $displayName];
+    }
+
+    protected function haveCompanyBusinessUnitForCustomer(CustomerTransfer $customerTransfer): CompanyBusinessUnitTransfer
+    {
+        $companyTransfer = $this->getCompanyHelper()->haveActiveCompany([
+            CompanyTransfer::STATUS => static::COMPANY_STATUS_APPROVED,
+        ]);
+
+        $companyBusinessUnitTransfer = $this->getCompanyBusinessUnitHelper()->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompanyOrFail(),
+        ]);
+
+        $companyUserTransfer = $this->getCompanyUserHelper()->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomerOrFail(),
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompanyOrFail(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+            CompanyUserTransfer::IS_ACTIVE => true,
+        ]);
+
+        $this->assignPlaceOrderRole($companyUserTransfer, $companyTransfer);
+
+        return $this->getLocator()->companyBusinessUnit()->facade()->getCompanyBusinessUnitById(
+            (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail()),
+        );
+    }
+
+    /**
+     * Without it the project's quote approval pre-check refuses the order as over the purchasing limit.
+     *
+     * @throws \Exception
+     */
+    protected function assignPlaceOrderRole(CompanyUserTransfer $companyUserTransfer, CompanyTransfer $companyTransfer): void
+    {
+        $permissionTransfer = $this->getLocator()->permission()->facade()->findPermissionByKey(PlaceOrderPermissionPlugin::KEY);
+
+        if ($permissionTransfer === null) {
+            throw new Exception(sprintf('Permission "%s" is not synchronised.', PlaceOrderPermissionPlugin::KEY));
+        }
+
+        $companyRoleTransfer = $this->getLocator()->companyRole()->facade()->create(
+            (new CompanyRoleTransfer())
+                ->setFkCompany($companyTransfer->getIdCompanyOrFail())
+                ->setName(uniqid('OEM Backend API buyer ', true))
+                ->setIsDefault(false)
+                ->setPermissionCollection((new PermissionCollectionTransfer())->addPermission($permissionTransfer)),
+        )->getCompanyRoleTransferOrFail();
+
+        $this->getLocator()->companyRole()->facade()->saveCompanyUser(
+            $companyUserTransfer->setCompanyRoleCollection((new CompanyRoleCollectionTransfer())->addRole($companyRoleTransfer)),
+        );
+    }
+
+    protected function haveMerchantRelationship(
+        MerchantTransfer $merchantTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+    ): MerchantRelationshipTransfer {
+        $merchantRelationshipTransfer = (new MerchantRelationshipBuilder([
+            MerchantRelationshipTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchantOrFail(),
+            MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+            MerchantRelationshipTransfer::MERCHANT_RELATIONSHIP_KEY => uniqid('oem-api-mr-'),
+        ]))->build()
+            ->setIdMerchantRelationship(null)
+            ->setMerchant($merchantTransfer)
+            ->setOwnerCompanyBusinessUnit($companyBusinessUnitTransfer)
+            ->setAssigneeCompanyBusinessUnits(
+                (new CompanyBusinessUnitCollectionTransfer())->addCompanyBusinessUnit($companyBusinessUnitTransfer),
+            );
+
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipResponseTransfer $merchantRelationshipResponseTransfer */
+        $merchantRelationshipResponseTransfer = $this->getLocator()->merchantRelationship()->facade()->createMerchantRelationship(
+            $merchantRelationshipTransfer,
+            (new MerchantRelationshipRequestTransfer())->setMerchantRelationship($merchantRelationshipTransfer),
+        );
+        $merchantRelationshipTransfer = $merchantRelationshipResponseTransfer->getMerchantRelationshipOrFail();
+
+        $this->merchantRelationshipIds[] = $merchantRelationshipTransfer->getIdMerchantRelationshipOrFail();
+
+        return $merchantRelationshipTransfer;
+    }
+
+    protected function haveMerchantRelationshipPrice(
+        ProductConcreteTransfer $productConcreteTransfer,
+        PriceProductTransfer $defaultPriceProductTransfer,
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        int $grossAmount,
+        int $netAmount,
+    ): void {
+        $defaultMoneyValueTransfer = $defaultPriceProductTransfer->getMoneyValueOrFail();
+
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setIdPriceProduct($defaultPriceProductTransfer->getIdPriceProductOrFail())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcreteOrFail())
+            ->setSkuProduct($productConcreteTransfer->getSkuOrFail())
+            ->setSkuProductAbstract($productConcreteTransfer->getAbstractSkuOrFail())
+            ->setFkPriceType($defaultPriceProductTransfer->getFkPriceType())
+            ->setPriceType($defaultPriceProductTransfer->getPriceType())
+            ->setPriceTypeName($defaultPriceProductTransfer->getPriceTypeName())
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setFkStore($defaultMoneyValueTransfer->getFkStoreOrFail())
+                    ->setFkCurrency($defaultMoneyValueTransfer->getFkCurrencyOrFail())
+                    ->setCurrency($defaultMoneyValueTransfer->getCurrency())
+                    ->setGrossAmount($grossAmount)
+                    ->setNetAmount($netAmount),
+            )
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType(PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP)
+                    ->setIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationshipOrFail()),
+            );
+
+        $this->getLocator()->priceProduct()->facade()->persistPriceProductStore($priceProductTransfer);
+    }
+
     public function cleanupPlacedOrder(string $orderReference): void
     {
         $this->placedOrderReferences[$orderReference] = $orderReference;
@@ -567,6 +813,43 @@ class OrderExperienceManagementBackendApiHelper extends Module
         $this->placedOrderReferences = [];
 
         $this->deleteBudgetFixtures();
+        $this->deleteDiscountFixtures();
+        $this->deleteMerchantRelationshipFixtures();
+    }
+
+    protected function deleteDiscountFixtures(): void
+    {
+        $connection = Propel::getConnection();
+
+        foreach ($this->discountIds as $idDiscount) {
+            $idVoucherPool = (int)SpyDiscountQuery::create()->findPk($idDiscount)?->getFkDiscountVoucherPool();
+
+            $connection->exec(sprintf('DELETE FROM spy_discount_store WHERE fk_discount = %d', $idDiscount));
+            $connection->exec(sprintf('DELETE FROM spy_discount_amount WHERE fk_discount = %d', $idDiscount));
+            $connection->exec(sprintf('DELETE FROM spy_discount WHERE id_discount = %d', $idDiscount));
+
+            if ($idVoucherPool === 0) {
+                continue;
+            }
+
+            $connection->exec(sprintf('DELETE FROM spy_discount_voucher WHERE fk_discount_voucher_pool = %d', $idVoucherPool));
+            $connection->exec(sprintf('DELETE FROM spy_discount_voucher_pool WHERE id_discount_voucher_pool = %d', $idVoucherPool));
+        }
+
+        $this->discountIds = [];
+    }
+
+    protected function deleteMerchantRelationshipFixtures(): void
+    {
+        $connection = Propel::getConnection();
+
+        foreach ($this->merchantRelationshipIds as $idMerchantRelationship) {
+            $connection->exec(sprintf('DELETE FROM spy_price_product_merchant_relationship WHERE fk_merchant_relationship = %d', $idMerchantRelationship));
+            $connection->exec(sprintf('DELETE FROM spy_merchant_relationship_to_company_business_unit WHERE fk_merchant_relationship = %d', $idMerchantRelationship));
+            $connection->exec(sprintf('DELETE FROM spy_merchant_relationship WHERE id_merchant_relationship = %d', $idMerchantRelationship));
+        }
+
+        $this->merchantRelationshipIds = [];
     }
 
     protected function deleteBudgetFixtures(): void
@@ -801,6 +1084,30 @@ class OrderExperienceManagementBackendApiHelper extends Module
         $omsHelper = $this->getModule('\\' . OmsHelper::class);
 
         return $omsHelper;
+    }
+
+    protected function getCompanyHelper(): CompanyHelper
+    {
+        /** @var \SprykerTest\Zed\Company\Helper\CompanyHelper $companyHelper */
+        $companyHelper = $this->getModule('\\' . CompanyHelper::class);
+
+        return $companyHelper;
+    }
+
+    protected function getCompanyBusinessUnitHelper(): CompanyBusinessUnitHelper
+    {
+        /** @var \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper $companyBusinessUnitHelper */
+        $companyBusinessUnitHelper = $this->getModule('\\' . CompanyBusinessUnitHelper::class);
+
+        return $companyBusinessUnitHelper;
+    }
+
+    protected function getCompanyUserHelper(): CompanyUserHelper
+    {
+        /** @var \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper $companyUserHelper */
+        $companyUserHelper = $this->getModule('\\' . CompanyUserHelper::class);
+
+        return $companyUserHelper;
     }
 
     protected function getMerchantHelper(): MerchantHelper
