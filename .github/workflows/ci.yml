@@ -186,8 +186,6 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    # Not draft-tiered: codeception always runs, so its dump must too. cypress consumes
-    # it as well (b2b-mp cells only), but only runs itself once a PR leaves draft.
     build-db:
         needs: [js-validation]
         uses: ./.github/workflows/_build-db.yml
