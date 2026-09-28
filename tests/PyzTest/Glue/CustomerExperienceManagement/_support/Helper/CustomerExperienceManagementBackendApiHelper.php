@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
@@ -69,6 +70,10 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     public const string RESOURCE_CUSTOMER_GROUP_CUSTOMERS = 'customer-group-customers';
 
     public const string RESOURCE_CUSTOMER_ACCESS = 'customer-access';
+
+    public const string RESOURCE_COMPANY_ROLES = 'company-roles';
+
+    public const string RESOURCE_COMPANY_ROLE_PERMISSIONS = 'company-role-permissions';
 
     /**
      * Distinguishes the customers of one test method from every other row in the database, so a
@@ -842,5 +847,69 @@ class CustomerExperienceManagementBackendApiHelper extends Module
         }
 
         return $state;
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCompanyRoleRequestBody(array $attributes, ?string $uuid = null): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_COMPANY_ROLES, $attributes, $uuid);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCompanyRoleCollectionUrl(array $query = []): string
+    {
+        return sprintf('/%s', static::RESOURCE_COMPANY_ROLES) . $this->formatQuery($query);
+    }
+
+    public function getCompanyRoleUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s', static::RESOURCE_COMPANY_ROLES, $uuid);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCompanyRolePermissionCollectionUrl(array $query = []): string
+    {
+        return sprintf('/%s', static::RESOURCE_COMPANY_ROLE_PERMISSIONS) . $this->formatQuery($query);
+    }
+
+    /**
+     * @throws \RuntimeException
+     */
+    public function getDefaultCompanyRoleUuid(int $idCompany): string
+    {
+        $companyRoleEntity = SpyCompanyRoleQuery::create()
+            ->filterByFkCompany($idCompany)
+            ->filterByIsDefault(true)
+            ->findOne();
+
+        if ($companyRoleEntity === null) {
+            throw new RuntimeException(sprintf('Company %d has no default company role.', $idCompany));
+        }
+
+        return (string)$companyRoleEntity->getUuid();
+    }
+
+    public function isCompanyRoleDefault(string $uuid): bool
+    {
+        return (bool)SpyCompanyRoleQuery::create()->findOneByUuid($uuid)?->getIsDefault();
+    }
+
+    public function hasCompanyRole(string $uuid): bool
+    {
+        return SpyCompanyRoleQuery::create()->filterByUuid($uuid)->exists();
+    }
+
+    public function countDefaultCompanyRoles(int $idCompany): int
+    {
+        return SpyCompanyRoleQuery::create()
+            ->filterByFkCompany($idCompany)
+            ->filterByIsDefault(true)
+            ->count();
     }
 }
