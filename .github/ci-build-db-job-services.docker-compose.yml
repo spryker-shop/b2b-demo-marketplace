@@ -1,0 +1,37 @@
+# Docker Compose file for Spryker database build job in CI builds. Required because of GitHub Actions limitations with services configuration.
+services:
+    database:
+        image: mariadb:11.8
+        networks:
+            - private
+        ports:
+            - "3306:3306"
+        environment:
+            MARIADB_ROOT_PASSWORD: ""
+            MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+            MARIADB_DATABASE: eu-docker
+            LANG: C.UTF-8
+        healthcheck:
+            test: [ "CMD", "mariadb-admin", "ping", "--silent" ]
+            interval: 10s
+            timeout: 10s
+            retries: 5
+        volumes:
+            - ${GITHUB_WORKSPACE}/.github/config/mysql/my.cnf:/etc/mysql/mariadb.conf.d/spryker.cnf:ro
+
+    broker:
+        image: spryker/rabbitmq:4.2
+        hostname: broker
+        networks:
+            - private
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        healthcheck:
+            test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+            interval: 15s
+            timeout: 10s
+            retries: 30
+            start_period: 120s
+networks:
+    private:

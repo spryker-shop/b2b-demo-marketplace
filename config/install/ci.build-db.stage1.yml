@@ -1,0 +1,89 @@
+# CI-only fast DB build (stage 1). Trims config/install/docker.ci.acceptance.yml's
+# build / init-storages-per-region / demodata sections down to what's needed to
+# produce eu-docker.sql: no router/twig/navigation/rest-validation cache warmups
+# (they need a booted HTTP app, not just a DB), no frontend build, no ES source
+# setup (ES isn't running in this job — storage tables are read straight back
+# out of MySQL, see SynchronizationBehaviorConfig::isSynchronizationEnabled()).
+#
+# Consumed via `vendor/bin/install -r ci.build-db.stage1.yml -s build
+# -s init-storages-per-region -s demodata` in .github/workflows/_build-db.yml.
+
+env:
+    NEW_RELIC_ENABLED: 0
+    SPRYKER_LOG_STDOUT: /dev/null
+
+sections:
+    build:
+        generate-transfers:
+            command: 'vendor/bin/console transfer:generate'
+
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync'
+
+        propel-copy-schema:
+            command: 'vendor/bin/console propel:schema:copy'
+
+        propel-build:
+            command: 'vendor/bin/console propel:model:build'
+
+        generate-entity-transfer:
+            command: 'vendor/bin/console transfer:entity:generate'
+
+        generate-page-source-map:
+            command: 'vendor/bin/console search:setup:source-map'
+
+        generate-scope-collection-file:
+            command: 'vendor/bin/console oauth:scope-collection-file:generate'
+
+        provider-processor-glue:
+            command: 'vendor/bin/glue api:generate'
+
+        provider-processor-glue-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+
+        provider-processor-glue-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
+
+        # api:generate's own boot compiles each container before the generated classes exist, and
+        # with debug=false nothing recompiles it (see the ApiPlatform README for the full contract).
+        cache-glue-api-clear:
+            command: 'vendor/bin/glue cache:clear'
+
+        cache-storefront-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
+
+        cache-backend-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
+
+    init-storages-per-region:
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+
+        propel-postgres-compatibility:
+            command: 'vendor/bin/console propel:pg-sql-compat'
+
+        propel-diff:
+            command: 'vendor/bin/console propel:diff'
+
+        propel-migrate:
+            command: 'vendor/bin/console propel:migrate'
+
+        propel-migration-cleanup:
+            command: 'vendor/bin/console propel:migration:delete'
+
+    demodata:
+        init-database:
+            command: 'vendor/bin/console setup:init-db'
+
+        import-eu-region-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml -v'
+
+        apply-scheduled-prices:
+            command: 'vendor/bin/console price-product-schedule:apply'
+
+        update-product-labels:
+            command: 'vendor/bin/console product-label:relations:update'
+
+        publish-and-sync:
+            command: 'vendor/bin/console queue:worker:start --stop-when-empty'
+            timeout: 2000
