@@ -35,6 +35,10 @@ abstract class AbstractCustomerExperienceManagementBackendApiTestCase extends Ba
 
     protected const string ATTRIBUTE_STATUS = 'status';
 
+    protected const string ATTRIBUTE_PARENT_BUSINESS_UNIT_UUID = 'parentBusinessUnitUuid';
+
+    protected const string ATTRIBUTE_ADDRESS_UUIDS = 'addressUuids';
+
     protected const string ATTRIBUTE_IS_ACTIVE = 'isActive';
 
     protected const string COMPANY_STATUS_PENDING = 'pending';
@@ -96,8 +100,6 @@ abstract class AbstractCustomerExperienceManagementBackendApiTestCase extends Ba
 
     protected const string ATTRIBUTE_CUSTOMER_REFERENCE = 'customerReference';
 
-    protected const string ATTRIBUTE_COMPANY_UUID = 'companyUuid';
-
     protected const string ATTRIBUTE_COMPANY_BUSINESS_UNIT_UUID = 'companyBusinessUnitUuid';
 
     protected const string ATTRIBUTE_COMPANY_ROLE_UUIDS = 'companyRoleUuids';
@@ -105,6 +107,8 @@ abstract class AbstractCustomerExperienceManagementBackendApiTestCase extends Ba
     protected const string ATTRIBUTE_CUSTOMER = 'customer';
 
     protected const string IGNORED_FIRST_NAME = 'ShouldBeIgnored';
+
+    protected const string ATTRIBUTE_COMPANY_UUID = 'companyUuid';
 
     protected CustomerExperienceManagementBackendApiIntegrationTester $tester;
 
@@ -190,6 +194,66 @@ abstract class AbstractCustomerExperienceManagementBackendApiTestCase extends Ba
         }
 
         return $companyRoleUuids;
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     *
+     * @return non-empty-string
+     */
+    protected function haveCompanyBusinessUnitViaApi(array $attributes = []): string
+    {
+        $attributes += [static::ATTRIBUTE_COMPANY_UUID => $this->haveCompanyViaApi()];
+
+        $response = $this->handleApiRequest(
+            'POST',
+            $this->tester->getCompanyBusinessUnitCollectionUrl(),
+            $this->tester->buildCompanyBusinessUnitRequestBody(
+                $this->tester->buildValidCompanyBusinessUnitAttributes($attributes),
+            ),
+        );
+
+        $this->assertSame(
+            Response::HTTP_CREATED,
+            $response->getStatusCode(),
+            sprintf('Could not provision the business unit under test: %s', (string)$response->getContent()),
+        );
+
+        $uuid = (string)($this->decodeJsonApi($response)[static::JSON_API_KEY_DATA][static::JSON_API_KEY_ID] ?? '');
+        $this->assertNotSame('', $uuid, 'The created business unit must be addressable by uuid.');
+
+        /** @var non-empty-string $uuid */
+        return $uuid;
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     *
+     * @return non-empty-string
+     */
+    protected function haveCompanyBusinessUnitAddressViaApi(array $attributes = []): string
+    {
+        $attributes += [static::ATTRIBUTE_COMPANY_UUID => $this->haveCompanyViaApi()];
+
+        $response = $this->handleApiRequest(
+            'POST',
+            $this->tester->getCompanyBusinessUnitAddressCollectionUrl(),
+            $this->tester->buildCompanyBusinessUnitAddressRequestBody(
+                $this->tester->buildValidCompanyBusinessUnitAddressAttributes($attributes),
+            ),
+        );
+
+        $this->assertSame(
+            Response::HTTP_CREATED,
+            $response->getStatusCode(),
+            sprintf('Could not provision the business unit address under test: %s', (string)$response->getContent()),
+        );
+
+        $uuid = (string)($this->decodeJsonApi($response)[static::JSON_API_KEY_DATA][static::JSON_API_KEY_ID] ?? '');
+        $this->assertNotSame('', $uuid, 'The created business unit address must be addressable by uuid.');
+
+        /** @var non-empty-string $uuid */
+        return $uuid;
     }
 
     /**
