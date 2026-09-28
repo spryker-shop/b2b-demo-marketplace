@@ -59,6 +59,9 @@ use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
 
 // >>> Debug
 
+$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = !(bool)getenv('SPRYKER_TESTING_ENABLED');
+$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = !(bool)getenv('SPRYKER_TESTING_ENABLED');
+
 $config[ApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[ShopApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = (bool)getenv('SPRYKER_DEBUG_ENABLED');
@@ -230,7 +233,7 @@ $sprykerGlueStorefrontPort = (int)(getenv('SPRYKER_GLUE_STOREFRONT_PORT')) ?: 80
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_API_HOST] = $sprykerGlueStorefrontHost;
 
 if ($isTestifyConstantsClassExists) {
-    $config[TestifyConstants::GLUE_STOREFRONT_API_DOMAIN] = sprintf(
+    $config[TestifyConstants::GLUE_STOREFRONT_API_DOMAIN] = $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] ?? sprintf(
         'http://%s%s',
         $sprykerGlueStorefrontHost,
         $sprykerGlueStorefrontPort !== 80 ? ':' . $sprykerGlueStorefrontPort : '',

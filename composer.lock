@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cbccc29232b06b414068f8564d904e7",
+    "content-hash": "7794ecb57456fe426823364d6f7683e5",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -13043,12 +13043,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/order-experience-management.git",
-                "reference": "1844b5774ed836c97626ff1b440a9611754becef"
+                "reference": "66ccf703a29b5baaf9c6c89ab0a05c0558f6482f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/order-experience-management/zipball/1844b5774ed836c97626ff1b440a9611754becef",
-                "reference": "1844b5774ed836c97626ff1b440a9611754becef",
+                "url": "https://api.github.com/repos/spryker-feature/order-experience-management/zipball/66ccf703a29b5baaf9c6c89ab0a05c0558f6482f",
+                "reference": "66ccf703a29b5baaf9c6c89ab0a05c0558f6482f",
                 "shasum": ""
             },
             "require": {
@@ -13058,6 +13058,7 @@
                 "spryker/application": "^3.46.0",
                 "spryker/calculation": "^4.0.0",
                 "spryker/cart": "^7.0.0",
+                "spryker/cart-code": "^1.2.0",
                 "spryker/catalog": "^5.0.0",
                 "spryker/checkout": "^6.0.0",
                 "spryker/checkout-extension": "^1.0.0",
@@ -13067,6 +13068,7 @@
                 "spryker/company-user": "^2.0.0",
                 "spryker/currency": "^4.0.0",
                 "spryker/customer": "^7.0.0",
+                "spryker/decimal-object": "^1.0.0",
                 "spryker/glossary": "^3.0.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/gui": "^5.5.0",
@@ -13079,24 +13081,28 @@
                 "spryker/merchant-product": "^1.3.0",
                 "spryker/merchant-storage": "^1.0.0",
                 "spryker/messenger": "^3.6.0",
+                "spryker/oms": "^11.0.0",
                 "spryker/payment": "^5.0.0",
                 "spryker/price": "^5.0.0",
                 "spryker/price-cart-connector": "^6.0.0",
+                "spryker/price-product": "^4.45.0",
                 "spryker/product-alternative-storage": "^1.15.0",
                 "spryker/product-measurement-unit": "^5.0.0",
                 "spryker/product-offer": "^1.0.0",
                 "spryker/product-offer-storage": "^1.0.0",
+                "spryker/product-option": "^8.28.0",
                 "spryker/product-packaging-unit": "^4.0.0",
                 "spryker/product-packaging-unit-storage": "^5.5.0",
                 "spryker/product-storage": "^1.0.0",
                 "spryker/propel": "^3.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/quote": "^2.0.0",
-                "spryker/sales": "^11.0.0",
+                "spryker/sales": "^11.85.0",
                 "spryker/shipment": "^8.0.0",
                 "spryker/shipment-type-storage": "^1.0.0",
                 "spryker/state-machine": "^2.0.0",
                 "spryker/symfony": "^3.0.0",
+                "spryker/translator": "^1.1.0",
                 "spryker/util-encoding": "^2.0.0",
                 "spryker/util-text": "^1.1.0",
                 "spryker/uuid-behavior": "^1.3.0",
@@ -13106,6 +13112,7 @@
                 "spryker-feature/purchasing-control": "*",
                 "spryker-shop/customer-page": "*",
                 "spryker-shop/product-search-widget": "*",
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/company-business-unit-sales-connector": "*",
                 "spryker/company-mail-connector": "*",
@@ -13114,6 +13121,7 @@
                 "spryker/configurable-bundle": "*",
                 "spryker/container": "*",
                 "spryker/country": "*",
+                "spryker/merchant-relationship": "*",
                 "spryker/permission": "*",
                 "spryker/product": "*",
                 "spryker/router": "*",
@@ -13121,11 +13129,12 @@
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker-feature/purchasing-control": "Embed cost-center-detail molecule and budget action links in recurring order storefront templates.",
+                "spryker-feature/purchasing-control": "Embed cost-center-detail molecule and budget action links in recurring order storefront templates. Also provides budgets usage in orders creation for Backend API.",
                 "spryker-shop/company-page": "Register RecurringOrderMenuItemWidget in the company account navigation sidebar.",
                 "spryker-shop/customer-page": "Provides page-layout-customer extended by recurring order list, detail, and review views.",
                 "spryker-shop/product-search-widget": "Provides ProductConcreteSearchWidget and the products-list molecule used by the recurring order add-product search bar.",
                 "spryker-shop/shop-ui": "Provides Component base class, AjaxProvider, and app registry used by recurring order web components.",
+                "spryker/api-platform": "Provides Backend API functionality.",
                 "spryker/router": "Required by RecurringOrderRouteProviderPlugin to register recurring order Yves routes."
             },
             "default-branch": true,
@@ -13149,7 +13158,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/order-experience-management/tree/master"
             },
-            "time": "2026-09-07T11:40:38+00:00"
+            "time": "2026-09-28T09:21:48+00:00"
         },
         {
             "name": "spryker-feature/order-management",
@@ -14161,16 +14170,16 @@
         },
         {
             "name": "spryker-feature/purchasing-control",
-            "version": "202608.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/purchasing-control.git",
-                "reference": "0f9bbe9633d58acdbb4c27c03544282bbc0aa456"
+                "reference": "8e4befa066a7018f4d74c69db2b5fb0999edfa16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/0f9bbe9633d58acdbb4c27c03544282bbc0aa456",
-                "reference": "0f9bbe9633d58acdbb4c27c03544282bbc0aa456",
+                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/8e4befa066a7018f4d74c69db2b5fb0999edfa16",
+                "reference": "8e4befa066a7018f4d74c69db2b5fb0999edfa16",
                 "shasum": ""
             },
             "require": {
@@ -14187,7 +14196,7 @@
                 "spryker/data-import": "^1.0.0",
                 "spryker/glossary": "^3.16.0",
                 "spryker/glossary-storage": "^1.0.0",
-                "spryker/gui": "^5.0.0",
+                "spryker/gui": "^5.5.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^4.0.0",
                 "spryker/money": "^2.0.0",
@@ -14220,7 +14229,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker-feature/order-experience-management": "Enables cost center selection in recurring order approve and schedule edit forms, and blocks recurring order checkout for budgets that require approval. Install this feature to use the plugins under `Yves/PurchasingControl/Plugin/OrderExperienceManagement` and `Zed/PurchasingControl/Communication/Plugin/OrderExperienceManagement`.",
+                "spryker-feature/order-experience-management": "Enables cost center selection in recurring order approve and schedule edit forms, blocks recurring order checkout for budgets that require approval, and adds the `budgetUuid` field to order intake so an intaken order can be charged against a budget. Install this feature to use the plugins under `Yves/PurchasingControl/Plugin/OrderExperienceManagement` and `Zed/PurchasingControl/Communication/Plugin/OrderExperienceManagement`.",
                 "spryker-shop/company-page": "Use this module if you want to display company information on the storefront.",
                 "spryker-shop/customer-page": "Use this module if you want to display customer information on the storefront.",
                 "spryker-shop/quote-request-agent-page": "Add the module if you want to use QuoteRequestAgentCostCenterSelectorWidget on the agent quote request details and edit pages: ^3.7.0",
@@ -14228,6 +14237,7 @@
                 "spryker/oms": "Use OMS to manage order states and processes.",
                 "spryker/router": "Use Router when the storefront needs to be able to route to the purchasing control module."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -14246,9 +14256,9 @@
             ],
             "description": "PurchasingControl module",
             "support": {
-                "source": "https://github.com/spryker-feature/purchasing-control/tree/202608.0"
+                "source": "https://github.com/spryker-feature/purchasing-control/tree/master"
             },
-            "time": "2026-08-23T18:38:12+00:00"
+            "time": "2026-09-23T15:55:03+00:00"
         },
         {
             "name": "spryker-feature/quick-add-to-cart",
@@ -26098,16 +26108,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.40.1",
+            "version": "1.42.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "50b48538b2068c1ef62236046be3bd2bd9a89823"
+                "reference": "f5266790c9ce3534a379acf247482df08af63951"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/50b48538b2068c1ef62236046be3bd2bd9a89823",
-                "reference": "50b48538b2068c1ef62236046be3bd2bd9a89823",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/f5266790c9ce3534a379acf247482df08af63951",
+                "reference": "f5266790c9ce3534a379acf247482df08af63951",
                 "shasum": ""
             },
             "require": {
@@ -26153,16 +26163,26 @@
             "require-dev": {
                 "spryker/auth-rest-api": "*",
                 "spryker/code-sniffer": "*",
+                "spryker/config": "*",
                 "spryker/console": "*",
                 "spryker/container": "*",
                 "spryker/customer": "*",
                 "spryker/decimal-object": "*",
+                "spryker/event": "*",
+                "spryker/event-behavior": "*",
                 "spryker/glue-backend-api-application": "*",
+                "spryker/glue-storefront-api-application": "*",
                 "spryker/kernel-feature": "*",
+                "spryker/oauth-cryptography": "*",
                 "spryker/propel": "*",
+                "spryker/propel-orm": "*",
+                "spryker/publisher": "*",
+                "spryker/queue": "*",
+                "spryker/storage-database": "*",
                 "spryker/symfony": "*",
                 "spryker/testify": "*",
                 "spryker/user": "*",
+                "spryker/zed-request": "*",
                 "symfony/framework-bundle": "*"
             },
             "type": "library",
@@ -26190,9 +26210,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.40.1"
+                "source": "https://github.com/spryker/api-platform/tree/1.42.0"
             },
-            "time": "2026-09-25T07:51:05+00:00"
+            "time": "2026-09-28T09:21:48+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -66638,16 +66658,16 @@
         },
         {
             "name": "spryker/quote-checkout-connector",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/quote-checkout-connector.git",
-                "reference": "a23732d1611cf9d899d4887694da57b8c393affb"
+                "reference": "186c6a5c92c1017a680cf328534b076430bc1f72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/quote-checkout-connector/zipball/a23732d1611cf9d899d4887694da57b8c393affb",
-                "reference": "a23732d1611cf9d899d4887694da57b8c393affb",
+                "url": "https://api.github.com/repos/spryker/quote-checkout-connector/zipball/186c6a5c92c1017a680cf328534b076430bc1f72",
+                "reference": "186c6a5c92c1017a680cf328534b076430bc1f72",
                 "shasum": ""
             },
             "require": {
@@ -66680,9 +66700,9 @@
             ],
             "description": "QuoteCheckoutConnector module",
             "support": {
-                "source": "https://github.com/spryker/quote-checkout-connector/tree/1.0.1"
+                "source": "https://github.com/spryker/quote-checkout-connector/tree/1.1.0"
             },
-            "time": "2026-08-20T09:06:27+00:00"
+            "time": "2026-09-23T15:55:03+00:00"
         },
         {
             "name": "spryker/quote-extension",
@@ -67642,16 +67662,16 @@
         },
         {
             "name": "spryker/sales",
-            "version": "11.85.0",
+            "version": "11.85.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales.git",
-                "reference": "5309385aa45996496e567a05015efd1f34cbfefe"
+                "reference": "ae4cc40cb3ce57e3cd0d9f1085edf2cee7e1cac8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales/zipball/5309385aa45996496e567a05015efd1f34cbfefe",
-                "reference": "5309385aa45996496e567a05015efd1f34cbfefe",
+                "url": "https://api.github.com/repos/spryker/sales/zipball/ae4cc40cb3ce57e3cd0d9f1085edf2cee7e1cac8",
+                "reference": "ae4cc40cb3ce57e3cd0d9f1085edf2cee7e1cac8",
                 "shasum": ""
             },
             "require": {
@@ -67722,9 +67742,9 @@
             ],
             "description": "Sales module",
             "support": {
-                "source": "https://github.com/spryker/sales/tree/11.85.0"
+                "source": "https://github.com/spryker/sales/tree/11.85.1"
             },
-            "time": "2026-09-23T15:55:03+00:00"
+            "time": "2026-09-28T09:21:48+00:00"
         },
         {
             "name": "spryker/sales-configurable-bundle",
@@ -92925,16 +92945,16 @@
         },
         {
             "name": "spryker/testify",
-            "version": "3.66.3",
+            "version": "3.67.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/testify.git",
-                "reference": "a94b5c0c64a7e64ffb6f17b96b34c9377e13ac6a"
+                "reference": "56ec118ca3ec55744c30d5abc67c2f912972c906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/testify/zipball/a94b5c0c64a7e64ffb6f17b96b34c9377e13ac6a",
-                "reference": "a94b5c0c64a7e64ffb6f17b96b34c9377e13ac6a",
+                "url": "https://api.github.com/repos/spryker/testify/zipball/56ec118ca3ec55744c30d5abc67c2f912972c906",
+                "reference": "56ec118ca3ec55744c30d5abc67c2f912972c906",
                 "shasum": ""
             },
             "require": {
@@ -93008,9 +93028,9 @@
             ],
             "description": "Testify module",
             "support": {
-                "source": "https://github.com/spryker/testify/tree/3.66.3"
+                "source": "https://github.com/spryker/testify/tree/3.67.1"
             },
-            "time": "2026-08-21T15:09:48+00:00"
+            "time": "2026-09-28T09:21:48+00:00"
         },
         {
             "name": "spryker/testify-backend-api",
@@ -93690,6 +93710,12 @@
             "alias_normalized": "202608.0"
         },
         {
+            "package": "spryker-feature/purchasing-control",
+            "version": "9999999-dev",
+            "alias": "202608.0",
+            "alias_normalized": "202608.0"
+        },
+        {
             "package": "spryker-feature/self-service-portal",
             "version": "9999999-dev",
             "alias": "202608.0",
@@ -93701,6 +93727,7 @@
         "spryker-feature/customer-experience-management": 20,
         "spryker-feature/order-experience-management": 20,
         "spryker-feature/product-experience-management": 20,
+        "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20

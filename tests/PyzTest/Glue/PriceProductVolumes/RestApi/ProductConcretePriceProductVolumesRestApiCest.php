@@ -24,6 +24,7 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
  * @group RestApi
  * @group ProductConcretePriceProductVolumesRestApiCest
  * Add your own group annotations below this line
+ * @group EndToEnd
  */
 class ProductConcretePriceProductVolumesRestApiCest
 {
