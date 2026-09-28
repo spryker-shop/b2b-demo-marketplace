@@ -60,6 +60,10 @@ class CustomerExperienceManagementBackendApiHelper extends Module
 
     public const string RESOURCE_COMPANIES = 'companies';
 
+    public const string RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
+
+    public const string RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES = 'company-business-unit-addresses';
+
     /**
      * Distinguishes the customers of one test method from every other row in the database, so a
      * free-text search can isolate exactly them. The suite rolls its writes back, but the database
@@ -163,6 +167,85 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     public function getCompanyCollectionUrl(array $query = []): string
     {
         return sprintf('/%s', static::RESOURCE_COMPANIES) . $this->formatQuery($query);
+    }
+
+    /**
+     * @param array<string, mixed> $override
+     *
+     * @return array<string, mixed>
+     */
+    public function buildValidCompanyBusinessUnitAttributes(array $override = []): array
+    {
+        return $override + [
+            CompanyBusinessUnitTransfer::NAME => uniqid('CxmBusinessUnit', false),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCompanyBusinessUnitRequestBody(array $attributes, ?string $uuid = null): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_COMPANY_BUSINESS_UNITS, $attributes, $uuid);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function getCompanyBusinessUnitUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s', static::RESOURCE_COMPANY_BUSINESS_UNITS, $uuid);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCompanyBusinessUnitCollectionUrl(array $query = []): string
+    {
+        return sprintf('/%s', static::RESOURCE_COMPANY_BUSINESS_UNITS) . $this->formatQuery($query);
+    }
+
+    /**
+     * `companyUuid` is intentionally absent: it is the one attribute every caller must supply
+     * itself, because the address is created against a company the test already owns.
+     *
+     * @param array<string, mixed> $override
+     *
+     * @return array<string, mixed>
+     */
+    public function buildValidCompanyBusinessUnitAddressAttributes(array $override = []): array
+    {
+        return $override + [
+            'iso2Code' => static::ISO2_CODE,
+            'street' => uniqid('CxmStreet', false),
+            'number' => '1',
+            'city' => static::CITY_FIRST_ADDRESS,
+            'zipCode' => static::ZIP_CODE_FIRST_ADDRESS,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCompanyBusinessUnitAddressRequestBody(array $attributes, ?string $uuid = null): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES, $attributes, $uuid);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function getCompanyBusinessUnitAddressUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s', static::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES, $uuid);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCompanyBusinessUnitAddressCollectionUrl(array $query = []): string
+    {
+        return sprintf('/%s', static::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES) . $this->formatQuery($query);
     }
 
     public function buildListedCompanyNameToken(): string
