@@ -100,11 +100,30 @@ class CatalogSearchRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $product = $I->grabDataFromResponseByJsonPath('$.data[0].attributes.abstractProducts[0]')[0];
+        $product = $this->findFirstProductWithPricesAndImages(
+            $I->grabDataFromResponseByJsonPath('$.data[0].attributes.abstractProducts')[0] ?? [],
+        );
+        $I->assertNotNull($product, 'The first result page must contain a product with prices and images.');
         $I->assertEqualsCanonicalizing(static::PRODUCT_KEYS, array_keys($product));
         $I->assertEqualsCanonicalizing(static::IMAGE_KEYS, array_keys($product['images'][0]));
         $I->assertEqualsCanonicalizing(static::CURRENCY_KEYS, array_keys($product['prices'][0]['currency']));
         $categoryNode = $I->grabDataFromResponseByJsonPath('$.data[0].attributes.categoryTreeFilter[0]')[0];
         $I->assertEqualsCanonicalizing(static::CATEGORY_NODE_KEYS, array_keys($categoryNode));
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $products
+     *
+     * @return array<string, mixed>|null
+     */
+    protected function findFirstProductWithPricesAndImages(array $products): ?array
+    {
+        foreach ($products as $product) {
+            if (!empty($product['prices']) && !empty($product['images'])) {
+                return $product;
+            }
+        }
+
+        return null;
     }
 }

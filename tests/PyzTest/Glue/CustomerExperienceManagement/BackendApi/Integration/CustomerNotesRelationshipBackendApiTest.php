@@ -86,7 +86,7 @@ class CustomerNotesRelationshipBackendApiTest extends AbstractCustomerExperience
 
         $firstIncluded = (array)($this->decodeJsonApi($response)[static::JSON_API_KEY_INCLUDED][0] ?? []);
         $this->assertSame(
-            CustomerExperienceManagementBackendApiHelper::RESOURCE_NOTES,
+            CustomerExperienceManagementBackendApiHelper::RESOURCE_TYPE_NOTES,
             $firstIncluded[static::JSON_API_KEY_TYPE] ?? null,
         );
         $this->assertSame(
