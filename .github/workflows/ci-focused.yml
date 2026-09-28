@@ -20,9 +20,10 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    # Only codeception restores a dump; the cypress and robot lanes import their own demodata.
+    # codeception restores a dump for both cells; cypress restores it for b2b-mp only (see
+    # _cypress.yml). The robot lanes import their own demodata regardless.
     build-db:
-        if: ${{ inputs.framework == 'codeception' }}
+        if: ${{ inputs.framework == 'codeception' || inputs.framework == 'cypress' }}
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
@@ -44,5 +45,6 @@ jobs:
 
     cypress:
         if: ${{ inputs.framework == 'cypress' }}
+        needs: [build-db]
         uses: ./.github/workflows/_cypress.yml
         secrets: inherit

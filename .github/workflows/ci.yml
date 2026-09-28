@@ -186,7 +186,6 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    # Not draft-tiered: codeception always runs, so its dump must too.
     build-db:
         needs: [js-validation]
         uses: ./.github/workflows/_build-db.yml
@@ -317,7 +316,7 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, validation]
+        needs: [js-validation, validation, build-db]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml
