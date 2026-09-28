@@ -11096,12 +11096,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-experience-management.git",
-                "reference": "54456502e078743086efccf6fa7ea6efbe12cb90"
+                "reference": "b7d241eff79c913295ad6107c107f932566d1dfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/54456502e078743086efccf6fa7ea6efbe12cb90",
-                "reference": "54456502e078743086efccf6fa7ea6efbe12cb90",
+                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/b7d241eff79c913295ad6107c107f932566d1dfb",
+                "reference": "b7d241eff79c913295ad6107c107f932566d1dfb",
                 "shasum": ""
             },
             "require": {
@@ -11115,6 +11115,8 @@
                 "spryker/company-user": "^2.24.0",
                 "spryker/country": "^3.1.0 || ^4.0.0",
                 "spryker/customer": "^7.85.0",
+                "spryker/customer-access": "^1.0.0",
+                "spryker/customer-group": "^2.14.0",
                 "spryker/customer-note": "^1.3.0",
                 "spryker/glossary": "^3.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -11154,7 +11156,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/customer-experience-management/tree/master"
             },
-            "time": "2026-09-25T07:51:05+00:00"
+            "time": "2026-09-25T15:09:10+00:00"
         },
         {
             "name": "spryker-feature/data-exchange-api",
@@ -38991,16 +38993,16 @@
         },
         {
             "name": "spryker/customer-group",
-            "version": "2.13.0",
+            "version": "2.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customer-group.git",
-                "reference": "956371b267f853802237a59fb3d91559470b26a3"
+                "reference": "4615e60bf2cd0336bd51521a993471e7d4fa2a1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customer-group/zipball/956371b267f853802237a59fb3d91559470b26a3",
-                "reference": "956371b267f853802237a59fb3d91559470b26a3",
+                "url": "https://api.github.com/repos/spryker/customer-group/zipball/4615e60bf2cd0336bd51521a993471e7d4fa2a1d",
+                "reference": "4615e60bf2cd0336bd51521a993471e7d4fa2a1d",
                 "shasum": ""
             },
             "require": {
@@ -39008,8 +39010,10 @@
                 "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
                 "spryker/gui": "^3.0.0 || ^4.0.0 || ^5.6.0",
                 "spryker/kernel": "^3.30.0",
+                "spryker/propel": "^3.43.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/symfony": "^3.9.0",
+                "spryker/transfer": "^3.27.0",
                 "spryker/util-date-time": "^1.0.0",
                 "spryker/util-encoding": "^2.0.0",
                 "spryker/util-sanitize": "^2.0.0"
@@ -39020,7 +39024,6 @@
                 "spryker/container": "*",
                 "spryker/event-dispatcher": "*",
                 "spryker/form": "*",
-                "spryker/propel": "*",
                 "spryker/router": "*",
                 "spryker/store": "*",
                 "spryker/testify": "*",
@@ -39047,9 +39050,9 @@
             ],
             "description": "CustomerGroup module",
             "support": {
-                "source": "https://github.com/spryker/customer-group/tree/2.13.0"
+                "source": "https://github.com/spryker/customer-group/tree/2.14.0"
             },
-            "time": "2026-09-15T07:32:35+00:00"
+            "time": "2026-09-25T15:09:10+00:00"
         },
         {
             "name": "spryker/customer-group-discount-connector",
