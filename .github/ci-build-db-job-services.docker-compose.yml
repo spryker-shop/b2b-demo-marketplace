@@ -33,5 +33,21 @@ services:
             timeout: 10s
             retries: 30
             start_period: 120s
+
+    # Not ES/search — this job disables storage/search sync entirely (see
+    # SPRYKER_SYNCHRONIZATION_ENABLED in the workflow). Some demodata (sales-order,
+    # recurring-schedule) goes through the full order-creation/OMS flow though, which
+    # talks to Valkey directly regardless of that flag, so it still needs to exist.
+    valkey:
+        image: valkey/valkey:7.2-alpine3.21
+        networks:
+            - private
+        ports:
+            - "6379:6379"
+        healthcheck:
+            test: [ "CMD", "valkey-cli", "ping" ]
+            interval: 10s
+            timeout: 10s
+            retries: 5
 networks:
     private:

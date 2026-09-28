@@ -62,6 +62,14 @@ sections:
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat'
 
+        # This job's database is always freshly created, so the migration files
+        # accumulated in the repo are never "already applied" from its point of view —
+        # propel:diff refuses to run while any are pending. Delete them (they're only
+        # local files in this ephemeral checkout; nothing is committed back) so diff
+        # generates one full migration for the current schema instead.
+        propel-migration-delete:
+            command: 'vendor/bin/console propel:migration:delete'
+
         propel-diff:
             command: 'vendor/bin/console propel:diff'
 
