@@ -22,10 +22,6 @@ on:
                 type: string
                 default: "PHP8.5MariaDB"
             restore-db:
-                # The dump is MariaDB-only and marketplace-enabled, so it's only ever applied
-                # to b2b-mp cells (see the `cypress` job below) regardless of this input; a
-                # non-MariaDB caller (compatibility-ci's Postgres run) sets this false too, so
-                # it doesn't depend on that cell-level check alone.
                 description: "Restore the shared spryker-app-db dump for b2b-mp cells instead of importing demodata."
                 type: boolean
                 default: true
