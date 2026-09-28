@@ -11,10 +11,10 @@ namespace Pyz\Zed\DataImport\Business\Model\Glossary;
 
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 
 class GlossaryWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
@@ -60,6 +60,6 @@ class GlossaryWriterStep extends PublishAwareStep implements DataImportStepInter
             ->setValue($dataSet[static::KEY_TRANSLATION])
             ->save();
 
-        $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryTranslationEntity->getFkGlossaryKey());
+        $this->addPublishEvents(GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryTranslationEntity->getFkGlossaryKey());
     }
 }

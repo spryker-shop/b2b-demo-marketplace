@@ -24,9 +24,9 @@ class DevelopmentConfig extends SprykerDevelopmentConfig
     public function getOrganizationPathMap(): array
     {
         return [
-        'Spryker' => $this->getPathToCore(),
-        'SprykerFeature' => $this->getPathToFeature(),
-        'SprykerEco' => $this->getPathToEco(),
+            static::NAMESPACE_SPRYKER => $this->getPathToInternalNamespace(static::NAMESPACE_SPRYKER),
+            static::NAMESPACE_SPRYKER_FEATURE => $this->getPathToInternalNamespace(static::NAMESPACE_SPRYKER_FEATURE),
+            static::NAMESPACE_SPRYKER_ECO => $this->getPathToInternalNamespace(static::NAMESPACE_SPRYKER_ECO),
         ];
     }
 }
