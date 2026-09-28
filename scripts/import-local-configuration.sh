@@ -10,35 +10,43 @@
 # its own - this script is what turns it into a configuration value.
 #
 # CONVENTION
-# The environment variable NAME is the setting key, verbatim:
-#     integrations:google_analytics:tracking:measurement_id=G-XXXXXXXXXX
-# Any variable whose name looks like a setting key (lowercase segments joined
-# by colons) is imported. Everything else is ignored, so ordinary SCREAMING_CASE
-# variables are never picked up.
+# The environment variable is the setting key namespaced with `configuration:`:
+#     configuration:integrations:google_analytics:tracking:measurement_id=G-XXXXXXXXXX
+# The prefix is stripped to give the setting key actually written.
+# Only variables carrying that prefix are imported; everything else in the
+# environment is ignored.
 #
 # Locally the values come from deploy.dev.yml; on cloud environments they come
 # from the environment itself. Nothing is committed, so installing this
 # boilerplate never carries environment-specific configuration.
-
 #
 set -euo pipefail
 
 CSV_PATH='data/import/common/common/configuration_value.local.csv'
 IMPORT_CONFIG='data/import/local/configuration_value_local.yml'
-SETTING_KEY_PATTERN='^[a-z0-9_]+(:[a-z0-9_]+)+$'
+# Environment variables are namespaced with `configuration:`; the remainder is
+# the setting key. The prefix makes the intent explicit and keeps an unrelated
+# variable from ever being treated as a setting - which matters, because
+# ConfigurationValueSettingKeyValidatorStep THROWS on a key that is not in the
+# schema, and that would abort the whole install.
+ENV_VAR_PREFIX='configuration:'
+ENV_VAR_PATTERN="^${ENV_VAR_PREFIX}[a-z0-9_]+(:[a-z0-9_]+)+$"
 
 tmp_rows="$(mktemp)"
 trap 'rm -f "${tmp_rows}"' EXIT
 
 while IFS= read -r line; do
-    key="${line%%=*}"
+    name="${line%%=*}"
     value="${line#*=}"
 
-    [[ "${key}" =~ ${SETTING_KEY_PATTERN} ]] || continue
+    [[ "${name}" =~ ${ENV_VAR_PATTERN} ]] || continue
     [ -n "${value}" ] || continue
 
+    # Strip the namespace: configuration:<setting key> -> <setting key>
+    key="${name#"${ENV_VAR_PREFIX}"}"
+
     printf '%s,global,,%s\n' "${key}" "${value}" >> "${tmp_rows}"
-    echo "  ${key}"
+    echo "  ${name}  ->  ${key}"
 done < <(env)
 
 if [ ! -s "${tmp_rows}" ]; then
