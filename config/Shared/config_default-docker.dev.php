@@ -233,7 +233,7 @@ $sprykerGlueStorefrontPort = (int)(getenv('SPRYKER_GLUE_STOREFRONT_PORT')) ?: 80
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_API_HOST] = $sprykerGlueStorefrontHost;
 
 if ($isTestifyConstantsClassExists) {
-    $config[TestifyConstants::GLUE_STOREFRONT_API_DOMAIN] = !$sprykerGlueStorefrontHost && isset($config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN])
+    $config[TestifyConstants::GLUE_STOREFRONT_API_DOMAIN] = isset($config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN])
         ? $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN]
         : sprintf(
             'http://%s%s',
