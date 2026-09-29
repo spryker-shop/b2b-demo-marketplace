@@ -15,9 +15,9 @@ use Demo\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
 use Demo\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Demo\Zed\CmsBlockGui\Communication\Tabs\CmsBlockFormAddTabs;
 use Demo\Zed\CmsBlockGui\Communication\Tabs\CmsBlockFormEditTabs;
-use Demo\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory as SprykerCmsBlockGuiCommunicationFactory;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider as SprykerCmsBlockFormDataProvider;
+use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Symfony\Component\Form\FormInterface;
 
