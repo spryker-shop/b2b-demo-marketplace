@@ -1,0 +1,32 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "cli-command",
+          "name": "vendor/bin/console mcp-commerce:feature-flag enable",
+          "key": "mcpFeatureFlag"
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "customerAddress",
+          "arguments": [
+            {
+              "email": "maria.williams@acme.com",
+              "firstName": "Mcp",
+              "lastName": "Tester",
+              "address1": "Julie-Wolfthorn-Strasse",
+              "address2": "1",
+              "zipCode": "10115",
+              "city": "Berlin",
+              "iso2Code": "DE"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

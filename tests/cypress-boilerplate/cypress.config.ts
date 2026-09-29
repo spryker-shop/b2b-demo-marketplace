@@ -1,5 +1,6 @@
 import { defineConfig } from 'cypress'
 import * as fs from 'fs'
+import { createHash, randomBytes } from 'crypto'
 import { config as dotenvConfig } from 'dotenv'
 
 interface ResolvedStore {
@@ -88,6 +89,24 @@ export default defineConfig({
         // dynamic/static fixture files (cy.fixture would fail the spec on a missing file)
         isFileExists: (filePath: string): boolean => {
           return fs.existsSync(filePath)
+        },
+        // PKCE S256 needs a real SHA-256. `window.crypto.subtle` is unavailable in the spec because
+        // the app is served over plain HTTP and Web Crypto requires a secure context, so the pair is
+        // generated in Node where `crypto` is always present.
+        createPkcePair: (): { codeVerifier: string; codeChallenge: string } => {
+          const toBase64Url = (buffer: Buffer): string =>
+            buffer
+              .toString('base64')
+              .replace(/\+/g, '-')
+              .replace(/\//g, '_')
+              .replace(/=+$/, '')
+
+          const codeVerifier = toBase64Url(randomBytes(32))
+          const codeChallenge = toBase64Url(
+            createHash('sha256').update(codeVerifier).digest()
+          )
+
+          return { codeVerifier, codeChallenge }
         },
       })
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
