@@ -64,6 +64,17 @@ sections:
         provider-processor-glue-storefront:
             command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
 
+        # api:generate's own boot compiles each container before the generated classes exist, and
+        # with debug=false nothing recompiles it (see the ApiPlatform README for the full contract).
+        cache-glue-api-clear:
+            command: 'vendor/bin/glue cache:clear'
+
+        cache-storefront-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
+
+        cache-backend-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
+
     build-development:
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'

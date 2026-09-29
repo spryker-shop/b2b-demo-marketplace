@@ -13,6 +13,17 @@ use Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig as Spryker
 
 class SynchronizationBehaviorConfig extends SprykerSynchronizationBehaviorConfig
 {
+    public function isSynchronizationEnabled(): bool
+    {
+        $envValue = getenv('SPRYKER_SYNCHRONIZATION_ENABLED');
+
+        if ($envValue === false) {
+            return true;
+        }
+
+        return filter_var($envValue, FILTER_VALIDATE_BOOLEAN);
+    }
+
     public function isDirectSynchronizationEnabled(): bool
     {
         return true;

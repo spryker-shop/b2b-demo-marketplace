@@ -1,7 +1,9 @@
 name: _build-db
 
-# Imports full_EU once via a normal acceptance boot and publishes the dump as the
-# `spryker-app-db` artifact, for consumers to restore with SPRYKER_PIPELINE=ci.restore-db.stage2.
+# Imports full_EU once via a minimal DB-only build (no full docker-sdk stack, no
+# ES/Valkey — see SynchronizationBehaviorConfig::isSynchronizationEnabled()) and
+# publishes the dump as the `spryker-app-db` artifact, for consumers to restore
+# with SPRYKER_PIPELINE=ci.restore-db.stage2.
 
 on:
     workflow_call:
@@ -14,14 +16,35 @@ env:
 jobs:
     build-db:
         name: "Build DB (EU)"
-        timeout-minutes: 60
+        timeout-minutes: 20
         runs-on: ubuntu-latest
         env:
-            PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.5
-            TRAVIS: 1
+            APPLICATION_ENV: ci
             SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
+            SPRYKER_DYNAMIC_STORE_MODE: true
+            TRAVIS: 1
+            SPRYKER_LOG_STDOUT: 'php://stdout'
+
+            SPRYKER_DB_ENGINE: mysql
+            SPRYKER_DB_HOST: 127.0.0.1
+            SPRYKER_DB_PORT: 3306
+            SPRYKER_DB_USERNAME: root
+            SPRYKER_DB_PASSWORD: ""
+            SPRYKER_DB_DATABASE: eu-docker
+
+            SPRYKER_BROKER_API_HOST: localhost
+            SPRYKER_BROKER_API_PORT: 15672
+            SPRYKER_BROKER_API_USERNAME: guest
+            SPRYKER_BROKER_API_PASSWORD: guest
+            SPRYKER_BROKER_HOST: localhost
+            SPRYKER_BROKER_PORT: 5672
+            SPRYKER_BROKER_USERNAME: guest
+            SPRYKER_BROKER_PASSWORD: guest
+
+            # Elasticsearch and Valkey are not available in this job — disable sync
+            # event enqueuing so publish listeners can write to MySQL storage tables
+            # cleanly without attempting Valkey/ES connections that would fail.
+            SPRYKER_SYNCHRONIZATION_ENABLED: false
         steps:
             -   uses: actions/checkout@v4
                 with:
@@ -29,39 +52,54 @@ jobs:
                     # composer-installed in these jobs is public.
                     persist-credentials: false
 
+            -   name: Run services in Docker
+                run: docker compose -f .github/ci-build-db-job-services.docker-compose.yml up -d --wait
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+                with:
+                    php-version: '8.5'
+                    tools: composer:v2
+                    extensions: amqp
+                    coverage: none
+
             -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
-            -   name: Configure sysctl limits
-                run: |
-                    sudo sysctl -w vm.swappiness=10
-                    sudo sysctl -w fs.file-max=262144
-                    sudo sysctl -w vm.max_map_count=262144
-                    ulimit -n 65536
-
-            -   name: Run project in Docker
-                run: |
-                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
-                    docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+            -   name: Run Spryker install
+                run: vendor/bin/install -r ci.build-db.stage1.yml -s build -s init-storages-per-region -s demodata -v
 
             -   name: Dump details
                 run: |
-                    query() { docker/sdk cli "mariadb --ssl=false -h \$SPRYKER_DB_HOST -u \$SPRYKER_DB_USERNAME -p\$SPRYKER_DB_PASSWORD \$SPRYKER_DB_DATABASE -sNe '$1'"; }
-                    echo "spy_product_abstract:                          $(query 'SELECT COUNT(*) FROM spy_product_abstract')"
-                    echo "spy_product:                                   $(query 'SELECT COUNT(*) FROM spy_product')"
-                    echo "spy_product_abstract_page_search (total keys): $(query 'SELECT COUNT(*) FROM spy_product_abstract_page_search')"
-                    echo "spy_product_concrete_storage (total keys):     $(query 'SELECT COUNT(*) FROM spy_product_concrete_storage')"
+                    DC="docker compose -f .github/ci-build-db-job-services.docker-compose.yml"
+                    DB="$SPRYKER_DB_DATABASE"
+                    query() { $DC exec -T database mariadb -u "$SPRYKER_DB_USERNAME" "$DB" -sNe "$1"; }
+
+                    echo "spy_product_abstract:                          $(query "SELECT COUNT(*) FROM spy_product_abstract")"
+                    echo "spy_product:                                   $(query "SELECT COUNT(*) FROM spy_product")"
+                    echo "spy_product_abstract_page_search (total keys): $(query "SELECT COUNT(*) FROM spy_product_abstract_page_search")"
+                    echo "spy_product_concrete_storage (total keys):     $(query "SELECT COUNT(*) FROM spy_product_concrete_storage")"
 
             -   name: Create database dump
                 # Schema then data, skipping the oauth/token-cache tables that setup:init-db
-                # re-initialises on restore. `\$` keeps expansion inside the container.
+                # re-initialises on restore.
                 run: |
-                    docker/sdk cli "mariadb-dump --ssl=false -h \$SPRYKER_DB_HOST -u \$SPRYKER_DB_USERNAME -p\$SPRYKER_DB_PASSWORD \$SPRYKER_DB_DATABASE --no-data" > eu-docker.sql
-                    docker/sdk cli "mariadb-dump --ssl=false -h \$SPRYKER_DB_HOST -u \$SPRYKER_DB_USERNAME -p\$SPRYKER_DB_PASSWORD \$SPRYKER_DB_DATABASE --no-create-info --ignore-table=\$SPRYKER_DB_DATABASE.spy_oauth_client --ignore-table=\$SPRYKER_DB_DATABASE.spy_unauthenticated_customer_access --ignore-table=\$SPRYKER_DB_DATABASE.spy_oauth_client_access_token_cache" >> eu-docker.sql
+                    EXCLUDED_TABLES=(
+                        "spy_oauth_client"
+                        "spy_unauthenticated_customer_access"
+                        "spy_oauth_client_access_token_cache"
+                    )
+
+                    IGNORE_PARAMS=""
+                    for table in "${EXCLUDED_TABLES[@]}"; do
+                        IGNORE_PARAMS="$IGNORE_PARAMS --ignore-table=$SPRYKER_DB_DATABASE.$table"
+                    done
+
+                    # `exec -T` disables the pseudo-TTY so the container's stdout redirects cleanly into the host dump file.
+                    DC="docker compose -f .github/ci-build-db-job-services.docker-compose.yml"
+                    $DC exec -T database mariadb-dump -u "$SPRYKER_DB_USERNAME" "$SPRYKER_DB_DATABASE" --no-data > eu-docker.sql
+                    $DC exec -T database mariadb-dump -u "$SPRYKER_DB_USERNAME" "$SPRYKER_DB_DATABASE" --no-create-info $IGNORE_PARAMS >> eu-docker.sql
                     echo "eu-docker.sql size: $(wc -c < eu-docker.sql) bytes"
 
             -   name: Save project artifacts

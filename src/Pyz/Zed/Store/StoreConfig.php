@@ -17,4 +17,9 @@ class StoreConfig extends SprykerStoreConfig
     {
         return true;
     }
+
+    public function isVisibleToCustomerEnabled(): bool
+    {
+        return true;
+    }
 }

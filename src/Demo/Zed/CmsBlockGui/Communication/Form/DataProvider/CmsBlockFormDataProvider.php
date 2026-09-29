@@ -11,12 +11,13 @@ namespace Demo\Zed\CmsBlockGui\Communication\Form\DataProvider;
 
 use Demo\Zed\CmsBlockCustomerGroup\Business\CmsBlockCustomerGroupFacadeInterface;
 use Demo\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
-use Demo\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
+use Generated\Shared\Transfer\CustomerGroupCriteriaTransfer;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider as SprykerCmsBlockFormDataProvider;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleInterface;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
+use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 
 class CmsBlockFormDataProvider extends SprykerCmsBlockFormDataProvider
 {
@@ -72,7 +73,7 @@ class CmsBlockFormDataProvider extends SprykerCmsBlockFormDataProvider
      */
     protected function getCustomerGroupNamesIndexedById(): array
     {
-        $customerGroupCollectionTransfer = $this->customerGroupFacade->getCustomerGroupCollection();
+        $customerGroupCollectionTransfer = $this->customerGroupFacade->getCustomerGroupCollection(new CustomerGroupCriteriaTransfer());
 
         $result = [];
         foreach ($customerGroupCollectionTransfer->getGroups() as $customerGroupTransfer) {

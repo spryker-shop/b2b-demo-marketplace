@@ -361,15 +361,22 @@ if ($isTestifyConstantsClassExists) {
 
 // >>> FILESYSTEM
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+    // This whole array replaces (not merges with) config_default.php's, so any
+    // service used here has to be repeated even though its definition is identical.
+    'import-files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/import',
+        'path' => '/',
+    ],
     'merchant-product-data-import-files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/merchant-product-data-import-files',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'merchant-product-data-import-files',
     ],
     'merchant-product-offer-data-import-files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/merchant-product-offer-data-import-files',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'merchant-product-offer-data-import-files',
     ],
     'files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
@@ -378,33 +385,33 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     ],
     'ssp-inquiry' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-inquiry',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'ssp-inquiry',
     ],
     'ssp-files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-files',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'ssp-files',
     ],
     'ssp-asset-image' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-asset-image',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'ssp-asset-image',
     ],
     'ssp-model-image' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-model-image',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'ssp-model-image',
     ],
     'product-experience-management-imports' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/pim-imports',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'pim-imports',
     ],
     'product-experience-management-exports' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/pim-exports',
+        'root' => APPLICATION_ROOT_DIR . '/data',
+        'path' => 'pim-exports',
     ],
 ];
 

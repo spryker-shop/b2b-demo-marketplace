@@ -501,10 +501,12 @@ customer.logout,Logout,en_US
 customer.logout,Abmelden,de_DE
 customer.register,Register,en_US
 customer.register,Registrieren,de_DE
+customer.sign_up,Sign up,en_US
+customer.sign_up,Registrieren,de_DE
 customer.login,Login,en_US
 customer.login,Anmelden,de_DE
 customer.please_login,Sign in,en_US
-customer.please_login,Bitte anmelden,de_DE
+customer.please_login,Anmelden,de_DE
 customer.login.email,Email,en_US
 customer.login.email,E-Mail,de_DE
 customer.login.password,Password,en_US
@@ -1403,8 +1405,8 @@ checkout.payment_method.invalid,Checkout Zahlung ist ungültig,de_DE
 checkout.payment_method.invalid,Checkout payment is not valid,en_US
 checkout.order.duplicate,Order with given reference {{reference}} already exists,en_US
 checkout.order.duplicate,Bestellung mit gegebener Referenz {{reference}} existiert bereits,de_DE
-checkout.order.checkout.error.duplicate-order-processing,Cart with given uid %quote-uid% has already been processed,en_US
-checkout.order.checkout.error.duplicate-order-processing,Der Warenkorb mit der angegebenen UID %quote-uid% wurde bereits verarbeitet,de_DE
+checkout.error.duplicate-order-processing,Cart with given uid %quote-uid% has already been processed,en_US
+checkout.error.duplicate-order-processing,Der Warenkorb mit der angegebenen UID %quote-uid% wurde bereits verarbeitet,de_DE
 cms.preview.access_denied,You are not logged in or you do not have permission to access this page.,en_US
 cms.preview.access_denied,"Sie sind nicht angemeldet oder haben keine Berechtigung, diese Seite zu betreten.",de_DE
 product-cart.validation.error.abstract-product-exists,"Product ""sku"" not found",en_US
@@ -1507,6 +1509,10 @@ company.account.login.password,Password,en_US
 company.account.login.password,Passwort,de_DE
 company.account.registration.title,Create account,en_US
 company.account.registration.title,Ich bin Neukunde,de_DE
+company.account.registration.subtitle,Register your company to start ordering,en_US
+company.account.registration.subtitle,"Registrieren Sie Ihr Unternehmen, um mit der Bestellung zu beginnen",de_DE
+company.account.registration.have_account,Already have an account?,en_US
+company.account.registration.have_account,Haben Sie bereits ein Konto?,de_DE
 company.user.first_name,Vorname,de_DE
 company.user.first_name,First Name,en_US
 company.user.last_name,Nachname,de_DE
@@ -7610,3 +7616,27 @@ shipment_type.name.shipment_type_on-site-service,On-Site Service,en_US
 shipment_type.name.shipment_type_on-site-service,Service vor Ort,de_DE
 mail.error.send_failed,"The email failed to send. Error code: %errorCode%.",en_US
 mail.error.send_failed,"Die E-Mail konnte nicht gesendet werden. Fehlercode: %errorCode%.",de_DE
+customer.address.validation.first_name_missing,First name is required,en_US
+customer.address.validation.first_name_missing,Vorname ist erforderlich,de_DE
+customer.address.validation.last_name_missing,Last name is required,en_US
+customer.address.validation.last_name_missing,Nachname ist erforderlich,de_DE
+customer.address.validation.name_pattern,Name contains characters that are not allowed,en_US
+customer.address.validation.name_pattern,Name enthält unzulässige Zeichen,de_DE
+customer.address.validation.salutation_invalid,Salutation is invalid,en_US
+customer.address.validation.salutation_invalid,Anrede ist ungültig,de_DE
+customer.address.validation.field_too_long,Value exceeds the maximum length of %limit% characters,en_US
+customer.address.validation.field_too_long,Wert überschreitet die maximale Länge von %limit% Zeichen,de_DE
+country.validation.unknown_country,The country %value% is not available in this shop,en_US
+country.validation.unknown_country,Das Land %value% ist in diesem Shop nicht verfügbar,de_DE
+country.validation.unknown_region,The region %value% is not known,en_US
+country.validation.unknown_region,Die Region %value% ist unbekannt,de_DE
+country.validation.region_not_in_country,The region %value% does not belong to the given country,en_US
+country.validation.region_not_in_country,Die Region %value% gehört nicht zum angegebenen Land,de_DE
+message.company_user.validation.company_not_found,Company not found.,en_US
+message.company_user.validation.company_not_found,Unternehmen nicht gefunden.,de_DE
+message.company_user.validation.business_unit_not_found,Company business unit not found.,en_US
+message.company_user.validation.business_unit_not_found,Geschäftseinheit nicht gefunden.,de_DE
+message.company_user.validation.business_unit_not_in_company,Company business unit does not belong to the selected company.,en_US
+message.company_user.validation.business_unit_not_in_company,Die Geschäftseinheit gehört nicht zum ausgewählten Unternehmen.,de_DE
+message.company_user.validation.role_not_in_company,Company role does not belong to the selected company.,en_US
+message.company_user.validation.role_not_in_company,Die Unternehmensrolle gehört nicht zum ausgewählten Unternehmen.,de_DE

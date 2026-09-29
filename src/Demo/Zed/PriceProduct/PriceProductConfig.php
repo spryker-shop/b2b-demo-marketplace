@@ -9,9 +9,9 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\PriceProduct;
 
-use Spryker\Zed\PriceProduct\PriceProductConfig as SprykerPriceProductConfig;
+use Pyz\Zed\PriceProduct\PriceProductConfig as PyzPriceProductConfig;
 
-class PriceProductConfig extends SprykerPriceProductConfig
+class PriceProductConfig extends PyzPriceProductConfig
 {
     /**
      * Perform orphan prices removing automatically.
