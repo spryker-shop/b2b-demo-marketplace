@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\DataImport\Business\Model\SalesOrder;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -28,14 +29,21 @@ class ShipmentExpander
     public function __construct(
         protected ShipmentFacadeInterface $shipmentFacade,
         protected CalculationFacadeInterface $calculationFacade,
+        protected AddressResolver $addressResolver,
     ) {
     }
 
     public function addShipment(QuoteTransfer $quoteTransfer, DataSetInterface $dataSet): QuoteTransfer
     {
+        $shippingAddressTransfer = $this->addressResolver->resolveShippingAddress(
+            $quoteTransfer->getCustomerOrFail(),
+            $quoteTransfer->getBillingAddressOrFail(),
+        );
+
         $defaultShipmentTransfer = $this->createShipmentByMethodKey(
             $dataSet[SalesOrderDataSetInterface::COLUMN_SHIPMENT_METHOD_KEY],
             $quoteTransfer,
+            $shippingAddressTransfer,
         );
 
         $usedShipmentTransfers = [];
@@ -58,7 +66,7 @@ class ShipmentExpander
             );
 
             if (!isset($serviceShipmentTransfers[$shipmentGroupKey])) {
-                $serviceShipmentTransfers[$shipmentGroupKey] = $this->createShipmentForShipmentType($itemTransfer, $quoteTransfer);
+                $serviceShipmentTransfers[$shipmentGroupKey] = $this->createShipmentForShipmentType($itemTransfer, $quoteTransfer, $shippingAddressTransfer);
             }
 
             $itemTransfer->setShipment($serviceShipmentTransfers[$shipmentGroupKey]);
@@ -72,15 +80,18 @@ class ShipmentExpander
         return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
-    protected function createShipmentByMethodKey(string $shipmentMethodKey, QuoteTransfer $quoteTransfer): ShipmentTransfer
-    {
+    protected function createShipmentByMethodKey(
+        string $shipmentMethodKey,
+        QuoteTransfer $quoteTransfer,
+        AddressTransfer $shippingAddressTransfer,
+    ): ShipmentTransfer {
         $shipmentMethodTransfer = $this->shipmentFacade->findShipmentMethodByKey($shipmentMethodKey);
 
         if (!$shipmentMethodTransfer) {
             throw new EntityNotFoundException(sprintf('Shipment method with key "%s" is not found.', $shipmentMethodKey));
         }
 
-        return $this->createShipment($shipmentMethodTransfer, $quoteTransfer);
+        return $this->createShipment($shipmentMethodTransfer, $quoteTransfer, $shippingAddressTransfer);
     }
 
     /**
@@ -90,8 +101,11 @@ class ShipmentExpander
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
      */
-    protected function createShipmentForShipmentType(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): ShipmentTransfer
-    {
+    protected function createShipmentForShipmentType(
+        ItemTransfer $itemTransfer,
+        QuoteTransfer $quoteTransfer,
+        AddressTransfer $shippingAddressTransfer,
+    ): ShipmentTransfer {
         $shipmentTypeTransfer = $itemTransfer->getShipmentTypeOrFail();
 
         $shipmentMethodEntity = SpyShipmentMethodQuery::create()
@@ -115,15 +129,18 @@ class ShipmentExpander
             ));
         }
 
-        $shipmentTransfer = $this->createShipment($shipmentMethodTransfer, $quoteTransfer);
+        $shipmentTransfer = $this->createShipment($shipmentMethodTransfer, $quoteTransfer, $shippingAddressTransfer);
         $shipmentTransfer->setShipmentTypeUuid($shipmentTypeTransfer->getUuidOrFail());
         $shipmentTransfer->getMethodOrFail()->setShipmentType((new ShipmentTypeTransfer())->fromArray($shipmentTypeTransfer->toArray()));
 
         return $shipmentTransfer;
     }
 
-    protected function createShipment(ShipmentMethodTransfer $shipmentMethodTransfer, QuoteTransfer $quoteTransfer): ShipmentTransfer
-    {
+    protected function createShipment(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        QuoteTransfer $quoteTransfer,
+        AddressTransfer $shippingAddressTransfer,
+    ): ShipmentTransfer {
         $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             $quoteTransfer,
@@ -132,7 +149,7 @@ class ShipmentExpander
         return (new ShipmentTransfer())
             ->setMethod($shipmentMethodTransfer)
             ->setShipmentSelection((string)$shipmentMethodTransfer->getIdShipmentMethod())
-            ->setShippingAddress($quoteTransfer->getShippingAddress());
+            ->setShippingAddress($shippingAddressTransfer);
     }
 
     protected function createShipmentExpense(ShipmentTransfer $shipmentTransfer, ?string $priceMode): ExpenseTransfer

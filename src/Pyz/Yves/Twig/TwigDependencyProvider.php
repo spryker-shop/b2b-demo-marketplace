@@ -18,6 +18,7 @@ use Spryker\Shared\Twig\Plugin\VarDumperTwigPlugin;
 use Spryker\Yves\CmsContentWidget\Plugin\Twig\CmsContentWidgetTwigPlugin;
 use Spryker\Yves\Http\Plugin\Twig\HttpKernelTwigPlugin;
 use Spryker\Yves\Http\Plugin\Twig\RuntimeLoaderTwigPlugin;
+use Spryker\Yves\Money\Plugin\Twig\MoneyTwigPlugin;
 use Spryker\Yves\Translator\Plugin\Twig\TranslatorTwigPlugin;
 use Spryker\Yves\Twig\Plugin\FilesystemTwigLoaderPlugin;
 use Spryker\Yves\Twig\Plugin\FormFilesystemTwigLoaderPlugin;
@@ -36,7 +37,7 @@ use SprykerShop\Yves\ContentNavigationWidget\Plugin\Twig\ContentNavigationTwigPl
 use SprykerShop\Yves\ContentProductSetWidget\Plugin\Twig\ContentProductSetTwigPlugin;
 use SprykerShop\Yves\ContentProductWidget\Plugin\Twig\ContentProductAbstractListTwigPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\Twig\CustomerTwigPlugin;
-use SprykerShop\Yves\MoneyWidget\Plugin\Twig\MoneyTwigPlugin;
+use SprykerShop\Yves\MoneyWidget\Plugin\Twig\MoneyWidgetTwigPlugin;
 use SprykerShop\Yves\ShopApplication\Plugin\Twig\ShopApplicationFormTwigLoaderPlugin;
 use SprykerShop\Yves\ShopApplication\Plugin\Twig\ShopApplicationTwigPlugin;
 use SprykerShop\Yves\ShopApplication\Plugin\Twig\WidgetTagTwigPlugin;
@@ -71,6 +72,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new CatalogPageTwigPlugin(),
             new CmsBlockTwigPlugin(),
             new MoneyTwigPlugin(),
+            new MoneyWidgetTwigPlugin(),
             new WidgetTwigPlugin(),
             new CartTwigPlugin(),
             new ShopPermissionTwigPlugin(),
