@@ -40,6 +40,18 @@ parameters:
         - '#Instantiation of deprecated class Spryker\\Zed\\ShipmentsRestApi\\Communication\\Plugin\\CheckoutRestApi\\ShipmentMethodCheckoutDataValidatorPlugin#'
         - '#Call to deprecated method getSaveOrderOrFail\(\) of class Generated\\Shared\\Transfer\\CheckoutResponseTransfer#'
         - '#Call to deprecated method setPayment\(\) of class Generated\\Shared\\Transfer\\QuoteTransfer#'
+        -
+            message: '#Call to deprecated method (getPayment|getShippingAddress|setShippingAddress)\(\) of class Generated\\Shared\\Transfer\\QuoteTransfer#'
+            path: src/Demo/Zed/AiCommerce/Business/BackofficeAssistant/PlaceOrder/*
+        -
+            message: '#Call to deprecated method getSaveOrder\(\) of class Generated\\Shared\\Transfer\\CheckoutResponseTransfer#'
+            path: src/Demo/Zed/AiCommerce/Business/BackofficeAssistant/PlaceOrder/CheckoutManager.php
+        -
+            message: '#Call to deprecated method hasForcedUnitGrossPrice\(\) of class Spryker\\Zed\\PriceCartConnector\\Business\\Manager\\PriceManager#'
+            path: src/Demo/Zed/PriceCartConnector/Business/Manager/PriceManager.php
+        -
+            message: '#Call to deprecated method setPriceData\(\) of class Generated\\Shared\\Transfer\\CurrentProductPriceTransfer#'
+            path: src/Demo/Client/PriceProduct/ProductPriceResolver/ProductPriceResolver.php
 
     reportUnmatchedIgnoredErrors: false
 
