@@ -167,6 +167,9 @@ jobs:
                     fi
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
+            -   name: Drain publish & synchronize queue
+                run: docker/sdk testing console queue:worker:start --stop-when-empty
+
             -   name: Validate sync completeness
                 if: ${{ inputs.restore-db }}
                 uses: ./.github/actions/validate-sync-completeness
