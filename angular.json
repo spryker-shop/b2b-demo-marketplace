@@ -7,7 +7,7 @@
             "projectType": "application",
             "schematics": {},
             "root": "",
-            "sourceRoot": ".",
+            "sourceRoot": "src",
             "prefix": "mp",
             "architect": {
                 "build": {
@@ -38,14 +38,12 @@
                             {
                                 "glob": "*/Presentation/Components/assets/**/*",
                                 "input": "src/Pyz/Zed",
-                                "output": "/assets/",
-                                "ignore": ["**/.gitkeep"]
+                                "output": "/assets/"
                             },
                             {
                                 "glob": "*/data/files/**/*",
                                 "input": "src/Pyz/Zed",
-                                "output": "/static/",
-                                "ignore": ["**/.gitkeep"]
+                                "output": "/static/"
                             }
                         ],
                         "styles": [

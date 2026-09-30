@@ -8,6 +8,10 @@
         "email": "info@spryker.com",
         "url": "https://spryker.com/"
     },
+    "engines": {
+        "node": ">=24.15.0",
+        "npm": ">=10.0.0"
+    },
     "workspaces": [
         "vendor/spryker/*",
         "vendor/spryker/*/assets/Zed",
@@ -23,63 +27,33 @@
         "yves:lint": "npm run lint -w shop-ui --",
         "formatter": "prettier --check '**/*.(scss|css|less|js|ts|json|html)'",
         "formatter:fix": "prettier --write '**/*.(scss|css|less|js|ts|json|html)'",
-        "zed": "node ./frontend/zed/build",
-        "zed:watch": "node ./frontend/zed/build --dev",
-        "zed:production": "node ./frontend/zed/build --prod",
+        "zed": "npm run build -w spryker-zed-gui --",
+        "zed:watch": "npm run build:watch -w spryker-zed-gui --",
+        "zed:production": "npm run build:production -w spryker-zed-gui --",
+        "zed:stylelint": "npm run stylelint -w spryker-zed-gui --",
+        "zed:lint": "npm run lint -w spryker-zed-gui --",
         "mp:build": "npm run build -w mp-zed-ui --",
         "mp:build:watch": "npm run build:watch -w mp-zed-ui --",
         "mp:build:production": "npm run build:production -w mp-zed-ui --",
         "mp:stylelint": "npm run stylelint -w mp-zed-ui --",
         "mp:lint": "npm run lint -w mp-zed-ui --",
         "mp:test": "npm run test -w mp-zed-ui --",
-        "mp:update:config": "npm run update:config -w mp-zed-ui --",
-        "postinstall": "npm run update:config -w mp-zed-ui",
+        "postinstall": "npm run update:config -w mp-zed-ui && npm run update:config -w spryker-zed-gui && npm run update:config -w shop-ui",
         "storybook": "NODE_OPTIONS=--max-old-space-size=8192 storybook dev -p 6006 -c src/Pyz/Yves/ShopUi/Theme/storybook/config",
         "storybook:build": "NODE_OPTIONS=--max-old-space-size=8192 storybook build -c src/Pyz/Yves/ShopUi/Theme/storybook/config -o public/Storybook/assets"
     },
-    "engines": {
-        "node": ">=24.15.0",
-        "npm": ">=10.0.0"
-    },
     "dependencies": {
         "flatpickr": "^4.6.13",
-        "nouislider": "~11.1.0",
-        "search-insights": "^2.17.3",
-        "select2": "~4.0.13",
-        "slick-carousel": "~1.8.1"
+        "nouislider": "~15.8.1",
+        "select2": "~4.1.0",
+        "slick-carousel": "~2.0.0"
     },
     "devDependencies": {
-        "@babel/core": "~7.29.7",
-        "@babel/preset-env": "~7.28.6",
-        "@babel/runtime": "~7.29.7",
-        "@eslint/js": "^10.0.1",
-        "@jest/globals": "~30.5.1",
-        "@spryker/oryx-for-zed": "~3.6.1",
         "@storybook/addon-essentials": "^8.6.18",
         "@storybook/html-webpack5": "^8.6.18",
-        "@typescript-eslint/eslint-plugin": "~8.69.0",
-        "@typescript-eslint/parser": "~8.69.0",
         "ajv": "~8.20.0",
-        "babel-loader": "~10.1.1",
-        "css-loader": "~7.1.5",
-        "eslint": "~10.9.1",
-        "jest": "~30.5.1",
-        "postcss": "~8.5.26",
-        "postcss-loader": "~8.2.1",
-        "prettier": "~3.8.0",
-        "sass-loader": "~17.0.0",
+        "prettier": "~3.9.6",
         "storybook": "^8.6.18",
-        "style-dictionary": "^4.4.0",
-        "stylelint": "~17.14.1",
-        "ts-jest": "~29.4.12",
-        "twig": "^3.0.0",
-        "typescript": "~6.0.3",
-        "typescript-eslint": "^8.69.0",
-        "webpack": "~5.110.1"
-    },
-    "overrides": {
-        "lodash-es": "~4.18.1",
-        "postcss": "~8.5.26",
-        "serialize-javascript": "~7.1.0"
+        "twig": "^3.0.0"
     }
 }

@@ -17,7 +17,6 @@ export default class DateTimePicker extends Component {
         this.calendarButton = this.querySelector<HTMLButtonElement>(`.${this.name}__calendar-button`);
         this.dateFromPicker = document.querySelector(`[data-id="${this.dateFromId}"]`);
         this.dateToPicker = document.querySelector(`[data-id="${this.dateToId}"]`);
-        console.log('enableTime', this.enableTime, this.getAttribute('enable-time'));
 
         this.mountEvents();
         this.datePickerInit();
