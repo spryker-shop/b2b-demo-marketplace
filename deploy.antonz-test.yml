@@ -64,12 +64,12 @@ composer:
 assets:
     image: spryker/nginx-brotli:latest
     mode: production
-        compression:
-            brotli:
-                static: only
-            gzip:
-                static: true
-                level: 5
+    compression:
+        brotli:
+            static: only
+        gzip:
+            static: true
+            level: 5
 
 
 regions:
