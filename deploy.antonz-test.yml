@@ -62,12 +62,15 @@ composer:
     autoload: --classmap-authoritative
 
 assets:
-    image: spryker/nginx-brotli:ladev
+    image: spryker/nginx-brotli:latest
     mode: production
-    compression:
-        brotli:
-            static: on
-            level: 5
+        compression:
+            brotli:
+                static: only
+            gzip:
+                static: true
+                level: 5
+
 
 regions:
     EU:
