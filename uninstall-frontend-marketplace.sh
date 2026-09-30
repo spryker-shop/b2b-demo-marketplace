@@ -52,14 +52,21 @@ def cleanup_package_json(file_path):
             del package_data['scripts'][script]
             scripts_removed += 1
 
-        # Also remove postinstall if it drives the Merchant Portal build. The project owned that
-        # tooling before ("mp:update:paths"); it now delegates to the mp-zed-ui workspace shipped by
+        # Also strip the Merchant Portal steps from postinstall. The project owned that tooling
+        # before ("mp:update:paths"); it now delegates to the mp-zed-ui workspace shipped by
         # spryker/zed-ui, which uninstall-marketplace-modules.sh removes right after this script.
-        # Leaving the hook behind makes every later "npm ci" fail on a workspace that is gone.
+        # Leaving those steps behind makes every later "npm ci" fail on a workspace that is gone.
+        # The remaining steps (update:config for the Zed and Yves builders) must stay: they
+        # generate the tsconfig files the Zed and Yves builds read.
         postinstall_markers = ('mp:update:paths', 'mp-zed-ui')
         postinstall = package_data['scripts'].get('postinstall', '')
-        if any(marker in postinstall for marker in postinstall_markers):
-            del package_data['scripts']['postinstall']
+        steps = [step.strip() for step in postinstall.split('&&') if step.strip()]
+        kept_steps = [step for step in steps if not any(marker in step for marker in postinstall_markers)]
+        if len(kept_steps) != len(steps):
+            if kept_steps:
+                package_data['scripts']['postinstall'] = ' && '.join(kept_steps)
+            else:
+                del package_data['scripts']['postinstall']
             scripts_removed += 1
 
     with open(file_path, 'w') as f:
