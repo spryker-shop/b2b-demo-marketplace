@@ -50,6 +50,16 @@ class CustomerExperienceManagementBackendApiHelper extends Module
 {
     use LocatorHelperTrait;
 
+    public const string RESOURCE_COMPANY_ROLES = 'company-roles';
+
+    public const string RESOURCE_COMPANY_ROLE_PERMISSIONS = 'company-role-permissions';
+
+    public const string LISTED_FIRST_NAME_FIRST = 'Aaron';
+
+    public const string LISTED_FIRST_NAME_SECOND = 'Zoe';
+
+    protected const string ADDRESSEE_LAST_NAME = 'CxmAddressee';
+
     public function clearCompanyBusinessUnitUuid(string $uuid): void
     {
         SpyCompanyBusinessUnitQuery::create()->filterByUuid($uuid)->update(['Uuid' => null]);
@@ -75,7 +85,7 @@ class CustomerExperienceManagementBackendApiHelper extends Module
      */
     public function haveTwoListedCustomers(): array
     {
-        $listedLastName = uniqid(static::LISTED_LAST_NAME_PREFIX);
+        $listedLastName = uniqid(BackendApiRequestHelper::LISTED_LAST_NAME_PREFIX);
 
         return [
             $this->haveListedCustomer(static::LISTED_FIRST_NAME_FIRST, $listedLastName),
@@ -94,13 +104,13 @@ class CustomerExperienceManagementBackendApiHelper extends Module
             $customerTransfer,
             $this->haveCustomerAddressFor($customerTransfer, [
                 AddressTransfer::FIRST_NAME => static::LISTED_FIRST_NAME_FIRST,
-                AddressTransfer::CITY => static::CITY_FIRST_ADDRESS,
-                AddressTransfer::ZIP_CODE => static::ZIP_CODE_FIRST_ADDRESS,
+                AddressTransfer::CITY => BackendApiRequestHelper::CITY_FIRST_ADDRESS,
+                AddressTransfer::ZIP_CODE => BackendApiRequestHelper::ZIP_CODE_FIRST_ADDRESS,
             ]),
             $this->haveCustomerAddressFor($customerTransfer, [
                 AddressTransfer::FIRST_NAME => static::LISTED_FIRST_NAME_SECOND,
-                AddressTransfer::CITY => static::CITY_SECOND_ADDRESS,
-                AddressTransfer::ZIP_CODE => static::ZIP_CODE_SECOND_ADDRESS,
+                AddressTransfer::CITY => BackendApiRequestHelper::CITY_SECOND_ADDRESS,
+                AddressTransfer::ZIP_CODE => BackendApiRequestHelper::ZIP_CODE_SECOND_ADDRESS,
             ]),
         ];
     }
@@ -120,10 +130,10 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     {
         return $this->getCustomerDataHelper()->haveCustomerAddress($seed + [
             AddressTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomerOrFail(),
-            AddressTransfer::ISO2_CODE => static::ISO2_CODE,
+            AddressTransfer::ISO2_CODE => BackendApiRequestHelper::ISO2_CODE,
             AddressTransfer::LAST_NAME => static::ADDRESSEE_LAST_NAME,
-            AddressTransfer::ADDRESS1 => static::ADDRESS1,
-            AddressTransfer::ADDRESS2 => static::ADDRESS2,
+            AddressTransfer::ADDRESS1 => BackendApiRequestHelper::ADDRESS1,
+            AddressTransfer::ADDRESS2 => BackendApiRequestHelper::ADDRESS2,
         ]);
     }
 
