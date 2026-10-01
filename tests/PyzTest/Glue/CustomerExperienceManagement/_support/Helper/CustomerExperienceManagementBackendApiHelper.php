@@ -22,281 +22,33 @@ use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use RuntimeException;
-use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
-use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
+use SprykerFeatureTest\Glue\CustomerExperienceManagement\Helper\CustomerExperienceManagementBackendApiHelper as BackendApiRequestHelper;
 use SprykerTest\Shared\CustomerNote\Helper\CustomerNoteDataHelper;
+use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Shared\User\Helper\UserDataHelper;
-use SprykerTest\Zed\Company\Helper\CompanyHelper;
 use SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper;
 use SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper;
+use SprykerTest\Zed\Company\Helper\CompanyHelper;
+use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 
 /**
- * Request building and fixture arrangement for every resource of the CustomerExperienceManagement
- * Backend API: customers, their addresses and their notes.
+ * Fixture arrangement for the CustomerExperienceManagement Backend API test lanes: seeding
+ * companies, customers, notes, company users and company roles, and reading rows back for
+ * assertions.
  *
- * One module rather than one per resource, because Codeception merges every enabled module into a
- * single actor and a method name defined in two of them would collide there.
- *
- * Routes are returned as paths with a leading slash, which is what
- * {@see \SprykerTest\ApiPlatform\Test\AbstractApiTestCase::handleApiRequest()} resolves against the
- * suite's base URL.
+ * Stateless request building for the resources the feature ships lives in the module's own
+ * {@see \SprykerFeatureTest\Glue\CustomerExperienceManagement\Helper\CustomerExperienceManagementBackendApiHelper},
+ * which this suite enables alongside this one; Codeception merges both onto the same actor.
  */
 class CustomerExperienceManagementBackendApiHelper extends Module
 {
     use LocatorHelperTrait;
-
-    public const string RESOURCE_CUSTOMERS = 'customers';
-
-    public const string RESOURCE_COMPANY_USERS = 'company-users';
-
-    public const string RESOURCE_ADDRESSES = 'addresses';
-
-    public const string RESOURCE_NOTES = 'notes';
-
-    public const string RESOURCE_TYPE_NOTES = 'customer-notes';
-
-    public const string OPERATION_SET_STATUS = 'set-status';
-
-    public const string OPERATION_SET_DEFAULT = 'set-default';
-
-    public const string RESOURCE_COMPANIES = 'companies';
-
-    public const string RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
-
-    public const string RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES = 'company-business-unit-addresses';
-
-    public const string RESOURCE_CUSTOMER_GROUPS = 'customer-groups';
-
-    public const string RESOURCE_CUSTOMER_GROUP_CUSTOMERS = 'customer-group-customers';
-
-    public const string RESOURCE_CUSTOMER_ACCESS = 'customer-access';
-
-    public const string RESOURCE_COMPANY_ROLES = 'company-roles';
-
-    public const string RESOURCE_COMPANY_ROLE_PERMISSIONS = 'company-role-permissions';
-
-    /**
-     * Distinguishes the customers of one test method from every other row in the database, so a
-     * free-text search can isolate exactly them. The suite rolls its writes back, but the database
-     * it runs against is the shared development one and already holds demo customers.
-     */
-    protected const string LISTED_LAST_NAME_PREFIX = 'CxmListed';
-
-    protected const string LISTED_COMPANY_NAME_PREFIX = 'CxmListedCompany';
-
-    protected const string LISTED_COMPANY_NAME_FIRST = 'Aaa';
-
-    protected const string LISTED_COMPANY_NAME_SECOND = 'Zzz';
-
-    public const string LISTED_FIRST_NAME_FIRST = 'Aaron';
-
-    public const string LISTED_FIRST_NAME_SECOND = 'Zoe';
-
-    protected const string ISO2_CODE = 'DE';
-
-    protected const string STORE_NAME = 'DE';
-
-    protected const string COUNTRY_NAME = 'Germany';
-
-    protected const string ADDRESSEE_LAST_NAME = 'CxmAddressee';
-
-    protected const string ADDRESS1 = 'Julie-Wolfthorn-Strasse';
-
-    protected const string ADDRESS2 = '1';
-
-    protected const string CITY_FIRST_ADDRESS = 'Aachen';
-
-    protected const string CITY_SECOND_ADDRESS = 'Berlin';
-
-    protected const string ZIP_CODE_FIRST_ADDRESS = '52062';
-
-    protected const string ZIP_CODE_SECOND_ADDRESS = '10115';
-
-    /**
-     * Resource-only: the company user resource addresses its related entities by public reference
-     * and uuid, none of which the CompanyUser transfer has a counterpart for.
-     */
-    protected const string ATTRIBUTE_COMPANY_UUID = 'companyUuid';
-
-    protected const string ATTRIBUTE_COMPANY_BUSINESS_UNIT_UUID = 'companyBusinessUnitUuid';
-
-    protected const string ATTRIBUTE_COMPANY_ROLE_UUIDS = 'companyRoleUuids';
-
-    public function getIso2Code(): string
-    {
-        return static::ISO2_CODE;
-    }
-
-    public function getCountryName(): string
-    {
-        return static::COUNTRY_NAME;
-    }
-
-    public function getFirstAddressCity(): string
-    {
-        return static::CITY_FIRST_ADDRESS;
-    }
-
-    public function getSecondAddressCity(): string
-    {
-        return static::CITY_SECOND_ADDRESS;
-    }
-
-    // ---------------------------------------------------------------- companies
-
-    /**
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildValidCompanyAttributes(array $override = []): array
-    {
-        return $override + [
-            CompanyTransfer::NAME => uniqid('CxmCompany', false),
-        ];
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCompanyRequestBody(array $attributes, ?string $uuid = null): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_COMPANIES, $attributes, $uuid);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCompanyUrl(string $uuid): string
-    {
-        return sprintf('/%s/%s', static::RESOURCE_COMPANIES, $uuid);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCompanyCollectionUrl(array $query = []): string
-    {
-        return sprintf('/%s', static::RESOURCE_COMPANIES) . $this->formatQuery($query);
-    }
-
-    /**
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildValidCompanyBusinessUnitAttributes(array $override = []): array
-    {
-        return $override + [
-            CompanyBusinessUnitTransfer::NAME => uniqid('CxmBusinessUnit', false),
-        ];
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCompanyBusinessUnitRequestBody(array $attributes, ?string $uuid = null): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_COMPANY_BUSINESS_UNITS, $attributes, $uuid);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCompanyBusinessUnitUrl(string $uuid): string
-    {
-        return sprintf('/%s/%s', static::RESOURCE_COMPANY_BUSINESS_UNITS, $uuid);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCompanyBusinessUnitCollectionUrl(array $query = []): string
-    {
-        return sprintf('/%s', static::RESOURCE_COMPANY_BUSINESS_UNITS) . $this->formatQuery($query);
-    }
-
-    /**
-     * `companyUuid` is intentionally absent: it is the one attribute every caller must supply
-     * itself, because the address is created against a company the test already owns.
-     *
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildValidCompanyBusinessUnitAddressAttributes(array $override = []): array
-    {
-        return $override + [
-            'iso2Code' => static::ISO2_CODE,
-            'street' => uniqid('CxmStreet', false),
-            'number' => '1',
-            'city' => static::CITY_FIRST_ADDRESS,
-            'zipCode' => static::ZIP_CODE_FIRST_ADDRESS,
-        ];
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCompanyBusinessUnitAddressRequestBody(array $attributes, ?string $uuid = null): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES, $attributes, $uuid);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCompanyBusinessUnitAddressUrl(string $uuid): string
-    {
-        return sprintf('/%s/%s', static::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES, $uuid);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCompanyBusinessUnitAddressCollectionUrl(array $query = []): string
-    {
-        return sprintf('/%s', static::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES) . $this->formatQuery($query);
-    }
-
-    public function buildListedCompanyNameToken(): string
-    {
-        return uniqid(static::LISTED_COMPANY_NAME_PREFIX);
-    }
-
-    public function buildFirstListedCompanyName(string $token): string
-    {
-        return $token . static::LISTED_COMPANY_NAME_FIRST;
-    }
-
-    public function buildSecondListedCompanyName(string $token): string
-    {
-        return $token . static::LISTED_COMPANY_NAME_SECOND;
-    }
-
-    // ---------------------------------------------------------------- customers
-
-    /**
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildValidCustomerAttributes(array $override = []): array
-    {
-        return $override + [
-            CustomerTransfer::EMAIL => uniqid('cxm.backend.api.', true) . '@spryker.local',
-            CustomerTransfer::SALUTATION => 'Mr',
-            CustomerTransfer::FIRST_NAME => 'Created',
-            CustomerTransfer::LAST_NAME => 'ViaBackendApi',
-            CustomerTransfer::STORE_NAME => static::STORE_NAME,
-        ];
-    }
 
     public function clearCompanyBusinessUnitUuid(string $uuid): void
     {
@@ -319,38 +71,6 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     }
 
     /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCustomerRequestBody(array $attributes, ?string $customerReference = null): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_CUSTOMERS, $attributes, $customerReference);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCustomerUrl(string $customerReference): string
-    {
-        return sprintf('/%s/%s', static::RESOURCE_CUSTOMERS, $customerReference);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCustomerUrlWithQuery(string $customerReference, array $query = []): string
-    {
-        return $this->getCustomerUrl($customerReference) . $this->formatQuery($query);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCustomerCollectionUrl(array $query = []): string
-    {
-        return sprintf('/%s', static::RESOURCE_CUSTOMERS) . $this->formatQuery($query);
-    }
-
-    /**
      * @return array<\Generated\Shared\Transfer\CustomerTransfer>
      */
     public function haveTwoListedCustomers(): array
@@ -361,60 +81,6 @@ class CustomerExperienceManagementBackendApiHelper extends Module
             $this->haveListedCustomer(static::LISTED_FIRST_NAME_FIRST, $listedLastName),
             $this->haveListedCustomer(static::LISTED_FIRST_NAME_SECOND, $listedLastName),
         ];
-    }
-
-    /**
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildValidCustomerAddressAttributes(array $override = []): array
-    {
-        return $override + [
-            AddressTransfer::SALUTATION => 'Mr',
-            AddressTransfer::FIRST_NAME => 'Created',
-            AddressTransfer::LAST_NAME => 'ViaBackendApi',
-            AddressTransfer::ADDRESS1 => static::ADDRESS1,
-            AddressTransfer::ADDRESS2 => static::ADDRESS2,
-            AddressTransfer::CITY => static::CITY_SECOND_ADDRESS,
-            AddressTransfer::ZIP_CODE => static::ZIP_CODE_SECOND_ADDRESS,
-            AddressTransfer::ISO2_CODE => static::ISO2_CODE,
-        ];
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCustomerAddressRequestBody(array $attributes, ?string $uuid = null): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_ADDRESSES, $attributes, $uuid);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCustomerAddressCollectionUrl(string $customerReference, array $query = []): string
-    {
-        return sprintf(
-            '/%s/%s/%s',
-            static::RESOURCE_CUSTOMERS,
-            $customerReference,
-            static::RESOURCE_ADDRESSES,
-        ) . $this->formatQuery($query);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCustomerAddressUrl(string $customerReference, string $uuid): string
-    {
-        return sprintf(
-            '/%s/%s/%s/%s',
-            static::RESOURCE_CUSTOMERS,
-            $customerReference,
-            static::RESOURCE_ADDRESSES,
-            $uuid,
-        );
     }
 
     /**
@@ -462,53 +128,6 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     }
 
     /**
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildValidCustomerNoteAttributes(array $override = []): array
-    {
-        return $override + [
-            SpyCustomerNoteEntityTransfer::MESSAGE => 'Called the customer about invoice 4711.',
-        ];
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCustomerNoteRequestBody(array $attributes): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_TYPE_NOTES, $attributes);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCustomerNoteCollectionUrl(string $customerReference, array $query = []): string
-    {
-        return sprintf(
-            '/%s/%s/%s',
-            static::RESOURCE_CUSTOMERS,
-            $customerReference,
-            static::RESOURCE_NOTES,
-        ) . $this->formatQuery($query);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCustomerNoteUrl(string $customerReference, string $uuid): string
-    {
-        return sprintf(
-            '/%s/%s/%s/%s',
-            static::RESOURCE_CUSTOMERS,
-            $customerReference,
-            static::RESOURCE_NOTES,
-            $uuid,
-        );
-    }
-
-    /**
      * @return array{0: \Generated\Shared\Transfer\CustomerTransfer, 1: \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer, 2: \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer}
      */
     public function haveCustomerWithTwoNotes(UserTransfer $userTransfer): array
@@ -545,48 +164,6 @@ class CustomerExperienceManagementBackendApiHelper extends Module
         return $this->getUserDataHelper()->haveUser();
     }
 
-    // ---------------------------------------------------------------- company users
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCompanyUserCollectionUrl(array $query = []): string
-    {
-        return sprintf('/%s', static::RESOURCE_COMPANY_USERS) . $this->formatQuery($query);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCompanyUserUrl(string $uuid): string
-    {
-        return sprintf('/%s/%s', static::RESOURCE_COMPANY_USERS, $uuid);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCompanyUserSetStatusUrl(string $uuid): string
-    {
-        return sprintf('/%s/%s/%s', static::RESOURCE_COMPANY_USERS, $uuid, static::OPERATION_SET_STATUS);
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    public function getCompanyUserSetDefaultUrl(string $uuid): string
-    {
-        return sprintf('/%s/%s/%s', static::RESOURCE_COMPANY_USERS, $uuid, static::OPERATION_SET_DEFAULT);
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCompanyUserRequestBody(array $attributes): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_COMPANY_USERS, $attributes);
-    }
-
     /**
      * @return array{company: \Generated\Shared\Transfer\CompanyTransfer, businessUnit: \Generated\Shared\Transfer\CompanyBusinessUnitTransfer, role: \Generated\Shared\Transfer\CompanyRoleTransfer}
      */
@@ -620,11 +197,6 @@ class CustomerExperienceManagementBackendApiHelper extends Module
         return $this->getCompanyRoleHelper()->haveCompanyRole([
             CompanyRoleTransfer::FK_COMPANY => $idCompany,
         ]);
-    }
-
-    public function getListedCompanyUserLastName(): string
-    {
-        return uniqid(static::LISTED_LAST_NAME_PREFIX);
     }
 
     /**
@@ -663,7 +235,7 @@ class CustomerExperienceManagementBackendApiHelper extends Module
         string $firstName = self::LISTED_FIRST_NAME_FIRST,
         ?string $lastName = null,
     ): CompanyUserTransfer {
-        $customerTransfer = $this->haveCompanyUserCustomer($firstName, $lastName ?? $this->getListedCompanyUserLastName());
+        $customerTransfer = $this->haveCompanyUserCustomer($firstName, $lastName ?? $this->getRequestHelper()->getListedCompanyUserLastName());
 
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setCustomer($customerTransfer)
@@ -698,39 +270,6 @@ class CustomerExperienceManagementBackendApiHelper extends Module
             CustomerTransfer::FIRST_NAME => $firstName,
             CustomerTransfer::LAST_NAME => $lastName,
         ]);
-    }
-
-    /**
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildValidCompanyUserAttributes(
-        CompanyTransfer $companyTransfer,
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
-        CompanyRoleTransfer $companyRoleTransfer,
-        array $override = [],
-    ): array {
-        return $override + [
-            static::ATTRIBUTE_COMPANY_UUID => $companyTransfer->getUuidOrFail(),
-            static::ATTRIBUTE_COMPANY_BUSINESS_UNIT_UUID => $companyBusinessUnitTransfer->getUuidOrFail(),
-            static::ATTRIBUTE_COMPANY_ROLE_UUIDS => [$companyRoleTransfer->getUuidOrFail()],
-        ];
-    }
-
-    /**
-     * @param array<string, mixed> $override
-     *
-     * @return array<string, mixed>
-     */
-    public function buildNewCustomerAttributes(array $override = []): array
-    {
-        return $override + [
-            CustomerTransfer::EMAIL => uniqid('cxm.company.user.', true) . '@spryker.local',
-            CustomerTransfer::SALUTATION => 'Mr',
-            CustomerTransfer::FIRST_NAME => 'Created',
-            CustomerTransfer::LAST_NAME => 'ViaBackendApi',
-        ];
     }
 
     protected function getCompanyUserFacade(): CompanyUserFacadeInterface
@@ -822,72 +361,6 @@ class CustomerExperienceManagementBackendApiHelper extends Module
         $userDataHelper = $this->getModule('\\' . UserDataHelper::class);
 
         return $userDataHelper;
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCustomerGroupRequestBody(array $attributes, ?string $uuid = null): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_CUSTOMER_GROUPS, $attributes, $uuid);
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCustomerGroupCustomersRequestBody(array $attributes): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_CUSTOMER_GROUP_CUSTOMERS, $attributes);
-    }
-
-    /**
-     * @param array<string, mixed> $attributes
-     */
-    public function buildCustomerAccessRequestBody(array $attributes): string
-    {
-        return $this->buildRequestBody(static::RESOURCE_CUSTOMER_ACCESS, $attributes);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCustomerGroupCollectionUrl(array $query = []): string
-    {
-        return sprintf('/%s', static::RESOURCE_CUSTOMER_GROUPS) . $this->formatQuery($query);
-    }
-
-    public function getCustomerGroupUrl(string $uuid): string
-    {
-        return sprintf('/%s/%s', static::RESOURCE_CUSTOMER_GROUPS, $uuid);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    public function getCustomerGroupCustomerCollectionUrl(string $uuid, array $query = []): string
-    {
-        return sprintf(
-            '/%s/%s/%s',
-            static::RESOURCE_CUSTOMER_GROUPS,
-            $uuid,
-            static::RESOURCE_CUSTOMERS,
-        ) . $this->formatQuery($query);
-    }
-
-    public function getCustomerGroupCustomerUrl(string $uuid, string $customerReference): string
-    {
-        return sprintf(
-            '/%s/%s/%s/%s',
-            static::RESOURCE_CUSTOMER_GROUPS,
-            $uuid,
-            static::RESOURCE_CUSTOMERS,
-            $customerReference,
-        );
-    }
-
-    public function getCustomerAccessUrl(): string
-    {
-        return sprintf('/%s', static::RESOURCE_CUSTOMER_ACCESS);
     }
 
     /**
@@ -1009,5 +482,13 @@ class CustomerExperienceManagementBackendApiHelper extends Module
             ->filterByFkCompany($idCompany)
             ->filterByIsDefault(true)
             ->count();
+    }
+
+    protected function getRequestHelper(): BackendApiRequestHelper
+    {
+        /** @var \SprykerFeatureTest\Glue\CustomerExperienceManagement\Helper\CustomerExperienceManagementBackendApiHelper $requestHelper */
+        $requestHelper = $this->getModule('\\' . BackendApiRequestHelper::class);
+
+        return $requestHelper;
     }
 }

@@ -11096,21 +11096,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-experience-management.git",
-                "reference": "b7d241eff79c913295ad6107c107f932566d1dfb"
+                "reference": "75842665cab54d9d5e0b7186d63888661c32872e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/b7d241eff79c913295ad6107c107f932566d1dfb",
-                "reference": "b7d241eff79c913295ad6107c107f932566d1dfb",
+                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/75842665cab54d9d5e0b7186d63888661c32872e",
+                "reference": "75842665cab54d9d5e0b7186d63888661c32872e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/business-on-behalf": "^1.0.0",
                 "spryker/company": "^1.11.0",
-                "spryker/company-business-unit": "^2.22.0",
+                "spryker/company-business-unit": "^2.24.0",
                 "spryker/company-role": "^1.14.0",
-                "spryker/company-unit-address": "^1.19.0",
+                "spryker/company-unit-address": "^1.20.0",
                 "spryker/company-unit-address-label": "^1.6.0",
                 "spryker/company-user": "^2.24.0",
                 "spryker/country": "^3.1.0 || ^4.0.0",
@@ -11145,7 +11145,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerFeature\\": "src/SprykerFeature/"
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Glue\\CustomerExperienceManagement\\Helper\\": "tests/SprykerFeatureTest/Glue/CustomerExperienceManagement/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -11156,7 +11157,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/customer-experience-management/tree/master"
             },
-            "time": "2026-09-25T15:09:10+00:00"
+            "time": "2026-09-30T16:27:09+00:00"
         },
         {
             "name": "spryker-feature/data-exchange-api",
@@ -26108,16 +26109,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.42.0",
+            "version": "1.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "f5266790c9ce3534a379acf247482df08af63951"
+                "reference": "7e76e007778e40b2d9f1c230519f6c895f08984c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/f5266790c9ce3534a379acf247482df08af63951",
-                "reference": "f5266790c9ce3534a379acf247482df08af63951",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/7e76e007778e40b2d9f1c230519f6c895f08984c",
+                "reference": "7e76e007778e40b2d9f1c230519f6c895f08984c",
                 "shasum": ""
             },
             "require": {
@@ -26210,9 +26211,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.42.0"
+                "source": "https://github.com/spryker/api-platform/tree/1.45.0"
             },
-            "time": "2026-09-28T09:21:48+00:00"
+            "time": "2026-09-30T16:27:09+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -33860,16 +33861,16 @@
         },
         {
             "name": "spryker/company-business-unit",
-            "version": "2.23.0",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-unit.git",
-                "reference": "651965d78243bc6c691c7912d4bd5a455584cfef"
+                "reference": "7dd20334d8a6354ef341787591fc0365b159a463"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/651965d78243bc6c691c7912d4bd5a455584cfef",
-                "reference": "651965d78243bc6c691c7912d4bd5a455584cfef",
+                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/7dd20334d8a6354ef341787591fc0365b159a463",
+                "reference": "7dd20334d8a6354ef341787591fc0365b159a463",
                 "shasum": ""
             },
             "require": {
@@ -33912,9 +33913,9 @@
             ],
             "description": "CompanyBusinessUnit module",
             "support": {
-                "source": "https://github.com/spryker/company-business-unit/tree/2.23.0"
+                "source": "https://github.com/spryker/company-business-unit/tree/2.24.0"
             },
-            "time": "2026-09-24T10:50:37+00:00"
+            "time": "2026-09-30T16:27:09+00:00"
         },
         {
             "name": "spryker/company-business-unit-addresses-rest-api",
@@ -34982,16 +34983,16 @@
         },
         {
             "name": "spryker/company-unit-address",
-            "version": "1.19.0",
+            "version": "1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-unit-address.git",
-                "reference": "d3a9380e0d2e4aa283d7a7c6c7187cc81f7fd5d8"
+                "reference": "cc1b97524b71b2662dc46adaa9db74c8646fe0b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-unit-address/zipball/d3a9380e0d2e4aa283d7a7c6c7187cc81f7fd5d8",
-                "reference": "d3a9380e0d2e4aa283d7a7c6c7187cc81f7fd5d8",
+                "url": "https://api.github.com/repos/spryker/company-unit-address/zipball/cc1b97524b71b2662dc46adaa9db74c8646fe0b7",
+                "reference": "cc1b97524b71b2662dc46adaa9db74c8646fe0b7",
                 "shasum": ""
             },
             "require": {
@@ -35035,9 +35036,9 @@
             ],
             "description": "CompanyUnitAddress module",
             "support": {
-                "source": "https://github.com/spryker/company-unit-address/tree/1.19.0"
+                "source": "https://github.com/spryker/company-unit-address/tree/1.20.0"
             },
-            "time": "2026-09-24T10:50:37+00:00"
+            "time": "2026-09-30T16:27:09+00:00"
         },
         {
             "name": "spryker/company-unit-address-data-import",
@@ -93747,9 +93748,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
