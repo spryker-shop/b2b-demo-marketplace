@@ -22,20 +22,20 @@ use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
-use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
-use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
+use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
 use RuntimeException;
+use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerFeatureTest\Glue\CustomerExperienceManagement\Helper\CustomerExperienceManagementBackendApiHelper as BackendApiRequestHelper;
-use SprykerTest\Shared\CustomerNote\Helper\CustomerNoteDataHelper;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
+use SprykerTest\Shared\CustomerNote\Helper\CustomerNoteDataHelper;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Shared\User\Helper\UserDataHelper;
+use SprykerTest\Zed\Company\Helper\CompanyHelper;
 use SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper;
 use SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper;
-use SprykerTest\Zed\Company\Helper\CompanyHelper;
-use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 
 /**
  * Fixture arrangement for the CustomerExperienceManagement Backend API test lanes: seeding
