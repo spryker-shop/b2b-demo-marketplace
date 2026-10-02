@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7794ecb57456fe426823364d6f7683e5",
+    "content-hash": "69ce9c9f16564d2ca0d9a94d02b1cc8a",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -11092,7 +11092,7 @@
         },
         {
             "name": "spryker-feature/customer-experience-management",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-experience-management.git",
@@ -11136,7 +11136,6 @@
             "suggest": {
                 "spryker/api-platform": "Required to expose the customers and company-users Backend API resources; without it the resource schemas are never discovered."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -11155,7 +11154,7 @@
             ],
             "description": "CustomerExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/customer-experience-management/tree/master"
+                "source": "https://github.com/spryker-feature/customer-experience-management/tree/1.1.0"
             },
             "time": "2026-09-30T16:27:09+00:00"
         },
@@ -13598,7 +13597,7 @@
         },
         {
             "name": "spryker-feature/product-experience-management",
-            "version": "dev-master",
+            "version": "4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-experience-management.git",
@@ -13665,7 +13664,6 @@
                 "spryker-feature/self-service-portal": "Enables product class and shipment type import/export. Install dependency to get SelfServicePortal-specific data included in import and export operations.",
                 "spryker/api-platform": "If you want to use the products backend API resources, which are provided via API Platform."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -13683,7 +13681,7 @@
             ],
             "description": "ProductExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/product-experience-management/tree/master"
+                "source": "https://github.com/spryker-feature/product-experience-management/tree/4.1.2"
             },
             "time": "2026-09-29T16:09:01+00:00"
         },
@@ -50559,16 +50557,16 @@
         },
         {
             "name": "spryker/multi-factor-auth",
-            "version": "2.8.1",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/multi-factor-auth.git",
-                "reference": "832f53881e844117957703db327d823cf6ff6303"
+                "reference": "1e73fba6a1157b18bd9bf75861cfa62f5d551e30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/multi-factor-auth/zipball/832f53881e844117957703db327d823cf6ff6303",
-                "reference": "832f53881e844117957703db327d823cf6ff6303",
+                "url": "https://api.github.com/repos/spryker/multi-factor-auth/zipball/1e73fba6a1157b18bd9bf75861cfa62f5d551e30",
+                "reference": "1e73fba6a1157b18bd9bf75861cfa62f5d551e30",
                 "shasum": ""
             },
             "require": {
@@ -50588,6 +50586,7 @@
                 "spryker/gui": "^4.0.0 || ^5.8.0",
                 "spryker/gui-extension": "^1.0.0",
                 "spryker/kernel": "^3.52.0",
+                "spryker/log": "^3.0.0",
                 "spryker/mail": "^4.6.0",
                 "spryker/mail-extension": "^1.0.0",
                 "spryker/multi-factor-auth-extension": "^1.2.0",
@@ -50634,9 +50633,9 @@
             ],
             "description": "MultiFactorAuth module",
             "support": {
-                "source": "https://github.com/spryker/multi-factor-auth/tree/2.8.1"
+                "source": "https://github.com/spryker/multi-factor-auth/tree/2.9.0"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-09-30T15:23:25+00:00"
         },
         {
             "name": "spryker/multi-factor-auth-extension",
@@ -93693,19 +93692,7 @@
     ],
     "aliases": [
         {
-            "package": "spryker-feature/customer-experience-management",
-            "version": "9999999-dev",
-            "alias": "202608.0",
-            "alias_normalized": "202608.0"
-        },
-        {
             "package": "spryker-feature/order-experience-management",
-            "version": "9999999-dev",
-            "alias": "202608.0",
-            "alias_normalized": "202608.0"
-        },
-        {
-            "package": "spryker-feature/product-experience-management",
             "version": "9999999-dev",
             "alias": "202608.0",
             "alias_normalized": "202608.0"
@@ -93725,9 +93712,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "spryker-feature/customer-experience-management": 20,
         "spryker-feature/order-experience-management": 20,
-        "spryker-feature/product-experience-management": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker/cypress-tests": 20,
