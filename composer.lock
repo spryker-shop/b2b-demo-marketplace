@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69ce9c9f16564d2ca0d9a94d02b1cc8a",
+    "content-hash": "aaac384a432ad931786652429ea43311",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -11092,7 +11092,7 @@
         },
         {
             "name": "spryker-feature/customer-experience-management",
-            "version": "1.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-experience-management.git",
@@ -11136,6 +11136,7 @@
             "suggest": {
                 "spryker/api-platform": "Required to expose the customers and company-users Backend API resources; without it the resource schemas are never discovered."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -11154,7 +11155,7 @@
             ],
             "description": "CustomerExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/customer-experience-management/tree/1.1.0"
+                "source": "https://github.com/spryker-feature/customer-experience-management/tree/master"
             },
             "time": "2026-09-30T16:27:09+00:00"
         },
@@ -13597,16 +13598,16 @@
         },
         {
             "name": "spryker-feature/product-experience-management",
-            "version": "4.1.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-experience-management.git",
-                "reference": "3cb51bf7f6a51195b9da352ac1ac03d7c041f8a2"
+                "reference": "ae5f2394b2e48c970d5bb57b4e287011ed2a87d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/product-experience-management/zipball/3cb51bf7f6a51195b9da352ac1ac03d7c041f8a2",
-                "reference": "3cb51bf7f6a51195b9da352ac1ac03d7c041f8a2",
+                "url": "https://api.github.com/repos/spryker-feature/product-experience-management/zipball/ae5f2394b2e48c970d5bb57b4e287011ed2a87d0",
+                "reference": "ae5f2394b2e48c970d5bb57b4e287011ed2a87d0",
                 "shasum": ""
             },
             "require": {
@@ -13664,6 +13665,7 @@
                 "spryker-feature/self-service-portal": "Enables product class and shipment type import/export. Install dependency to get SelfServicePortal-specific data included in import and export operations.",
                 "spryker/api-platform": "If you want to use the products backend API resources, which are provided via API Platform."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -13672,7 +13674,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerFeature\\": "src/SprykerFeature/"
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Shared\\ProductExperienceManagement\\Helper\\": "tests/SprykerFeatureTest/Shared/ProductExperienceManagement/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -13681,9 +13684,9 @@
             ],
             "description": "ProductExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/product-experience-management/tree/4.1.2"
+                "source": "https://github.com/spryker-feature/product-experience-management/tree/master"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-10-02T10:51:43+00:00"
         },
         {
             "name": "spryker-feature/product-groups",
@@ -93692,7 +93695,19 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/customer-experience-management",
+            "version": "9999999-dev",
+            "alias": "202608.0",
+            "alias_normalized": "202608.0"
+        },
+        {
             "package": "spryker-feature/order-experience-management",
+            "version": "9999999-dev",
+            "alias": "202608.0",
+            "alias_normalized": "202608.0"
+        },
+        {
+            "package": "spryker-feature/product-experience-management",
             "version": "9999999-dev",
             "alias": "202608.0",
             "alias_normalized": "202608.0"
@@ -93712,7 +93727,9 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/customer-experience-management": 20,
         "spryker-feature/order-experience-management": 20,
+        "spryker-feature/product-experience-management": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker/cypress-tests": 20,
