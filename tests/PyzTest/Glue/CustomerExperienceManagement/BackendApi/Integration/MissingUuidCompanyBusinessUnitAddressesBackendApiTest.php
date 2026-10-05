@@ -18,9 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
  * installs it over a populated database has addresses whose uuid is empty until
  * `console uuid:generate CompanyUnitAddress spy_company_unit_address` has run.
  *
- * These tests pin what the API does in that window: the collection stays readable and filterable,
- * and an address that cannot be addressed reports that plainly instead of failing or matching on
- * an empty value.
+ * These tests pin what the API does in that window. An address with no uuid has no JSON:API
+ * identity, so any response that would have to carry it fails with error code 012, which names the
+ * back-fill as the remedy, instead of dropping the row silently or reporting an opaque IRI error.
+ * An address addressed directly by its former uuid is reported not found.
  *
  * Auto-generated group annotations
  *
@@ -35,13 +36,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MissingUuidCompanyBusinessUnitAddressesBackendApiTest extends AbstractCustomerExperienceManagementBackendApiTestCase
 {
-    public function testGivenAnAddressWithoutAUuidWhenGetCollectionThenItStillAnswers(): void
+    public function testGivenAnAddressWithoutAUuidWhenGetCollectionThenItReportsTheMissingBackfill(): void
     {
-        $this->markTestSkipped(
-            'API Platform cannot generate an IRI for a collection item without a uuid, so the collection responds 400; '
-            . 'needs a fix in the feature before this can run.',
-        );
-
         // Arrange
         $this->tester->actingAsUser();
         $companyUuid = $this->haveCompanyViaApi();
@@ -52,20 +48,15 @@ class MissingUuidCompanyBusinessUnitAddressesBackendApiTest extends AbstractCust
         $response = $this->handleApiRequest('GET', $this->tester->getCompanyBusinessUnitAddressCollectionUrl());
 
         // Assert
-        $this->assertRespondsWithStatus(
+        $this->assertRespondsWithErrorCode(
             $response,
-            Response::HTTP_OK,
-            'An address still waiting for uuid:generate must not break the collection.',
+            Response::HTTP_INTERNAL_SERVER_ERROR,
+            static::RESPONSE_CODE_RESOURCE_IDENTIFIER_MISSING,
         );
     }
 
-    public function testGivenAnAddressWithoutAUuidWhenFilteringByCompanyThenItIsStillListed(): void
+    public function testGivenAnAddressWithoutAUuidWhenFilteringByCompanyThenItStillReportsTheMissingBackfill(): void
     {
-        $this->markTestSkipped(
-            'API Platform cannot generate an IRI for a collection item without a uuid, so the collection responds 400; '
-            . 'needs a fix in the feature before this can run.',
-        );
-
         // Arrange
         $this->tester->actingAsUser();
         $companyUuid = $this->haveCompanyViaApi();
@@ -82,11 +73,10 @@ class MissingUuidCompanyBusinessUnitAddressesBackendApiTest extends AbstractCust
         );
 
         // Assert
-        $this->assertRespondsWithStatus($response, Response::HTTP_OK);
-        $this->assertCount(
-            1,
-            $this->decodeJsonApi($response)[static::JSON_API_KEY_DATA] ?? [],
-            'The address is listed even though its uuid has not been generated yet.',
+        $this->assertRespondsWithErrorCode(
+            $response,
+            Response::HTTP_INTERNAL_SERVER_ERROR,
+            static::RESPONSE_CODE_RESOURCE_IDENTIFIER_MISSING,
         );
     }
 

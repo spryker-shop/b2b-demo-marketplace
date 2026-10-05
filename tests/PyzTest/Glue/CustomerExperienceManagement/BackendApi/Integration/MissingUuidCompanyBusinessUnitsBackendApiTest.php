@@ -19,9 +19,10 @@ use Symfony\Component\HttpFoundation\Response;
  * installs it over a populated database has business units whose uuid is empty until
  * `console uuid:generate CompanyBusinessUnit spy_company_business_unit` has run.
  *
- * These tests pin what the API does in that window: the collection stays readable, and a business
- * unit that cannot be addressed reports that plainly instead of failing or matching on an empty
- * value.
+ * These tests pin what the API does in that window. A business unit with no uuid has no JSON:API
+ * identity, so any response that would have to carry it fails with error code 012, which names the
+ * back-fill as the remedy, instead of dropping the row silently or reporting an opaque IRI error.
+ * A business unit addressed directly by its former uuid is reported not found.
  *
  * Auto-generated group annotations
  *
@@ -36,13 +37,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MissingUuidCompanyBusinessUnitsBackendApiTest extends AbstractCustomerExperienceManagementBackendApiTestCase
 {
-    public function testGivenABusinessUnitWithoutAUuidWhenGetCollectionThenItStillAnswers(): void
+    public function testGivenABusinessUnitWithoutAUuidWhenGetCollectionThenItReportsTheMissingBackfill(): void
     {
-        $this->markTestSkipped(
-            'API Platform cannot generate an IRI for a collection item without a uuid, so the collection responds 400; '
-            . 'needs a fix in the feature before this can run.',
-        );
-
         // Arrange
         $this->tester->actingAsUser();
         $companyUuid = $this->haveCompanyViaApi();
@@ -53,10 +49,10 @@ class MissingUuidCompanyBusinessUnitsBackendApiTest extends AbstractCustomerExpe
         $response = $this->handleApiRequest('GET', $this->tester->getCompanyBusinessUnitCollectionUrl());
 
         // Assert
-        $this->assertRespondsWithStatus(
+        $this->assertRespondsWithErrorCode(
             $response,
-            Response::HTTP_OK,
-            'A business unit still waiting for uuid:generate must not break the collection.',
+            Response::HTTP_INTERNAL_SERVER_ERROR,
+            static::RESPONSE_CODE_RESOURCE_IDENTIFIER_MISSING,
         );
     }
 

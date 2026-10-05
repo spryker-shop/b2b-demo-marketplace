@@ -1,7 +1,8 @@
 import PackagingUnitQuantitySelectorCore from 'ProductPackagingUnitWidget/components/molecules/packaging-unit-quantity-selector/packaging-unit-quantity-selector';
-import { VolumePrice } from 'PriceProductVolumeWidget/components/molecules/volume-price/volume-price';
+import VolumePrice from 'PriceProductVolumeWidget/components/molecules/volume-price/volume-price';
 
 export default class PackagingUnitQuantitySelector extends PackagingUnitQuantitySelectorCore {
+    protected readonly priceFractionDigits = 2;
     protected multiply(a: number, b: number): number {
         const result = a * b;
         const precision = 1000;
@@ -53,7 +54,7 @@ export default class PackagingUnitQuantitySelector extends PackagingUnitQuantity
         const amount = price.match(/[\d.,]+/)?.[0] ?? '';
         const decimalSeparator = this.getPriceDecimalSeparator(amount) ?? '.';
 
-        return price.replace(/[\d.,]+/, value.toFixed(2).replace('.', decimalSeparator));
+        return price.replace(/[\d.,]+/, value.toFixed(this.priceFractionDigits).replace('.', decimalSeparator));
     }
 
     protected getPriceDecimalSeparator(amount: string): string | null {
