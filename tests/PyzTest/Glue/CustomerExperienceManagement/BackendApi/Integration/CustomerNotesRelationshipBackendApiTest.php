@@ -11,7 +11,7 @@ namespace PyzTest\Glue\CustomerExperienceManagement\BackendApi\Integration;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use PyzTest\Glue\CustomerExperienceManagement\AbstractCustomerExperienceManagementBackendApiTestCase;
-use PyzTest\Glue\CustomerExperienceManagement\Helper\CustomerExperienceManagementBackendApiHelper;
+use SprykerFeatureTest\Glue\CustomerExperienceManagement\Helper\CustomerExperienceManagementBackendApiHelper;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

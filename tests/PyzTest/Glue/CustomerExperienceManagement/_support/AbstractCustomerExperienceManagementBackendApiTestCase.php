@@ -54,6 +54,8 @@ abstract class AbstractCustomerExperienceManagementBackendApiTestCase extends Ba
      */
     protected const string RESPONSE_CODE_FRAMEWORK_VALIDATION = '901';
 
+    protected const string RESPONSE_CODE_RESOURCE_IDENTIFIER_MISSING = '012';
+
     protected const string ATTRIBUTE_PAGINATION = 'pagination';
 
     protected const string JSON_API_KEY_META = 'meta';

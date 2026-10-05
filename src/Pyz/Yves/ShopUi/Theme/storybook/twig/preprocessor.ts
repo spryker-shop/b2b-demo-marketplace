@@ -11,6 +11,11 @@ interface MacroDef {
 
 type MacroMap = Record<string, MacroDef>;
 
+const NULL_COALESCING_OPERATOR = '??';
+const WITH_KEYWORD = 'with';
+const TAG_CLOSE = '%}';
+const INTERPOLATION_OPEN = '#{';
+
 function preprocessTernaryNoElse(source: string): string {
     // twig.js parser bug: inside an object literal, `key: A ? B` (ternary with no
     // else clause) silently evaluates to empty — the value is lost. Spryker's
@@ -25,8 +30,8 @@ function preprocessTernaryNoElse(source: string): string {
         const ch = source[i];
         // Skip `??` (null coalescing) — not a ternary.
         if (ch === '?' && source[i + 1] === '?') {
-            out += '??';
-            i += 2;
+            out += NULL_COALESCING_OPERATOR;
+            i += NULL_COALESCING_OPERATOR.length;
             continue;
         }
         if (ch !== '?') {
@@ -131,7 +136,7 @@ function extractWidgetWithClause(tagContent: string): string | null {
     // Tracks bracket depth + quotes so nested objects aren't truncated.
     const idx = tagContent.search(/\bwith\b/);
     if (idx === -1) return null;
-    let i = idx + 4;
+    let i = idx + WITH_KEYWORD.length;
     while (i < tagContent.length && /\s/.test(tagContent[i])) i++;
     if (tagContent[i] !== '{') return null;
     let depth = 0;
@@ -174,9 +179,9 @@ function rewriteWidgets(source: string): string {
         const quotedMatch = firstArg.match(/^'([^']+)'$/);
         const widgetName = quotedMatch ? quotedMatch[1] : null;
 
-        const tagBodyEnd = result.indexOf('%}', tagStart);
+        const tagBodyEnd = result.indexOf(TAG_CLOSE, tagStart);
         if (tagBodyEnd === -1) break;
-        const tagEnd = tagBodyEnd + 2;
+        const tagEnd = tagBodyEnd + TAG_CLOSE.length;
         const openTag = result.slice(tagStart, tagEnd);
 
         // Walk to matching `{% endwidget %}`. Spryker also supports
@@ -195,8 +200,8 @@ function rewriteWidgets(source: string): string {
             if (m[1] === 'elsewidget') continue;
             depth--;
             if (depth === 0) {
-                const close = result.indexOf('%}', m.index);
-                if (close !== -1) endIdx = close + 2;
+                const close = result.indexOf(TAG_CLOSE, m.index);
+                if (close !== -1) endIdx = close + TAG_CLOSE.length;
                 break;
             }
         }
@@ -277,26 +282,16 @@ function preprocessParentCalls(source: string): string {
     return source;
 }
 
-// Synthetic copies of the macros from `models/component.twig`, injected into
-// templates that rely on macro resolution through `{% extends %}` — which
-// twig.js cannot follow. Bodies match the vendor model byte-for-byte.
-const COMPONENT_MACRO_DEFS =
-    '{% macro renderClass(name, modifiers, extra) %}' +
-    '{{-name | trim-}}' +
-    '{%- for modifier in modifiers | default([]) -%}' +
-    '{%- if modifier | trim is not empty %} {{name}}--{{modifier | trim}}{% endif -%}' +
-    '{% endfor -%}' +
-    '{%- if extra %} {{extra-}}{% endif -%}' +
-    '{% endmacro %}\n' +
-    '{% macro renderAttributes(attributes) %}' +
-    '{%- for name, value in attributes | default({}) -%}' +
-    '{%- if value is same as(true) -%}' +
-    "{{-' ' ~ name-}}" +
-    '{%- elseif value is not same as(false) -%}' +
-    "{{-' ' ~ name-}}='{{-value-}}'" +
-    '{%- endif -%}' +
-    '{%- endfor -%}' +
-    '{% endmacro %}\n';
+// `models/component.twig` exposes `renderClass` / `renderAttributes` as thin macro wrappers over the
+// PHP-side Twig functions `componentClass` / `componentAttributes`. Templates call them through
+// `component.` (the imported model) or `_self.` — but under `{% extends %}` twig.js never executes
+// the top-level `{% import %}`, so inside blocks `alias.macro(...)` degrades to rendering its last
+// argument. Calling the functions directly is what the macros do anyway, in every context.
+function preprocessComponentMacroCalls(source: string): string {
+    return source
+        .replace(/\b\w+\.renderClass\s*\(/g, 'componentClass(')
+        .replace(/\b\w+\.renderAttributes\s*\(/g, 'componentAttributes(');
+}
 
 function preprocessMacros(source: string): string {
     // twig.js does not support `{% macro %}` with `{% embed %}` inside, and it
@@ -308,19 +303,12 @@ function preprocessMacros(source: string): string {
     //      evaluating the argument list (renders the last argument as text).
     //      Plain macros in non-extending templates are left intact so other
     //      templates that `{% import %}` them keep working.
-    //   2. For templates that import `_self as X` but define no macros locally,
-    //      synthesize `renderClass`/`renderAttributes` macros from the component
-    //      model so calls resolve in both expression and output contexts.
+    //   2. The component model's `renderClass` / `renderAttributes` are rewritten to
+    //      direct function calls beforehand (preprocessComponentMacroCalls), so only
+    //      locally defined macros are left to inline here.
     const hasLocalMacros = /\{%-?\s*macro\s+/.test(source);
 
-    if (!hasLocalMacros) {
-        if (!/\{%-?\s*import\s+_self\s+as\s+\w+/.test(source)) return source;
-        const extendsMatch = source.match(/^([\s\S]*?\{%-?\s*extends\s+[^%]*-?%\})([\s\S]*)$/);
-        if (extendsMatch) {
-            return extendsMatch[1] + '\n' + COMPONENT_MACRO_DEFS + extendsMatch[2];
-        }
-        return COMPONENT_MACRO_DEFS + source;
-    }
+    if (!hasLocalMacros) return source;
 
     const hasExtends = /\{%-?\s*extends\s+/.test(source);
     const macros: MacroMap = {};
@@ -520,11 +508,10 @@ function preprocessEmbedToInclude(source: string): string {
         const setRe = /\{%-?\s*set\s+(\w+)\s*=\s*([\s\S]*?)\s*-?%\}/g;
         const sets: Array<{ name: string; expr: string }> = [];
         let cursor = 0;
-        let match2: RegExpExecArray | null;
-        while ((match2 = setRe.exec(stripped)) !== null) {
-            if (stripped.slice(cursor, match2.index).trim() !== '') return match;
-            sets.push({ name: match2[1], expr: match2[2].trim() });
-            cursor = match2.index + match2[0].length;
+        for (let setMatch = setRe.exec(stripped); setMatch !== null; setMatch = setRe.exec(stripped)) {
+            if (stripped.slice(cursor, setMatch.index).trim() !== '') return match;
+            sets.push({ name: setMatch[1], expr: setMatch[2].trim() });
+            cursor = setMatch.index + setMatch[0].length;
         }
         if (stripped.slice(cursor).trim() !== '') return match;
 
@@ -600,13 +587,13 @@ function preprocessStringInterpolation(source: string): string {
     // alone so the later preprocessing passes keep seeing their original shape.
     const stringRe = /"((?:[^"\\]|\\.)*)"/g;
     return source.replace(stringRe, (full, inner: string) => {
-        if (!inner.includes('#{')) return full;
+        if (!inner.includes(INTERPOLATION_OPEN)) return full;
         const parts: string[] = [];
         let rest = inner;
-        for (let open = rest.indexOf('#{'); open !== -1; open = rest.indexOf('#{')) {
+        for (let open = rest.indexOf(INTERPOLATION_OPEN); open !== -1; open = rest.indexOf(INTERPOLATION_OPEN)) {
             const close = rest.indexOf('}', open);
             if (close === -1) return full;
-            const expression = rest.slice(open + 2, close).trim();
+            const expression = rest.slice(open + INTERPOLATION_OPEN.length, close).trim();
             if (!/^[\w.]+$/.test(expression)) return full;
             const literal = rest.slice(0, open);
             if (literal) parts.push(`'${literal.replace(/'/g, "\\'")}'`);
@@ -632,6 +619,7 @@ export function preprocess(source: string): string {
     result = preprocessOnly(result);
     result = preprocessStripBranchBlocks(result);
     result = preprocessLiftConditionalBlocks(result);
+    result = preprocessComponentMacroCalls(result);
     result = preprocessMacros(result);
     result = preprocessEmbedToInclude(result);
     result = preprocessParentCalls(result);

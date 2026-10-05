@@ -31,6 +31,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UpdateProductBackendApiTest extends AbstractProductExperienceManagementBackendApiTestCase
 {
+    protected const string VALID_FROM = '2026-01-01 00:00:00';
+
+    protected const string VALID_TO = '2030-12-31 00:00:00';
+
     public function testGivenAPatchThatTouchesNeitherPricesNorStocksWhenPatchProductThenScalarsChangeAndRelationsAreUntouched(): void
     {
         // Arrange
@@ -113,6 +117,35 @@ class UpdateProductBackendApiTest extends AbstractProductExperienceManagementBac
         $patchedStock = $this->findStock($patchedAttributes, $this->getWarehouseName());
         $this->assertNotNull($patchedStock, 'An omitted stocks property preserves the persisted stocks.');
         $this->assertSame(static::DEFAULT_STOCK_QUANTITY, $patchedStock['quantity'] ?? null);
+    }
+
+    public function testGivenNullForValidFromWhenPatchProductThenItIsClearedAndValidToIsKept(): void
+    {
+        // Arrange
+        $this->tester->actingAsUser();
+        $baselineAttributes = $this->haveProductViaApi([
+            static::ATTRIBUTE_VALID_FROM => static::VALID_FROM,
+            static::ATTRIBUTE_VALID_TO => static::VALID_TO,
+        ]);
+        $sku = (string)$baselineAttributes[static::ATTRIBUTE_SKU];
+        $this->assertSame(static::VALID_FROM, $baselineAttributes[static::ATTRIBUTE_VALID_FROM] ?? null);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'PATCH',
+            $this->tester->getProductUrl($sku),
+            $this->tester->buildProductRequestBody([static::ATTRIBUTE_VALID_FROM => null]),
+        );
+
+        // Assert
+        $this->assertRespondsWithStatus($response, Response::HTTP_OK);
+        $patchedAttributes = $this->getResourceAttributes($response);
+        $this->assertNull($patchedAttributes[static::ATTRIBUTE_VALID_FROM] ?? null, 'An explicit null clears the attribute.');
+        $this->assertSame(
+            static::VALID_TO,
+            $patchedAttributes[static::ATTRIBUTE_VALID_TO] ?? null,
+            'Attributes the request omitted keep their stored value.',
+        );
     }
 
     public function testGivenAPatchOfEveryConcreteCollectionWhenPatchProductThenEachIsWrittenInPlaceWithoutDuplicates(): void

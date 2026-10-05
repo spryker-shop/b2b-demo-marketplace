@@ -39,6 +39,14 @@ class UpdateCustomerAddressBackendApiTest extends AbstractCustomerExperienceMana
 
     protected const string COUNTRY_NAME_FROM_PAYLOAD = 'Atlantis';
 
+    protected const string ADDRESS3 = 'Floor 3';
+
+    protected const string COMPANY = 'Spryker Systems';
+
+    protected const string PHONE = '+49 30 1234567';
+
+    protected const string COMMENT = 'Ring twice';
+
     public function testGivenASingleAttributeWhenUpdateAddressThenItIsAppliedAndTheRestIsKept(): void
     {
         // Arrange
@@ -99,6 +107,58 @@ class UpdateCustomerAddressBackendApiTest extends AbstractCustomerExperienceMana
             [AddressTransfer::CITY => static::UPDATED_CITY],
             $this->getResourceAttributes($response),
         );
+    }
+
+    public function testGivenNullForNullableAttributesWhenUpdateAddressThenTheyAreCleared(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveAddresseeCustomer();
+        $addressTransfer = $this->tester->haveCustomerAddressFor($customerTransfer, [
+            AddressTransfer::ADDRESS3 => static::ADDRESS3,
+            AddressTransfer::COMPANY => static::COMPANY,
+            AddressTransfer::PHONE => static::PHONE,
+            AddressTransfer::COMMENT => static::COMMENT,
+        ]);
+        $this->tester->actingAsUser();
+        $customerReference = $customerTransfer->getCustomerReferenceOrFail();
+        $uuid = $addressTransfer->getUuidOrFail();
+
+        // Act
+        $response = $this->handleApiRequest(
+            'PATCH',
+            $this->tester->getCustomerAddressUrl($customerReference, $uuid),
+            $this->tester->buildCustomerAddressRequestBody(
+                [
+                    AddressTransfer::ADDRESS3 => null,
+                    AddressTransfer::COMPANY => null,
+                    AddressTransfer::PHONE => null,
+                    AddressTransfer::COMMENT => null,
+                ],
+                $uuid,
+            ),
+        );
+
+        // Assert
+        $this->assertRespondsWithStatus($response, Response::HTTP_OK);
+
+        $attributes = $this->getResourceAttributes($response);
+        $this->assertNull($attributes[AddressTransfer::ADDRESS3] ?? null, 'An explicit null clears the attribute.');
+        $this->assertNull($attributes[AddressTransfer::COMPANY] ?? null, 'An explicit null clears the attribute.');
+        $this->assertNull($attributes[AddressTransfer::PHONE] ?? null, 'An explicit null clears the attribute.');
+        $this->assertNull($attributes[AddressTransfer::COMMENT] ?? null, 'An explicit null clears the attribute.');
+        $this->assertAttributesMatch(
+            [AddressTransfer::CITY => $addressTransfer->getCityOrFail()],
+            $attributes,
+            'Attributes the request omitted keep their stored value.',
+        );
+
+        $readBackAttributes = $this->getResourceAttributes(
+            $this->handleApiRequest('GET', $this->tester->getCustomerAddressUrl($customerReference, $uuid)),
+        );
+        $this->assertNull($readBackAttributes[AddressTransfer::ADDRESS3] ?? null);
+        $this->assertNull($readBackAttributes[AddressTransfer::COMPANY] ?? null);
+        $this->assertNull($readBackAttributes[AddressTransfer::PHONE] ?? null);
+        $this->assertNull($readBackAttributes[AddressTransfer::COMMENT] ?? null);
     }
 
     public function testGivenACountryInThePayloadWhenUpdateAddressThenTheReadOnlyCountryIsIgnored(): void

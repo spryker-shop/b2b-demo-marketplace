@@ -9,6 +9,7 @@ interface InputSnapshotEntry {
 }
 
 export default class FilterSection extends Component {
+    protected readonly defaultOverlayBreakpoint = 768;
     protected triggers: HTMLElement[];
     protected closeButton: HTMLButtonElement;
     protected applyButton: HTMLButtonElement;
@@ -171,7 +172,7 @@ export default class FilterSection extends Component {
     }
 
     protected get overlayBreakpoint(): number {
-        return parseInt(this.getAttribute('overlay-breakpoint')) || 768;
+        return parseInt(this.getAttribute('overlay-breakpoint')) || this.defaultOverlayBreakpoint;
     }
 
     protected get dialogLabel(): string {

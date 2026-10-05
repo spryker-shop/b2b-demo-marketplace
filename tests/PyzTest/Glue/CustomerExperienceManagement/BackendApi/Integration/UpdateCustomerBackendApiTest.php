@@ -36,6 +36,10 @@ class UpdateCustomerBackendApiTest extends AbstractCustomerExperienceManagementB
 {
     protected const string UPDATED_FIRST_NAME = 'PatchedViaBackendApi';
 
+    protected const string PHONE = '+49 30 1234567';
+
+    protected const string COMPANY = 'Spryker Systems';
+
     public function testGivenAPasswordTokenIsRequestedWithoutAStoreWhenUpdateCustomerThenItIsRejected(): void
     {
         // Arrange: create requires a store, update does not, so this is where the flag can arrive without one.
@@ -121,6 +125,67 @@ class UpdateCustomerBackendApiTest extends AbstractCustomerExperienceManagementB
         $this->assertSame(
             static::UPDATED_FIRST_NAME,
             $this->getResourceAttributes($response)[CustomerTransfer::FIRST_NAME],
+        );
+    }
+
+    public function testGivenNullForNullableAttributesWhenUpdateCustomerThenTheyAreCleared(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PHONE => static::PHONE,
+            CustomerTransfer::COMPANY => static::COMPANY,
+        ]);
+        $this->tester->actingAsUser();
+        $customerReference = $customerTransfer->getCustomerReferenceOrFail();
+
+        // Act
+        $response = $this->handleApiRequest(
+            'PATCH',
+            $this->tester->getCustomerUrl($customerReference),
+            $this->tester->buildCustomerRequestBody(
+                [CustomerTransfer::PHONE => null, CustomerTransfer::COMPANY => null],
+                $customerReference,
+            ),
+        );
+
+        // Assert
+        $this->assertRespondsWithStatus($response, Response::HTTP_OK);
+
+        $attributes = $this->getResourceAttributes($response);
+        $this->assertNull($attributes[CustomerTransfer::PHONE] ?? null, 'An explicit null clears the attribute.');
+        $this->assertNull($attributes[CustomerTransfer::COMPANY] ?? null, 'An explicit null clears the attribute.');
+        $this->assertSame(
+            $customerTransfer->getFirstNameOrFail(),
+            $attributes[CustomerTransfer::FIRST_NAME],
+            'Attributes the request omitted keep their stored value.',
+        );
+
+        $readBackAttributes = $this->getResourceAttributes(
+            $this->handleApiRequest('GET', $this->tester->getCustomerUrl($customerReference)),
+        );
+        $this->assertNull($readBackAttributes[CustomerTransfer::PHONE] ?? null);
+        $this->assertNull($readBackAttributes[CustomerTransfer::COMPANY] ?? null);
+    }
+
+    public function testGivenNullForARequiredAttributeWhenUpdateCustomerThenItIsRejected(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $this->tester->actingAsUser();
+        $customerReference = $customerTransfer->getCustomerReferenceOrFail();
+
+        // Act
+        $response = $this->handleApiRequest(
+            'PATCH',
+            $this->tester->getCustomerUrl($customerReference),
+            $this->tester->buildCustomerRequestBody([CustomerTransfer::EMAIL => null], $customerReference),
+        );
+
+        // Assert
+        $this->assertRespondsWithErrorCode(
+            $response,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            static::RESPONSE_CODE_VALIDATION,
         );
     }
 
