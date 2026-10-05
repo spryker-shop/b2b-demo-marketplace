@@ -8,6 +8,14 @@
 {% block content %}
     {% set contentClassName = config.name ~ '__box' %}
     {{ parent() }}
+
+    <template id="change-button-placeholder">
+        {% include atom('font-icon') with {
+            data: {
+                name: 'change_circle',
+            },
+        } only %}
+    </template>
 {% endblock %}
 
 {% block itemName %}
