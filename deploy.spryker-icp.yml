@@ -201,7 +201,7 @@ services:
                 protocol: tcp
     search:
         engine: opensearch
-        version: '1.3'
+        version: '3.5'
         endpoints:
             localhost:9200:
                 protocol: tcp
@@ -226,7 +226,7 @@ docker:
         enabled: true
 
     testing:
-       store: EU
+        store: EU
 
     debug:
         enabled: false
