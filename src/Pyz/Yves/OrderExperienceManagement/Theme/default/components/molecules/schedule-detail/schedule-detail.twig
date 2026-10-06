@@ -28,8 +28,8 @@
 {% endblock %}
 
 {% block grid %}
-    <div class="{{ config.name }}__grid grid grid--gap">
-        <div class="col col--sm-12 col--lg-8 spacing-bottom">
+    <div class="{{ config.name }}__grid">
+        <div class="{{ config.name }}__content-column">
             <div class="{{ config.name }}__order-info">
                 {% block scheduleNextExecution %}
                     {{ parent() }}
@@ -42,7 +42,7 @@
             
         </div>
 
-        <div class="col col--sm-12 col--lg-4 spacing-bottom">
+        <div class="{{ config.name }}__sidebar-column">
             {% block scheduleDetailSidebar %}
                 {{ parent() }}
             {% endblock %}

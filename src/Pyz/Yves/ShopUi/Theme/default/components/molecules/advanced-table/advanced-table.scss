@@ -1,30 +1,16 @@
 @include shop-ui-advanced-table($name: '.advanced-table') {
+    @include typography(label-sm);
+    color: var(--text-primary);
+    border: solid var(--border-subtle);
+    border-width: rem(1) rem(1) 0 rem(1);
+
     &__head {
-        background-color: $setting-color-gray-7;
-        text-transform: uppercase;
-        font-size: map.get($setting-font-size, tiny);
-        font-weight: fw(bold);
+        background-color: var(--background-surface);
     }
 
     &__col {
-        padding: rem(16) rem(15);
-        text-align: left;
-        color: $setting-color-gray-4;
-
-        &:first-child {
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: rem(30);
-            }
-        }
-
-        &--head {
-            color: $setting-color-gray-5;
-            font-weight: fw(bold);
-
-            &:empty {
-                padding: 0;
-            }
-        }
+        padding: var(--scale-12);
+        vertical-align: top;
     }
 
     &__row:nth-child(even) &__col {
@@ -35,14 +21,8 @@
         width: 100%;
     }
 
-    &__row:not(&__row--head) {
-        &:not(:first-child) {
-            border-top: rem(1) solid $setting-color-gray-6;
-        }
-
-        &:last-child {
-            border-bottom: rem(1) solid $setting-color-gray-6;
-        }
+    &__row {
+        border-bottom: rem(1) solid var(--border-subtle);
     }
 
     @include helper-breakpoint-media-max($lg - 1) {
@@ -63,9 +43,6 @@
 
         &__body {
             tr {
-                padding-top: $setting-grid-space;
-                padding-bottom: $setting-grid-space;
-
                 &:not(#{&}--backgroungless) {
                     &:nth-child(even) {
                         background: none;
@@ -77,11 +54,14 @@
         &__col {
             display: flex;
             position: relative;
-            padding-top: 0;
-            padding-bottom: 0;
+            padding: var(--scale-4) var(--scale-12);
 
             &:first-child {
-                padding-top: 1rem;
+                padding-top: var(--scale-12);
+            }
+
+            &:last-child {
+                padding-bottom: var(--scale-12);
             }
 
             &:not(:has(.advanced-table-actions-cell)) {
@@ -100,6 +80,8 @@
                 padding-right: rem(10);
                 text-transform: uppercase;
                 flex-shrink: 0;
+                vertical-align: top;
+                min-width: 25%;
             }
 
             &:has(.advanced-table-actions-cell)::before {

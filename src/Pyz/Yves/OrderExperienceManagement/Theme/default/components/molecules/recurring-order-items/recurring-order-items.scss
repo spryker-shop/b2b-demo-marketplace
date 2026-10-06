@@ -4,7 +4,12 @@
 
         &__title {
             @include typography(label-md);
-            margin-bottom: var(--scale-8);
+            padding: 0 var(--scale-16) var(--scale-8);
+        }
+
+        &__table {
+            border-left: 0;
+            border-right: 0;
         }
 
         &__items {
@@ -26,12 +31,25 @@
         }
 
         .sold-by-merchant {
-            @include typography(body-md);
-            color: inherit;
+            @include typography(body-sm);
+            color: var(--text-tertiary);
         }
 
-        &__item-name {
-            font-weight: normal;
+        &__product-name {
+            @include typography(label-md);
+            display: block;
+            margin-bottom: var(--scale-6);
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+        &__product-sku {
+            @include typography(body-sm);
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: var(--scale-2);
         }
 
         &__main-info {
@@ -50,24 +68,26 @@
             margin-top: var(--scale-4);
         }
 
-        &__item-recurring-quantity,
-        &__item-recurring-total {
-            display: block;
-        }
-
-        &__summary,
-        &__item-total {
-            font-weight: var(--font-weight-bold);
-        }
-
-        &__note {
-            font-size: var(--font-size-12);
-        }
-
         &__summary {
-            border-top: 1px solid var(--border-default);
-            margin-top: var(--scale-12);
-            padding-top: var(--scale-12);
+            @include typography(body-sm);
+            display: flex;
+            gap: var(--scale-12);
+            align-items: center;
+            padding: var(--scale-12);
+        }
+
+        &__summary-label {
+            @include typography(label-md);
+            margin-bottom: var(--scale-2);
+        }
+
+        &__summary-total {
+            @include typography(body-lg);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        &__tooltip-trigger {
+            cursor: pointer;
         }
 
         @content;
