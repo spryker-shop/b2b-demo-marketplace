@@ -42,6 +42,7 @@ use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PricePr
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PriceProductConcreteSynchronizationDataPlugin;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization\ProductAlternativeSynchronizationDataBulkPlugin;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization\ProductReplacementForSynchronizationDataBulkPlugin;
+use Spryker\Zed\ProductAttachmentStorage\Communication\Plugin\Synchronization\ProductAbstractAttachmentSynchronizationDataPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Synchronization\ProductBundleSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Synchronization\ProductCategoryFilterSynchronizationDataPlugin;
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Synchronization\ProductCategorySynchronizationDataBulkRepositoryPlugin;
@@ -188,6 +189,7 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new ProductOfferServiceSynchronizationDataBulkRepositoryPlugin(),
             new ProductOfferShipmentTypeSynchronizationDataBulkRepositoryPlugin(),
             new ProductAttributeSynchronizationDataBulkRepositoryPlugin(),
+            new ProductAbstractAttachmentSynchronizationDataPlugin(),
         ];
     }
 

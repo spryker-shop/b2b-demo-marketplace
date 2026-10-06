@@ -9,8 +9,9 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\DataImport\Communication\Plugin\ProductStock;
 
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface;
+use Generated\Shared\Transfer\DataSetItemTransfer;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
+use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,11 +19,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Pyz\Zed\DataImport\DataImportConfig getConfig()
  * @method \Spryker\Zed\DataImport\Communication\DataImportCommunicationFactory getFactory()
  */
-class ProductStockPropelWriterPlugin extends AbstractPlugin implements DataSetWriterPluginInterface
+class ProductStockPropelWriterPlugin extends AbstractPlugin implements DataSetItemWriterPluginInterface
 {
-    public function write(DataSetInterface $dataSet): void
+    public function write(DataSetItemTransfer $dataSetItemTransfer): void
     {
-        $this->getFacade()->writeProductStockDataSet($dataSet);
+        $this->getFacade()->writeProductStockDataSet(new DataSet($dataSetItemTransfer->getPayload()));
     }
 
     public function flush(): void

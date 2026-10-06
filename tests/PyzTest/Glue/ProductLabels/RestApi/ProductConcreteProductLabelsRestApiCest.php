@@ -124,7 +124,7 @@ class ProductConcreteProductLabelsRestApiCest
         $I->sendPOST($url);
 
         // Assert
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseCodeIs(HttpCode::METHOD_NOT_ALLOWED);
         $I->seeResponseIsJson();
     }
 
@@ -145,6 +145,6 @@ class ProductConcreteProductLabelsRestApiCest
         $I->sendPATCH($url);
 
         // Assert
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseCodeIs(HttpCode::METHOD_NOT_ALLOWED);
     }
 }

@@ -21,6 +21,10 @@ on:
                 description: "Platform segment of the screenshot upload path."
                 type: string
                 default: "PHP8.5MariaDB"
+            restore-db:
+                description: "Restore the shared spryker-app-db dump for b2b-mp cells instead of importing demodata."
+                type: boolean
+                default: true
 
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -76,6 +80,7 @@ jobs:
             DYNAMIC_STORE_MODE: true
             DEPLOY_FILE: ${{ inputs.deploy-file }}
             ARTIFACT_PLATFORM: ${{ inputs.artifact-platform }}
+            RESTORE_DB: ${{ inputs.restore-db && matrix.cell.repository_id == 'b2b-mp' }}
         steps:
             -   uses: actions/checkout@v4
                 with:
@@ -92,10 +97,17 @@ jobs:
                     sudo sysctl -w vm.max_map_count=262144
                     ulimit -n 65536
 
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                if: ${{ inputs.restore-db && matrix.cell.repository_id == 'b2b-mp' }}
+                with:
+                    name: spryker-app-db
+
             -   name: Run project in Docker
-                # Deliberately imports demodata rather than restoring the shared dump: the
-                # restore bought a minute or two per cell and cost correctness. Sharding is
-                # where this lane's wall-clock win comes from.
+                # b2b-mp/MariaDB restores the shared dump (see _build-db.yml) — the only cell
+                # that matches its schema/engine: b2b uninstalls marketplace, and a non-MariaDB
+                # caller sets restore-db false. Accepts the previously-documented DMS-spec risk
+                # (CC-39284) for the time saved on the rest of the shard.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     if [ "${{ matrix.cell.repository_id }}" = "b2b" ]; then
@@ -106,8 +118,16 @@ jobs:
                     fi
                     docker/sdk boot "$DEPLOY_FILE"
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
+                    if [ "$RESTORE_DB" = "true" ]; then
+                        SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+                    else
+                        docker/sdk up -t
+                    fi
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Validate sync completeness
+                if: ${{ inputs.restore-db && matrix.cell.repository_id == 'b2b-mp' }}
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Tests
                 id: run_tests
