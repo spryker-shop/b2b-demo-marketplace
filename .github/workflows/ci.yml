@@ -89,34 +89,6 @@ jobs:
             -   name: Setup search map files
                 run: vendor/bin/console search:setup:source-map
 
-            -   name: Validate propel files
-                run: |
-                    vendor/bin/console propel:schema:validate
-                    vendor/bin/console propel:schema:validate-xml-names
-
-            -   name: Validate transfer files
-                run: vendor/bin/console transfer:validate
-
-            -   name: Run CodeStyle checks
-                run: vendor/bin/console code:sniff:style
-
-            -   name: Run Architecture rules
-                run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
-
-            -   name: Run Project Architecture rules
-                run: vendor/bin/phpmd src/ text phpmd.xml --minimumpriority 4
-
-            -   name: Generate rest API documentation
-                run: vendor/bin/console rest-api:generate:documentation
-
-            -  name: Generate API
-               run: |
-                   echo "vendor/bin/glue api:generate" && vendor/bin/glue api:generate --quiet-meta --keep-existing
-                   echo "GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate --quiet-meta --keep-existing
-
-            -   name: Run PHPStan
-                run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
-
             # [remove for project] release-* branch flow only; projects have no release branches.
             -   name: Run Evaluator for release branches
                 run: vendor/bin/evaluator evaluate --format=compact

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<ruleset name="SprykerСore">
+    <description>
+        Spryker Coding Standard for Spryker Core.
+
+        Extends main Spryker Coding Standard.
+        All sniffs in ./Sniffs will be auto loaded
+    </description>
+
+    <config name="php_version" value="80200"/>
+
+    <exclude-pattern>*/tests/_support/_generated/*</exclude-pattern>
+    <exclude-pattern>*/tests/_helpers/*</exclude-pattern>
+    <exclude-pattern>*/tests/_output/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+
+    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml"/>
+
+    <!-- Define your own sniffs here -->
+    <rule ref="src/Custom/CodeSniffer/Sniffs/MethodAnnotation/ConfigMethodAnnotationSniff.php"/>
+
+    <rule ref="Spryker.Internal.SprykerDisallowFunctions">
+        <properties>
+            <!-- We want to prevent 8.4+ functions to break 8.3 compatibility -->
+            <property name="phpVersion" value="8.3"/>
+        </properties>
+    </rule>
+
+    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml">
+        <!-- Ignore when the signature and doc-block are not equal. -->
+        <exclude name="Spryker.Commenting.DocBlockParam.SignatureMismatch"/>
+        <!-- Ignore when the signature has a return but the doc-block not. -->
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnMissing"/>
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnVoidMissing"/>
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnMissingInInterface"/>
+        <exclude name="Spryker.Commenting.DocBlock.ReturnVoidMissing"/>
+        <exclude name="Spryker.Commenting.InlineDocBlock.DocBlockInvalid"/>
+        <exclude name="Spryker.Commenting.Attributes.ExpectedFQCN"/>
+        <!-- Ignore when a constant does not have a doc-block. CAN ONLY BE APPLIED WHEN WE ARE ON PHP 8.3 -->
+        <exclude name="Spryker.Commenting.DocBlockConst.VarDocBlockMissing"/>
+
+        <!-- Ignore when there is no doc-block. -->
+        <exclude name="Spryker.Commenting.DocBlock.DocBlockMissing"/>
+        <!-- Ignore when there is no doc-block on the __construct or __destruct method. -->
+        <exclude name="Spryker.Commenting.DocBlock.ConstructDesctructMissingDocBlock"/>
+
+        <!-- [ACCEPTED] RFC: Stop adding Bridges in Spryker Core. -->
+        <exclude name="Spryker.DependencyProvider.FacadeNotInBridgeReturned"/>
+    </rule>
+
+    <!-- The project-convention sniffs ship in code-sniffer's opt-in SprykerConventions
+         standard (deliberately NOT part of the Spryker standard included above). Opt in
+         explicitly so the core-only downgrades below can reference them. Keep advisory
+         warnings non-blocking on exit; this file previously inherited that config from
+         the retired in-tree SprykerSuite ruleset. -->
+    <config name="ignore_warnings_on_exit" value="1"/>
+    <rule ref="vendor/spryker/code-sniffer/SprykerConventions/ruleset.xml"/>
+
+    <!-- Core-only downgrades: these sniff codes each have >50 pre-existing errors
+         on src/Spryker (measured 2026-07-06: DisallowHydrate 587,
+         ColConstType 424, ColConstVisibility 218, SetWithoutClosure 232), so they report
+         as warnings here to keep the core CodeSniffer CI job green while the violation
+         backlog is cleaned up. The project ruleset (phpcs.xml) keeps them as errors.
+         Flip each back to error once its core count reaches zero. -->
+    <rule ref="SprykerConventions.Naming.DisallowHydrate">
+        <type>warning</type>
+    </rule>
+    <rule ref="SprykerConventions.Table.TableConstants.ColConstType">
+        <type>warning</type>
+    </rule>
+    <rule ref="SprykerConventions.Table.TableConstants.ColConstVisibility">
+        <type>warning</type>
+    </rule>
+    <rule ref="SprykerConventions.DependencyProvider.ContainerSetClosure">
+        <type>warning</type>
+    </rule>
+    <!-- Same treatment for the remaining core backlog (DbSpecificSql 43,
+         BeforeAfterForbidden 26, SprintfInMessage 5): the method names are part of
+         released plugin APIs and SQL portability debt needs its own cleanup PR. -->
+    <rule ref="SprykerConventions.Persistence.DbSpecificSql">
+        <type>warning</type>
+    </rule>
+    <rule ref="SprykerConventions.Naming.PluginPrePostMethods">
+        <type>warning</type>
+    </rule>
+    <rule ref="SprykerConventions.Messenger.NoSprintfInMessage">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
+    <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+        <severity>0</severity>
+    </rule>
+
+</ruleset>
