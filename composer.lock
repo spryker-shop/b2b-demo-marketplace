@@ -40462,22 +40462,24 @@
         },
         {
             "name": "spryker/documentation-generator-api",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/documentation-generator-api.git",
-                "reference": "1b6dc440d1cb14c58dfa51e5294e4d6d917ec1c6"
+                "reference": "73e016464472f479fce12cd2e1acaecc6105f395"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/documentation-generator-api/zipball/1b6dc440d1cb14c58dfa51e5294e4d6d917ec1c6",
-                "reference": "1b6dc440d1cb14c58dfa51e5294e4d6d917ec1c6",
+                "url": "https://api.github.com/repos/spryker/documentation-generator-api/zipball/73e016464472f479fce12cd2e1acaecc6105f395",
+                "reference": "73e016464472f479fce12cd2e1acaecc6105f395",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "cebe/php-openapi": "^1.7",
+                "php": ">=8.3",
                 "spryker/documentation-generator-api-extension": "^1.1.0",
                 "spryker/kernel": "^3.30.0",
+                "spryker/log": "^3.0.0",
                 "spryker/storage": "^3.0.0",
                 "spryker/symfony": "^3.5.0",
                 "spryker/transfer": "^3.27.0",
@@ -40488,6 +40490,9 @@
                 "spryker/console": "*",
                 "spryker/documentation-generator-open-api": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required for the generator to merge API Platform endpoints into the generated API application specifications. Without it, the specifications are produced unchanged."
             },
             "type": "library",
             "extra": {
@@ -40506,9 +40511,9 @@
             ],
             "description": "DocumentationGeneratorApi module",
             "support": {
-                "source": "https://github.com/spryker/documentation-generator-api/tree/1.5.0"
+                "source": "https://github.com/spryker/documentation-generator-api/tree/1.6.0"
             },
-            "time": "2025-08-04T04:29:14+00:00"
+            "time": "2026-10-08T04:24:31+00:00"
         },
         {
             "name": "spryker/documentation-generator-api-extension",
