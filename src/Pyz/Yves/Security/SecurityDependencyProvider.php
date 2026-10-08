@@ -30,7 +30,7 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
     {
         return [
             new RememberMeSecurityPlugin(),
-            new CustomerRememberMeSecurityPlugin(),
+            // new CustomerRememberMeSecurityPlugin(),
             new YvesAgentPageSecurityPlugin(),
             new YvesCustomerPageSecurityPlugin(),
             new OauthCustomerSecurityPlugin(),
