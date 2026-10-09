@@ -192,7 +192,7 @@ services:
     scheduler:
         engine: jenkins
         version: '2.568.1'
-        csrf-protection-enabled: true
+        csrf-protection-enabled: false
         endpoints:
             scheduler.sns.demo-spryker.com:
     mail_catcher:
