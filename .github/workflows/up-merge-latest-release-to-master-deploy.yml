@@ -54,6 +54,13 @@ jobs:
           git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy"
         continue-on-error: true
 
+      - name: Pin docker-sdk version on master-deploy
+        if: success() && env.up_merge_is_required == 'true'
+        run: |
+          echo "1.79.0" > .git.docker
+          git add .git.docker
+          git diff --cached --quiet || git commit -m "Pin docker-sdk to 1.79.0"
+
       - name: Push changes
         if: success() && env.up_merge_is_required == 'true'
         run: |
