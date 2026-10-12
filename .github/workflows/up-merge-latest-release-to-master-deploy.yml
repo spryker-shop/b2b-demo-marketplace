@@ -22,7 +22,7 @@ jobs:
 
       - name: Get the latest tag
         run: |
-          latest_tag=$(git tag --sort=-v:refname --list '[0-9]*' | head -n1)
+          latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
           echo "latest_tag=$latest_tag" >> $GITHUB_ENV
 
       - name: Get the current tag on master-deploy
@@ -53,13 +53,6 @@ jobs:
         run: |
           git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy"
         continue-on-error: true
-
-      - name: Pin docker-sdk version on master-deploy
-        if: success() && env.up_merge_is_required == 'true'
-        run: |
-          echo "1.79.0" > .git.docker
-          git add .git.docker
-          git diff --cached --quiet || git commit -m "Pin docker-sdk to 1.79.0"
 
       - name: Push changes
         if: success() && env.up_merge_is_required == 'true'
