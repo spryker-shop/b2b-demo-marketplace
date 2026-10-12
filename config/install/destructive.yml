@@ -5,6 +5,14 @@ env:
 command-timeout: 7200
 
 sections:
+    configuration-export:
+        configuration-export:
+            command: >-
+                vendor/bin/console configuration:export
+                integrations:google_analytics:tracking:measurement_id
+                integrations:google_analytics:connection:property_id
+                -vvv --no-ansi
+
     scheduler-clean:
         scheduler-clean:
             command: 'vendor/bin/console scheduler:clean -vvv --no-ansi'
@@ -44,6 +52,21 @@ sections:
     configuration:
         configuration-sync:
             command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+
+        configuration-restore:
+            command: >-
+                vendor/bin/console configuration:restore
+                integrations:google_analytics:tracking:measurement_id
+                integrations:google_analytics:connection:property_id
+                -vvv --no-ansi
+
+        configuration-import-environment:
+            command: >-
+                vendor/bin/console configuration:import-environment
+                configuration:global:integrations:google_analytics:tracking:measurement_id
+                configuration:global:integrations:google_analytics:connection:property_id
+                configuration:global:integrations:google_analytics:connection:service_account_credentials_json
+                -vvv --no-ansi
 
     setup-queue:
         queue-setup:

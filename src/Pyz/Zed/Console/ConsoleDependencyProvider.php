@@ -23,6 +23,9 @@ use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
 use Spryker\Zed\Configuration\Communication\Console\ConfigurationSyncConsole;
+use Spryker\Zed\Configuration\Communication\Console\ExportConfigurationConsole;
+use Spryker\Zed\Configuration\Communication\Console\ImportEnvironmentConfigurationConsole;
+use Spryker\Zed\Configuration\Communication\Console\RestoreConfigurationConsole;
 use Spryker\Zed\Configuration\Communication\Plugin\Application\ConfigurationApplicationPlugin;
 use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
@@ -473,6 +476,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new SymfonyMessengerConsumeMessagesConsole(),
             new SchedulerListConsole(),
             new ConfigurationSyncConsole(),
+            new ExportConfigurationConsole(),
+            new ImportEnvironmentConfigurationConsole(),
+            new RestoreConfigurationConsole(),
 
             new RecurringOrderTriggerConsole(),
             new RecurringOrderForecastRefreshConsole(),
