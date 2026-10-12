@@ -22,7 +22,7 @@ jobs:
 
       - name: Get the latest tag
         run: |
-          latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+          latest_tag=$(git tag --sort=-v:refname --list '[0-9]*' | head -n1)
           echo "latest_tag=$latest_tag" >> $GITHUB_ENV
 
       - name: Get the current tag on master-deploy
