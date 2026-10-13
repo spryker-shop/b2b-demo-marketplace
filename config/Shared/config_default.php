@@ -671,6 +671,13 @@ foreach ($rabbitConnections as $key => $connection) {
     $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
     $config[SymfonyMessengerConstants::QUEUE_AMQP_PROTOCOL] = getenv('SPRYKER_BROKER_PROTOCOL') ?: null;
     $config[SymfonyMessengerConstants::QUEUE_AMQP_SSL_CA_CERT_PATH] = getenv('SPRYKER_SSL_CA_CERT') ?: null;
+
+    // Symfony Scheduler connection for jobs queue
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_HOST] = $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_PORT] = $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_USERNAME] = $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_PASSWORD] = $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_VIRTUAL_HOST] = $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST];
 }
 
 // >>> SYNCHRONIZATION
