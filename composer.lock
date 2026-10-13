@@ -11096,12 +11096,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-experience-management.git",
-                "reference": "75842665cab54d9d5e0b7186d63888661c32872e"
+                "reference": "a21c93be4e56b8f58ee91a93a4a291a6f211a3b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/75842665cab54d9d5e0b7186d63888661c32872e",
-                "reference": "75842665cab54d9d5e0b7186d63888661c32872e",
+                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/a21c93be4e56b8f58ee91a93a4a291a6f211a3b1",
+                "reference": "a21c93be4e56b8f58ee91a93a4a291a6f211a3b1",
                 "shasum": ""
             },
             "require": {
@@ -11126,6 +11126,9 @@
                 "spryker/transfer": "^3.27.0",
                 "spryker/user": "^3.33.0",
                 "spryker/uuid-behavior": "^1.0.0"
+            },
+            "conflict": {
+                "spryker/api-platform": "<1.51.0"
             },
             "require-dev": {
                 "spryker/api-platform": "*",
@@ -11157,7 +11160,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/customer-experience-management/tree/master"
             },
-            "time": "2026-09-30T16:27:09+00:00"
+            "time": "2026-10-13T07:41:06+00:00"
         },
         {
             "name": "spryker-feature/data-exchange-api",
@@ -26110,16 +26113,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.48.0",
+            "version": "1.51.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "29b814a7290ea03b7e208a56413565dd18155757"
+                "reference": "2e7bd9eab91611e59c116687da5f67232f8794ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/29b814a7290ea03b7e208a56413565dd18155757",
-                "reference": "29b814a7290ea03b7e208a56413565dd18155757",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/2e7bd9eab91611e59c116687da5f67232f8794ea",
+                "reference": "2e7bd9eab91611e59c116687da5f67232f8794ea",
                 "shasum": ""
             },
             "require": {
@@ -26140,6 +26143,7 @@
                 "api-platform/symfony": "^4.3.17",
                 "api-platform/validator": "^4.3.0",
                 "friendsofcxml/cxml-php": "^2.2.2",
+                "nikic/php-parser": "^5.0.0",
                 "php": ">=8.3",
                 "spryker/doctrine-inflector": "^1.0.0 || ^2.0.0",
                 "spryker/entity-tag": "^1.0.0",
@@ -26212,9 +26216,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.48.0"
+                "source": "https://github.com/spryker/api-platform/tree/1.51.0"
             },
-            "time": "2026-10-07T15:45:57+00:00"
+            "time": "2026-10-13T07:41:06+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -40041,16 +40045,16 @@
         },
         {
             "name": "spryker/discount",
-            "version": "9.56.2",
+            "version": "9.57.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/discount.git",
-                "reference": "2f6ba620cd14be52cff121391b63cb743dcc1bab"
+                "reference": "730e2df2ac973b1b6e4c1369b6068e3fb18c3e40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/discount/zipball/2f6ba620cd14be52cff121391b63cb743dcc1bab",
-                "reference": "2f6ba620cd14be52cff121391b63cb743dcc1bab",
+                "url": "https://api.github.com/repos/spryker/discount/zipball/730e2df2ac973b1b6e4c1369b6068e3fb18c3e40",
+                "reference": "730e2df2ac973b1b6e4c1369b6068e3fb18c3e40",
                 "shasum": ""
             },
             "require": {
@@ -40060,7 +40064,7 @@
                 "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
                 "spryker/checkout-extension": "^1.5.0",
                 "spryker/currency": "^3.1.0 || ^4.0.0",
-                "spryker/discount-extension": "^1.3.0",
+                "spryker/discount-extension": "^1.4.0",
                 "spryker/gui": "^3.61.0 || ^4.0.0 || ^5.8.0",
                 "spryker/kernel": "^3.76.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
@@ -40077,9 +40081,14 @@
                 "spryker/transfer": "^3.27.0",
                 "spryker/translator": "^1.1.0",
                 "spryker/twig": "^3.16.0",
-                "spryker/util-text": "^1.1.0"
+                "spryker/util-text": "^1.1.0",
+                "spryker/uuid-behavior": "^1.0.0"
+            },
+            "conflict": {
+                "spryker/api-platform": "<1.51.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/application": "*",
                 "spryker/checkout": "*",
                 "spryker/code-sniffer": "*",
@@ -40092,6 +40101,7 @@
                 "spryker/validator": "*"
             },
             "suggest": {
+                "spryker/api-platform": "Required to expose the discount Backend API resources; without it the resource schemas are never discovered.",
                 "spryker/checkout": "If you want to use Checkout plugins."
             },
             "type": "library",
@@ -40112,9 +40122,9 @@
             ],
             "description": "Discount module",
             "support": {
-                "source": "https://github.com/spryker/discount/tree/9.56.2"
+                "source": "https://github.com/spryker/discount/tree/9.57.0"
             },
-            "time": "2026-09-30T14:07:02+00:00"
+            "time": "2026-10-13T07:41:06+00:00"
         },
         {
             "name": "spryker/discount-calculation-connector",
@@ -40172,20 +40182,21 @@
         },
         {
             "name": "spryker/discount-extension",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/discount-extension.git",
-                "reference": "739f63113dc8cb476f495a7535fa90b30a5a7ecf"
+                "reference": "9e33cb545df3a633ae7a3c68a796a34ec982917d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/discount-extension/zipball/739f63113dc8cb476f495a7535fa90b30a5a7ecf",
-                "reference": "739f63113dc8cb476f495a7535fa90b30a5a7ecf",
+                "url": "https://api.github.com/repos/spryker/discount-extension/zipball/9e33cb545df3a633ae7a3c68a796a34ec982917d",
+                "reference": "9e33cb545df3a633ae7a3c68a796a34ec982917d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.3",
+                "spryker/transfer": "^3.27.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*"
@@ -40207,9 +40218,9 @@
             ],
             "description": "DiscountExtension module",
             "support": {
-                "source": "https://github.com/spryker/discount-extension/tree/1.3.0"
+                "source": "https://github.com/spryker/discount-extension/tree/1.4.0"
             },
-            "time": "2022-05-16T12:57:55+00:00"
+            "time": "2026-10-13T07:41:06+00:00"
         },
         {
             "name": "spryker/discount-merchant-sales-order",
@@ -40304,16 +40315,16 @@
         },
         {
             "name": "spryker/discount-promotion",
-            "version": "4.16.1",
+            "version": "4.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/discount-promotion.git",
-                "reference": "bfc3d019b64404da60462e1ab105d4c77cd4cb6c"
+                "reference": "e86f6aed3d4c83a5b017f19eed7eb2f9c19a7ff0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/discount-promotion/zipball/bfc3d019b64404da60462e1ab105d4c77cd4cb6c",
-                "reference": "bfc3d019b64404da60462e1ab105d4c77cd4cb6c",
+                "url": "https://api.github.com/repos/spryker/discount-promotion/zipball/e86f6aed3d4c83a5b017f19eed7eb2f9c19a7ff0",
+                "reference": "e86f6aed3d4c83a5b017f19eed7eb2f9c19a7ff0",
                 "shasum": ""
             },
             "require": {
@@ -40322,7 +40333,7 @@
                 "spryker/availability": "^9.0.0",
                 "spryker/cart-extension": "^1.5.0 || ^2.1.0 || ^4.0.0",
                 "spryker/discount": "^7.2.4 || ^9.0.0",
-                "spryker/discount-extension": "^1.3.0",
+                "spryker/discount-extension": "^1.4.0",
                 "spryker/gui": "^3.45.0 || ^4.0.0 || ^5.8.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
@@ -40331,7 +40342,7 @@
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/sales-quantity-extension": "^1.0.0",
                 "spryker/symfony": "^3.0.0",
-                "spryker/transfer": "^3.25.0",
+                "spryker/transfer": "^3.27.0",
                 "spryker/translator": "^1.1.0",
                 "spryker/twig": "^3.16.0"
             },
@@ -40366,9 +40377,9 @@
             ],
             "description": "DiscountPromotion module",
             "support": {
-                "source": "https://github.com/spryker/discount-promotion/tree/4.16.1"
+                "source": "https://github.com/spryker/discount-promotion/tree/4.17.0"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-10-13T07:41:06+00:00"
         },
         {
             "name": "spryker/discount-promotions-rest-api",
