@@ -5,7 +5,6 @@
 {% block table %}
     {% set itemColumns = [
         { id: 'product', title: 'recurring_orders.detail.order_items.column.product' },
-        { id: 'price-tolerance', title: 'recurring_orders.detail.order_items.column.price-tolerance', tooltip: 'recurring_orders.detail.order_items.column.price-tolerance.tooltip', type: 'status' },
         { id: 'quantity', title: 'recurring_orders.detail.order_items.column.quantity'},
         { id: 'price', title: 'recurring_orders.detail.order_items.column.price' },
         { id: 'total', title: 'recurring_orders.detail.order_items.column.total' },
@@ -42,7 +41,6 @@
 
         {% set itemRows = itemRows | merge([{
             product: productCell,
-            'price-tolerance': { label: item.priceTolerance | default('Off') | lower | trans, status: 'primary' },
             quantity: quantityCell,
             price: priceCell,
             total: totalCell,
