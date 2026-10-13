@@ -10,11 +10,13 @@ declare(strict_types = 1);
 namespace PyzTest\Glue\Discount\Helper;
 
 use Codeception\Module;
+use Codeception\TestInterface;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Glue\Discount\DiscountConfig;
 use Spryker\Shared\Discount\DiscountConstants;
+use SprykerTest\Shared\Product\Helper\ProductDataHelper;
 use SprykerTest\Shared\Store\Helper\StoreDataHelper;
 
 class DiscountBackendApiHelper extends Module
@@ -84,9 +86,19 @@ class DiscountBackendApiHelper extends Module
      */
     protected const string COLLECTOR_STRATEGY_PROMOTION = 'promotion';
 
-    protected const string PROMOTION_ABSTRACT_SKU = '001';
-
     protected const int PROMOTION_QUANTITY = 1;
+
+    /**
+     * @var array<int, string>
+     */
+    protected array $promotionAbstractSkus = [];
+
+    public function _before(TestInterface $test): void
+    {
+        parent::_before($test);
+
+        $this->promotionAbstractSkus = [];
+    }
 
     public function getStoreName(): string
     {
@@ -355,7 +367,27 @@ class DiscountBackendApiHelper extends Module
      */
     public function getPromotionAbstractSkus(): array
     {
-        return [static::PROMOTION_ABSTRACT_SKU];
+        if ($this->promotionAbstractSkus === []) {
+            $this->promotionAbstractSkus = $this->haveAbstractSkus(1);
+        }
+
+        return $this->promotionAbstractSkus;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function haveAbstractSkus(int $count): array
+    {
+        /** @var \SprykerTest\Shared\Product\Helper\ProductDataHelper $productDataHelper */
+        $productDataHelper = $this->getModule('\\' . ProductDataHelper::class);
+
+        $abstractSkus = [];
+        for ($i = 0; $i < $count; $i++) {
+            $abstractSkus[] = $productDataHelper->haveProductAbstract()->getSkuOrFail();
+        }
+
+        return $abstractSkus;
     }
 
     public function getPromotionCollectorStrategyType(): string

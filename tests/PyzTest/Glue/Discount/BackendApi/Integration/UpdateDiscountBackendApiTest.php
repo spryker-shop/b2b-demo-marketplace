@@ -65,15 +65,11 @@ class UpdateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
 
     protected const int UPDATED_PROMOTION_QUANTITY = 5;
 
-    /**
-     * @var array<int, string>
-     */
-    protected const array PROMOTION_ABSTRACT_SKUS = ['001'];
+    protected const int UPDATED_PROMOTION_ABSTRACT_SKU_COUNT = 2;
 
-    /**
-     * @var array<int, string>
-     */
-    protected const array UPDATED_PROMOTION_ABSTRACT_SKUS = ['002', '003'];
+    protected const string ABSTRACT_SKUS_OF_DISCOUNT = '{abstract skus of the discount}';
+
+    protected const string ABSTRACT_SKUS_OF_PATCH = '{abstract skus of the patch}';
 
     /**
      * @dataProvider providePartialUpdates
@@ -383,7 +379,14 @@ class UpdateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
     ): void {
         // Arrange
         $uuid = $this->havePromotionDiscount();
-        $attributes = $promotion === null ? [] : [static::RESOURCE_KEY_PROMOTION => $promotion];
+        $abstractSkusByPlaceholder = [
+            static::ABSTRACT_SKUS_OF_DISCOUNT => $this->tester->getPromotionAbstractSkus(),
+            static::ABSTRACT_SKUS_OF_PATCH => $this->tester->haveAbstractSkus(static::UPDATED_PROMOTION_ABSTRACT_SKU_COUNT),
+        ];
+        $attributes = $promotion === null
+            ? []
+            : [static::RESOURCE_KEY_PROMOTION => $this->resolveAbstractSkus($promotion, $abstractSkusByPlaceholder)];
+        $expectedPromotion = $this->resolveAbstractSkus($expectedPromotion, $abstractSkusByPlaceholder);
 
         // Act
         $response = $this->handleApiRequest(
@@ -412,21 +415,21 @@ class UpdateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
             'given no promotion object, when the discount is patched, then the stored promotion survives' => [
                 null,
                 [
-                    self::PROMOTION_KEY_ABSTRACT_SKUS => self::PROMOTION_ABSTRACT_SKUS,
+                    self::PROMOTION_KEY_ABSTRACT_SKUS => self::ABSTRACT_SKUS_OF_DISCOUNT,
                     self::PROMOTION_KEY_QUANTITY => self::PROMOTION_QUANTITY,
                 ],
             ],
             'given a new sku list, when the discount is patched, then the skus are replaced and the quantity survives' => [
-                [self::PROMOTION_KEY_ABSTRACT_SKUS => self::UPDATED_PROMOTION_ABSTRACT_SKUS],
+                [self::PROMOTION_KEY_ABSTRACT_SKUS => self::ABSTRACT_SKUS_OF_PATCH],
                 [
-                    self::PROMOTION_KEY_ABSTRACT_SKUS => self::UPDATED_PROMOTION_ABSTRACT_SKUS,
+                    self::PROMOTION_KEY_ABSTRACT_SKUS => self::ABSTRACT_SKUS_OF_PATCH,
                     self::PROMOTION_KEY_QUANTITY => self::PROMOTION_QUANTITY,
                 ],
             ],
             'given only a quantity, when the discount is patched, then the quantity is replaced and the skus survive' => [
                 [self::PROMOTION_KEY_QUANTITY => self::UPDATED_PROMOTION_QUANTITY],
                 [
-                    self::PROMOTION_KEY_ABSTRACT_SKUS => self::PROMOTION_ABSTRACT_SKUS,
+                    self::PROMOTION_KEY_ABSTRACT_SKUS => self::ABSTRACT_SKUS_OF_DISCOUNT,
                     self::PROMOTION_KEY_QUANTITY => self::UPDATED_PROMOTION_QUANTITY,
                 ],
             ],
@@ -604,13 +607,28 @@ class UpdateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
         ];
     }
 
+    /**
+     * @param array<string, mixed> $promotion
+     * @param array<string, array<int, string>> $abstractSkusByPlaceholder
+     *
+     * @return array<string, mixed>
+     */
+    protected function resolveAbstractSkus(array $promotion, array $abstractSkusByPlaceholder): array
+    {
+        if (isset($promotion[static::PROMOTION_KEY_ABSTRACT_SKUS])) {
+            $promotion[static::PROMOTION_KEY_ABSTRACT_SKUS] = $abstractSkusByPlaceholder[$promotion[static::PROMOTION_KEY_ABSTRACT_SKUS]];
+        }
+
+        return $promotion;
+    }
+
     protected function havePromotionDiscount(): string
     {
         $this->tester->actingAsUser();
 
         return $this->haveDiscountViaApi(
             $this->tester->buildValidPromotionDiscountAttributes(
-                static::PROMOTION_ABSTRACT_SKUS,
+                $this->tester->getPromotionAbstractSkus(),
                 static::PROMOTION_QUANTITY,
             ),
         );
