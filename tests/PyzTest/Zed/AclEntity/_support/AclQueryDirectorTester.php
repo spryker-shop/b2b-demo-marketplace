@@ -233,6 +233,42 @@ class AclQueryDirectorTester extends Actor
         return $aclEntityMetadataCollectionTransfer;
     }
 
+    public function createProductAbstractMerchantSubEntityMetadataHierarchy(): AclEntityMetadataCollectionTransfer
+    {
+        // SpyProductAbstract (sub-entity) -> SpyMerchantProductAbstract (sub-entity) -> SpyMerchant (root)
+        $aclEntityMetadataCollectionTransfer = new AclEntityMetadataCollectionTransfer();
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            SpyProductAbstract::class,
+            (new AclEntityMetadataTransfer())
+                ->setEntityName(SpyProductAbstract::class)
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName(SpyMerchantProductAbstract::class),
+                )
+                ->setIsSubEntity(true),
+        );
+
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            SpyMerchantProductAbstract::class,
+            (new AclEntityMetadataTransfer())
+                ->setEntityName(SpyMerchantProductAbstract::class)
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName(SpyMerchant::class),
+                )
+                ->setIsSubEntity(true),
+        );
+
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            SpyMerchant::class,
+            (new AclEntityMetadataTransfer())
+                ->setEntityName(SpyMerchant::class)
+                ->setHasSegmentTable(true),
+        );
+
+        return $aclEntityMetadataCollectionTransfer;
+    }
+
     public function createProductOfferMetadataHierarchy(): AclEntityMetadataCollectionTransfer
     {
         // SpyProductOffer -> SpyMerchant
@@ -331,6 +367,7 @@ class AclQueryDirectorTester extends Actor
             $factory->createAclQueryExpander($aclEntityConfigTransfer),
             $factory->createAclEntityQueryMerger(),
             $this->createAclModelDirector($rolesTransfer, $aclEntityMetadataCollectionTransfer, $bundleConfig),
+            $factory->createAclEntityAmbiguousSelectColumnGuard(),
         );
     }
 
