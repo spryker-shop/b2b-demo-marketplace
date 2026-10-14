@@ -49,7 +49,6 @@ image:
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
     php:
         enabled-extensions:
-            - blackfire
             - newrelic
             - otel
             - amqp
@@ -192,9 +191,6 @@ services:
             mail.antonz-test.cloud.spryker.toys:
 
 docker:
-
-    blackfire:
-        enabled: true
 
     ssl:
         enabled: true
