@@ -17989,16 +17989,16 @@
         },
         {
             "name": "spryker-shop/customer-page",
-            "version": "2.87.1",
+            "version": "2.88.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/customer-page.git",
-                "reference": "640c245af2926bf63de88570081833920ca2908f"
+                "reference": "449bda811160929a2fd1b0d9812dfcc67c1a25e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/640c245af2926bf63de88570081833920ca2908f",
-                "reference": "640c245af2926bf63de88570081833920ca2908f",
+                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/449bda811160929a2fd1b0d9812dfcc67c1a25e3",
+                "reference": "449bda811160929a2fd1b0d9812dfcc67c1a25e3",
                 "shasum": ""
             },
             "require": {
@@ -18081,7 +18081,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerShop\\": "src/SprykerShop/"
+                    "SprykerShop\\": "src/SprykerShop/",
+                    "SprykerShopTest\\Yves\\CustomerPage\\Fixtures\\": "tests/SprykerShopTest/Yves/CustomerPage/_support/Fixtures/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -18090,9 +18091,9 @@
             ],
             "description": "CustomerPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/customer-page/tree/2.87.1"
+                "source": "https://github.com/spryker-shop/customer-page/tree/2.88.0"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-10-13T14:24:22+00:00"
         },
         {
             "name": "spryker-shop/customer-page-extension",
@@ -67685,16 +67686,16 @@
         },
         {
             "name": "spryker/sales",
-            "version": "11.85.2",
+            "version": "11.85.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales.git",
-                "reference": "c7cbb145b85bae1394278350298033b297bb26de"
+                "reference": "fe8db079790706721605f995b6bcf629924d8815"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales/zipball/c7cbb145b85bae1394278350298033b297bb26de",
-                "reference": "c7cbb145b85bae1394278350298033b297bb26de",
+                "url": "https://api.github.com/repos/spryker/sales/zipball/fe8db079790706721605f995b6bcf629924d8815",
+                "reference": "fe8db079790706721605f995b6bcf629924d8815",
                 "shasum": ""
             },
             "require": {
@@ -67765,9 +67766,9 @@
             ],
             "description": "Sales module",
             "support": {
-                "source": "https://github.com/spryker/sales/tree/11.85.2"
+                "source": "https://github.com/spryker/sales/tree/11.85.3"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-10-14T09:28:54+00:00"
         },
         {
             "name": "spryker/sales-configurable-bundle",
@@ -67985,44 +67986,49 @@
         },
         {
             "name": "spryker/sales-invoice",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-invoice.git",
-                "reference": "457b74de69c0eb082bb852f62464a4ce3b32d024"
+                "reference": "1926a9e61255458a56e188ffd512b02d882b5e2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-invoice/zipball/457b74de69c0eb082bb852f62464a4ce3b32d024",
-                "reference": "457b74de69c0eb082bb852f62464a4ce3b32d024",
+                "url": "https://api.github.com/repos/spryker/sales-invoice/zipball/1926a9e61255458a56e188ffd512b02d882b5e2c",
+                "reference": "1926a9e61255458a56e188ffd512b02d882b5e2c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
                 "spryker/glossary": "^3.0.0",
-                "spryker/kernel": "^3.52.0",
+                "spryker/kernel": "^3.77.0",
                 "spryker/mail": "^4.6.0",
                 "spryker/mail-extension": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/sales": "^11.11.0",
+                "spryker/sales-extension": "^1.14.0",
                 "spryker/sales-invoice-extension": "^1.0.0",
                 "spryker/sequence-number": "^3.0.0",
                 "spryker/symfony": "^3.0.0",
-                "spryker/transfer": "^3.25.0",
-                "spryker/twig": "^3.0.0"
+                "spryker/transfer": "^3.27.0",
+                "spryker/twig": "^3.0.0",
+                "spryker/zed-request": "^3.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
-                "spryker/customer": "*",
                 "spryker/oms": "*",
                 "spryker/propel": "*",
+                "spryker/router": "*",
                 "spryker/store": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker/oms": "If you want to use GenerateOrderInvoiceCommandPlugin plugin"
+                "spryker-shop/shop-ui": "Use this module when you want to use Yves.",
+                "spryker/oms": "If you want to use GenerateOrderInvoiceCommandPlugin plugin",
+                "spryker/router": "If you want to use SalesInvoiceRouteProviderPlugin plugin"
             },
             "type": "library",
             "extra": {
@@ -68042,9 +68048,9 @@
             ],
             "description": "SalesInvoice module",
             "support": {
-                "source": "https://github.com/spryker/sales-invoice/tree/1.5.0"
+                "source": "https://github.com/spryker/sales-invoice/tree/1.6.0"
             },
-            "time": "2025-08-15T12:11:43+00:00"
+            "time": "2026-10-13T14:24:22+00:00"
         },
         {
             "name": "spryker/sales-invoice-extension",
