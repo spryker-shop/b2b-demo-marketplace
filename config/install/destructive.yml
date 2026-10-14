@@ -75,6 +75,9 @@ sections:
         punchout:
             command: 'vendor/bin/console punchout-gateway:demo-connection:create'
 
+        import-environment-configuration:
+            command: 'bash scripts/import-local-configuration.sh'
+
     scheduler-start:
         trigger-events:
             command: 'vendor/bin/console publish:trigger-events'
