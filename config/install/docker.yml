@@ -8,6 +8,9 @@ sections:
 
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
+        
+        generate-transfer-databuilders:
+            command: 'vendor/bin/console transfer:databuilder:generate'
 
         router-cache-warmup-yves:
             command: 'vendor/bin/yves router:cache:warm-up'
