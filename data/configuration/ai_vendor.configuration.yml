@@ -47,6 +47,8 @@ features:
                                 'gpt-4.1-mini': { 'input': 0.40, 'output': 1.60, 'currency': 'USD' },
                                 'gpt-4o': { 'input': 2.50, 'output': 10.00, 'currency': 'USD' },
                                 'gpt-4o-mini': { 'input': 0.15, 'output': 0.60, 'currency': 'USD' },
+                                'gpt-5-nano': { 'input': 0.05, 'output': 0.40, 'currency': 'USD' },
+                                'gpt-6-luna': { 'input': 0.10, 'output': 0.50, 'currency': 'USD' },
                             }
                         enabled: true
                         secret: false
@@ -93,6 +95,7 @@ features:
                                 'claude-opus-4': { 'input': 15.00, 'output': 75.00, 'currency': 'USD' },
                                 'claude-sonnet-4-5': { 'input': 3.00, 'output': 15.00, 'currency': 'USD' },
                                 'claude-haiku-4-5': { 'input': 1.00, 'output': 5.00, 'currency': 'USD' },
+                                'claude-haiku-5-5': { 'input': 0.10, 'output': 0.50, 'currency': 'USD' },
                             }
                         enabled: true
                         secret: false
@@ -149,6 +152,7 @@ features:
                                     { 'input': 3.00, 'output': 15.00, 'currency': 'USD' },
                                 'eu.anthropic.claude-haiku-4-5-20251001-v1:0':
                                     { 'input': 1.00, 'output': 5.00, 'currency': 'USD' },
+                                'eu.anthropic.claude-haiku-5-5': { 'input': 0.11, 'output': 0.55, 'currency': 'USD' },
                             }
                         enabled: true
                         secret: false
