@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aaac384a432ad931786652429ea43311",
+    "content-hash": "bd7e3acccd7e231799541e68fcc551a0",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -10232,44 +10232,70 @@
         },
         {
             "name": "spryker-feature/ai-commerce",
-            "version": "202608.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ai-commerce.git",
-                "reference": "58369646b6db7c75f82d27577cb9b319cf806e30"
+                "reference": "a2c1b71370c7132453d39cb215aa7db456260a19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/58369646b6db7c75f82d27577cb9b319cf806e30",
-                "reference": "58369646b6db7c75f82d27577cb9b319cf806e30",
+                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/a2c1b71370c7132453d39cb215aa7db456260a19",
+                "reference": "a2c1b71370c7132453d39cb215aa7db456260a19",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker-shop/quick-order-page-extension": "^1.3.0",
                 "spryker-shop/shop-ui": "^1.104.0 || ^2.0.0",
-                "spryker/ai-foundation": "^0.8.0",
+                "spryker/ai-foundation": "^0.9.0",
                 "spryker/application": "^3.46.0",
+                "spryker/availability-storage": "^2.2.0",
                 "spryker/catalog": "^5.12.0",
                 "spryker/category": "^5.24.0",
+                "spryker/category-storage": "^1.11.0 || ^2.0.0",
+                "spryker/cms-storage": "^2.4.0",
                 "spryker/configuration": "^1.0.0",
                 "spryker/content": "^2.0.0",
                 "spryker/content-gui": "^3.0.0",
                 "spryker/content-gui-extension": "^1.0.0",
+                "spryker/currency": "^4.0.0",
+                "spryker/customer": "^7.0.0",
                 "spryker/discount": "^9.0.0",
-                "spryker/glossary": "^3.0.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/kernel": "^3.72.0",
                 "spryker/locale": "^4.12.0",
                 "spryker/log": "^3.0.0",
+                "spryker/merchant-storage": "^1.0.0",
                 "spryker/messenger": "^3.6.0",
+                "spryker/money": "^2.0.0",
                 "spryker/oms": "^11.0.0",
+                "spryker/permission": "^1.0.0",
+                "spryker/price": "^5.0.0",
+                "spryker/price-product-storage": "^4.0.0",
+                "spryker/product-alternative-storage": "^1.0.0",
+                "spryker/product-bundle-storage": "^1.0.0",
+                "spryker/product-category-storage": "^1.11.0 || ^2.6.0",
+                "spryker/product-discontinued-storage": "^1.0.0",
+                "spryker/product-image-storage": "^1.19.0",
+                "spryker/product-label-storage": "^2.0.0",
                 "spryker/product-management-extension": "^1.11.0",
+                "spryker/product-offer-storage": "^1.0.0",
+                "spryker/product-option-storage": "^1.6.0",
+                "spryker/product-relation-storage": "^1.6.0 || ^2.0.0",
+                "spryker/product-review-storage": "^1.0.0",
+                "spryker/product-set-page-search": "^1.0.0",
+                "spryker/product-set-storage": "^1.0.0",
                 "spryker/product-storage": "^1.53.0",
                 "spryker/propel-orm": "^1.20.0",
                 "spryker/sales": "^11.0.0",
+                "spryker/search-extension": "^1.0.0",
+                "spryker/session": "^4.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/store": "^1.19.0",
                 "spryker/symfony": "^3.19.0",
                 "spryker/transfer": "^3.42.0",
+                "spryker/translator": "^1.1.0",
                 "spryker/twig-extension": "^1.0.0",
                 "spryker/user": "^3.0.0",
                 "spryker/util-encoding": "^2.1.1"
@@ -10278,9 +10304,15 @@
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/content-banner-gui": "*",
+                "spryker/country": "*",
+                "spryker/product": "*",
+                "spryker/product-label": "*",
+                "spryker/product-search-config-storage": "*",
                 "spryker/propel": "*",
                 "spryker/router": "*",
                 "spryker/shipment": "*",
+                "spryker/storage-redis": "*",
+                "spryker/store-storage": "*",
                 "spryker/testify": "*",
                 "spryker/twig": "*"
             },
@@ -10288,9 +10320,10 @@
                 "spryker/container": "When using BackofficeAssistant",
                 "spryker/product": "When using AI-based product management features",
                 "spryker/product-category": "When using category suggestions in product management.",
-                "spryker/router": "Required for SearchByImageRouteProviderPlugin to register search by image routes in Yves.",
+                "spryker/router": "When using StorefrontAssistantRouteProviderPlugin or SearchByImageRouteProviderPlugin",
                 "spryker/twig": "When using AiCommerceTwigPlugin"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -10299,7 +10332,9 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerFeature\\": "src/SprykerFeature/"
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Zed\\AiCommerce\\Helper\\": "tests/SprykerFeatureTest/Zed/AiCommerce/_support/Helper/",
+                    "SprykerFeatureTest\\Client\\AiCommerce\\Helper\\": "tests/SprykerFeatureTest/Client/AiCommerce/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -10308,9 +10343,9 @@
             ],
             "description": "AiCommerce module",
             "support": {
-                "source": "https://github.com/spryker-feature/ai-commerce/tree/202608.0"
+                "source": "https://github.com/spryker-feature/ai-commerce/tree/master"
             },
-            "time": "2026-08-23T18:38:12+00:00"
+            "time": "2026-10-15T08:12:39+00:00"
         },
         {
             "name": "spryker-feature/alternative-products",
@@ -25761,24 +25796,25 @@
         },
         {
             "name": "spryker/ai-foundation",
-            "version": "0.8.6",
+            "version": "0.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/ai-foundation.git",
-                "reference": "bc51f35e76f6b454cef0ed5dc9a2c9c1ab03bfe1"
+                "reference": "c42d0e0c7b80435b9114ced257acd34a83d1a37f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/bc51f35e76f6b454cef0ed5dc9a2c9c1ab03bfe1",
-                "reference": "bc51f35e76f6b454cef0ed5dc9a2c9c1ab03bfe1",
+                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/c42d0e0c7b80435b9114ced257acd34a83d1a37f",
+                "reference": "c42d0e0c7b80435b9114ced257acd34a83d1a37f",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "^3.380",
-                "neuron-core/neuron-ai": "^3.4.0",
+                "neuron-core/neuron-ai": "^3.15.0",
                 "php": ">=8.3",
-                "spryker/gui": "^5.5.0",
+                "spryker/gui": "^5.8.0",
                 "spryker/kernel": "^3.30.0",
+                "spryker/log": "^3.0.0",
                 "spryker/log-extension": "^1.0.0",
                 "spryker/monolog": "^2.0.5",
                 "spryker/propel-orm": "^1.15.0",
@@ -25790,12 +25826,9 @@
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
-                "spryker/log": "*",
+                "spryker/guzzle": "*",
                 "spryker/propel": "*",
                 "spryker/testify": "*"
-            },
-            "suggest": {
-                "spryker/log": "Provides logging infrastructure and audit log support for Spryker features."
             },
             "type": "library",
             "extra": {
@@ -25814,9 +25847,9 @@
             ],
             "description": "AiFoundation module",
             "support": {
-                "source": "https://github.com/spryker/ai-foundation/tree/0.8.6"
+                "source": "https://github.com/spryker/ai-foundation/tree/0.9.3"
             },
-            "time": "2026-09-14T12:38:19+00:00"
+            "time": "2026-10-15T10:07:09+00:00"
         },
         {
             "name": "spryker/alternative-products-rest-api",
@@ -77402,16 +77435,16 @@
         },
         {
             "name": "spryker/translator",
-            "version": "1.15.2",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/translator.git",
-                "reference": "eb55a6344f4ac179622ccd5cb4001f23b226dbc2"
+                "reference": "846c449c62e729d7068f0ba223619b9cb36fde98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/translator/zipball/eb55a6344f4ac179622ccd5cb4001f23b226dbc2",
-                "reference": "eb55a6344f4ac179622ccd5cb4001f23b226dbc2",
+                "url": "https://api.github.com/repos/spryker/translator/zipball/846c449c62e729d7068f0ba223619b9cb36fde98",
+                "reference": "846c449c62e729d7068f0ba223619b9cb36fde98",
                 "shasum": ""
             },
             "require": {
@@ -77431,7 +77464,7 @@
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/installer": "*",
-                "spryker/silex": "^2.2.0",
+                "spryker/silex": "^2.2.0 || ^3.0.0",
                 "spryker/storage": "*",
                 "spryker/store": "*",
                 "spryker/testify": "*"
@@ -77457,9 +77490,9 @@
             ],
             "description": "Translator module",
             "support": {
-                "source": "https://github.com/spryker/translator/tree/1.15.2"
+                "source": "https://github.com/spryker/translator/tree/1.16.0"
             },
-            "time": "2026-10-06T08:00:47+00:00"
+            "time": "2026-10-09T10:57:26+00:00"
         },
         {
             "name": "spryker/translator-extension",
@@ -93725,6 +93758,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/ai-commerce",
+            "version": "9999999-dev",
+            "alias": "202608.0",
+            "alias_normalized": "202608.0"
+        },
+        {
             "package": "spryker-feature/customer-experience-management",
             "version": "9999999-dev",
             "alias": "202608.0",
@@ -93757,6 +93796,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/ai-commerce": 20,
         "spryker-feature/customer-experience-management": 20,
         "spryker-feature/order-experience-management": 20,
         "spryker-feature/product-experience-management": 20,
