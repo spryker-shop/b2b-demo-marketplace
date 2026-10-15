@@ -77,6 +77,8 @@ use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\ConfiguredBun
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\ConfiguredBundlesOrderItemsPostSavePlugin;
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\SalesConfigurableBundleSalesOrderItemCollectionPreDeletePlugin;
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\SalesConfiguredBundlesSalesOrderItemCollectionPostUpdatePlugin;
+use Spryker\Zed\SalesInvoice\Communication\Plugin\Sales\OrderInvoiceOrderExpanderPlugin;
+use Spryker\Zed\SalesInvoice\Communication\Plugin\Sales\OrderInvoiceSalesListBlockRendererPlugin;
 use Spryker\Zed\SalesMerchantCommission\Communication\Plugin\Sales\MerchantCommissionOrderPostCancelPlugin;
 use Spryker\Zed\SalesOms\Communication\Plugin\OrderItemReferenceExpanderPreSavePlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Sales\CreateSalesOrderAmendmentOrderPostSavePlugin;
@@ -178,6 +180,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ProductClassOrderExpanderPlugin(),
             new SspServiceReschedulableOrderExpanderPlugin(),
             new CostCenterOrderExpanderPlugin(), #PurchasingControlFeature
+            new OrderInvoiceOrderExpanderPlugin(),
         ];
     }
 
@@ -458,6 +461,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
     protected function getSalesDetailBlockRendererPlugins(): array
     {
         return [
+            new OrderInvoiceSalesListBlockRendererPlugin(),
             new OrderTransferBlockRendererPlugin(),
             new SalesCommentBlockRendererPlugin(),
             new SalesReturnListBlockRendererPlugin(),

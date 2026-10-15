@@ -21,6 +21,9 @@ use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotio
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionCleanerPostUpdatePlugin;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionCollectorStrategyPlugin;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionConfigurationExpanderPlugin;
+use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionConfigurationOptionsExpanderPlugin;
+use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionDiscountConfiguratorCollectionExpanderPlugin;
+use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionDiscountConfiguratorValidatorRulePlugin;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionDiscountPostUpdatePlugin;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionFilterApplicableItemsPlugin;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionFilterCollectedItemsPlugin;
@@ -207,5 +210,35 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
     protected function getMoneyCollectionFormTypePlugin(): FormTypeInterface
     {
         return new MoneyCollectionFormTypePlugin();
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorCollectionExpanderPluginInterface>
+     */
+    protected function getDiscountConfiguratorCollectionExpanderPlugins(): array
+    {
+        return [
+            new DiscountPromotionDiscountConfiguratorCollectionExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfigurationOptionsExpanderPluginInterface>
+     */
+    protected function getDiscountConfigurationOptionsExpanderPlugins(): array
+    {
+        return [
+            new DiscountPromotionConfigurationOptionsExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorValidatorRulePluginInterface>
+     */
+    protected function getDiscountConfiguratorValidatorRulePlugins(): array
+    {
+        return [
+            new DiscountPromotionDiscountConfiguratorValidatorRulePlugin(),
+        ];
     }
 }
