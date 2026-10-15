@@ -597,4 +597,76 @@ class InheritedAclQueryScopeTest extends Unit
         // Assert
         $this->assertSame(3, $query->count());
     }
+
+    /**
+     * @group AclEntityDelete
+     */
+    public function testApplyAclRuleOnDeleteQueryWithDeletePermissionAndSegmentScopeRuleForRootEntity(): void
+    {
+        // Arrange
+        $roleTransfer = $this->tester->haveRole([RoleTransfer::NAME => AclQueryDirectorTester::ACL_ROLE_1_NAME]);
+
+        $merchantInSegmentTransfer = $this->tester->haveMerchant();
+        $merchantOutOfSegmentTransfer = $this->tester->haveMerchant();
+
+        $productOfferInSegmentTransfer = $this->tester->haveProductOffer(
+            [ProductOfferTransfer::MERCHANT_REFERENCE => $merchantInSegmentTransfer->getMerchantReference()],
+        );
+        $productOfferOutOfSegmentTransfer = $this->tester->haveProductOffer(
+            [ProductOfferTransfer::MERCHANT_REFERENCE => $merchantOutOfSegmentTransfer->getMerchantReference()],
+        );
+
+        $aclEntitySegmentTransfer = $this->tester->haveAclEntitySegment(
+            [
+                AclEntitySegmentRequestTransfer::NAME => static::ACL_ENTITY_SEGMENT_MERCHANT_1_NAME,
+                AclEntitySegmentRequestTransfer::REFERENCE => static::ACL_ENTITY_SEGMENT_MERCHANT_1_REFERENCE,
+                AclEntitySegmentRequestTransfer::ENTITY => SpyMerchant::class,
+                AclEntitySegmentRequestTransfer::ENTITY_IDS => [$merchantInSegmentTransfer->getIdMerchantOrFail()],
+            ],
+        );
+
+        $this->tester->haveAclEntityRule(
+            [
+                AclEntityRuleTransfer::SCOPE => AclEntityConstants::SCOPE_INHERITED,
+                AclEntityRuleTransfer::ENTITY => SpyProductOffer::class,
+                AclEntityRuleTransfer::ID_ACL_ROLE => $roleTransfer->getIdAclRole(),
+                AclEntityRuleTransfer::PERMISSION_MASK => AclEntityConstants::OPERATION_MASK_DELETE,
+            ],
+        );
+        $this->tester->haveAclEntityRule(
+            [
+                AclEntityRuleTransfer::SCOPE => AclEntityConstants::SCOPE_SEGMENT,
+                AclEntityRuleTransfer::ENTITY => SpyMerchant::class,
+                AclEntityRuleTransfer::ID_ACL_ROLE => $roleTransfer->getIdAclRole(),
+                AclEntityRuleTransfer::ID_ACL_ENTITY_SEGMENT => $aclEntitySegmentTransfer->getIdAclEntitySegmentOrFail(),
+                AclEntityRuleTransfer::PERMISSION_MASK => AclEntityConstants::OPERATION_MASK_DELETE,
+            ],
+        );
+
+        $rolesTransfer = (new RolesTransfer())->addRole($roleTransfer);
+        $aclQueryDirector = $this->tester->createAclQueryDirector(
+            $rolesTransfer,
+            $this->tester->createProductOfferMetadataHierarchy(),
+        );
+
+        // Act
+        $productOfferQuery = SpyProductOfferQuery::create()->filterByIdProductOffer_In(
+            [
+                $productOfferInSegmentTransfer->getIdProductOfferOrFail(),
+                $productOfferOutOfSegmentTransfer->getIdProductOfferOrFail(),
+            ],
+        );
+        $productOfferQuery = $aclQueryDirector->applyAclRuleOnDeleteQuery($productOfferQuery);
+
+        // Assert
+        $this->assertSame(
+            [$productOfferInSegmentTransfer->getIdProductOfferOrFail()],
+            array_map(
+                function (SpyProductOffer $productOfferEntity): int {
+                    return $productOfferEntity->getIdProductOffer();
+                },
+                $productOfferQuery->find()->getArrayCopy(),
+            ),
+        );
+    }
 }

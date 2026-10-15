@@ -29,5 +29,8 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
         'vendor/spryker/currency/resources/api/',
         'vendor/spryker/locale/resources/api/',
         'vendor/spryker/store-context/resources/api/',
+        // Duplicate of the identical `Pagination` object in spryker-feature/customer-experience-management.
+        // API Platform does not treat `vendor/spryker-feature/` as the feature layer, so both land in core and clash.
+        'vendor/spryker/discount/resources/api/backend/objects/pagination.object.yml',
     ]);
 };
