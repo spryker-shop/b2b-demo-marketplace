@@ -36,7 +36,7 @@ features:
                         name: OpenAI Model
                         description: The OpenAI model used for the Backoffice Assistant AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'gpt-4.1'
+                        default_value: 'gpt-6-luna'
                         enabled: true
                         secret: false
                         storefront: false
@@ -53,7 +53,7 @@ features:
                         name: AWS Bedrock Model
                         description: The AWS Bedrock model identifier used for the Backoffice Assistant AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'eu.anthropic.claude-sonnet-4-5-20250929-v1:0'
+                        default_value: 'eu.anthropic.claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -70,7 +70,7 @@ features:
                         name: Anthropic Model
                         description: The Anthropic model used for the Backoffice Assistant AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'claude-sonnet-4-5'
+                        default_value: 'claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -227,7 +227,7 @@ features:
                         name: OpenAI Model
                         description: The OpenAI model used for the Smart CMS AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'gpt-4.1'
+                        default_value: 'gpt-5-nano'
                         enabled: true
                         secret: false
                         storefront: false
@@ -244,7 +244,7 @@ features:
                         name: AWS Bedrock Model
                         description: The AWS Bedrock model identifier used for the Smart CMS AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'eu.anthropic.claude-sonnet-4-5-20250929-v1:0'
+                        default_value: 'eu.anthropic.claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -261,7 +261,7 @@ features:
                         name: Anthropic Model
                         description: The Anthropic model used for the Smart CMS AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'claude-sonnet-4-5'
+                        default_value: 'claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -292,7 +292,7 @@ features:
                         default_value: 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI'
                         enabled: true
                         secret: false
-                        storefront: false
+                        storefront: true
                         order: 1
                         scopes:
                             - global
@@ -307,7 +307,7 @@ features:
                         name: OpenAI Model
                         description: The OpenAI model used for the Quick Order Image-to-Cart AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'gpt-4o-mini'
+                        default_value: 'gpt-5-nano'
                         enabled: true
                         secret: false
                         storefront: false
@@ -324,7 +324,7 @@ features:
                         name: AWS Bedrock Model
                         description: The AWS Bedrock model identifier used for the Quick Order Image-to-Cart AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'eu.anthropic.claude-haiku-4-5-20251001-v1:0'
+                        default_value: 'eu.anthropic.claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -341,7 +341,7 @@ features:
                         name: Anthropic Model
                         description: The Anthropic model used for the Quick Order Image-to-Cart AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'claude-haiku-4-5'
+                        default_value: 'claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -372,7 +372,7 @@ features:
                         default_value: 'AI_COMMERCE:AI_CONFIGURATION_SEARCH_BY_IMAGE_OPENAI'
                         enabled: true
                         secret: false
-                        storefront: false
+                        storefront: true
                         order: 1
                         scopes:
                             - global
@@ -387,7 +387,7 @@ features:
                         name: OpenAI Model
                         description: The OpenAI model used for the Search by Image AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'gpt-4o-mini'
+                        default_value: 'gpt-5-nano'
                         enabled: true
                         secret: false
                         storefront: false
@@ -404,7 +404,7 @@ features:
                         name: AWS Bedrock Model
                         description: The AWS Bedrock model identifier used for the Search by Image AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'eu.anthropic.claude-haiku-4-5-20251001-v1:0'
+                        default_value: 'eu.anthropic.claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -421,7 +421,7 @@ features:
                         name: Anthropic Model
                         description: The Anthropic model used for the Search by Image AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'claude-haiku-4-5'
+                        default_value: 'claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -470,7 +470,7 @@ features:
                         name: OpenAI Model
                         description: The OpenAI model used for the Smart PIM AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'gpt-4o-mini'
+                        default_value: 'gpt-5-nano'
                         enabled: true
                         secret: false
                         storefront: false
@@ -487,7 +487,7 @@ features:
                         name: AWS Bedrock Model
                         description: The AWS Bedrock model identifier used for the Smart PIM AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'eu.anthropic.claude-haiku-4-5-20251001-v1:0'
+                        default_value: 'eu.anthropic.claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
@@ -504,7 +504,7 @@ features:
                         name: Anthropic Model
                         description: The Anthropic model used for the Smart PIM AI configuration. Model must support image input and structured output.
                         type: string
-                        default_value: 'claude-haiku-4-5'
+                        default_value: 'claude-haiku-5-5'
                         enabled: true
                         secret: false
                         storefront: false
