@@ -33,30 +33,6 @@ suites:
                 - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
                 - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper
 
-    AssetCommunication:
-        path: MessageHandlers/Asset/Communication
-        actor: AssetCommunicationTester
-        modules:
-            enabled:
-                - Asserts
-                - \PyzTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Config\Helper\ConfigInit
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
-                      projectNamespaces: ['Pyz']
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
-                - \SprykerTest\Zed\MessageBroker\Helper\MessageBrokerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
-                - \SprykerTest\Shared\Asset\Helper\AssetDataHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
-                - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper
-
     PaymentCommunication:
         path: MessageHandlers/Payment/Communication
         actor: PaymentCommunicationTester
