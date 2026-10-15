@@ -46,31 +46,32 @@
                     },
                     rowAttr: {class: "#{config.name}__field #{fieldLayoutClass} #{embed.configJsName}__value-wrapper"},
                 }) }}
+            {% elseif fieldName == 'cadenceOptions' %}
+                <div class="{{ config.name }}__field {{ fieldLayoutClass }} {{ embed.configJsName }}__days-wrapper">
+                    {% include molecule('recurring-order-day-picker', 'OrderExperienceManagement') with {
+                        data: {
+                            field: field,
+                        },
+                    } only %}
+                </div>
             {% elseif fieldName == 'startDate' %}
                 {% set tooltipId = "#{embed.configName}__start-date-tooltip" %}
                 <div class="{{ config.name }}__field {{ fieldLayoutClass }}">
                     {{ form_label(field) }}
-                    <span class="{{ embed.configName }}__tooltip-trigger" tabindex="0" role="button"
-                        data-qa="recurring-order-start-date-tooltip"
-                        aria-label="{{ 'recurring_orders.checkout.start_date_tooltip_label' | trans }}"
-                        aria-describedby="{{ tooltipId }}">
-                        {% include atom('icon') with {
-                            data: {
-                                name: 'action-default',
+                    {% include molecule('tooltip-message') with {
+                        class: "#{embed.configName}__tooltip-trigger",
+                        attributes: {
+                            id: tooltipId,
+                        },
+                        data: {
+                            text: 'recurring_orders.checkout.start_date_tooltip' | trans,
+                            hasTrigger: true,
+                            triggerLabel: 'recurring_orders.checkout.start_date_tooltip_label' | trans,
+                            triggerAttributes: {
+                                'data-qa': 'recurring-order-start-date-tooltip',
                             },
-                        } only %}
-
-                        {% include molecule('tooltip-message') with {
-                            class: "#{embed.configName}__tooltip-message",
-                            modifiers: ['top'],
-                            attributes: {
-                                id: tooltipId,
-                            },
-                            data: {
-                                text: 'recurring_orders.checkout.start_date_tooltip' | trans,
-                            },
-                        } only %}
-                    </span>
+                        },
+                    } only %}
                     {{ form_errors(field) }}
 
                     {% include molecule('date-time-picker') with {
