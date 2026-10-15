@@ -7412,8 +7412,8 @@ recurring_orders.review.invalid_form,The request could not be processed. Please 
 recurring_orders.review.invalid_form,Die Anfrage konnte nicht verarbeitet werden. Bitte überprüfen Sie sie und versuchen Sie es erneut.,de_DE
 recurring_orders.review.modal.accepted_prices,Accepted price changes,en_US
 recurring_orders.review.modal.accepted_prices,Akzeptierte Preisänderungen,de_DE
-recurring_orders.review.modal.body,Removing unavailable items and accepting updated prices will affect this order and all future executions of this schedule. These changes will become the new reference state for the recurring order going forward.,en_US
-recurring_orders.review.modal.body,Das Entfernen nicht verfügbarer Artikel und das Akzeptieren aktualisierter Preise wirken sich auf diese Bestellung und alle zukünftigen Ausführungen dieses Zeitplans aus. Diese Änderungen werden zum neuen Referenzzustand der wiederkehrenden Bestellung.,de_DE
+recurring_orders.review.modal.body,"Removing unavailable items and accepting updated prices will be applied as you choose below: to this order only, or to this and all future executions of this schedule.",en_US
+recurring_orders.review.modal.body,"Das Entfernen nicht verfügbarer Artikel und das Akzeptieren aktualisierter Preise werden so angewendet, wie Sie unten wählen: nur auf diese Bestellung oder auf diese und alle zukünftigen Ausführungen dieses Zeitplans.",de_DE
 recurring_orders.review.modal.headline,Confirm order and apply changes,en_US
 recurring_orders.review.modal.headline,Bestellung bestätigen und Änderungen übernehmen,de_DE
 recurring_orders.review.modal.new_total,New order total,en_US
@@ -7516,10 +7516,6 @@ recurring_orders.review.reason.configurable_bundle_unavailable,Configurable bund
 recurring_orders.review.reason.configurable_bundle_unavailable,Konfigurierbares Bundle nicht verfügbar,de_DE
 recurring_orders.detail.estimated_total.auto_approved,Auto-approved up to %threshold% (+%tolerance%),en_US
 recurring_orders.detail.estimated_total.auto_approved,Automatisch freigegeben bis %threshold% (+%tolerance%),de_DE
-recurring_orders.review.modal.body,Removing unavailable items and accepting updated prices will be applied as you choose below: to this order only, or to this and all future executions of this schedule.,en_US
-recurring_orders.review.modal.body,Das Entfernen nicht verfügbarer Artikel und das Akzeptieren aktualisierter Preise werden so angewendet, wie Sie unten wählen: nur auf diese Bestellung oder auf diese und alle zukünftigen Ausführungen dieses Zeitplans.,de_DE
-recurring_orders.review.currency_mismatch,Diese wiederkehrende Bestellung kann nur in ihrer eigenen Währung überprüft werden. Bitte wechseln Sie zurück, um Änderungen vorzunehmen.,de_DE
-recurring_orders.review.price_mode_mismatch,Diese wiederkehrende Bestellung kann nur in ihrem eigenen Preismodus (brutto/netto) überprüft werden. Bitte wechseln Sie zurück, um Änderungen vorzunehmen.,de_DE
 recurring_orders.status.processing,Processing,en_US
 recurring_orders.status.processing,In Bearbeitung,de_DE
 recurring_orders.review.order_total.rose_beyond_tolerance,"This order's total rose from %previous_total% to %current_total% (+%increase%), above your %tolerance% tolerance.",en_US
@@ -7648,6 +7644,24 @@ recurring_orders.price_tolerance.products.ignored_notice,Product price changes a
 recurring_orders.price_tolerance.products.ignored_notice,Preisänderungen einzelner Produkte werden ignoriert: Es wird nur die Gesamtsumme geprüft.,de_DE
 recurring_orders.price_tolerance.error.ignore_requires_order_tolerance,Set an order total tolerance above 0 to ignore product price changes.,en_US
 recurring_orders.price_tolerance.error.ignore_requires_order_tolerance,"Legen Sie eine Toleranz der Gesamtsumme über 0 fest, um Preisänderungen einzelner Produkte zu ignorieren.",de_DE
+recurring_orders.price_tolerance.confirm.title,Confirm settings?,en_US
+recurring_orders.price_tolerance.confirm.title,Einstellungen bestätigen?,de_DE
+recurring_orders.price_tolerance.confirm.text.one,You changed 1 price tolerance. It will apply from the next order.,en_US
+recurring_orders.price_tolerance.confirm.text.one,Sie haben 1 Preistoleranz geändert. Die Änderung gilt ab der nächsten Bestellung.,de_DE
+recurring_orders.price_tolerance.confirm.text.many,You changed %count% price tolerances. They will apply from the next order.,en_US
+recurring_orders.price_tolerance.confirm.text.many,Sie haben %count% Preistoleranzen geändert. Die Änderungen gelten ab der nächsten Bestellung.,de_DE
+recurring_orders.price_tolerance.confirm.action,Confirm,en_US
+recurring_orders.price_tolerance.confirm.action,Bestätigen,de_DE
+recurring_orders.price_tolerance.discard.title,Discard unsaved changes?,en_US
+recurring_orders.price_tolerance.discard.title,Nicht gespeicherte Änderungen verwerfen?,de_DE
+recurring_orders.price_tolerance.discard.text.one,"You have 1 unsaved change. If you leave this page, it will be lost.",en_US
+recurring_orders.price_tolerance.discard.text.one,"Sie haben 1 nicht gespeicherte Änderung. Wenn Sie diese Seite verlassen, geht sie verloren.",de_DE
+recurring_orders.price_tolerance.discard.text.many,"You have %count% unsaved changes. If you leave this page, they will be lost.",en_US
+recurring_orders.price_tolerance.discard.text.many,"Sie haben %count% nicht gespeicherte Änderungen. Wenn Sie diese Seite verlassen, gehen sie verloren.",de_DE
+recurring_orders.price_tolerance.discard.action,Discard changes,en_US
+recurring_orders.price_tolerance.discard.action,Änderungen verwerfen,de_DE
+recurring_orders.price_tolerance.keep_editing,Keep editing,en_US
+recurring_orders.price_tolerance.keep_editing,Weiter bearbeiten,de_DE
 recurring_orders.detail.sidebar.price_tolerance.order_total_ignored,Order total +%tolerance% · product changes ignored,en_US
 recurring_orders.detail.sidebar.price_tolerance.order_total_ignored,Gesamtsumme +%tolerance% · Produktänderungen ignoriert,de_DE
 recurring_orders.detail.order_items.price_tolerance.hint,"How much a product's unit price may rise before the order waits for your review. ""Any increase"" means every rise is reviewed; ""Order total"" means only the order total is checked.",en_US
