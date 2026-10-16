@@ -184,6 +184,10 @@
         } only %}
     {% endblock %}
 
+    {% block invoices %}
+        {% widget 'OrderInvoicesWidget' args [data.order] only %}{% endwidget %}
+    {% endblock %}
+
     {% block buttonsStateHandler %}
         {% include molecule('order-buttons-disable-toggler', 'SalesReturnPage') ignore missing with {
             attributes: {
