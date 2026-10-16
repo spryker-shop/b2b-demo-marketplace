@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\OrderExperienceManagement;
 
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\BiWeeklyCadenceTypePlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\ByDaysCadenceTypePlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\EveryNWeeksCadenceTypePlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\MonthlyCadenceTypePlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\WeeklyCadenceTypePlugin;
@@ -32,6 +33,7 @@ class OrderExperienceManagementDependencyProvider extends SprykerOrderExperience
             new BiWeeklyCadenceTypePlugin(), #RecurringOrdersFeature
             new MonthlyCadenceTypePlugin(), #RecurringOrdersFeature
             new EveryNWeeksCadenceTypePlugin(), #RecurringOrdersFeature
+            new ByDaysCadenceTypePlugin(), #RecurringOrdersFeature
         ];
     }
 

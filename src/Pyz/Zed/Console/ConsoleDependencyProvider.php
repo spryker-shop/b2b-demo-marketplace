@@ -206,6 +206,7 @@ use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderForecastRefreshConsole;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderRecoverStuckConsole;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderTriggerConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
@@ -476,6 +477,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new RecurringOrderTriggerConsole(),
             new RecurringOrderForecastRefreshConsole(),
+            new RecurringOrderRecoverStuckConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();

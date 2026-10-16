@@ -1,0 +1,48 @@
+@include order-experience-management-price-tolerance-bulk {
+    @include typography(label-sm);
+    border: rem(1) solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--scale-40);
+
+    &__title {
+        @include typography(heading-sm);
+        padding: var(--scale-12) var(--scale-24) 0;
+    }
+
+    &__ignored-notice {
+        padding: 0 var(--scale-24) var(--scale-12);
+    }
+
+    &__product-data-heading {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 var(--scale-24) var(--scale-12);
+    }
+
+    &__product-name {
+        @include typography(label-md);
+    }
+
+    &__product-meta {
+        @include typography(body-sm);
+        display: flex;
+        gap: var(--scale-4);
+        flex-wrap: wrap;
+    }
+
+    /* stylelint-disable */
+    &__table-input {
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        -moz-appearance: textfield;
+    }
+    /* stylelint-enable */
+
+    &__tolerance-zero-hint {
+        padding: var(--scale-12);
+    }
+}

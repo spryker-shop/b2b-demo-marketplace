@@ -31,7 +31,8 @@
         },
         'spy_recurring_schedule.next_trigger_date': schedule.status == 'cancelled' ? '—' : schedule.nextTriggerDate,
         'spy_recurring_schedule.cadence_type': ('recurring_orders.cadence.' ~ schedule.cadenceType) | trans
-        ~ (schedule.cadenceValue ? ' (' ~ schedule.cadenceValue ~ ')' : ''),
+        ~ (schedule.cadenceValue ? ' (' ~ schedule.cadenceValue ~ ')' : '')
+        ~ (data.weekDayLabelsByScheduleUuid[schedule.uuid] ? ' (' ~ data.weekDayLabelsByScheduleUuid[schedule.uuid] ~ ')' : ''),
         'spy_recurring_schedule.actions': [{
             url: url('recurring-orders/detail', { uuid: schedule.uuid }),
             title: 'recurring_orders.detail.history.view_order',
