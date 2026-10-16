@@ -1,0 +1,16 @@
+@include order-experience-management-price-tolerance-bulk-bar {
+    padding: var(--scale-12);
+    background: var(--background-state-info-subtle);
+
+    /* stylelint-disable */
+    &__value {
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        -moz-appearance: textfield;
+    }
+    /* stylelint-enable */
+}

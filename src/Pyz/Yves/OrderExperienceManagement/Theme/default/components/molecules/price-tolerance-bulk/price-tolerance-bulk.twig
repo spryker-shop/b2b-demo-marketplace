@@ -1,0 +1,104 @@
+{% extends molecule('price-tolerance-bulk', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block title %}
+    <h3 class="{{ config.name }}__title">{{ 'recurring_orders.price_tolerance.products.title' | trans }}</h3>
+{% endblock %}
+
+{% block heading %}
+    {% set withToleranceCount = data.productRows | filter(row => row.hasTolerance) | length %}
+    {% set reviewsAnyIncreaseCount = data.productRows | filter(row => row.isReviewingAnyIncrease) | length %}
+
+    <div class="{{ config.name }}__product-data-heading">
+        {% block intro %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block summary %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block table %}
+    {% set toleranceColumns = [] %}
+    {% if not data.isLocked %}
+        {% set toleranceColumns = toleranceColumns | merge([{
+            id: 'select',
+            title: 'recurring_orders.price_tolerance.bulk.select_all',
+            type: 'checkbox',
+            head: {
+                type: 'checkbox',
+            },
+            options: {
+                selectable: true,
+            },
+        }]) %}
+    {% endif %}
+    {% set toleranceColumns = toleranceColumns | merge([
+        { id: 'product', title: 'recurring_orders.detail.order_items.column.product' },
+        { id: 'unitPrice', title: 'recurring_orders.price_tolerance.products.column.unit_price' },
+        { id: 'quantity', title: 'recurring_orders.detail.order_items.column.quantity' },
+        { id: 'tolerance', title: 'recurring_orders.price_tolerance.products.column.tolerance', type: 'input' },
+        { id: 'reviewAbove', title: 'recurring_orders.price_tolerance.products.column.review_above' },
+    ]) %}
+
+    {% set toleranceRows = [] %}
+    {% for itemForm in data.form.items %}
+        {% set row = data.productRows[loop.index0] %}
+        {% set productName = row.item.productName ?: row.item.sku %}
+
+        {% set productCell %}
+            <div class="{{ config.name }}__product-name">
+                {{- productName -}}
+            </div>
+            <div class="{{ config.name }}__product-meta">
+                <span class="{{ config.name }}__product-sku">SKU: {{ row.item.sku }}</span>
+                <span>·</span>
+                {% widget 'SoldByMerchantWidget' args [row.item] only %}{% endwidget %}
+            </div>
+        {% endset %}
+
+        {% set reviewAboveCell %}
+            <span class="{{ config.jsName }}__trigger">
+                {%- if row.triggerPrice is not null -%}
+                    <strong>{{ row.triggerPrice | money(true, data.currencyIsoCode) }}</strong>
+                {%- else -%}
+                    {{ 'recurring_orders.price_tolerance.products.any_increase' | trans }}
+                {%- endif -%}
+            </span>
+        {% endset %}
+
+        {% set toleranceRows = toleranceRows | merge([{
+            _row: {
+                class: "#{config.jsName}__row",
+                attributes: {
+                    'data-unit-price': row.unitPrice,
+                    'data-qa': 'recurring-order-product-tolerance-row',
+                },
+            },
+            select: { label: 'recurring_orders.price_tolerance.bulk.select_row' | trans({'%product%': productName}) },
+            product: productCell,
+            unitPrice: row.unitPrice | money(true, data.currencyIsoCode),
+            quantity: row.quantity,
+            tolerance: {
+                field: itemForm.tolerance,
+                fieldAttributes: {
+                    class: "#{config.name}__table-input #{config.jsName}__tolerance input--sm",
+                },
+                cellText: '%',
+            },
+            reviewAbove: reviewAboveCell,
+        }]) %}
+    {% endfor %}
+
+    {% include molecule('advanced-table') with {
+        data: {
+            columns: toleranceColumns,
+            rows: toleranceRows,
+        },
+    } only %}
+{% endblock %}
+
+{% block note %}
+    <p class="{{ config.name }}__tolerance-zero-hint">{{ 'recurring_orders.price_tolerance.products.note' | trans }}</p>
+{% endblock %}

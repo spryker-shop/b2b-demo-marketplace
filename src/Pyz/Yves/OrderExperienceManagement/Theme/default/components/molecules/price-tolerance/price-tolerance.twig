@@ -1,0 +1,149 @@
+{% extends molecule('price-tolerance', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block priceTolerancesTitle %}
+    {% include molecule('action-bar') with {
+        data: {
+            title: data.title,
+            titleQa: qa('recurring-order-price-tolerances-title'),
+        },
+    } only %}
+{% endblock %}
+
+{% block priceTolerancesChecksIntro %}
+    <div class="{{ config.name }}__help-info">
+        {% block priceTolerancesChecksIntroText %}
+            {{ 'recurring_orders.price_tolerance.checks_intro' | trans }}
+        {% endblock %}
+
+        {% block priceTolerancesChecksIntroTooltip %}
+            {% set priceTolerancesChecksIntroTooltipTriggerClassName = config.name ~ '__help-text-tooltip' %}
+            {% embed molecule('tooltip-message') with {
+                attributes: {
+                    id: 'recurring-order-price-tolerances-how-it-works-tooltip',
+                },
+                data: {
+                    hasTrigger: true,
+                    triggerLabel: 'recurring_orders.price_tolerance.how_it_works' | trans,
+                    triggerAttributes: {
+                        'data-qa': 'recurring-order-price-tolerances-how-it-works',
+                    },
+                },
+                embed: {
+                    triggerClassName: priceTolerancesChecksIntroTooltipTriggerClassName,
+                    content: block('howPriceChecksWorks'),
+                    configName: config.name,
+                },
+            } only %}
+                {% block triggerClass %}{{ embed.triggerClassName }}{% endblock %}
+
+                {% block triggerContent %}
+                    {% include atom('font-icon') with {
+                        class: embed.configName ~ '__help-text-tooltip-icon',
+                        data: {
+                            name: 'info',
+                        },
+                    } only %}
+                    {{ data.triggerLabel }}
+                {% endblock %}
+
+                {% block tooltipContent %}
+                    <div class="{{ config.name }}__text text-left">
+                        {{ embed.content | raw }}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block priceTolerancesOrderTotalField %}
+    <div class="col">
+        <div class="grid grid--middle grid--gap-smaller grid--nowrap">
+            {{ form_widget(data.form.orderTolerance, { attr: { class: config.name ~ "__order-total-input col input--sm #{priceTolerancesOrderToleranceJsClassName}" } }) }} <span class="col">%</span>
+        </div>
+        {{ form_errors(data.form.orderTolerance) }}
+    </div>
+{% endblock %}
+
+{% block howPriceChecksWorks %}
+    <h4 class="{{ config.name }}__how-it-works-title">
+        {{ 'recurring_orders.price_tolerance.how_it_works' | trans }}
+    </h4>
+
+    {% set howItWorksIconMapper = {
+        'order_total': 'store',
+        'product': 'check',
+        'independent': 'fact_check',
+        'zero': 'info',
+    }%}
+
+    <dl class="{{ config.name }}__how-it-works-list">
+        {% for key in ['order_total', 'product', 'independent', 'zero'] %}
+            <dt class="{{ config.name }}__how-it-works-term">
+                {% include atom('font-icon') with {
+                    class: config.name ~ '__how-it-works-icon',
+                    data: {
+                        name: howItWorksIconMapper[key],
+                    },
+                } only %}
+                {{ ('recurring_orders.price_tolerance.how_it_works.' ~ key ~ '.title') | trans }}
+            </dt>
+            <dd class="{{ config.name }}__how-it-works-description">
+                {{ ('recurring_orders.price_tolerance.how_it_works.' ~ key ~ '.text') | trans }}
+            </dd>
+        {% endfor %}
+    </dl>
+{% endblock %}
+
+{% block ignoreCheckbox %}
+    {{ form_row(data.form.isProductPriceChangeIgnored, {
+        component: molecule('toggler-checkbox'),
+        attributes: {
+            'target-class-name': priceTolerancesProductsSectionJsClassName,
+            'class-to-toggle': "price-tolerance-bulk--order-total-only-mode",
+            'add-class-when-checked': true,
+        },
+    }) }}
+{% endblock %}
+
+{% block priceTolerancesIgnoreSection %}
+    {% set priceTolerancesIgnoreSectionClassName = config.name ~ '__ignore-individual' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block priceTolerancesProductsSection %}
+    {% set priceTolerancesProductsSectionClassName = '' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block priceTolerancesActions %}
+    {% if not data.isLocked %}
+        <div class="{{ config.name }}__actions-line">
+            {% block priceTolerancesAppliesNext %}
+                <p>{{ 'recurring_orders.price_tolerance.applies_next' | trans({'%date%': data.schedule.nextTriggerDate | formatDate}) }}</p>
+            {% endblock %}
+            <div class="{{ config.name }}__actions">
+                <a href="{{ priceTolerancesDetailUrl }}" class="button button--hollow" {{ qa('recurring-order-price-tolerances-cancel') }}>
+                    {{ 'global.cancel' | trans }}
+                </a>
+                <button type="submit" class="button" {{ qa('recurring-order-price-tolerances-save') }}>{{ 'recurring_orders.detail.edit.actions.save' | trans }}</button>
+            </div>
+        </div>
+
+        {% block priceTolerancesChangeConfirm %}
+            {% include molecule('price-tolerance-change-confirm', 'OrderExperienceManagement') with {
+                attributes: {
+                    'form-id': priceTolerancesFormId,
+                    'tracked-field-selector': ".#{priceTolerancesOrderToleranceJsClassName}, .js-price-tolerance-bulk__tolerance",
+                },
+                data: {
+                    discardUrl: priceTolerancesDetailUrl,
+                },
+            } only %}
+        {% endblock %}
+    {% else %}
+        <a href="{{ priceTolerancesDetailUrl }}" class="button button--hollow" {{ qa('recurring-order-price-tolerances-back') }}>
+            {{ 'recurring_orders.price_tolerance.back' | trans }}
+        </a>
+    {% endif %}
+{% endblock %}

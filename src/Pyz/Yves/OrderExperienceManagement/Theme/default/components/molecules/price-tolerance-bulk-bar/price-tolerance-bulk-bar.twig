@@ -1,0 +1,19 @@
+{% extends molecule('price-tolerance-bulk-bar', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block input %}
+    <input type="number" id="{{ config.name }}-value"
+        class="{{ config.name }}__value {{ config.jsName }}__value input input--sm"
+        inputmode="decimal"
+        {{ _self.renderAttributes(data.valueAttributes) }}
+        {{ qa('recurring-order-bulk-value') }}>
+{% endblock %}
+
+{% block applyButton %}
+    {% set applyButtonClassName = 'button button--sm' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block turnOffButton %}
+    {% set turnOffButtonClassName = 'button button--sm button--secondary' %}
+    {{ parent() }}
+{% endblock %}
