@@ -1,5 +1,4 @@
 @mixin shop-ui-checkbox($name: '.checkbox') {
-    // Radios match :indeterminate when no radio in their group is checked, so exclude them.
     $indeterminate: ':indeterminate:not([type="radio"])';
 
     #{$name} {
