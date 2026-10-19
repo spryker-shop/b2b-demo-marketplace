@@ -1,4 +1,7 @@
 @mixin shop-ui-checkbox($name: '.checkbox') {
+    // Radios match :indeterminate when no radio in their group is checked, so exclude them.
+    $indeterminate: ':indeterminate:not([type="radio"])';
+
     #{$name} {
         display: inline-block;
         position: relative;
@@ -30,7 +33,7 @@
             }
 
             &:checked,
-            &:indeterminate {
+            &#{$indeterminate} {
                 & ~ #{$name}__box {
                     background-color: var(--background-brand-primary);
                     border-color: var(--background-brand-primary);
@@ -49,7 +52,7 @@
                 }
             }
 
-            &:indeterminate ~ #{$name}__box::after {
+            &#{$indeterminate} ~ #{$name}__box::after {
                 content: 'remove';
             }
 
@@ -63,8 +66,8 @@
 
                 &:checked ~ #{$name}__box,
                 &:checked ~ #{$name}__box:hover,
-                &:indeterminate ~ #{$name}__box,
-                &:indeterminate ~ #{$name}__box:hover {
+                &#{$indeterminate} ~ #{$name}__box,
+                &#{$indeterminate} ~ #{$name}__box:hover {
                     border-color: var(--input-border-disabled);
                     background: var(--input-background-disabled);
 
@@ -88,8 +91,8 @@
 
                 &:checked ~ #{$name}__box,
                 &:checked ~ #{$name}__box:hover,
-                &:indeterminate ~ #{$name}__box,
-                &:indeterminate ~ #{$name}__box:hover {
+                &#{$indeterminate} ~ #{$name}__box,
+                &#{$indeterminate} ~ #{$name}__box:hover {
                     border-color: var(--background-state-error-bold);
                     background: var(--background-state-error-bold);
                 }
@@ -110,7 +113,7 @@
             }
 
             #{$name}__input:checked ~ #{$name}__box::after,
-            #{$name}__input:indeterminate ~ #{$name}__box::after {
+            #{$name}__input#{$indeterminate} ~ #{$name}__box::after {
                 font-size: var(--font-size-16);
             }
         }
@@ -125,7 +128,7 @@
             }
 
             #{$name}__input:checked ~ #{$name}__box,
-            #{$name}__input:indeterminate ~ #{$name}__box {
+            #{$name}__input#{$indeterminate} ~ #{$name}__box {
                 background: var(--background-brand-hover);
                 border-color: var(--background-brand-hover);
             }
@@ -137,8 +140,8 @@
 
             #{$name}__input[invalid]:checked ~ #{$name}__box,
             #{$name}__input--error:checked ~ #{$name}__box,
-            #{$name}__input[invalid]:indeterminate ~ #{$name}__box,
-            #{$name}__input--error:indeterminate ~ #{$name}__box {
+            #{$name}__input[invalid]#{$indeterminate} ~ #{$name}__box,
+            #{$name}__input--error#{$indeterminate} ~ #{$name}__box {
                 border-color: var(--background-state-error-bold);
                 background: var(--background-state-error-bold);
             }
@@ -150,8 +153,8 @@
 
             #{$name}__input[disabled]:checked ~ #{$name}__box,
             #{$name}__input--disabled:checked ~ #{$name}__box,
-            #{$name}__input[disabled]:indeterminate ~ #{$name}__box,
-            #{$name}__input--disabled:indeterminate ~ #{$name}__box {
+            #{$name}__input[disabled]#{$indeterminate} ~ #{$name}__box,
+            #{$name}__input--disabled#{$indeterminate} ~ #{$name}__box {
                 border-color: var(--input-border-disabled);
                 background: var(--input-background-disabled);
             }
