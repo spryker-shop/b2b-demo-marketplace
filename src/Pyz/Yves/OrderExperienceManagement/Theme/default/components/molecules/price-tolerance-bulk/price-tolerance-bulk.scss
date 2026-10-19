@@ -9,8 +9,91 @@
         padding: var(--scale-12) var(--scale-24) 0;
     }
 
-    &__ignored-notice {
-        padding: 0 var(--scale-24) var(--scale-12);
+    &__mode {
+        min-width: 0;
+        margin: 0;
+        padding: var(--scale-8) var(--scale-24) var(--scale-16);
+        border: 0;
+    }
+
+    &__mode-legend {
+        @include typography(label-md);
+        margin-bottom: var(--scale-8);
+        padding: 0;
+        color: var(--text-primary);
+    }
+
+    &__mode-options {
+        display: grid;
+        gap: var(--scale-8);
+
+        @include helper-breakpoint-media-min($md) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--scale-12);
+        }
+    }
+
+    &__mode-option {
+        @include helper-effect-transition(background-color border-color box-shadow);
+        display: flex;
+        align-items: flex-start;
+        gap: var(--scale-12);
+        padding: var(--scale-12) var(--scale-16);
+        border: var(--stroke-sm) solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        background: var(--background-surface);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--border-strong);
+        }
+
+        &:has(:checked) {
+            border-color: var(--border-brand);
+            background: var(--background-brand-subtle);
+        }
+
+        &:has(:focus-visible) {
+            box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                var(--shadows-focus-spread) var(--shadows-focus-color);
+        }
+
+        &:has(:disabled) {
+            border-color: var(--border-disabled);
+            background: transparent;
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+    }
+
+    &__mode-input {
+        flex-shrink: 0;
+        width: rem(18);
+        height: rem(18);
+        margin: rem(1) 0 0;
+        accent-color: var(--background-brand-primary);
+        cursor: inherit;
+    }
+
+    &__mode-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-2);
+    }
+
+    &__mode-title {
+        @include typography(label-md);
+    }
+
+    &__mode-text {
+        @include typography(body-sm);
+        color: var(--text-secondary);
+    }
+
+    &__mode-hint {
+        @include typography(body-sm);
+        margin-top: var(--scale-8);
+        color: var(--text-secondary);
     }
 
     &__product-data-heading {
@@ -21,13 +104,24 @@
 
     &__product-name {
         @include typography(label-md);
+        margin-bottom: var(--scale-6);
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
     }
 
     &__product-meta {
         @include typography(body-sm);
-        display: flex;
-        gap: var(--scale-4);
-        flex-wrap: wrap;
+    }
+
+    &__product-sku {
+        display: block;
+    }
+
+    .sold-by-merchant {
+        @include typography(body-sm);
+        color: var(--text-tertiary);
     }
 
     /* stylelint-disable */

@@ -95,21 +95,8 @@
     </dl>
 {% endblock %}
 
-{% block ignoreCheckbox %}
-    {{ form_row(data.form.isProductPriceChangeIgnored, {
-        component: molecule('toggler-checkbox'),
-        attributes: {
-            'target-class-name': priceTolerancesProductsSectionJsClassName,
-            'class-to-toggle': "price-tolerance-bulk--order-total-only-mode",
-            'add-class-when-checked': true,
-        },
-    }) }}
-{% endblock %}
-
-{% block priceTolerancesIgnoreSection %}
-    {% set priceTolerancesIgnoreSectionClassName = config.name ~ '__ignore-individual' %}
-    {{ parent() }}
-{% endblock %}
+{# The ignore flag is rendered as a mode choice inside the products section (price-tolerance-bulk). #}
+{% block priceTolerancesIgnoreSection %}{% endblock %}
 
 {% block priceTolerancesProductsSection %}
     {% set priceTolerancesProductsSectionClassName = '' %}

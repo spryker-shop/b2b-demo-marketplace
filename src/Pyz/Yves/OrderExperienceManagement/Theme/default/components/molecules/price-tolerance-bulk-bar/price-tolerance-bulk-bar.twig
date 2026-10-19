@@ -1,11 +1,55 @@
 {% extends molecule('price-tolerance-bulk-bar', '@SprykerFeature:OrderExperienceManagement') %}
 
+{% define attributes = {
+    'selected-one-label': 'recurring_orders.price_tolerance.bulk.selected.one' | trans,
+    'selected-many-label': 'recurring_orders.price_tolerance.bulk.selected.many' | trans,
+    'data-qa': 'recurring-order-bulk-bar',
+    'hidden-class': 'is-hidden',
+    role: 'toolbar',
+    'aria-label': 'recurring_orders.price_tolerance.bulk.toolbar' | trans,
+} %}
+
+{% block body %}
+    <div class="{{ config.name }}__group {{ config.name }}__group--selection">
+        {{ block('counter') }}
+
+        {% block clearButton %}
+            <button type="button" class="button button--sm button--tertiary {{ config.name }}__clear {{ config.jsName }}__clear" {{ qa('recurring-order-bulk-clear') }}>
+                {{ 'recurring_orders.price_tolerance.bulk.clear_selection' | trans }}
+            </button>
+        {% endblock %}
+    </div>
+
+    <div class="{{ config.name }}__group {{ config.name }}__group--actions">
+        <div class="{{ config.name }}__setter">
+            {{ block('label') }}
+
+            <span class="{{ config.name }}__field">
+                {{ block('input') }}
+                {{ block('extra') }}
+            </span>
+
+            {{ block('applyButton') }}
+        </div>
+
+        {{ block('turnOffButton') }}
+    </div>
+{% endblock %}
+
+{% block label %}
+    <label class="{{ config.name }}__label" for="{{ config.name }}-value">{{ 'recurring_orders.price_tolerance.bulk.set_to' | trans }}</label>
+{% endblock %}
+
 {% block input %}
     <input type="number" id="{{ config.name }}-value"
-        class="{{ config.name }}__value {{ config.jsName }}__value input input--sm"
+        class="{{ config.name }}__value {{ config.jsName }}__value"
         inputmode="decimal"
         {{ _self.renderAttributes(data.valueAttributes) }}
         {{ qa('recurring-order-bulk-value') }}>
+{% endblock %}
+
+{% block extra %}
+    <span class="{{ config.name }}__suffix">%</span>
 {% endblock %}
 
 {% block applyButton %}
@@ -14,6 +58,6 @@
 {% endblock %}
 
 {% block turnOffButton %}
-    {% set turnOffButtonClassName = 'button button--sm button--secondary' %}
+    {% set turnOffButtonClassName = 'button button--sm button--tertiary ' ~ config.name ~ '__turn-off' %}
     {{ parent() }}
 {% endblock %}

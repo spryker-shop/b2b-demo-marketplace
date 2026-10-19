@@ -70,18 +70,6 @@
         padding: var(--scale-8) var(--scale-24);
     }
 
-    &__ignore-individual {
-        @include typography(label-sm);
-        border: rem(1) solid var(--border-subtle);
-        border-radius: var(--radius-md);
-        margin-bottom: var(--scale-12);
-        padding: var(--scale-8) var(--scale-24);
-
-        .toggler-checkbox {
-            vertical-align: top;
-        }
-    }
-
     &__actions-line {
         @include typography(body-sm);
         display: flex;

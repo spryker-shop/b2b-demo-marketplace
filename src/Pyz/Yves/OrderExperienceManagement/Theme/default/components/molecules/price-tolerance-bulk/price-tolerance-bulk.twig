@@ -2,7 +2,60 @@
 
 {% block title %}
     <h3 class="{{ config.name }}__title">{{ 'recurring_orders.price_tolerance.products.title' | trans }}</h3>
+
+    {% block mode %}
+        {% set ignoreField = data.form.isProductPriceChangeIgnored %}
+        {% set isIgnored = ignoreField.vars.checked %}
+        {% set orderTolerance = data.form.orderTolerance.vars.value %}
+        {% set hasOrderTolerance = orderTolerance is not empty and orderTolerance > 0 %}
+
+        <fieldset class="{{ config.name }}__mode" {{ data.isLocked ? 'disabled' }} {{ qa('recurring-order-price-tolerances-ignore') }}>
+            <legend class="{{ config.name }}__mode-legend">{{ 'recurring_orders.price_tolerance.mode.legend' | trans }}</legend>
+
+            {# Real form field, driven by the radios below. #}
+            <input type="checkbox" hidden
+                class="{{ config.jsName }}__ignore-field"
+                name="{{ ignoreField.vars.full_name }}"
+                value="{{ ignoreField.vars.value }}"
+                {{ isIgnored ? 'checked' }}>
+            {% do ignoreField.setRendered %}
+
+            <div class="{{ config.name }}__mode-options">
+                {# `form` points to no form, so the radios group natively but are never submitted. #}
+                {% for mode in ['products', 'order_total'] %}
+                    {% set isOrderTotalMode = mode == 'order_total' %}
+                    <label class="{{ config.name }}__mode-option">
+                        <input type="radio"
+                            class="{{ config.name }}__mode-input {{ config.jsName }}__mode-input {{ config.jsName }}__mode-input--{{ mode }}"
+                            name="{{ config.name }}-mode"
+                            form="{{ config.name }}-mode"
+                            value="{{ mode }}"
+                            {{ isOrderTotalMode == isIgnored ? 'checked' }}
+                            {{ isOrderTotalMode and not hasOrderTolerance and not isIgnored ? 'disabled' }}
+                            {{ qa('recurring-order-price-tolerances-mode-' ~ mode) }}>
+                        <span class="{{ config.name }}__mode-body">
+                            <span class="{{ config.name }}__mode-title">{{ ('recurring_orders.price_tolerance.mode.' ~ mode ~ '.title') | trans }}</span>
+                            <span class="{{ config.name }}__mode-text">
+                                {{ ('recurring_orders.price_tolerance.mode.' ~ mode ~ '.text') | trans({
+                                    '%tolerance%': '<span class="' ~ config.jsName ~ '__order-tolerance-value">' ~ (orderTolerance ?: 0) ~ '</span>',
+                                }) | raw }}
+                            </span>
+                        </span>
+                    </label>
+                {% endfor %}
+            </div>
+
+            <p class="{{ config.name }}__mode-hint {{ config.jsName }}__mode-hint" {{ hasOrderTolerance ? 'hidden' }}>
+                {{ 'recurring_orders.price_tolerance.mode.order_total.unavailable' | trans }}
+            </p>
+
+            {{ form_errors(ignoreField) }}
+        </fieldset>
+    {% endblock %}
 {% endblock %}
+
+{# The selected mode card already explains what is checked. #}
+{% block ignoredNotice %}{% endblock %}
 
 {% block heading %}
     {% set withToleranceCount = data.productRows | filter(row => row.hasTolerance) | length %}
@@ -52,8 +105,7 @@
                 {{- productName -}}
             </div>
             <div class="{{ config.name }}__product-meta">
-                <span class="{{ config.name }}__product-sku">SKU: {{ row.item.sku }}</span>
-                <span>·</span>
+                <span class="{{ config.name }}__product-sku">{{ 'recurring_orders.sku' | trans({'%sku%': row.item.sku}) }}</span>
                 {% widget 'SoldByMerchantWidget' args [row.item] only %}{% endwidget %}
             </div>
         {% endset %}
