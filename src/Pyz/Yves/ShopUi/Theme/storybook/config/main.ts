@@ -22,6 +22,7 @@ import {
 import {
     getAppSettings,
     loadProjectGlobalSettings,
+    resolveNamespaceJson,
 } from '../../../../../../../vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/FrontendBuilder/settings.mts';
 
 // Spryker widgets are PHP classes whose `getName()` returns the widget id used
@@ -81,13 +82,16 @@ export default {
         // --- Builder inputs: the same settings `npm run yves` resolves (frontend/yves.settings.mts included) ---
         const globalSettings = await loadProjectGlobalSettings();
         const namespaceConfigPath = path.resolve(projectRoot, globalSettings.paths.namespaceConfig);
-        const namespaceConfigList = getFilteredNamespaceConfigList({
-            mode: 'development',
-            namespaces: [],
-            themes: [],
-            pathToConfig: namespaceConfigPath,
-            isInjectionDebuggingEnabled: false,
-        });
+        const namespaceConfigList = getFilteredNamespaceConfigList(
+            {
+                mode: 'development',
+                namespaces: [],
+                themes: [],
+                pathToConfig: namespaceConfigPath,
+                isInjectionDebuggingEnabled: false,
+            },
+            resolveNamespaceJson(namespaceConfigPath, globalSettings),
+        );
         const [appSettings] = getAppSettings(namespaceConfigList, namespaceConfigPath, globalSettings);
 
         const aliasList = getAliasList(appSettings);
