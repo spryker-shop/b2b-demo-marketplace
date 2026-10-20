@@ -51,5 +51,24 @@
 {% endblock %}
 
 {% block itemPriceInfo %}
-    <span class="{{ config.name }}__price">{{ currentQuantity }}x {{ unitPrice | money(true, data.currencyIsoCode) }}</small>
+    <span class="{{ config.name }}__price">
+        {{ currentQuantity }}x
+        {% if priceChange %}
+            <s>{{ referencePrice | money(true, data.currencyIsoCode) }}</s>
+        {% endif %}
+        {{ unitPrice | money(true, data.currencyIsoCode) }}
+    </span>
+    {% if priceChange %}
+        {% set itemTolerance = item.priceTolerancePercent %}
+        <br>
+        <small class="text-muted" {{ qa('recurring-order-review-unflagged-price-change') }}>
+            {% if priceChange.current < priceChange.previous %}
+                ({{ 'recurring_orders.review.price_note.decreased' | trans }})
+            {% elseif data.isProductCheckIgnored %}
+                ({{ 'recurring_orders.review.price_note.within_order_tolerance' | trans({'%tolerance%': data.orderTolerance.trim() ~ '%'}) }})
+            {% else %}
+                ({{ 'recurring_orders.review.price_note.within_tolerance' | trans({'%tolerance%': itemTolerance.trim() ~ '%'}) }})
+            {% endif %}
+        </small>
+    {% endif %}
 {% endblock %}
