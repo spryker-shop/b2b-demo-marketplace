@@ -7,6 +7,6 @@ export default register(
         import(
             /* webpackMode: "lazy" */
             /* webpackChunkName: "price-tolerance-bulk-bar" */
-            './price-tolerance-bulk-bar'
+            'OrderExperienceManagement/components/molecules/price-tolerance-bulk-bar/price-tolerance-bulk-bar'
         ),
 );

@@ -1,5 +1,4 @@
 import PriceToleranceBulkCore from 'OrderExperienceManagement/components/molecules/price-tolerance-bulk/price-tolerance-bulk';
-import { EVENT_BULK_CLEAR } from '../price-tolerance-bulk-bar/price-tolerance-bulk-bar';
 
 const ORDER_TOTAL_ONLY_MODIFIER = 'order-total-only-mode';
 const ORDER_TOLERANCE_SELECTOR = '.js-price-tolerance__order-tolerance';
@@ -28,19 +27,10 @@ export default class PriceToleranceBulk extends PriceToleranceBulkCore {
     protected mapEvents(): void {
         super.mapEvents();
 
-        this.bar?.addEventListener(EVENT_BULK_CLEAR, () => this.clearSelection());
         [this.productsModeInput, this.orderTotalModeInput].forEach((input: HTMLInputElement | null) =>
             input?.addEventListener('change', () => this.applyMode()),
         );
         this.orderToleranceInput?.addEventListener('input', () => this.syncOrderToleranceAvailability());
-    }
-
-    protected clearSelection(): void {
-        this.toggleAll(false);
-        this.rows
-            .map((row: HTMLElement) => this.getRowCheckbox(row))
-            .find(Boolean)
-            ?.focus();
     }
 
     protected applyMode(): void {

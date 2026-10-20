@@ -54,7 +54,6 @@
     {% endblock %}
 {% endblock %}
 
-{# The selected mode card already explains what is checked. #}
 {% block ignoredNotice %}{% endblock %}
 
 {% block heading %}
@@ -73,21 +72,13 @@
 {% endblock %}
 
 {% block table %}
-    {% set toleranceColumns = [] %}
-    {% if not data.isLocked %}
-        {% set toleranceColumns = toleranceColumns | merge([{
-            id: 'select',
-            title: 'recurring_orders.price_tolerance.bulk.select_all',
-            type: 'checkbox',
-            head: {
-                type: 'checkbox',
-            },
-            options: {
-                selectable: true,
-            },
-        }]) %}
-    {% endif %}
-    {% set toleranceColumns = toleranceColumns | merge([
+    {% set toleranceColumns = (data.isLocked ? [] : [{
+        id: 'select',
+        title: 'recurring_orders.price_tolerance.bulk.select_all',
+        type: 'checkbox',
+        head: { type: 'checkbox' },
+        options: { selectable: true },
+    }]) | merge([
         { id: 'product', title: 'recurring_orders.detail.order_items.column.product' },
         { id: 'unitPrice', title: 'recurring_orders.price_tolerance.products.column.unit_price' },
         { id: 'quantity', title: 'recurring_orders.detail.order_items.column.quantity' },

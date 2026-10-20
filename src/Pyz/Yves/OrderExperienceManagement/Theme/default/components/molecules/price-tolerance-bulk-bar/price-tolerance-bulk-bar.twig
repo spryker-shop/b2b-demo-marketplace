@@ -12,12 +12,6 @@
 {% block body %}
     <div class="{{ config.name }}__group {{ config.name }}__group--selection">
         {{ block('counter') }}
-
-        {% block clearButton %}
-            <button type="button" class="button button--sm button--tertiary {{ config.name }}__clear {{ config.jsName }}__clear" {{ qa('recurring-order-bulk-clear') }}>
-                {{ 'recurring_orders.price_tolerance.bulk.clear_selection' | trans }}
-            </button>
-        {% endblock %}
     </div>
 
     <div class="{{ config.name }}__group {{ config.name }}__group--actions">
