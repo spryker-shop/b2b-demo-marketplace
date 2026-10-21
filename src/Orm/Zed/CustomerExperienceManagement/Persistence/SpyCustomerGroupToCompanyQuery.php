@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\CustomerExperienceManagement\Persistence;
 
-use SprykerFeature\Zed\CustomerExperienceManagement\Persistence\Propel\AbstractSpyCustomerGroupToCompanyQuery;
+use Orm\Zed\CustomerExperienceManagement\Persistence\Base\SpyCustomerGroupToCompanyQuery as BaseSpyCustomerGroupToCompanyQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_customer_group_to_company' table.
@@ -20,6 +20,6 @@ use SprykerFeature\Zed\CustomerExperienceManagement\Persistence\Propel\AbstractS
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyCustomerGroupToCompanyQuery extends AbstractSpyCustomerGroupToCompanyQuery
+class SpyCustomerGroupToCompanyQuery extends BaseSpyCustomerGroupToCompanyQuery
 {
 }
