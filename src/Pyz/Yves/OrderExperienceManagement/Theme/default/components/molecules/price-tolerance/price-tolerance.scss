@@ -1,0 +1,97 @@
+@include order-experience-management-price-tolerance {
+    @include typography(body-md);
+
+    &__intro {
+        margin: 0 0 var(--scale-16);
+    }
+
+    &__help-info {
+        @include typography(body-sm);
+        margin-bottom: var(--scale-8);
+        color: var(--text-tertiary);
+    }
+
+    &__help-text-tooltip {
+        color: var(--text-brand);
+    }
+
+    &__help-text-tooltip-icon {
+        vertical-align: top;
+    }
+
+    &__how-it-works-title {
+        @include typography(label-md);
+        margin-bottom: var(--scale-12);
+    }
+
+    &__how-it-works-term {
+        @include typography(label-sm);
+    }
+
+    &__how-it-works-list {
+        @include typography(body-sm);
+    }
+
+    &__how-it-works-icon {
+        vertical-align: top;
+        font-size: rem(16);
+    }
+
+    &__order-total-tolerance-wrapper {
+        @include typography(body-sm);
+        border: rem(1) solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--scale-20);
+    }
+
+    &__order-total-tolerance {
+        padding: var(--scale-12) var(--scale-24);
+        border-bottom: rem(1) solid var(--border-subtle);
+    }
+
+    &__order-total-title {
+        @include typography(heading-sm);
+        margin-bottom: var(--scale-4);
+    }
+
+    /* stylelint-disable */
+    &__order-total-input {
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        -moz-appearance: textfield;
+    }
+    /* stylelint-enable */
+
+    &__order-total-readout {
+        padding: var(--scale-8) var(--scale-24);
+    }
+
+    &__actions-line {
+        @include typography(body-sm);
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-12);
+        justify-content: space-between;
+
+        @include helper-breakpoint(md) {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-12);
+        justify-content: space-between;
+
+        @include helper-breakpoint(md) {
+            flex-direction: row;
+        }
+    }
+}

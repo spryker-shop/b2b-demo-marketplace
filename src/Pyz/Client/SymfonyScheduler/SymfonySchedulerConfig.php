@@ -82,6 +82,11 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'schedule' => '0 * * * *',
                 'priority' => 200,
             ],
+            'recurring-orders-recover-stuck' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console recurring-orders:recover-stuck',
+                'schedule' => '*/15 * * * *',
+                'priority' => 200,
+            ],
             'product-relation-updater' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console product-relation:update -vvv',
                 'schedule' => '30 2 * * *',
