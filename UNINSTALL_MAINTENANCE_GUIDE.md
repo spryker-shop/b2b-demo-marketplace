@@ -904,6 +904,36 @@ commands, audit logging, filesystems, OMS processes, data import entities and pr
 
 Known limitation: the B2B dataset is EU-only, so B2B mode imports `b2b_full_EU.yml` regardless of region.
 
+## Keeping the B2B Datasets in Sync
+
+B2B mode imports its demo data from `data/import/b2b_common` (and `data/import/b2b_robot` in the Robot CI job), not from
+`data/import/common`. When a feature adds data that B2B mode also renders, add it to the B2B datasets as well, otherwise
+the storefront shows raw glossary keys (`catalog.filter.by`, `customer.login.submit`, `product.attribute.steamoutput`)
+only in B2B mode:
+
+- glossary keys → `data/import/{common,b2b_common,b2b_robot}/common/glossary.csv`
+- product attribute definitions for products that exist in the B2B dataset →
+  `product_attribute_key.csv` and `product_management_attribute.csv`. Note that the B2B
+  `product_management_attribute.csv` has no `visibility` column; drop it when copying rows.
+- navigation nodes and CMS content: check that links do not point at marketplace-only pages (merchant registration,
+  merchant profile pages)
+
+To list glossary keys that the marketplace dataset has and a B2B dataset lacks:
+
+```bash
+python3 - <<'EOF'
+import csv
+keys = lambda p: {r[0] for r in list(csv.reader(open(p, encoding='utf-8')))[1:] if r}
+mp = keys('data/import/common/common/glossary.csv')
+for ds in ('b2b_common', 'b2b_robot'):
+    missing = sorted(mp - keys(f'data/import/{ds}/common/glossary.csv'))
+    print(ds, len(missing), missing[:20])
+EOF
+```
+
+Keys of marketplace-only features (merchant registration, merchant profile and opening hours, commissions, Merchant
+Portal) are expected in that list.
+
 ## Verifying a Change
 
 The CI jobs that run B2B mode (Cypress `b2b` cells, Robot "API B2B") exercise the storefront and Glue. They do **not**
@@ -935,6 +965,12 @@ cd ../b2b-mode
    should list only `config/install/ci.restore-db.stage2.yml`. That recipe restores the shared marketplace database dump
    in CI and is never used in B2B mode, so it is intentionally not processed.
 7. **CI.** Open the pull request and check the Cypress `b2b` and Robot "API B2B" jobs.
+8. **Runtime smoke test** (for larger changes). Boot the scratch worktree with its own namespace so it does not reuse the
+   marketplace environment's volumes (`sed -i '' 's/^namespace: .*/namespace: spryker_b2b_mode_dev/' deploy.dev.yml`,
+   copy `docker/` without `docker/deployment`, stop the marketplace environment, then
+   `PROGRESS_TYPE=plain docker/sdk boot deploy.dev.yml && PROGRESS_TYPE=plain docker/sdk up`). Check the Back Office
+   menu pages, a storefront checkout with `dummyPaymentInvoice`, and the storefront for raw glossary keys
+   (see [Keeping the B2B Datasets in Sync](#keeping-the-b2b-datasets-in-sync)).
 
 Remove the worktree afterwards: `git worktree remove --force ../b2b-mode`.
 
@@ -959,6 +995,9 @@ Document significant changes to the configuration:
               Step 9 also removes MerchantPortal endpoints declared under other applications
             - Removed: obsolete GlueApplicationDependencyProvider recipe (resources moved to API Platform) and other
               operations that no longer matched
+            - Fixed (runtime check): B2B datasets missed 367 (b2b_common) / 695 (b2b_robot) glossary keys and 54
+              product attribute definitions; Glue required fields for dummyPaymentInvoice used the wrong provider
+              key; B2B footer linked to the marketplace merchant registration page
 2026-02-05: Updated maintenance guide with all operation types and new sections
 2026-02-05: Added frontend uninstall script documentation
 2026-02-02: Initial configuration file created with all marketplace features

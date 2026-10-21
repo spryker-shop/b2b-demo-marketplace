@@ -1690,7 +1690,7 @@
                 {
                     "type": "replace_or_add_constant",
                     "constant_pattern": "protected\\s+const\\s+PAYMENT_METHOD_REQUIRED_FIELDS\\s*=\\s*\\[.*?\\];",
-                    "new_constant_definition": "protected const PAYMENT_METHOD_REQUIRED_FIELDS = [\n        DummyPaymentConfig::PROVIDER_NAME => [\n            DummyPaymentConfig::PAYMENT_METHOD_INVOICE => [\n                'dummyPaymentInvoice.dateOfBirth',\n            ],\n        ],\n    ];"
+                    "new_constant_definition": "protected const PAYMENT_METHOD_REQUIRED_FIELDS = [\n        // Keyed by the payment provider key of the B2B demo data (payment_method.csv), not DummyPaymentConfig::PROVIDER_NAME.\n        'dummyPayment' => [\n            DummyPaymentConfig::PAYMENT_METHOD_INVOICE => [\n                'dummyPaymentInvoice.dateOfBirth',\n            ],\n        ],\n    ];"
                 }
             ],
             "success_messages": ["✓ Updated PaymentsRestApiConfig with DummyPayment configuration"]
