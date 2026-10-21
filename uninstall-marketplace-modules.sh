@@ -70,7 +70,6 @@ MARKETPLACE_CORE_MODULES=(
     "spryker/merchant-sales-returns-rest-api"
     "spryker/merchant-shipments-rest-api"
     "spryker/merchants-rest-api"
-    "spryker/multi-factor-auth-merchant-portal"
     "spryker/price-product-merchant-commission-connector"
     "spryker/product-merchant-commission-connector"
     "spryker/product-option-merchant-portal-gui"
@@ -106,10 +105,36 @@ def write_file(file_path, content):
     with open(file_path, 'w') as f:
         f.write(content)
 
+def cut_lines(content, start, end):
+    """Remove the full lines spanned by [start, end) and drop the blank line the removal leaves behind."""
+    start = content.rfind('\n', 0, start) + 1
+    line_end = content.find('\n', end)
+    end = len(content) if line_end == -1 else line_end + 1
+    before, after = content[:start], content[end:]
+    if after.startswith('\n') and (before.endswith('{\n') or before.endswith('\n\n')):
+        after = after[1:]
+    elif before.endswith('\n\n') and re.match(r'[ \t]*[}\]]', after):
+        before = before[:-1]
+    return before + after
+
+def cut_all_matches(content, pattern, flags=0):
+    """Remove the full lines of every match of pattern."""
+    for match in reversed(list(re.finditer(pattern, content, flags))):
+        content = cut_lines(content, match.start(), match.end())
+    return content
+
+def cut_lines_or_inline(content, line_pattern, inline_pattern, flags=0):
+    """Remove whole lines when the match owns them, otherwise remove the inline match only."""
+    if re.search(line_pattern, content, flags | re.MULTILINE):
+        return cut_all_matches(content, line_pattern, flags | re.MULTILINE)
+    return re.sub(inline_pattern, '', content, flags=flags)
+
 def remove_use_statement(content, class_name):
-    """Remove use statement for a specific class."""
-    pattern = rf'use\s+[^;]*\\{re.escape(class_name)};\s*'
-    content = re.sub(pattern, '', content)
+    """Remove use statement for a specific class, imported directly or under an alias."""
+    pattern = rf'^use\s+[^;\n]*\\{re.escape(class_name)};[ \t]*\n'
+    content = re.sub(pattern, '', content, flags=re.MULTILINE)
+    alias_pattern = rf'^use\s+[^;\n]*\s+as\s+{re.escape(class_name)};[ \t]*\n'
+    content = re.sub(alias_pattern, '', content, flags=re.MULTILINE)
     return content
 
 def remove_plugin_from_array(content, plugin_class_name):
@@ -126,15 +151,13 @@ def remove_plugin_from_array(content, plugin_class_name):
 
 def remove_event_subscriber(content, subscriber_class_name):
     """Remove event subscriber add() call."""
-    pattern = rf'\s*\$\w+->add\(new\s+{re.escape(subscriber_class_name)}\s*\([^)]*\)\);\s*'
-    content = re.sub(pattern, '', content)
-    return content
+    call = rf'\$\w+->add\(new\s+{re.escape(subscriber_class_name)}\s*\([^)]*\)\);'
+    return cut_lines_or_inline(content, rf'^[ \t]*{call}[ \t]*$', rf'\s*{call}\s*')
 
 def remove_collection_add(content, plugin_class_name):
     """Remove collection->add() call with optional second parameter."""
-    pattern = rf'\s*\$\w+->add\(\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\)\s*(?:,\s*[^;]+)?\s*\);\s*'
-    content = re.sub(pattern, '', content, flags=re.DOTALL)
-    return content
+    call = rf'\$\w+->add\(\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\)\s*(?:,\s*[^;]+)?\s*\);'
+    return cut_lines_or_inline(content, rf'^[ \t]*{call}[ \t]*$', rf'\s*{call}\s*', re.DOTALL)
 
 def remove_resource_relationship(content, resource_type, plugin_class_name):
     """Remove addRelationship() call for a specific resource type and plugin."""
@@ -143,46 +166,60 @@ def remove_resource_relationship(content, resource_type, plugin_class_name):
     return content
 
 def remove_method(content, method_name):
-    """Remove method with its docblock."""
-    pattern = rf'\s*/\*\*[^/]*\*/\s*(?:public|protected|private)\s+function\s+{re.escape(method_name)}\s*\([^)]*\)[^{{]*\{{(?:[^{{}}]|\{{(?:[^{{}}]|\{{[^{{}}]*\}})*\}})*\}}'
-    content = re.sub(pattern, '', content, flags=re.DOTALL)
+    """Remove method with its docblock (if any) and attributes; the body is matched by brace counting."""
+    header = re.compile(
+        rf'^(?:[ \t]*/\*\*(?:(?!\*/).)*\*/[ \t]*\n)?(?:[ \t]*#\[[^\n]*\][ \t]*\n)*'
+        rf'[ \t]*(?:(?:public|protected|private|static|final|abstract)\s+)+function\s+{re.escape(method_name)}\s*\(',
+        re.MULTILINE | re.DOTALL,
+    )
+    match = header.search(content)
+    if not match:
+        return content
+    body_start = content.find('{', match.end())
+    if body_start == -1:
+        return content
+    depth = 0
+    for position in range(body_start, len(content)):
+        if content[position] == '{':
+            depth += 1
+        elif content[position] == '}':
+            depth -= 1
+            if depth == 0:
+                return cut_lines(content, match.start(), position + 1)
     return content
 
 def remove_constant(content, constant_name):
-    """Remove constant with its docblock."""
-    pattern = rf'\s*/\*\*[^/]*\*/\s*(?:public|protected|private)?\s*const\s+{re.escape(constant_name)}\s*=\s*[^;]+;\s*'
-    content = re.sub(pattern, '', content, flags=re.DOTALL)
-    return content
+    """Remove constant (typed or untyped) with its docblock (if any)."""
+    pattern = (
+        rf'^(?:[ \t]*/\*\*(?:(?!\*/).)*\*/[ \t]*\n)?'
+        rf'[ \t]*(?:(?:final|public|protected|private)\s+)*const\s+(?:[\w\\|?]+\s+)?{re.escape(constant_name)}\s*=\s*[^;]+;'
+    )
+    return cut_all_matches(content, pattern, re.MULTILINE | re.DOTALL)
 
 def remove_array_entry(content, key):
     """Remove array entry by key."""
-    pattern = rf"\s*'{re.escape(key)}'\s*=>\s*\[[^\]]+\],\s*"
-    content = re.sub(pattern, '', content, flags=re.DOTALL)
-    return content
+    pattern = rf"^[ \t]*'{re.escape(key)}'\s*=>\s*\[[^\]]*\],"
+    return cut_all_matches(content, pattern, re.MULTILINE)
 
 def remove_queue_entry(content, queue_config_key):
     """Remove queue array entry with Config class constant."""
-    pattern = rf'\s*{re.escape(queue_config_key)}\s*=>\s*new\s+\w+\([^)]*\),\s*'
-    content = re.sub(pattern, '', content)
-    return content
+    entry = rf'{re.escape(queue_config_key)}\s*=>\s*new\s+\w+\([^)]*\),'
+    return cut_lines_or_inline(content, rf'^[ \t]*{entry}[ \t]*$', rf'\s*{entry}\s*')
 
 def remove_array_constant_entry(content, constant_reference):
     """Remove array entry that is a config constant reference."""
-    pattern = rf'\s*{re.escape(constant_reference)}\s*,\s*'
-    content = re.sub(pattern, '', content)
-    return content
+    entry = rf'{re.escape(constant_reference)}\s*,'
+    return cut_lines_or_inline(content, rf'^[ \t]*{entry}[ \t]*$', rf'\s*{entry}\s*')
 
 def remove_data_import_console(content, config_constant):
     """Remove DataImportConsole instantiation with specific config constant."""
-    pattern = rf'\s*new\s+DataImportConsole\(DataImportConsole::DEFAULT_NAME\s*\.\s*static::COMMAND_SEPARATOR\s*\.\s*{re.escape(config_constant)}\),?\s*'
-    content = re.sub(pattern, '', content, flags=re.MULTILINE)
-    return content
+    entry = rf'new\s+DataImportConsole\(DataImportConsole::DEFAULT_NAME\s*\.\s*static::COMMAND_SEPARATOR\s*\.\s*{re.escape(config_constant)}\),?'
+    return cut_lines_or_inline(content, rf'^[ \t]*{entry}[ \t]*$', rf'\s*{entry}\s*')
 
 def remove_array_value_entry(content, array_value):
     """Remove array value entry from arrays."""
-    pattern = rf'\s*{re.escape(array_value)},?\s*\n'
-    content = re.sub(pattern, '', content)
-    return content
+    entry = rf'{re.escape(array_value)},?'
+    return cut_lines_or_inline(content, rf'^[ \t]*{entry}[ \t]*$', rf'\s*{entry}\s*\n')
 
 def remove_config_assignment(content, constant_pattern):
     """Remove config assignment line (including multi-line assignments)."""
@@ -192,15 +229,13 @@ def remove_config_assignment(content, constant_pattern):
 
 def remove_array_value(content, array_value):
     """Remove array value from arrays (like dependency injector arrays)."""
-    pattern = rf"\s*'{re.escape(array_value)}',\s*"
-    content = re.sub(pattern, '', content)
-    return content
+    entry = rf"'{re.escape(array_value)}',"
+    return cut_lines_or_inline(content, rf'^[ \t]*{entry}[ \t]*$', rf'\s*{entry}\s*')
 
 def remove_filesystem_config(content, filesystem_name):
     """Remove filesystem configuration block."""
-    pattern = rf"\s*'{re.escape(filesystem_name)}'\s*=>\s*\[[^\]]*\],\s*"
-    content = re.sub(pattern, '', content, flags=re.DOTALL)
-    return content
+    pattern = rf"^[ \t]*'{re.escape(filesystem_name)}'\s*=>\s*\[[^\]]*\],"
+    return cut_all_matches(content, pattern, re.MULTILINE)
 
 def remove_section_comment(content, comment_pattern):
     """Remove section comments."""
@@ -215,7 +250,10 @@ def remove_array_key_value(content, key_pattern):
     return content
 
 def remove_xml_element(content, element_pattern):
-    """Remove XML elements matching the pattern."""
+    """Remove XML elements matching the pattern (literal string); whole lines when the element owns them."""
+    line_pattern = rf'^[ \t]*{re.escape(element_pattern)}[ \t]*$'
+    if re.search(line_pattern, content, flags=re.MULTILINE):
+        return cut_all_matches(content, line_pattern, re.MULTILINE)
     content = re.sub(rf'\s*{re.escape(element_pattern)}\s*\n?', '', content)
     return content
 
@@ -357,6 +395,7 @@ def process_file(config):
     # Apply all removal operations
     for operation in config.get('operations', []):
         op_type = operation['type']
+        content_before_operation = content
 
         if op_type == 'remove_use':
             content = remove_use_statement(content, operation['class_name'])
@@ -410,6 +449,15 @@ def process_file(config):
             content = replace_array_config_content(content, operation['config_key'], operation['new_content'])
         elif op_type == 'replace_or_add_constant':
             content = replace_or_add_constant(content, operation['constant_pattern'], operation['new_constant_definition'])
+        else:
+            print(f"⚠ Unknown operation type '{op_type}' in {file_path}")
+            continue
+
+        # An operation that changes nothing means the configuration drifted from the code it targets.
+        # ensure_use_statement is idempotent by design, so "already present" is not a drift signal.
+        if content == content_before_operation and op_type != 'ensure_use_statement':
+            details = ', '.join(f'{key}={value}' for key, value in operation.items() if key != 'type')
+            print(f"⚠ No match in {file_path}: {op_type} ({details[:120]})")
 
     # Cleanup
     content = cleanup_content(content)
@@ -505,7 +553,20 @@ remove_directory() {
     fi
 }
 
-echo "Step 5: Removing marketplace directories..."
+# Function to remove a single file
+remove_file() {
+    local file_path=$1
+    local file_name=$2
+
+    if [ -f "$file_path" ]; then
+        rm -f "$file_path"
+        echo "✓ Removed $file_name"
+    else
+        echo "⚠ $file_name not found at $file_path"
+    fi
+}
+
+echo "Step 5: Removing marketplace directories and files..."
 python3 << 'PYTHON_PROCESS' | while IFS=':' read -r dir_path dir_name; do
 import json
 
@@ -518,6 +579,17 @@ for dir_entry in config['directories_to_remove']:
     print(dir_entry)
 PYTHON_PROCESS
     remove_directory "$dir_path" "$dir_name"
+done
+python3 << 'PYTHON_PROCESS' | while IFS=':' read -r file_path file_name; do
+import json
+
+with open('uninstall-marketplace-config.json', 'r') as f:
+    config = json.load(f)
+
+for file_entry in config.get('files_to_remove', []):
+    print(file_entry)
+PYTHON_PROCESS
+    remove_file "$file_path" "$file_name"
 done
 echo ""
 
@@ -750,7 +822,8 @@ if __name__ == '__main__':
     if result is True:
         print(f"✓ Removed merchant portal commands from {file_path}")
     elif result is False:
-        print(f"⚠ No merchant portal commands found in {file_path}")
+        # Some recipes are listed only for the data import path substitutions of Step 8.
+        print(f"  No merchant portal commands in {file_path}")
     else:
         print(f"⚠ File not found: {file_path}")
 PYTHON_SCRIPT
@@ -789,8 +862,10 @@ for docker_file in config['docker_config_files']:
         print(f"{docker_file}|{old_path}|{new_path}")
 PYTHON_PROCESS
     if [ -f "$docker_file" ]; then
-        sed -i.bak "s|$old_path|$new_path|g" "$docker_file" && rm "${docker_file}.bak"
-        echo "✓ Substituted '$old_path' with '$new_path' in $docker_file"
+        if grep -qF "$old_path" "$docker_file"; then
+            sed -i.bak "s|$old_path|$new_path|g" "$docker_file" && rm "${docker_file}.bak"
+            echo "✓ Substituted '$old_path' with '$new_path' in $docker_file"
+        fi
     else
         echo "⚠ Docker config file not found: $docker_file"
     fi
@@ -801,6 +876,24 @@ echo "Step 9: Removing merchant-portal applications from deploy files..."
 cat > /tmp/remove_merchant_portal_apps.py << 'PYTHON_SCRIPT'
 import sys
 import re
+
+def has_merchant_portal_entry_point(lines, key_index):
+    """Check whether the YAML key at key_index has "entry-point: MerchantPortal" among its direct children."""
+    key_line = lines[key_index]
+    key_indent = len(key_line) - len(key_line.lstrip())
+    child_indent = None
+    for next_line in lines[key_index + 1:]:
+        next_stripped = next_line.lstrip()
+        if not next_stripped:
+            continue
+        next_indent = len(next_line) - len(next_stripped)
+        if next_indent <= key_indent:
+            return False
+        if child_indent is None:
+            child_indent = next_indent
+        if next_indent == child_indent and re.match(r'entry-point:\s*MerchantPortal\s*$', next_stripped):
+            return True
+    return False
 
 def remove_merchant_portal_applications(content):
     """Remove merchant-portal application blocks from YAML using indentation-aware parsing."""
@@ -836,6 +929,11 @@ def remove_merchant_portal_applications(content):
             should_remove = True
             current_indent = len(line) - len(stripped)
             skip_until_indent = current_indent
+        # Merchant Portal endpoint declared inside another application (e.g. "mp.eu.example.com:" under backoffice):
+        # a key whose direct children contain "entry-point: MerchantPortal".
+        elif re.match(r'[\w.-]+:\s*(?:#.*)?$', stripped) and has_merchant_portal_entry_point(lines, i):
+            should_remove = True
+            skip_until_indent = len(line) - len(stripped)
         # Check if this is an application definition with "application: merchant-portal" on next lines
         elif re.match(r'[a-z_]+:\s*(?:#.*)?$', stripped):
             # Look ahead to see if next non-empty line is "application: merchant-portal"
@@ -875,7 +973,7 @@ def process_deploy_file(file_path):
             content = f.read()
 
         # Check if file contains merchant-portal
-        if 'merchant-portal' not in content and 'mportal_' not in content:
+        if 'merchant-portal' not in content and 'mportal_' not in content and 'MerchantPortal' not in content:
             return False
 
         # Remove merchant portal applications
