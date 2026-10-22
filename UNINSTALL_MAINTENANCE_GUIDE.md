@@ -25,7 +25,6 @@ project-root/
 ├── UNINSTALL_MAINTENANCE_GUIDE.md          # This guide
 └── data/import/
     ├── b2b_common/                         # B2B mode demo data (the scripts switch the install recipes to it)
-    ├── b2b_common/minimal.yml              # B2B mode minimal import (config/install/docker.ci.api.yml)
     ├── b2b_robot/                          # B2B mode Robot Framework demo data
     └── local/b2b_full_EU.yml, b2b_full_ROBOT.yml
 ```
@@ -983,7 +982,8 @@ Document significant changes to the configuration:
             - Fixed: Back Office password reset and the product offer stock table failed with "Class not found"
               (plugins from packages removed indirectly)
             - Fixed: production/development/testing install recipes ran removed acl-entity console commands
-            - Fixed: data/import/b2b_common/minimal.yml was referenced but missing (added)
+            - Removed: the data/import/common/minimal.yml substitution; its target never existed and no B2B mode CI
+              job uses the docker.ci.api install recipe
             - Fixed: Glue PaymentsRestApiConfig / CheckoutRestApiConfig kept marketplace payment keys or a wrong
               required-fields structure
             - Added: deploy files, install recipes and the CURRENT_REGION import substitution that were not processed

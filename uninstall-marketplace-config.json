@@ -1359,7 +1359,6 @@
         "deploy.spryker-sns.yml"
     ],
     "docker_config_substitutions": {
-        "data/import/common/minimal.yml": "data/import/b2b_common/minimal.yml",
         "data:import --config=data/import/local/full_${SPRYKER_REGION}.yml": "data:import --config=data/import/local/b2b_full_EU.yml",
         "data:import --config=data/import/local/full_${SPRYKER_CURRENT_REGION}.yml": "data:import --config=data/import/local/b2b_full_EU.yml",
         "data:import --config=data/import/local/full_ROBOT.yml": "data:import --config=data/import/local/b2b_full_ROBOT.yml",
