@@ -124,7 +124,6 @@
             <event name="send to merchant" onEnter="true" command="MerchantSalesOrder/CreateOrders"/>
             <event name="submit tax invoice" onEnter="true" command="Vertex/SubmitPaymentTaxInvoice"/>
             <event name="ship by merchant"/>
-            <event name="deliver"/>
             <event name="close" manual="true" command="MerchantOms/CloseOrderItem"/>
         </events>
 

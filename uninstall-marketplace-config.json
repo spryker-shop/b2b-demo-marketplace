@@ -389,6 +389,7 @@
                 { "type": "remove_use", "class_name": "MerchantPayoutCommandByOrderPlugin" },
                 { "type": "remove_use", "class_name": "MerchantPayoutReverseCommandByOrderPlugin" },
                 { "type": "remove_use", "class_name": "ProductOfferPackagingUnitOmsReservationAggregationPlugin" },
+                { "type": "remove_use", "class_name": "GenerateMerchantOrderInvoicesCommandPlugin" },
                 { "type": "remove_collection_add", "plugin_class": "IsOrderPaidConditionPlugin" },
                 { "type": "remove_collection_add", "plugin_class": "IsMerchantPaidOutConditionPlugin" },
                 { "type": "remove_collection_add", "plugin_class": "IsMerchantPayoutReversedConditionPlugin" },
@@ -401,6 +402,7 @@
                 },
                 { "type": "remove_collection_add", "plugin_class": "MerchantPayoutCommandByOrderPlugin" },
                 { "type": "remove_collection_add", "plugin_class": "MerchantPayoutReverseCommandByOrderPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "GenerateMerchantOrderInvoicesCommandPlugin" },
                 { "type": "remove_plugin", "plugin_class": "ProductOfferPackagingUnitOmsReservationAggregationPlugin" }
             ],
             "success_messages": ["✓ OmsDependencyProvider cleaned from marketplace-specific plugins"]
@@ -696,9 +698,34 @@
                 { "type": "remove_plugin", "plugin_class": "MerchantReferenceOrderItemExpanderPreSavePlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantOmsStateOrderItemsTableExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantCommissionOrderPostCancelPlugin" },
-                { "type": "remove_plugin", "plugin_class": "MerchantStateOrderItemExpanderPlugin" }
+                { "type": "remove_plugin", "plugin_class": "MerchantStateOrderItemExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOrderInvoiceSalesListBlockRendererPlugin" },
+                { "type": "replace_string", "old_value": "new MerchantOrderInvoiceSalesListBlockRendererPlugin()", "new_value": "new OrderInvoiceSalesListBlockRendererPlugin()" },
+                { "type": "ensure_use_statement", "class_name": "Spryker\\Zed\\SalesInvoice\\Communication\\Plugin\\Sales\\OrderInvoiceSalesListBlockRendererPlugin", "after_pattern": "use Spryker\\Zed\\SalesInvoice\\Communication\\Plugin\\Sales\\OrderInvoiceOrderExpanderPlugin;" }
             ],
-            "success_messages": ["✓ SalesDependencyProvider cleaned from marketplace-specific plugins"]
+            "success_messages": [
+                "✓ SalesDependencyProvider cleaned from marketplace-specific plugins",
+                "✓ Restored OrderInvoiceSalesListBlockRendererPlugin in SalesDependencyProvider"
+            ]
+        },
+        "src/Pyz/Zed/SalesInvoice/SalesInvoiceDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOrderInvoiceExistenceCheckStrategyPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOrderInvoiceRenderOrderExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOrderInvoicesExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantReferenceOrderInvoiceBeforeSavePlugin" },
+                { "type": "remove_method", "method_name": "getOrderInvoiceBeforeSavePlugins" },
+                { "type": "remove_method", "method_name": "getOrderInvoicesExpanderPlugins" },
+                { "type": "remove_method", "method_name": "getOrderInvoiceExistenceCheckStrategyPlugins" },
+                { "type": "remove_method", "method_name": "getOrderInvoiceRenderOrderExpanderPlugins" }
+            ],
+            "success_messages": ["✓ SalesInvoiceDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "config/Zed/oms/DummySubprocess/DummyInvoice01.xml": {
+            "operations": [
+                { "type": "replace_string", "old_value": "command=\"MerchantInvoice/Generate\"", "new_value": "command=\"Invoice/Generate\"" }
+            ],
+            "success_messages": ["✓ Switched DummyInvoice01.xml back to the Invoice/Generate command"]
         },
         "src/Pyz/Zed/SalesReturn/SalesReturnDependencyProvider.php": {
             "operations": [
@@ -1409,7 +1436,10 @@
         "public/MerchantPortal:MerchantPortal",
         "src/Pyz/Zed/SecurityOauthUser:SecurityOauthUser",
         "src/Pyz/Yves/SecurityOauthKnpu:SecurityOauthKnpu",
-        "src/Pyz/Zed/SecurityOauthKnpu:SecurityOauthKnpu"
+        "src/Pyz/Zed/SecurityOauthKnpu:SecurityOauthKnpu",
+        "src/Pyz/Zed/SalesInvoice/Communication/Plugin/AclMerchantPortal:SalesInvoice AclMerchantPortal plugins",
+        "src/Pyz/Zed/SequenceNumber:SequenceNumber",
+        "tests/PyzTest/Zed/Oms:PyzTest Zed Oms"
     ],
     "xml_files": {
         "config/Zed/oms/DummyPayment01.xml": {
