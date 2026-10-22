@@ -85,6 +85,11 @@
             font-weight: var(--font-weight-semibold);
         }
 
+        &__auto-approved {
+            @include typography(body-sm);
+            color: var(--text-tertiary);
+        }
+
         &__tooltip-trigger {
             cursor: pointer;
         }

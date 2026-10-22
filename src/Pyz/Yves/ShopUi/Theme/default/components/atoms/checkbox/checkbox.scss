@@ -1,4 +1,6 @@
 @mixin shop-ui-checkbox($name: '.checkbox') {
+    $indeterminate: ':indeterminate:not([type="radio"])';
+
     #{$name} {
         display: inline-block;
         position: relative;
@@ -29,8 +31,9 @@
                     var(--shadows-focus-spread) var(--shadows-focus-color);
             }
 
-            &:checked ~ {
-                #{$name}__box {
+            &:checked,
+            &#{$indeterminate} {
+                & ~ #{$name}__box {
                     background-color: var(--background-brand-primary);
                     border-color: var(--background-brand-primary);
                     position: relative;
@@ -48,6 +51,10 @@
                 }
             }
 
+            &#{$indeterminate} ~ #{$name}__box::after {
+                content: 'remove';
+            }
+
             &[disabled],
             &--disabled {
                 & ~ #{$name}__box,
@@ -57,7 +64,9 @@
                 }
 
                 &:checked ~ #{$name}__box,
-                &:checked ~ #{$name}__box:hover {
+                &:checked ~ #{$name}__box:hover,
+                &#{$indeterminate} ~ #{$name}__box,
+                &#{$indeterminate} ~ #{$name}__box:hover {
                     border-color: var(--input-border-disabled);
                     background: var(--input-background-disabled);
 
@@ -80,7 +89,9 @@
                 }
 
                 &:checked ~ #{$name}__box,
-                &:checked ~ #{$name}__box:hover {
+                &:checked ~ #{$name}__box:hover,
+                &#{$indeterminate} ~ #{$name}__box,
+                &#{$indeterminate} ~ #{$name}__box:hover {
                     border-color: var(--background-state-error-bold);
                     background: var(--background-state-error-bold);
                 }
@@ -100,7 +111,8 @@
                 height: rem(16);
             }
 
-            #{$name}__input:checked ~ #{$name}__box::after {
+            #{$name}__input:checked ~ #{$name}__box::after,
+            #{$name}__input#{$indeterminate} ~ #{$name}__box::after {
                 font-size: var(--font-size-16);
             }
         }
@@ -114,7 +126,8 @@
                 border-color: var(--input-border-hover);
             }
 
-            #{$name}__input:checked ~ #{$name}__box {
+            #{$name}__input:checked ~ #{$name}__box,
+            #{$name}__input#{$indeterminate} ~ #{$name}__box {
                 background: var(--background-brand-hover);
                 border-color: var(--background-brand-hover);
             }
@@ -125,7 +138,9 @@
             }
 
             #{$name}__input[invalid]:checked ~ #{$name}__box,
-            #{$name}__input--error:checked ~ #{$name}__box {
+            #{$name}__input--error:checked ~ #{$name}__box,
+            #{$name}__input[invalid]#{$indeterminate} ~ #{$name}__box,
+            #{$name}__input--error#{$indeterminate} ~ #{$name}__box {
                 border-color: var(--background-state-error-bold);
                 background: var(--background-state-error-bold);
             }
@@ -136,7 +151,9 @@
             }
 
             #{$name}__input[disabled]:checked ~ #{$name}__box,
-            #{$name}__input--disabled:checked ~ #{$name}__box {
+            #{$name}__input--disabled:checked ~ #{$name}__box,
+            #{$name}__input[disabled]#{$indeterminate} ~ #{$name}__box,
+            #{$name}__input--disabled#{$indeterminate} ~ #{$name}__box {
                 border-color: var(--input-border-disabled);
                 background: var(--input-background-disabled);
             }
