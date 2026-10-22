@@ -51,12 +51,20 @@
             {% elseif fieldName == 'cadenceValue' %}
                 {{ form_row(field, {
                     rowAttr: {
-                        class: embed.configName ~ '__value-wrapper ' ~ 'form__field col col--sm-12'
+                        class: embed.configJsName ~ '__value-wrapper ' ~ 'form__field col col--sm-12'
                     },
                     attr: {
                         'data-qa': 'recurring-order-edit-cadence-value-input',
                     },
                 }) }}
+            {% elseif fieldName == 'cadenceOptions' %}
+                <div class="form__field col col--sm-12 {{ embed.configJsName }}__days-wrapper">
+                    {% include molecule('recurring-order-day-picker', 'OrderExperienceManagement') with {
+                        data: {
+                            field: field,
+                        },
+                    } only %}
+                </div>
             {% elseif fieldName == 'nextExecutionDate' %}
                 <div class="form__field col col--sm-12">
                     {{ form_label(field) }}
