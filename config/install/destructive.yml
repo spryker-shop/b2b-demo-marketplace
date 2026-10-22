@@ -7,6 +7,11 @@ command-timeout: 7200
 sections:
     configuration-export:
         configuration-export:
+            # Off by default. An environment opts in with "-e configuration-restore" in its destructive
+            # install hook; only there do Back Office values survive the deployment.
+            excluded: true
+            groups:
+                - configuration-restore
             command: >-
                 vendor/bin/console configuration:export
                 integrations:google_analytics:tracking:measurement_id
@@ -54,6 +59,9 @@ sections:
             command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
 
         configuration-restore:
+            excluded: true
+            groups:
+                - configuration-restore
             command: >-
                 vendor/bin/console configuration:restore
                 integrations:google_analytics:tracking:measurement_id
