@@ -10,6 +10,9 @@ declare(strict_types = 1);
 namespace Pyz\Zed\AclMerchantPortal;
 
 use Pyz\Zed\ProductBundle\Communication\Plugin\AclMerchantPortal\ProductBundleAclEntityConfigurationExpanderPlugin;
+use Pyz\Zed\SalesInvoice\Communication\Plugin\AclMerchantPortal\SalesInvoiceAclEntityConfigurationExpanderPlugin as PyzSalesInvoiceAclEntityConfigurationExpanderPlugin;
+use Pyz\Zed\SalesInvoice\Communication\Plugin\AclMerchantPortal\SalesInvoiceMerchantAclEntityRuleExpanderPlugin;
+use Pyz\Zed\SequenceNumber\Communication\Plugin\AclMerchantPortal\SequenceNumberAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Acl\Communication\Plugin\AclMerchantPortal\AclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\AclMerchantPortal\AclEntityAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclMerchantPortal\AclMerchantPortalDependencyProvider as SprykerAclMerchantPortalDependencyProvider;
@@ -165,6 +168,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new StoreMerchantAclEntityRuleExpanderPlugin(),
             new LocaleMerchantAclEntityRuleExpanderPlugin(),
             new SalesMerchantAclEntityRuleExpanderPlugin(),
+            new SalesInvoiceMerchantAclEntityRuleExpanderPlugin(),
             new PriceProductMerchantAclEntityRuleExpanderPlugin(),
             new ProductImageMerchantAclEntityRuleExpanderPlugin(),
             new OmsProductOfferReservationMerchantAclEntityRuleExpanderPlugin(),
@@ -259,6 +263,8 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new RefundAclEntityConfigurationExpanderPlugin(),
             new SalesAclEntityConfigurationExpanderPlugin(),
             new SalesInvoiceAclEntityConfigurationExpanderPlugin(),
+            new PyzSalesInvoiceAclEntityConfigurationExpanderPlugin(),
+            new SequenceNumberAclEntityConfigurationExpanderPlugin(),
             new SalesOrderThresholdAclEntityConfigurationExpanderPlugin(),
             new ShipmentAclEntityConfigurationExpanderPlugin(),
             new StateMachineAclEntityConfigurationExpanderPlugin(),
