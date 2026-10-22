@@ -34,9 +34,4 @@ class ConfigurationConfig extends SprykerConfigurationConfig
 
         return $scopeHierarchy;
     }
-
-    public function getExportFile(): string
-    {
-        return APPLICATION_ROOT_DIR . '/data/export/configuration-values.json';
-    }
 }

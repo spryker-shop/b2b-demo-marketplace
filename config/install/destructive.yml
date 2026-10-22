@@ -63,9 +63,7 @@ sections:
         configuration-import-environment:
             command: >-
                 vendor/bin/console configuration:import-environment
-                configuration:global:integrations:google_analytics:tracking:measurement_id
-                configuration:global:integrations:google_analytics:connection:property_id
-                configuration:global:integrations:google_analytics:connection:service_account_credentials_json
+                integrations:google_analytics:connection:service_account_credentials_json=SPRYKER_GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON
                 -vvv --no-ansi
 
     setup-queue:
