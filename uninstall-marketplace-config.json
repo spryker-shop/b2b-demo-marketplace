@@ -700,8 +700,16 @@
                 { "type": "remove_plugin", "plugin_class": "MerchantCommissionOrderPostCancelPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantStateOrderItemExpanderPlugin" },
                 { "type": "remove_use", "class_name": "MerchantOrderInvoiceSalesListBlockRendererPlugin" },
-                { "type": "replace_string", "old_value": "new MerchantOrderInvoiceSalesListBlockRendererPlugin()", "new_value": "new OrderInvoiceSalesListBlockRendererPlugin()" },
-                { "type": "ensure_use_statement", "class_name": "Spryker\\Zed\\SalesInvoice\\Communication\\Plugin\\Sales\\OrderInvoiceSalesListBlockRendererPlugin", "after_pattern": "use Spryker\\Zed\\SalesInvoice\\Communication\\Plugin\\Sales\\OrderInvoiceOrderExpanderPlugin;" }
+                {
+                    "type": "replace_string",
+                    "old_value": "new MerchantOrderInvoiceSalesListBlockRendererPlugin()",
+                    "new_value": "new OrderInvoiceSalesListBlockRendererPlugin()"
+                },
+                {
+                    "type": "ensure_use_statement",
+                    "class_name": "Spryker\\Zed\\SalesInvoice\\Communication\\Plugin\\Sales\\OrderInvoiceSalesListBlockRendererPlugin",
+                    "after_pattern": "use Spryker\\Zed\\SalesInvoice\\Communication\\Plugin\\Sales\\OrderInvoiceOrderExpanderPlugin;"
+                }
             ],
             "success_messages": [
                 "✓ SalesDependencyProvider cleaned from marketplace-specific plugins",
@@ -723,7 +731,11 @@
         },
         "config/Zed/oms/DummySubprocess/DummyInvoice01.xml": {
             "operations": [
-                { "type": "replace_string", "old_value": "command=\"MerchantInvoice/Generate\"", "new_value": "command=\"Invoice/Generate\"" }
+                {
+                    "type": "replace_string",
+                    "old_value": "command=\"MerchantInvoice/Generate\"",
+                    "new_value": "command=\"Invoice/Generate\""
+                }
             ],
             "success_messages": ["✓ Switched DummyInvoice01.xml back to the Invoice/Generate command"]
         },
