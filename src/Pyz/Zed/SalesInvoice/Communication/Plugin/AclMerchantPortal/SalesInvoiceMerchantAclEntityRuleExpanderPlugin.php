@@ -23,25 +23,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SalesInvoiceMerchantAclEntityRuleExpanderPlugin extends AbstractPlugin implements MerchantAclEntityRuleExpanderPluginInterface
 {
-    /**
-     * @var string
-     */
-    protected const SCOPE_INHERITED = 'inherited';
+    protected const string SCOPE_INHERITED = 'inherited';
 
-    /**
-     * @var int
-     */
-    protected const OPERATION_MASK_READ = 0b1;
+    protected const int OPERATION_MASK_READ = 0b1;
 
-    /**
-     * @var int
-     */
-    protected const OPERATION_MASK_CREATE = 0b10;
+    protected const int OPERATION_MASK_CREATE = 0b10;
 
-    /**
-     * @var int
-     */
-    protected const OPERATION_MASK_UPDATE = 0b100;
+    protected const int OPERATION_MASK_UPDATE = 0b100;
 
     /**
      * {@inheritDoc}
