@@ -21,7 +21,7 @@ class SecurityMerchantPortalGuiConfig extends SprykerSecurityMerchantPortalGuiCo
     /**
      * @var string
      */
-    protected const MERCHANT_PORTAL_ROUTE_PATTERN = '^/((.+)-merchant-portal-gui|multi-factor-auth-merchant-portal/(merchant-user|user-management)|_profiler|stripe|security-oauth-knpu/oauth-merchant-user-initiate)/';
+    protected const MERCHANT_PORTAL_ROUTE_PATTERN = '^/((.+)-merchant-portal-gui|multi-factor-auth-merchant-portal/(merchant-user|user-management)|_profiler|stripe|security-oauth-knpu/oauth-merchant-user-initiate|merchant-sales-invoice)/';
 
     /**
      * @var string

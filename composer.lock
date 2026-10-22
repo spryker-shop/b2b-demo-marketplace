@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cba370699c344383bbb9b1464ff95c5a",
+    "content-hash": "d85ebe47057d6fb53122a770317dedf2",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -48638,6 +48638,76 @@
             "time": "2019-02-06T10:10:03+00:00"
         },
         {
+            "name": "spryker/merchant-sales-invoice",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-sales-invoice.git",
+                "reference": "b218bc7b3d379b518c244dd29ee09dba50351c4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-sales-invoice/zipball/b218bc7b3d379b518c244dd29ee09dba50351c4e",
+                "reference": "b218bc7b3d379b518c244dd29ee09dba50351c4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/calculation": "^4.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/log": "^3.0.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-sales-order": "^1.8.0",
+                "spryker/merchant-sales-order-extension": "^1.0.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/sales-extension": "^1.14.0",
+                "spryker/sales-invoice": "^1.7.0",
+                "spryker/sales-invoice-extension": "^1.1.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/glossary": "*",
+                "spryker/oms": "*",
+                "spryker/propel": "*",
+                "spryker/sales": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*",
+                "spryker/twig": "*",
+                "spryker/user": "*"
+            },
+            "suggest": {
+                "spryker/oms": "If you want to use GenerateMerchantOrderInvoicesCommandPlugin plugin.",
+                "spryker/sales": "If you want to use GenerateMerchantOrderInvoicesCommandPlugin plugin.",
+                "spryker/sales-merchant-portal-gui": "Renders the Documents section on the Merchant Portal order details page.",
+                "spryker/zed-ui": "Renders the Merchant Portal document page with the merchant layout and the web components of ZedUi."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantSalesInvoice module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-sales-invoice/tree/1.0.0"
+            },
+            "time": "2026-10-22T09:42:50+00:00"
+        },
+        {
             "name": "spryker/merchant-sales-order",
             "version": "1.8.1",
             "source": {
@@ -68076,16 +68146,16 @@
         },
         {
             "name": "spryker/sales-invoice",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-invoice.git",
-                "reference": "1926a9e61255458a56e188ffd512b02d882b5e2c"
+                "reference": "b8af7ac4ff00183618cdddaf8d85c1ffff5ef5c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-invoice/zipball/1926a9e61255458a56e188ffd512b02d882b5e2c",
-                "reference": "1926a9e61255458a56e188ffd512b02d882b5e2c",
+                "url": "https://api.github.com/repos/spryker/sales-invoice/zipball/b8af7ac4ff00183618cdddaf8d85c1ffff5ef5c5",
+                "reference": "b8af7ac4ff00183618cdddaf8d85c1ffff5ef5c5",
                 "shasum": ""
             },
             "require": {
@@ -68099,7 +68169,7 @@
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/sales": "^11.11.0",
                 "spryker/sales-extension": "^1.14.0",
-                "spryker/sales-invoice-extension": "^1.0.0",
+                "spryker/sales-invoice-extension": "^1.1.0",
                 "spryker/sequence-number": "^3.0.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.27.0",
@@ -68138,26 +68208,26 @@
             ],
             "description": "SalesInvoice module",
             "support": {
-                "source": "https://github.com/spryker/sales-invoice/tree/1.6.0"
+                "source": "https://github.com/spryker/sales-invoice/tree/1.7.0"
             },
-            "time": "2026-10-13T14:24:22+00:00"
+            "time": "2026-10-22T09:42:50+00:00"
         },
         {
             "name": "spryker/sales-invoice-extension",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-invoice-extension.git",
-                "reference": "9472ae6a878a487acf51ae937fcb972ef80c4e1b"
+                "reference": "503a0afae56f6db0de4a7e4757750ba459627c35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-invoice-extension/zipball/9472ae6a878a487acf51ae937fcb972ef80c4e1b",
-                "reference": "9472ae6a878a487acf51ae937fcb972ef80c4e1b",
+                "url": "https://api.github.com/repos/spryker/sales-invoice-extension/zipball/503a0afae56f6db0de4a7e4757750ba459627c35",
+                "reference": "503a0afae56f6db0de4a7e4757750ba459627c35",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
+                "php": ">=8.3"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*"
@@ -68179,9 +68249,9 @@
             ],
             "description": "SalesInvoiceExtension module",
             "support": {
-                "source": "https://github.com/spryker/sales-invoice-extension/tree/master"
+                "source": "https://github.com/spryker/sales-invoice-extension/tree/1.1.0"
             },
-            "time": "2020-06-29T08:34:25+00:00"
+            "time": "2026-10-22T09:42:50+00:00"
         },
         {
             "name": "spryker/sales-merchant-commission",
@@ -68332,16 +68402,16 @@
         },
         {
             "name": "spryker/sales-merchant-portal-gui",
-            "version": "4.2.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-merchant-portal-gui.git",
-                "reference": "2d212e4ec12ab8c4337977010aafaf4f8538d435"
+                "reference": "a7ed58d8a49a4b40426e0a9366b3890e5d3589dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-merchant-portal-gui/zipball/2d212e4ec12ab8c4337977010aafaf4f8538d435",
-                "reference": "2d212e4ec12ab8c4337977010aafaf4f8538d435",
+                "url": "https://api.github.com/repos/spryker/sales-merchant-portal-gui/zipball/a7ed58d8a49a4b40426e0a9366b3890e5d3589dc",
+                "reference": "a7ed58d8a49a4b40426e0a9366b3890e5d3589dc",
                 "shasum": ""
             },
             "require": {
@@ -68397,9 +68467,9 @@
             ],
             "description": "SalesMerchantPortalGui module",
             "support": {
-                "source": "https://github.com/spryker/sales-merchant-portal-gui/tree/4.2.0"
+                "source": "https://github.com/spryker/sales-merchant-portal-gui/tree/4.3.0"
             },
-            "time": "2026-09-07T11:40:38+00:00"
+            "time": "2026-10-22T09:42:50+00:00"
         },
         {
             "name": "spryker/sales-merchant-portal-gui-extension",
