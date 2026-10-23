@@ -134,16 +134,11 @@
             {% set linenumber = 0 %}
             {% set renderedBundles = [] %}
             {% set taxes = {} %}
-            {% set itemSumByTaxes = {} %}
 
             {% for item in order.items %}
                 {# @var item \Generated\Shared\Transfer\ItemTransfer #}
-
                 {% set taxRate = item.taxRate %}
-                {% set rateSum = taxes[item.taxRate] | default(0) + item.sumTaxAmountFullAggregation %}
-                {% set taxes = taxes | merge({ (taxRate): rateSum }) %}
-                {% set rateItemSum = itemSumByTaxes[taxRate] | default(0) + item.sumPriceToPayAggregation %}
-                {% set itemSumByTaxes = itemSumByTaxes | merge({ (taxRate): rateItemSum }) %}
+                {% set taxes = taxes | merge({ (taxRate): (taxes[taxRate] | default(0)) + item.sumTaxAmountFullAggregation }) %}
 
                 {% if item.productBundle is not defined or item.productBundle is null %}
                     {% set linenumber = linenumber + 1 %}
@@ -153,55 +148,39 @@
                         <td class="text-center">{{ item.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
                         <td>{{ item.name }}</td>
                         <td class="text-center">{{ item.taxRate | number_format }}%</td>
-                        <td class="text-center">{{ item.sumPriceToPayAggregation | money(true, order.currencyIsoCode) }}</td>
+                        <td class="text-center">{{ item.sumPrice | money(true, order.currencyIsoCode) }}</td>
                     </tr>
                 {% endif %}
 
-                {% if item.productBundle is defined and item.productBundle is not null and item.relatedBundleItemIdentifier not in renderedBundles %}
-                    {# @var productBundle \Generated\Shared\Transfer\ItemTransfer #}
+                {% if item.productBundle is defined and item.productBundle is not null %}
+                    {% if item.relatedBundleItemIdentifier not in renderedBundles %}
+                        {# @var productBundle \Generated\Shared\Transfer\ItemTransfer #}
+                        {% set linenumber = linenumber + 1 %}
+                        {% set productBundle = item.productBundle %}
 
-                    {% set linenumber = linenumber + 1 %}
-                    {% set productBundle = item.productBundle %}
+                        <tr>
+                            <td class="text-center">{{ linenumber }}</td>
+                            <td class="text-center">{{ productBundle.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
+                            <td>{{ productBundle.name }}</td>
+                            <td class="text-center">{{ productBundle.taxRate | number_format }}%</td>
+                            <td class="text-center">{{ productBundle.sumPrice | money(true, order.currencyIsoCode) }}</td>
+                        </tr>
 
-                    <tr>
-                        <td class="text-center">{{ linenumber }}</td>
-                        <td class="text-center">{{ productBundle.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
-                        <td>{{ productBundle.name }}</td>
-                        <td class="text-center">{{ productBundle.taxRate | number_format }}%</td>
-                        <td class="text-center">{{ productBundle.sumPriceToPayAggregation | money(true, order.currencyIsoCode) }}</td>
-                    </tr>
+                        {% for bundleditem in order.items %}
+                            {% if item.relatedBundleItemIdentifier == bundleditem.relatedBundleItemIdentifier %}
+                                <tr>
+                                    <td></td>
+                                    <td class="text-center">{{ bundleditem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
+                                    <td>{{ bundleditem.name }}</td>
+                                    <td class="text-center">{{ bundleditem.taxRate | number_format }}%</td>
+                                    <td class="text-center">{{ bundleditem.sumPrice | money(true, order.currencyIsoCode) }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
 
-                    {% for bundleditem in order.items %}
-                        {% if item.relatedBundleItemIdentifier == bundleditem.relatedBundleItemIdentifier %}
-                            <tr>
-                                <td></td>
-                                <td class="text-center">{{ bundleditem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
-                                <td>{{ bundleditem.name }}</td>
-                                <td class="text-center">{{ bundleditem.taxRate | number_format }}%</td>
-                                <td class="text-center">{{ bundleditem.sumPriceToPayAggregation | money(true, order.currencyIsoCode) }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% set renderedBundles = renderedBundles | merge([item.relatedBundleItemIdentifier]) %}
+                        {% set renderedBundles = renderedBundles | merge([item.relatedBundleItemIdentifier]) %}
+                    {% endif %}
                 {% endif %}
-            {% endfor %}
-
-            {% for expense in order.expenses %}
-                {% set linenumber = linenumber + 1 %}
-                {% set taxRate = expense.taxRate %}
-                {% set rateSum = taxes[expense.taxRate] | default(0) + expense.sumTaxAmount %}
-                {% set taxes = taxes | merge({ (taxRate): rateSum }) %}
-                {% set rateItemSum = itemSumByTaxes[taxRate] | default(0) + expense.sumPriceToPayAggregation %}
-                {% set itemSumByTaxes = itemSumByTaxes | merge({ (taxRate): rateItemSum }) %}
-
-                <tr>
-                    <td class="text-center">{{ linenumber }}</td>
-                    <td></td>
-                    <td>{{ expense.name }}</td>
-                    <td class="text-center">{{ expense.taxRate | number_format }}%</td>
-                    <td class="text-center">{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</td>
-                </tr>
             {% endfor %}
 
             <tr class="background-gray">
@@ -212,23 +191,36 @@
             <tr class="background-gray">
                 <td colspan="3"></td>
                 <td>{{ 'order_invoice.invoice_template.table.discount' | trans }}</td>
-                <td class="text-center">{{ order.totals.discountTotal | money(true, order.currencyIsoCode) }}</td>
+                <td class="text-center">{{ (0 - order.totals.discountTotal) | money(true, order.currencyIsoCode) }}</td>
             </tr>
+
+            {% for expense in order.expenses %}
+                {# @var expense \Generated\Shared\Transfer\ExpenseTransfer #}
+                {% set taxRate = expense.taxRate %}
+                {% set taxes = taxes | merge({ (taxRate): (taxes[taxRate] | default(0)) + expense.sumTaxAmount }) %}
+
+                <tr>
+                    <td colspan="2"></td>
+                    <td>{{ 'order_invoice.invoice_template.table.shipment' | trans({ '%name%': expense.name }) }}</td>
+                    <td class="text-center">{{ expense.taxRate | number_format }}%</td>
+                    <td class="text-center">{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</td>
+                </tr>
+            {% endfor %}
 
             {% for rate, tax in taxes %}
                 <tr>
+                    <td colspan="2"></td>
                     <td colspan="2">{{ 'order_invoice.invoice_template.table.tax.included' | trans({ '%tax_rate%': rate | number_format }) }}</td>
-                    <td class="text-center">{{ (itemSumByTaxes[rate] - tax) | money(true, order.currencyIsoCode) }}</td>
-                    <td class="text-center">{{ 'order_invoice.invoice_template.table.tax.name' | trans }}</td>
                     <td class="text-center">{{ tax | money(true, order.currencyIsoCode) }}</td>
                 </tr>
             {% endfor %}
 
             <tr>
+                <td colspan="2"></td>
                 <td colspan="2">{{ 'order_invoice.invoice_template.table.total.net' | trans }}</td>
                 <td class="text-center">{{ (order.totals.grandTotal - order.totals.taxTotal.amount) | money(true, order.currencyIsoCode) }}</td>
-                <td colspan="2"></td>
             </tr>
+
             <tr class="background-gray">
                 <td colspan="3"></td>
                 <td><strong>{{ 'order_invoice.invoice_template.table.grandtotal' | trans }}</strong></td>
