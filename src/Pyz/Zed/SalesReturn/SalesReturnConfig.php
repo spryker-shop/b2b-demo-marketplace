@@ -20,5 +20,6 @@ class SalesReturnConfig extends SprykerSalesReturnConfig
         'shipped',
         'delivered',
         'shipped by merchant',
+        'invoice generated',
     ];
 }

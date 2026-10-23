@@ -10,6 +10,9 @@ declare(strict_types = 1);
 namespace Pyz\Zed\AclMerchantPortal;
 
 use Pyz\Zed\ProductBundle\Communication\Plugin\AclMerchantPortal\ProductBundleAclEntityConfigurationExpanderPlugin;
+use Pyz\Zed\SalesInvoice\Communication\Plugin\AclMerchantPortal\SalesInvoiceAclEntityConfigurationExpanderPlugin as PyzSalesInvoiceAclEntityConfigurationExpanderPlugin;
+use Pyz\Zed\SalesInvoice\Communication\Plugin\AclMerchantPortal\SalesInvoiceMerchantAclEntityRuleExpanderPlugin;
+use Pyz\Zed\SequenceNumber\Communication\Plugin\AclMerchantPortal\SequenceNumberAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Acl\Communication\Plugin\AclMerchantPortal\AclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\AclMerchantPortal\AclEntityAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclMerchantPortal\AclMerchantPortalDependencyProvider as SprykerAclMerchantPortalDependencyProvider;
@@ -59,6 +62,7 @@ use Spryker\Zed\MerchantRelationRequestMerchantPortalGui\Communication\Plugin\Ac
 use Spryker\Zed\MerchantRelationship\Communication\Plugin\AclMerchantPortal\MerchantRelationshipMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\MerchantRelationship\Communication\Plugin\AclMerchantPortal\MerchantRelationshipModelAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\MerchantRelationshipMerchantPortalGui\Communication\Plugin\AclMerchantPortal\MerchantRelationshipMerchantPortalGuiMerchantAclRuleExpanderPlugin;
+use Spryker\Zed\MerchantSalesInvoice\Communication\Plugin\AclMerchantPortal\MerchantSalesInvoiceMerchantAclRuleExpanderPlugin;
 use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\AclMerchantPortal\MerchantSalesOrderAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\AclMerchantPortal\MerchantSalesOrderMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\MerchantStock\Communication\Plugin\AclMerchantPortal\MerchantStockAclEntityConfigurationExpanderPlugin;
@@ -136,6 +140,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new ProductOfferMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new ProductMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new SalesMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
+            new MerchantSalesInvoiceMerchantAclRuleExpanderPlugin(),
             new PriceProductMerchantRelationshipMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new MerchantRelationRequestMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new CommentMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
@@ -163,6 +168,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new StoreMerchantAclEntityRuleExpanderPlugin(),
             new LocaleMerchantAclEntityRuleExpanderPlugin(),
             new SalesMerchantAclEntityRuleExpanderPlugin(),
+            new SalesInvoiceMerchantAclEntityRuleExpanderPlugin(),
             new PriceProductMerchantAclEntityRuleExpanderPlugin(),
             new ProductImageMerchantAclEntityRuleExpanderPlugin(),
             new OmsProductOfferReservationMerchantAclEntityRuleExpanderPlugin(),
@@ -257,6 +263,8 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new RefundAclEntityConfigurationExpanderPlugin(),
             new SalesAclEntityConfigurationExpanderPlugin(),
             new SalesInvoiceAclEntityConfigurationExpanderPlugin(),
+            new PyzSalesInvoiceAclEntityConfigurationExpanderPlugin(),
+            new SequenceNumberAclEntityConfigurationExpanderPlugin(),
             new SalesOrderThresholdAclEntityConfigurationExpanderPlugin(),
             new ShipmentAclEntityConfigurationExpanderPlugin(),
             new StateMachineAclEntityConfigurationExpanderPlugin(),

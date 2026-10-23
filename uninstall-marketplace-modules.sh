@@ -67,6 +67,7 @@ MARKETPLACE_CORE_MODULES=(
     "spryker/merchant-product-shopping-lists-rest-api"
     "spryker/merchant-products-rest-api"
     "spryker/merchant-profile-merchant-portal-gui"
+    "spryker/merchant-sales-invoice"
     "spryker/merchant-sales-returns-rest-api"
     "spryker/merchant-shipments-rest-api"
     "spryker/merchants-rest-api"

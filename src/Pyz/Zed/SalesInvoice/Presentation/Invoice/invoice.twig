@@ -65,9 +65,32 @@
         </tr>
         <tr>
             <td width="300">
+                {% set merchant = invoice.merchant is defined ? invoice.merchant : null %}
+                {% set merchantProfile = merchant and merchant.merchantProfile ? merchant.merchantProfile : null %}
+                {% set merchantAddress = merchantProfile and merchantProfile.addressCollection is not empty ? merchantProfile.addressCollection | first : null %}
                 <div class="spacing-bottom spacing-right">
-                    <strong>{{ 'order_invoice.invoice_template.merchant.name' | trans }}</strong>
-                    <div class="text-small">{{ 'order_invoice.invoice_template.merchant.address' | trans }}</div>
+                    {% if merchant %}
+                        <strong>{{ merchant.name }}</strong>
+                        {% if merchant.registrationNumber %}
+                            <div class="text-small">{{ 'order_invoice.invoice_template.merchant.registration_number' | trans }} {{ merchant.registrationNumber }}</div>
+                        {% endif %}
+                        {% if merchantAddress %}
+                            <div class="text-small">
+                                {{ [merchantAddress.address1, merchantAddress.address2, merchantAddress.address3] | filter(line => line) | join(' ') }}<br>
+                                {{ merchantAddress.zipCode }} {{ merchantAddress.city }}<br>
+                                {{ merchantAddress.countryName }}
+                            </div>
+                        {% endif %}
+                        {% if merchantProfile and merchantProfile.publicEmail %}
+                            <div class="text-small">{{ merchantProfile.publicEmail }}</div>
+                        {% endif %}
+                        {% if merchantProfile and merchantProfile.publicPhone %}
+                            <div class="text-small">{{ merchantProfile.publicPhone }}</div>
+                        {% endif %}
+                    {% else %}
+                        <strong>{{ 'order_invoice.invoice_template.merchant.name' | trans }}</strong>
+                        <div class="text-small">{{ 'order_invoice.invoice_template.merchant.address' | trans }}</div>
+                    {% endif %}
                 </div>
                 <div class="spacing-bottom">
                     {{ order.billingAddress.firstName }} {{ order.billingAddress.lastName }}<br>
