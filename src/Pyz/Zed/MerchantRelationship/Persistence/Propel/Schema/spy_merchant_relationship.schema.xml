@@ -5,6 +5,12 @@
           namespace="Orm\Zed\MerchantRelationship\Persistence"
           package="src.Orm.Zed.MerchantRelationship.Persistence">
 
+    <table name="spy_merchant_relationship">
+        <behavior name="event">
+            <parameter name="spy_merchant_relationship_all" column="*"/>
+        </behavior>
+    </table>
+
     <table name="spy_merchant_relationship_to_company_business_unit">
         <behavior name="event">
             <parameter name="spy_merchant_relationship_to_company_business_unit_all" column="*"/>
