@@ -17,6 +17,10 @@
         background: none;
     }
 
+    &__row--selected:nth-child(even) &__col {
+        background-color: $setting-color-lightest;
+    }
+
     &__row:has(&__col:nth-child(2) .table-action-list) &__col:first-child {
         width: 100%;
     }

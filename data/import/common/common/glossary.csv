@@ -3643,8 +3643,10 @@ order_invoice.invoice_template.table.subtotal,Subtotal,en_US
 order_invoice.invoice_template.table.subtotal,Zwischensumme,de_DE
 order_invoice.invoice_template.table.discount,Discount,en_US
 order_invoice.invoice_template.table.discount,Rabatt,de_DE
-order_invoice.invoice_template.table.tax.included,this includes %tax_rate%% VAT net,en_US
-order_invoice.invoice_template.table.tax.included,darin enthalten %tax_rate%% MwSt. Netto,de_DE
+order_invoice.invoice_template.table.shipment,Shipment: %name%,en_US
+order_invoice.invoice_template.table.shipment,Versand: %name%,de_DE
+order_invoice.invoice_template.table.tax.included,this includes %tax_rate%% VAT,en_US
+order_invoice.invoice_template.table.tax.included,darin enthalten %tax_rate%% MwSt.,de_DE
 order_invoice.invoice_template.table.tax.name,VAT,en_US
 order_invoice.invoice_template.table.tax.name,MwSt.,de_DE
 order_invoice.invoice_template.table.grandtotal,Grand total,en_US
@@ -3663,8 +3665,10 @@ order_invoice.invoice_template.merchant.name,Spryker Systems GmbH Berlin,en_US
 order_invoice.invoice_template.merchant.name,Spryker Systems GmbH Berlin,de_DE
 order_invoice.invoice_template.merchant.address,Julie-Wolfthorn-Straße 1 + 10115 Berlin,en_US
 order_invoice.invoice_template.merchant.address,Julie-Wolfthorn-Straße 1 + 10115 Berlin,de_DE
-order_invoice.invoice_template.table.total.net,Total net,en_US
-order_invoice.invoice_template.table.total.net,Gesamt Netto,de_DE
+order_invoice.invoice_template.merchant.registration_number,Registration number:,en_US
+order_invoice.invoice_template.merchant.registration_number,Registernummer:,de_DE
+order_invoice.invoice_template.table.total.net,Total net amount,en_US
+order_invoice.invoice_template.table.total.net,Nettobetrag gesamt,de_DE
 return_page.list.title,Returns,en_US
 return_page.list.title,Retouren,de_DE
 return_page.account.no_return,No returns found!,en_US
@@ -7162,8 +7166,8 @@ recurring_orders.detail.cancel.modal.warning,This action is permanent. The sched
 recurring_orders.detail.cancel.modal.warning,Diese Aktion ist dauerhaft. Der Zeitplan wird sofort gestoppt und kann nicht reaktiviert werden.,de_DE
 recurring_orders.detail.error.failed.title,The last order attempt failed for the following reasons:,en_US
 recurring_orders.detail.error.failed.title,Der letzte Bestellversuch ist aus den folgenden Gründen fehlgeschlagen:,de_DE
-recurring_orders.detail.estimated_total.info,Estimated Grand Total displays the sum of order items excl. shipping costs or discounts.,en_US
-recurring_orders.detail.estimated_total.info,Der geschätzte Gesamtbetrag enthält die Summe der Artikel ohne Versandkosten oder Rabatte.,de_DE
+recurring_orders.detail.estimated_total.info,Excludes shipping costs or discounts,en_US
+recurring_orders.detail.estimated_total.info,Ohne Versandkosten oder Rabatte,de_DE
 recurring_orders.detail.estimated_total.label,Estimated Total,en_US
 recurring_orders.detail.estimated_total.label,Geschätzter Gesamtbetrag,de_DE
 recurring_orders.detail.skip.modal.title,Skip this execution?,en_US
@@ -7470,8 +7474,8 @@ recurring_orders.review.invalid_form,The request could not be processed. Please 
 recurring_orders.review.invalid_form,Die Anfrage konnte nicht verarbeitet werden. Bitte überprüfen Sie sie und versuchen Sie es erneut.,de_DE
 recurring_orders.review.modal.accepted_prices,Accepted price changes,en_US
 recurring_orders.review.modal.accepted_prices,Akzeptierte Preisänderungen,de_DE
-recurring_orders.review.modal.body,Removing unavailable items and accepting updated prices will affect this order and all future executions of this schedule. These changes will become the new reference state for the recurring order going forward.,en_US
-recurring_orders.review.modal.body,Das Entfernen nicht verfügbarer Artikel und das Akzeptieren aktualisierter Preise wirken sich auf diese Bestellung und alle zukünftigen Ausführungen dieses Zeitplans aus. Diese Änderungen werden zum neuen Referenzzustand der wiederkehrenden Bestellung.,de_DE
+recurring_orders.review.modal.body,"Removing unavailable items and accepting updated prices will be applied as you choose below: to this order only, or to this and all future executions of this schedule.",en_US
+recurring_orders.review.modal.body,"Das Entfernen nicht verfügbarer Artikel und das Akzeptieren aktualisierter Preise werden so angewendet, wie Sie unten wählen: nur auf diese Bestellung oder auf diese und alle zukünftigen Ausführungen dieses Zeitplans.",de_DE
 recurring_orders.review.modal.headline,Confirm order and apply changes,en_US
 recurring_orders.review.modal.headline,Bestellung bestätigen und Änderungen übernehmen,de_DE
 recurring_orders.review.modal.new_total,New order total,en_US
@@ -7494,8 +7498,8 @@ recurring_orders.review-scope-selector-option.occurrence.note,"Apply to the %dat
 recurring_orders.review-scope-selector-option.occurrence.note,"Auf die Ausführung am %date% anwenden. Ihr wiederkehrender Zeitplan bleibt unverändert.",de_DE
 recurring_orders.review.scope.every_future,Update schedule permanently,en_US
 recurring_orders.review.scope.every_future,Zeitplan dauerhaft aktualisieren,de_DE
-recurring_orders.review-scope-selector-option.standing.note,"Apply to this and all future executions, and update reference prices.",en_US
-recurring_orders.review-scope-selector-option.standing.note,"Wenden Sie dies auf diese und alle zukünftigen Ausführungen an und aktualisieren Sie die Referenzpreise.",de_DE
+recurring_orders.review-scope-selector-option.standing.note,"Apply to this and all future executions, and update reference prices including tolerance settings (if configured).",en_US
+recurring_orders.review-scope-selector-option.standing.note,"Wenden Sie dies auf diese und alle zukünftigen Ausführungen an und aktualisieren Sie die Referenzpreise einschließlich der Toleranzeinstellungen (falls konfiguriert).",de_DE
 recurring_orders.review.remove.label,Remove from schedule,en_US
 recurring_orders.review.remove.label,Aus Zeitplan entfernen,de_DE
 recurring_orders.review.remove.undo,Undo removal,en_US
@@ -7532,10 +7536,10 @@ recurring_orders.review.reason.out_of_stock,Out Of Stock,en_US
 recurring_orders.review.reason.out_of_stock,Nicht auf Lager,de_DE
 recurring_orders.review.title,Review Required — %name%,en_US
 recurring_orders.review.title,Überprüfung erforderlich — %name%,de_DE
-recurring_orders.review.unchanged.title,Unchanged items (%count%),en_US
-recurring_orders.review.unchanged.title,Unveränderte Artikel (%count%),de_DE
-recurring_orders.review.unchanged.title.plural,%count% unchanged items,en_US
-recurring_orders.review.unchanged.title.plural,%count% unveränderte Artikel,de_DE
+recurring_orders.review.unchanged.title,Other items (%count%),en_US
+recurring_orders.review.unchanged.title,Weitere Artikel (%count%),de_DE
+recurring_orders.review.unchanged.title.plural,%count% other items,en_US
+recurring_orders.review.unchanged.title.plural,%count% weitere Artikel,de_DE
 recurring_orders.review.add_product.error.product_required,Please choose a product.,en_US
 recurring_orders.review.add_product.error.product_required,Bitte wählen Sie ein Produkt aus.,de_DE
 recurring_orders.review.add_product.error.shipping_address_required,Please choose a shipping address.,en_US
@@ -7568,12 +7572,208 @@ recurring_orders.scheduled.order.errors.title,Recurring order not placed,en_US
 recurring_orders.scheduled.order.errors.title,Wiederkehrende Bestellung nicht aufgegeben,de_DE
 recurring_orders.checkout.error.not_eligible,This cart cannot be placed as a recurring order.,en_US
 recurring_orders.checkout.error.not_eligible,Dieser Warenkorb kann nicht als wiederkehrende Bestellung aufgegeben werden.,de_DE
-recurring_orders.checkout.error.cadence_value_required,Please choose an interval for the recurring order.,en_US
-recurring_orders.checkout.error.cadence_value_required,Bitte wählen Sie ein Intervall für die wiederkehrende Bestellung aus.,de_DE
 recurring_orders.error.quote_not_found,The cart could not be found or access was denied.,en_US
 recurring_orders.error.quote_not_found,Der Warenkorb wurde nicht gefunden oder der Zugriff wurde verweigert.,de_DE
 recurring_orders.review.reason.configurable_bundle_unavailable,Configurable bundle unavailable,en_US
 recurring_orders.review.reason.configurable_bundle_unavailable,Konfigurierbares Bundle nicht verfügbar,de_DE
+recurring_orders.detail.estimated_total.auto_approved,Auto-approved up to %threshold% (+%tolerance%),en_US
+recurring_orders.detail.estimated_total.auto_approved,Automatisch freigegeben bis %threshold% (+%tolerance%),de_DE
+recurring_orders.status.processing,Processing,en_US
+recurring_orders.status.processing,In Bearbeitung,de_DE
+recurring_orders.review.order_total.rose_beyond_tolerance,"This order's total rose from %previous_total% to %current_total% (+%increase%), above your %tolerance% tolerance.",en_US
+recurring_orders.review.order_total.rose_beyond_tolerance,Die Gesamtsumme dieser Bestellung ist von %previous_total% auf %current_total% gestiegen (+%increase%) und liegt über Ihrer Toleranz von %tolerance%.,de_DE
+recurring_orders.review.order_total.no_single_product,No single product exceeded its own tolerance — it is the order total that rose.,en_US
+recurring_orders.review.order_total.no_single_product,"Kein einzelnes Produkt hat seine eigene Toleranz überschritten – es ist die Gesamtsumme der Bestellung, die gestiegen ist.",de_DE
+recurring_orders.price_tolerance.error.out_of_range,The price tolerance must be between 0% and %max%%.,en_US
+recurring_orders.price_tolerance.error.out_of_range,Die Preistoleranz muss zwischen 0 % und %max% % liegen.,de_DE
+recurring_orders.price_tolerance.error.too_precise,The price tolerance can have at most %decimals% decimal places.,en_US
+recurring_orders.price_tolerance.error.not_in_step,The price tolerance must be a multiple of %step%%.,en_US
+recurring_orders.price_tolerance.error.too_precise,Die Preistoleranz darf höchstens %decimals% Nachkommastellen haben.,de_DE
+recurring_orders.price_tolerance.error.not_in_step,Die Preistoleranz muss ein Vielfaches von %step% % sein.,de_DE
+recurring_orders.detail.sidebar.price_tolerance,Price tolerance,en_US
+recurring_orders.detail.sidebar.price_tolerance,Preistoleranz,de_DE
+recurring_orders.detail.sidebar.price_tolerance.order_total,Order total +%tolerance%,en_US
+recurring_orders.detail.sidebar.price_tolerance.order_total,Gesamtsumme +%tolerance%,de_DE
+recurring_orders.detail.sidebar.price_tolerance.off,Off,en_US
+recurring_orders.detail.sidebar.price_tolerance.off,Aus,de_DE
+recurring_orders.detail.sidebar.price_tolerance.off_note,Every price increase needs review,en_US
+recurring_orders.detail.sidebar.price_tolerance.off_note,Jede Preiserhöhung wird zur Überprüfung vorgelegt,de_DE
+recurring_orders.price_tolerance.title,Edit price tolerance,en_US
+recurring_orders.price_tolerance.title,Preistoleranz bearbeiten,de_DE
+recurring_orders.price_tolerance.intro,Choose how much prices can rise before an order from this schedule waits for your review.,en_US
+recurring_orders.price_tolerance.intro,"Legen Sie fest, wie stark Preise steigen dürfen, bevor eine Bestellung dieses Plans auf Ihre Überprüfung wartet.",de_DE
+recurring_orders.price_tolerance.order_total.title,Order total,en_US
+recurring_orders.price_tolerance.order_total.title,Gesamtsumme der Bestellung,de_DE
+recurring_orders.price_tolerance.order_total.intro,"Checked against the estimated total of one order, separately from the product checks.",en_US
+recurring_orders.price_tolerance.order_total.intro,"Wird mit der geschätzten Gesamtsumme einer Bestellung verglichen, getrennt von den Produktprüfungen.",de_DE
+recurring_orders.price_tolerance.order_total.field_label,Auto-approve increases up to,en_US
+recurring_orders.price_tolerance.order_total.field_label,Erhöhungen automatisch freigeben bis,de_DE
+recurring_orders.price_tolerance.order_total.readout.rise,Estimated total %total% · Orders up to %threshold% are placed automatically.,en_US
+recurring_orders.price_tolerance.order_total.readout.rise,Geschätzte Gesamtsumme %total% · Bestellungen bis %threshold% werden automatisch aufgegeben.,de_DE
+recurring_orders.price_tolerance.order_total.readout.off,Order total check is off. Price increases are reviewed product by product.,en_US
+recurring_orders.price_tolerance.order_total.readout.off,Die Prüfung der Gesamtsumme ist aus. Preiserhöhungen werden produktweise überprüft.,de_DE
+recurring_orders.price_tolerance.back,Back to recurring order,en_US
+recurring_orders.price_tolerance.back,Zurück zur wiederkehrenden Bestellung,de_DE
+recurring_orders.price_tolerance.applies_next,Changes apply from the next order on %date%.,en_US
+recurring_orders.price_tolerance.applies_next,Änderungen gelten ab der nächsten Bestellung am %date%.,de_DE
+recurring_orders.price_tolerance.locked_notice,Tolerances cannot be changed while this order is under review.,en_US
+recurring_orders.price_tolerance.locked_notice,"Toleranzen können nicht geändert werden, solange diese Bestellung überprüft wird.",de_DE
+recurring_orders.price_tolerance.success,Price tolerance saved. Changes apply from the next order.,en_US
+recurring_orders.price_tolerance.success,Preistoleranz gespeichert. Änderungen gelten ab der nächsten Bestellung.,de_DE
+recurring_orders.price_tolerance.error.save,The price tolerances could not be saved.,en_US
+recurring_orders.price_tolerance.error.save,Die Preistoleranzen konnten nicht gespeichert werden.,de_DE
+recurring_orders.price_tolerance.checks_intro,"Two independent checks: the order total and each product. If either limit is exceeded, the order waits for your review.",en_US
+recurring_orders.price_tolerance.checks_intro,"Zwei unabhängige Prüfungen: die Gesamtsumme und jedes Produkt. Wird eine der Grenzen überschritten, wartet die Bestellung auf Ihre Überprüfung.",de_DE
+recurring_orders.price_tolerance.how_it_works,How price checks work,en_US
+recurring_orders.price_tolerance.how_it_works,So funktionieren die Preisprüfungen,de_DE
+recurring_orders.price_tolerance.how_it_works.order_total.title,Order total,en_US
+recurring_orders.price_tolerance.how_it_works.order_total.title,Gesamtsumme,de_DE
+recurring_orders.price_tolerance.how_it_works.order_total.text,Compares the order total with the estimated total of one order.,en_US
+recurring_orders.price_tolerance.how_it_works.order_total.text,Vergleicht die Gesamtsumme mit der geschätzten Gesamtsumme einer Bestellung.,de_DE
+recurring_orders.price_tolerance.how_it_works.product.title,Each product,en_US
+recurring_orders.price_tolerance.how_it_works.product.title,Jedes Produkt,de_DE
+recurring_orders.price_tolerance.how_it_works.product.text,Compares each unit price with its confirmed reference price. Quantity doesn't change the limit.,en_US
+recurring_orders.price_tolerance.how_it_works.product.text,Vergleicht jeden Stückpreis mit seinem bestätigten Referenzpreis. Die Menge ändert die Grenze nicht.,de_DE
+recurring_orders.price_tolerance.how_it_works.independent.title,Checks are independent,en_US
+recurring_orders.price_tolerance.how_it_works.independent.title,Die Prüfungen sind unabhängig,de_DE
+recurring_orders.price_tolerance.how_it_works.independent.text,"If the order total or any product goes over its limit, the order waits for your review.",en_US
+recurring_orders.price_tolerance.how_it_works.independent.text,"Überschreitet die Gesamtsumme oder ein Produkt seine Grenze, wartet die Bestellung auf Ihre Überprüfung.",de_DE
+recurring_orders.price_tolerance.how_it_works.zero.title,0% means off,en_US
+recurring_orders.price_tolerance.how_it_works.zero.title,0 % bedeutet aus,de_DE
+recurring_orders.price_tolerance.how_it_works.zero.text,"With 0%, any price increase sends the order to review.",en_US
+recurring_orders.price_tolerance.how_it_works.zero.text,Bei 0 % führt jede Preiserhöhung zur Überprüfung der Bestellung.,de_DE
+recurring_orders.price_tolerance.form.error.blank,Enter a value. Use 0 to turn off.,en_US
+recurring_orders.price_tolerance.form.error.blank,"Geben Sie einen Wert ein. Verwenden Sie 0, um die Prüfung auszuschalten.",de_DE
+recurring_orders.price_tolerance.form.error.range,Enter 0 to {{ max }}.,en_US
+recurring_orders.price_tolerance.form.error.range,Geben Sie einen Wert von 0 bis {{ max }} ein.,de_DE
+recurring_orders.price_tolerance.form.error.decimals,Use up to {{ decimals }} decimals.,en_US
+recurring_orders.price_tolerance.form.error.step,Use steps of {{ step }}.,en_US
+recurring_orders.price_tolerance.form.error.decimals,Verwenden Sie höchstens {{ decimals }} Nachkommastellen.,de_DE
+recurring_orders.price_tolerance.form.error.step,Verwenden Sie Schritte von {{ step }}.,de_DE
+recurring_orders.price_tolerance.products.title,Products,en_US
+recurring_orders.price_tolerance.products.title,Produkte,de_DE
+recurring_orders.price_tolerance.products.intro,Each product is checked on its own unit price. Quantity doesn't change the limit.,en_US
+recurring_orders.price_tolerance.products.intro,Jedes Produkt wird anhand seines eigenen Stückpreises geprüft. Die Menge ändert die Grenze nicht.,de_DE
+recurring_orders.price_tolerance.products.summary,%with% with a tolerance · %any% reviews any increase,en_US
+recurring_orders.price_tolerance.products.summary,%with% mit Toleranz · %any% mit Prüfung bei jeder Erhöhung,de_DE
+recurring_orders.price_tolerance.products.column.unit_price,Unit price,en_US
+recurring_orders.price_tolerance.products.column.unit_price,Stückpreis,de_DE
+recurring_orders.price_tolerance.products.column.tolerance,Tolerance,en_US
+recurring_orders.price_tolerance.products.column.tolerance,Toleranz,de_DE
+recurring_orders.price_tolerance.products.column.review_above,Review if price is above,en_US
+recurring_orders.price_tolerance.products.column.review_above,"Prüfung, wenn der Preis über … liegt",de_DE
+recurring_orders.price_tolerance.products.any_increase,Any increase,en_US
+recurring_orders.price_tolerance.products.any_increase,Jede Erhöhung,de_DE
+recurring_orders.price_tolerance.products.note,0% means any price increase on that product is reviewed.,en_US
+recurring_orders.price_tolerance.products.note,"0 % bedeutet, dass jede Preiserhöhung dieses Produkts überprüft wird.",de_DE
+recurring_orders.price_tolerance.bulk.selected.one,1 product selected,en_US
+recurring_orders.price_tolerance.bulk.selected.one,1 Produkt ausgewählt,de_DE
+recurring_orders.price_tolerance.bulk.selected.many,%count% products selected,en_US
+recurring_orders.price_tolerance.bulk.selected.many,%count% Produkte ausgewählt,de_DE
+recurring_orders.price_tolerance.bulk.set_to,Set tolerance to,en_US
+recurring_orders.price_tolerance.bulk.set_to,Toleranz setzen auf,de_DE
+recurring_orders.price_tolerance.bulk.turn_off,Turn tolerance off,en_US
+recurring_orders.price_tolerance.bulk.turn_off,Toleranz ausschalten,de_DE
+recurring_orders.price_tolerance.bulk.select_all,Select all products,en_US
+recurring_orders.price_tolerance.bulk.select_all,Alle Produkte auswählen,de_DE
+recurring_orders.price_tolerance.bulk.select_row,Select %product%,en_US
+recurring_orders.price_tolerance.bulk.select_row,%product% auswählen,de_DE
+recurring_orders.price_tolerance.bulk.clear_selection,Clear selection,en_US
+recurring_orders.price_tolerance.bulk.clear_selection,Auswahl aufheben,de_DE
+recurring_orders.price_tolerance.bulk.toolbar,Bulk edit price tolerance,en_US
+recurring_orders.price_tolerance.bulk.toolbar,Preistoleranz gesammelt bearbeiten,de_DE
+recurring_orders.price_tolerance.mode.legend,How should product price increases be checked?,en_US
+recurring_orders.price_tolerance.mode.legend,Wie sollen Preiserhöhungen bei Produkten geprüft werden?,de_DE
+recurring_orders.price_tolerance.mode.products.title,Product by product,en_US
+recurring_orders.price_tolerance.mode.products.title,Produkt für Produkt,de_DE
+recurring_orders.price_tolerance.mode.products.text,Each product is checked against its own tolerance.,en_US
+recurring_orders.price_tolerance.mode.products.text,Jedes Produkt wird gegen seine eigene Toleranz geprüft.,de_DE
+recurring_orders.price_tolerance.mode.order_total.title,Order total only,en_US
+recurring_orders.price_tolerance.mode.order_total.title,Nur Gesamtsumme,de_DE
+recurring_orders.price_tolerance.mode.order_total.text,"Ignore individual product prices. Only the order total (+%tolerance%%) is checked.",en_US
+recurring_orders.price_tolerance.mode.order_total.text,"Einzelne Produktpreise ignorieren. Nur die Gesamtsumme (+%tolerance%%) wird geprüft.",de_DE
+recurring_orders.price_tolerance.mode.order_total.unavailable,Set an order total tolerance above 0% to check the order total only.,en_US
+recurring_orders.price_tolerance.mode.order_total.unavailable,"Legen Sie eine Toleranz für die Gesamtsumme über 0 % fest, um nur die Gesamtsumme zu prüfen.",de_DE
+recurring_orders.price_tolerance.error.item_not_found,This product is not part of the recurring order.,en_US
+recurring_orders.price_tolerance.error.item_not_found,Dieses Produkt gehört nicht zur wiederkehrenden Bestellung.,de_DE
+recurring_orders.review.reason.price_increased_beyond,Price above %tolerance%,en_US
+recurring_orders.review.reason.price_increased_beyond,Preis um mehr als %tolerance% gestiegen,de_DE
+recurring_orders.review.price_note.within_tolerance,within your %tolerance% tolerance,en_US
+recurring_orders.review.price_note.within_tolerance,innerhalb Ihrer Toleranz von %tolerance%,de_DE
+recurring_orders.review.price_note.within_order_tolerance,within your %tolerance% order total tolerance,en_US
+recurring_orders.review.price_note.within_order_tolerance,innerhalb Ihrer Toleranz der Gesamtsumme von %tolerance%,de_DE
+recurring_orders.review.price_note.decreased,price decreased,en_US
+recurring_orders.review.price_note.decreased,Preis gesunken,de_DE
+recurring_orders.detail.sidebar.price_tolerance.products_only,Added to %count% items,en_US
+recurring_orders.detail.sidebar.price_tolerance.products_only,Für %count% Artikel festgelegt,de_DE
+recurring_orders.detail.sidebar.price_tolerance.products_only_one,Added to 1 item,en_US
+recurring_orders.detail.sidebar.price_tolerance.products_only_one,Für 1 Artikel festgelegt,de_DE
+recurring_orders.detail.sidebar.price_tolerance.order_total_and_products,Order total +%tolerance% · %count% products,en_US
+recurring_orders.detail.sidebar.price_tolerance.order_total_and_products,Gesamtsumme +%tolerance% · %count% Produkte,de_DE
+recurring_orders.detail.sidebar.price_tolerance.order_total_and_product,Order total +%tolerance% · 1 product,en_US
+recurring_orders.detail.sidebar.price_tolerance.order_total_and_product,Gesamtsumme +%tolerance% · 1 Produkt,de_DE
+recurring_orders.price_tolerance.ignore_products.label,Ignore product price changes,en_US
+recurring_orders.price_tolerance.ignore_products.label,Preisänderungen einzelner Produkte ignorieren,de_DE
+recurring_orders.price_tolerance.ignore_products.help,"When the order total tolerance is above 0, only the order total is checked and the product tolerances are not applied.",en_US
+recurring_orders.price_tolerance.ignore_products.help,"Ist die Toleranz der Gesamtsumme größer als 0, wird nur die Gesamtsumme geprüft und die Produkttoleranzen werden nicht angewendet.",de_DE
+recurring_orders.price_tolerance.ignore_products.hint_label,About ignoring product price changes,en_US
+recurring_orders.price_tolerance.ignore_products.hint_label,Hinweis zum Ignorieren von Produktpreisänderungen,de_DE
+recurring_orders.price_tolerance.products.ignored_notice,Product price changes are ignored: only the order total is checked.,en_US
+recurring_orders.price_tolerance.products.ignored_notice,Preisänderungen einzelner Produkte werden ignoriert: Es wird nur die Gesamtsumme geprüft.,de_DE
+recurring_orders.price_tolerance.error.ignore_requires_order_tolerance,Set an order total tolerance above 0 to ignore product price changes.,en_US
+recurring_orders.price_tolerance.error.ignore_requires_order_tolerance,"Legen Sie eine Toleranz der Gesamtsumme über 0 fest, um Preisänderungen einzelner Produkte zu ignorieren.",de_DE
+recurring_orders.price_tolerance.confirm.title,Confirm settings?,en_US
+recurring_orders.price_tolerance.confirm.title,Einstellungen bestätigen?,de_DE
+recurring_orders.price_tolerance.confirm.text.one,You changed 1 tolerance. Are you sure you want to proceed with it?,en_US
+recurring_orders.price_tolerance.confirm.text.one,Sie haben 1 Toleranz geändert. Möchten Sie damit fortfahren?,de_DE
+recurring_orders.price_tolerance.confirm.text.many,You changed %count% tolerances. Are you sure you want to proceed with those?,en_US
+recurring_orders.price_tolerance.confirm.text.many,Sie haben %count% Toleranzen geändert. Möchten Sie damit fortfahren?,de_DE
+recurring_orders.price_tolerance.confirm.action,Confirm,en_US
+recurring_orders.price_tolerance.confirm.action,Bestätigen,de_DE
+recurring_orders.price_tolerance.discard.title,Discard unsaved changes?,en_US
+recurring_orders.price_tolerance.discard.title,Nicht gespeicherte Änderungen verwerfen?,de_DE
+recurring_orders.price_tolerance.discard.text.one,"You have 1 unsaved change. If you leave this page, it will be lost.",en_US
+recurring_orders.price_tolerance.discard.text.one,"Sie haben 1 nicht gespeicherte Änderung. Wenn Sie diese Seite verlassen, geht sie verloren.",de_DE
+recurring_orders.price_tolerance.discard.text.many,"You have %count% unsaved changes. If you leave this page, they will be lost.",en_US
+recurring_orders.price_tolerance.discard.text.many,"Sie haben %count% nicht gespeicherte Änderungen. Wenn Sie diese Seite verlassen, gehen sie verloren.",de_DE
+recurring_orders.price_tolerance.discard.action,Discard changes,en_US
+recurring_orders.price_tolerance.discard.action,Änderungen verwerfen,de_DE
+recurring_orders.price_tolerance.keep_editing,Keep editing,en_US
+recurring_orders.price_tolerance.keep_editing,Weiter bearbeiten,de_DE
+recurring_orders.detail.sidebar.price_tolerance.order_total_ignored,Order total +%tolerance% · product changes ignored,en_US
+recurring_orders.detail.sidebar.price_tolerance.order_total_ignored,Gesamtsumme +%tolerance% · Produktänderungen ignoriert,de_DE
+recurring_orders.detail.order_items.price_tolerance.hint,"How much a product's unit price may rise before the order waits for your review. ""Any increase"" means every rise is reviewed; ""Order total"" means only the order total is checked.",en_US
+recurring_orders.detail.order_items.price_tolerance.hint,"Um wie viel der Stückpreis eines Produkts steigen darf, bevor die Bestellung auf Ihre Überprüfung wartet. „Jede Erhöhung“ bedeutet, dass jeder Anstieg überprüft wird; „Gesamtsumme“ bedeutet, dass nur die Gesamtsumme geprüft wird.",de_DE
+recurring_orders.detail.order_items.price_tolerance.hint_label,About the price tolerance,en_US
+recurring_orders.detail.order_items.price_tolerance.hint_label,Zur Preistoleranz,de_DE
+recurring_orders.detail.sidebar.price_tolerance.locked_label,Why tolerances cannot be changed,en_US
+recurring_orders.detail.sidebar.price_tolerance.locked_label,Warum Toleranzen nicht geändert werden können,de_DE
+recurring_orders.cadence.validation.value_required,Please choose an interval for the recurring order.,en_US
+recurring_orders.cadence.validation.value_required,Bitte wählen Sie ein Intervall für die wiederkehrende Bestellung aus.,de_DE
+recurring_orders.cadence.validation.date_not_selected_week_day,Select a date that falls on one of the selected days.,en_US
+recurring_orders.cadence.validation.date_not_selected_week_day,"Wählen Sie ein Datum, das auf einen der ausgewählten Tage fällt.",de_DE
+recurring_orders.cadence.validation.days_required,Select at least one day.,en_US
+recurring_orders.cadence.validation.days_required,Wählen Sie mindestens einen Tag aus.,de_DE
+recurring_orders.cadence.by_days,On specific days,en_US
+recurring_orders.cadence.by_days,An bestimmten Tagen,de_DE
+recurring_orders.checkout.days_label,Days,en_US
+recurring_orders.checkout.days_label,Tage,de_DE
+recurring_orders.day.monday,Mon,en_US
+recurring_orders.day.monday,Mo.,de_DE
+recurring_orders.day.tuesday,Tue,en_US
+recurring_orders.day.tuesday,Di.,de_DE
+recurring_orders.day.wednesday,Wed,en_US
+recurring_orders.day.wednesday,Mi.,de_DE
+recurring_orders.day.thursday,Thu,en_US
+recurring_orders.day.thursday,Do.,de_DE
+recurring_orders.day.friday,Fri,en_US
+recurring_orders.day.friday,Fr.,de_DE
+recurring_orders.day.saturday,Sat,en_US
+recurring_orders.day.saturday,Sa.,de_DE
+recurring_orders.day.sunday,Sun,en_US
+recurring_orders.day.sunday,So.,de_DE
+recurring_orders.detail.edit.days_label,Days,en_US
+recurring_orders.detail.edit.days_label,Tage,de_DE
 catalog.no-results.browse-all,Browse all products,en_US
 catalog.no-results.browse-all,Alle Produkte ansehen,de_DE
 backoffice_assistant.error.disabled,"Backoffice Assistant is disabled.",en_US
@@ -7654,3 +7854,5 @@ sales_invoice.order_documents.pdf,PDF,en_US
 sales_invoice.order_documents.pdf,PDF,de_DE
 sales_invoice.order_documents.save_as_pdf,Save as PDF,en_US
 sales_invoice.order_documents.save_as_pdf,Als PDF speichern,de_DE
+customer.change_customer_email_limit_exceeded,"You reached the limit of email change requests. Please try again later.",en_US
+customer.change_customer_email_limit_exceeded,"Sie haben das Limit für Anfragen zur Änderung der E-Mail-Adresse erreicht. Bitte versuchen Sie es später erneut.",de_DE

@@ -1,0 +1,31 @@
+{% extends molecule('recurring-order-day-picker', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% define data = {
+    inputClass: '',
+} %}
+
+{% set hasErrors = data.field.vars.errors | length > 0 %}
+
+{% block days %}
+    <div class="{{ config.name }}__days" role="group" aria-labelledby="{{ data.field.vars.id }}-label">
+        {% for child in data.field %}
+            <div class="{{ config.name }}__day">
+                <input
+                    type="checkbox"
+                    class="{{ config.name }}__input {{ data.inputClass }}"
+                    id="{{ child.vars.id }}"
+                    name="{{ child.vars.full_name }}"
+                    value="{{ child.vars.value }}"
+                    {{ child.vars.checked ? 'checked' }}
+                    {{ child.vars.disabled ? 'disabled' }}
+                    {{ hasErrors ? 'aria-invalid="true"' }}>
+                <label
+                    class="{{ config.name }}__label {{ hasErrors ? config.name ~ '__label--error' }}"
+                    for="{{ child.vars.id }}">
+                    {{ child.vars.label | trans({}, child.vars.translation_domain) }}
+                </label>
+            </div>
+            {% do child.setRendered() %}
+        {% endfor %}
+    </div>
+{% endblock %}
