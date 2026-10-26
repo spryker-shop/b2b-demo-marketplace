@@ -79,6 +79,8 @@ class PriceManager extends SprykerPriceManager
             $itemTransfer = $this->applyOriginUnitPrices($itemTransfer);
         }
 
+        $this->addPriceToAffectedQuoteItems($cartChangeTransfer, $priceMode);
+
         return $cartChangeTransfer;
     }
 
