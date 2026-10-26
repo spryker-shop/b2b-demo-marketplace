@@ -32,7 +32,7 @@ class StateMachineCompanyEventSubscriber extends AbstractPlugin implements Event
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListener(
+        $eventCollection->addListenerQueued(
             ExampleWorkflowConfig::EVENT_COMPANY_CREATE,
             new StateMachineCompanyEventListener(),
         );

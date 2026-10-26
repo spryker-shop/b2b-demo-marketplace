@@ -180,6 +180,7 @@ jobs:
                 with:
                     name: cypress-ui-${{ matrix.cell.repository_id }}-${{ matrix.cell.shard }}-failed-artifacts
                     retention-days: 5 # save for 5 days
+                    include-hidden-files: true
                     path: |
                         logs/*.log
                         .cypress/

@@ -19,12 +19,17 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
+use Orm\Zed\CustomerExperienceManagement\Persistence\SpyCustomerGroupToCompanyBusinessUnitQuery;
+use Orm\Zed\CustomerExperienceManagement\Persistence\SpyCustomerGroupToCompanyQuery;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
 use RuntimeException;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
@@ -500,5 +505,65 @@ class CustomerExperienceManagementBackendApiHelper extends Module
         $requestHelper = $this->getModule('\\' . BackendApiRequestHelper::class);
 
         return $requestHelper;
+    }
+
+    /**
+     * @return array<int, string> Ordered by company id.
+     */
+    public function getAssignedCompanyUuids(string $uuid): array
+    {
+        $companyUuids = SpyCompanyQuery::create()
+            ->useSpyCustomerGroupToCompanyQuery()
+                ->useCustomerGroupQuery()
+                    ->filterByUuid($uuid)
+                ->endUse()
+            ->endUse()
+            ->orderByIdCompany()
+            ->select([SpyCompanyTableMap::COL_UUID])
+            ->find()
+            ->toArray();
+
+        return array_map('strval', $companyUuids);
+    }
+
+    /**
+     * @return array<int, string> Ordered by business unit id.
+     */
+    public function getAssignedCompanyBusinessUnitUuids(string $uuid): array
+    {
+        $companyBusinessUnitUuids = SpyCompanyBusinessUnitQuery::create()
+            ->useSpyCustomerGroupToCompanyBusinessUnitQuery()
+                ->useCustomerGroupQuery()
+                    ->filterByUuid($uuid)
+                ->endUse()
+            ->endUse()
+            ->orderByIdCompanyBusinessUnit()
+            ->select([SpyCompanyBusinessUnitTableMap::COL_UUID])
+            ->find()
+            ->toArray();
+
+        return array_map('strval', $companyBusinessUnitUuids);
+    }
+
+    public function countMembershipsOfCustomerGroup(int $idCustomerGroup): int
+    {
+        return SpyCustomerGroupToCompanyQuery::create()->filterByFkCustomerGroup($idCustomerGroup)->count()
+            + SpyCustomerGroupToCompanyBusinessUnitQuery::create()->filterByFkCustomerGroup($idCustomerGroup)->count();
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getCompanyRow(int $idCompany): array
+    {
+        return SpyCompanyQuery::create()->findOneByIdCompany($idCompany)?->toArray() ?? [];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getCustomerGroupRow(string $uuid): array
+    {
+        return SpyCustomerGroupQuery::create()->findOneByUuid($uuid)?->toArray() ?? [];
     }
 }
