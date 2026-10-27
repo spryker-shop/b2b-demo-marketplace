@@ -321,7 +321,7 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, build-db]
+        needs: [build-db]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml
