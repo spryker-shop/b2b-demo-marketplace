@@ -193,7 +193,6 @@ jobs:
                 if: always()
 
     build-db:
-        needs: [js-validation]
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
@@ -234,7 +233,7 @@ jobs:
 
     # [project applicable] Cypress Project tests run
     cypress-e2e:
-        needs: [js-validation, validation, cypress-quality-gate]
+        needs: [js-validation, validation, cypress-quality-gate, build-db]
         name: "Cypress-boilerplate / E2E"
         runs-on: ubuntu-latest
         env:
@@ -262,21 +261,23 @@ jobs:
                 working-directory: tests/cypress-boilerplate
                 run: npm ci
 
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-app-db
+
             -   name: Run docker
+                # The pipeline override restores the shared dump (see _build-db.yml) instead of
+                # importing demodata; the deploy file's own pipeline key is untouched.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress-boilerplate.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
-            -   name: Start queue worker
-                run: docker/sdk console queue:worker:start --stop-when-empty
-
-            -   name: Warm up merchant search index
-                run: |
-                    docker/sdk console sync:data merchant
-                    docker/sdk console queue:worker:start --stop-when-empty
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Cypress E2E tests
                 id: cypress-tests
