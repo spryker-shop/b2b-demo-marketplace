@@ -103,14 +103,10 @@ sections:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
     # Yves, Back Office and Merchant Portal assets are built once by _build-frontend.yml and restored
-    # into public/*/assets before `docker/sdk up` (see the restore-frontend-assets action). Only the
-    # water-treatment configurator (a PHP file copy, no npm) is still built here.
-    build-static-production:
-        excluded: true
-        water-treatment-product-configurator:
-            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
-
-    build-static-development:
+    # into public/*/assets before `docker/sdk up` (see the restore-frontend-assets action). docker/sdk
+    # runs build-static-<mode> only when build-static exists, so the water-treatment configurator copy
+    # (a PHP file copy into public/WaterTreatmentConfigurator/dist, no npm) lives in build-static itself.
+    build-static:
         water-treatment-product-configurator:
             command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
