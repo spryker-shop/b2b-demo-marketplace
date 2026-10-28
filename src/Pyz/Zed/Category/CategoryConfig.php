@@ -25,4 +25,9 @@ class CategoryConfig extends CategoryCategoryConfig
 
         return $templateList;
     }
+
+    public function isCategoryUuidEnabled(): bool
+    {
+        return true;
+    }
 }

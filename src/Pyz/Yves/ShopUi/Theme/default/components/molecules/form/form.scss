@@ -20,6 +20,7 @@ $address-form-width: rem(710);
         align-items: center;
         text-align: center;
         justify-content: flex-end;
+        gap: var(--scale-16);
 
         @include helper-breakpoint-media-min($lg) {
             margin-top: rem(16);
@@ -28,10 +29,6 @@ $address-form-width: rem(710);
 
         &--actions-right {
             justify-content: end;
-
-            #{$name}__action:last-child {
-                margin-right: 0;
-            }
         }
     }
 
@@ -42,26 +39,15 @@ $address-form-width: rem(710);
 
         @include helper-breakpoint-media-min($lg) {
             width: auto;
-            margin: 0 rem(16) 0 0;
         }
 
         &--expand {
             width: 100%;
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-right: 0;
-                margin-left: 0;
-            }
         }
 
         &--expand-sm-md {
             @include helper-breakpoint-media-min($md) {
                 width: auto;
-                margin: rem(10) rem(16) 0 0;
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-top: 0;
             }
         }
 
@@ -218,12 +204,6 @@ $address-form-width: rem(710);
 
             @include helper-breakpoint-media-min($lg) {
                 padding: 0 rem(10) rem(16);
-            }
-        }
-
-        #{$name}__action {
-            @include helper-breakpoint-media-min($md) {
-                margin: 0 0 0 rem(16);
             }
         }
 

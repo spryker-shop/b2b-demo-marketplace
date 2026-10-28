@@ -8,6 +8,14 @@
 {% block content %}
     {% set contentClassName = config.name ~ '__box' %}
     {{ parent() }}
+
+    <template id="change-button-placeholder">
+        {% include atom('font-icon') with {
+            data: {
+                name: 'change_circle',
+            },
+        } only %}
+    </template>
 {% endblock %}
 
 {% block itemName %}
@@ -19,6 +27,9 @@
         {% if (flaggedItem.previousPrice is not null) %}
         <div class="col">
             <span class="{{ config.name }}__price">{{ (flaggedItem.recurringScheduleItem.nextDeliveryQuantity ?: flaggedItem.recurringScheduleItem.quantity) }}x <s>{{ flaggedItem.previousPrice | money(true, data.currencyIsoCode) }}</s> {{ flaggedItem.currentPrice | money(true, data.currencyIsoCode) }}</span>
+            {% if isWithinItemTolerance %}
+                <br><small class="text-muted" {{ qa('recurring-order-review-within-tolerance') }}>({{ 'recurring_orders.review.price_note.within_tolerance' | trans({'%tolerance%': itemTolerance.trim() ~ '%'}) }})</small>
+            {% endif %}
         </div>
         {% endif %}
         
@@ -35,9 +46,12 @@
 
 {% block itemStatus %}
     {% for reviewReason in flaggedItem.reviewReasons %}
+        {% set reviewReasonLabel = isBeyondItemTolerance and reviewReason in data.priceChangeReviewReasons
+            ? 'recurring_orders.review.reason.price_increased_beyond' | trans({'%tolerance%': itemTolerance.trim() ~ '%'})
+            : (data.reviewReasonLabelMap[reviewReason] ?? reviewReason) | trans %}
         {% include molecule('status') with {
             data: {
-                label: (data.reviewReasonLabelMap[reviewReason] ?? reviewReason) | trans,
+                label: reviewReasonLabel,
                 status: data.reviewReasonBadgeMap[reviewReason],
             },
         } only %}

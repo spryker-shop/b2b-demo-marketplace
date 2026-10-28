@@ -60,13 +60,11 @@ class QuoteBuilder
         }
 
         $billingAddressTransfer = $this->addressResolver->resolveBillingAddress($customerTransfer);
-        $shippingAddressTransfer = $this->addressResolver->resolveShippingAddress($customerTransfer, $billingAddressTransfer);
 
         return $quoteTransfer
             ->setCustomer($customerTransfer)
             ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setBillingAddress($billingAddressTransfer)
-            ->setShippingAddress($shippingAddressTransfer);
+            ->setBillingAddress($billingAddressTransfer);
     }
 
     protected function getCustomer(string $customerReference): CustomerTransfer

@@ -55,7 +55,6 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
     {
         return [
             new MerchantPortalRouterPlugin(),
-            new ZedDevelopmentRouterPlugin(),
         ];
     }
 

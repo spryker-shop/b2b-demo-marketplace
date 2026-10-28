@@ -17,7 +17,7 @@ use Spryker\Zed\CustomerAccess\Business\CustomerAccessBusinessFactory as Spryker
 
 /**
  * @method \Pyz\Zed\CustomerAccess\CustomerAccessConfig getConfig()
- * @method \Pyz\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface getRepository()
  * @method \Pyz\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface getEntityManager()
  */
 class CustomerAccessBusinessFactory extends SprykerCustomerAccessBusinessFactory

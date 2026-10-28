@@ -56,6 +56,11 @@ export default class AddressItemFormFieldList extends Component {
     protected mapEvents(): void {
         this.sameAddressForAllItemsControl.forEach((control: HTMLInputElement) => {
             const wrapper = control.closest<HTMLElement>(`.${this.getAttribute('product-item')}`);
+
+            if (!wrapper) {
+                return;
+            }
+
             const groupIndex = wrapper.getAttribute('group-index');
             const controlClass = wrapper.getAttribute('address-control');
             const main = {
@@ -70,18 +75,28 @@ export default class AddressItemFormFieldList extends Component {
                     this.querySelectorAll<HTMLElement>(
                         `.${this.getAttribute('product-item')}[group-index="${groupIndex}"]`,
                     ),
-                ).map((item) => {
-                    const value = item.querySelector<HTMLInputElement>(`.${controlClass}`).value;
+                )
+                    .map((item) => {
+                        const addressControl = controlClass
+                            ? item.querySelector<HTMLInputElement>(`.${controlClass}`)
+                            : null;
 
-                    if (item.querySelector(`.${this.getAttribute('same-address-for-all-items-control')}`)) {
-                        main.value = value;
-                    }
+                        if (!addressControl) {
+                            return null;
+                        }
 
-                    return {
-                        item,
-                        value,
-                    };
-                }),
+                        const value = addressControl.value;
+
+                        if (item.querySelector(`.${this.getAttribute('same-address-for-all-items-control')}`)) {
+                            main.value = value;
+                        }
+
+                        return {
+                            item,
+                            value,
+                        };
+                    })
+                    .filter(Boolean),
             };
             this.controls[groupIndex].main = main;
 
@@ -93,7 +108,13 @@ export default class AddressItemFormFieldList extends Component {
 
         const items = Object.values(this.controls).flatMap((data) => {
             data.items.forEach(({ item }) => {
-                const input = item.querySelector<HTMLInputElement>(`.${item.getAttribute('address-control')}`);
+                const addressControl = item.getAttribute('address-control');
+                const input = addressControl ? item.querySelector<HTMLInputElement>(`.${addressControl}`) : null;
+
+                if (!input) {
+                    return;
+                }
+
                 this.observer.observe(input, { attributes: true, attributeFilter: ['value'] });
             });
 
@@ -110,13 +131,29 @@ export default class AddressItemFormFieldList extends Component {
     protected onInputChangeCallback(event: MutationRecord[]): void {
         const target = event[0].target as HTMLInputElement;
         const element = target.closest<HTMLElement>(`.${this.getAttribute('product-item')}`);
-        const groupIndex = element.getAttribute('group-index');
-        const value = (event[0].target as HTMLInputElement).value;
 
-        this.controls[groupIndex].items.find((child) => child.item === element).value = value;
+        if (!element) {
+            return;
+        }
+
+        const groupIndex = element.getAttribute('group-index');
+        const control = this.controls[groupIndex];
+
+        if (!control) {
+            return;
+        }
+
+        const value = target.value;
+        const changedItem = control.items.find((child) => child.item === element);
+
+        if (!changedItem) {
+            return;
+        }
+
+        changedItem.value = value;
 
         if (element.querySelector(`.${this.getAttribute('same-address-for-all-items-control')}`)) {
-            this.controls[groupIndex].main.value = value;
+            control.main.value = value;
         }
 
         this.validation();
@@ -147,6 +184,10 @@ export default class AddressItemFormFieldList extends Component {
         for (const key in this.controls) {
             const control = this.controls[key];
             let valueToUse: string;
+
+            if (!control.items.length) {
+                continue;
+            }
 
             if (control.main.checked) {
                 valueToUse = control.main.value;

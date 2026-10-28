@@ -201,6 +201,24 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant",
+          "arguments": [
+            { "storeRelation": { "idStores": ["#store.id_store"] } }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idMerchant": "#merchant.id_merchant",
+              "idProductAbstract": "#product.fk_product_abstract"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveShipmentMethod",
           "key": "shipmentMethod",
           "arguments": [

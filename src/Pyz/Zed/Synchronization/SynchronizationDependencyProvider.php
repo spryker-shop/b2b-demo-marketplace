@@ -35,6 +35,7 @@ use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Synchronization
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Synchronization\MerchantSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Synchronization\MerchantSynchronizationDataPlugin;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Synchronization\NavigationSynchronizationDataPlugin;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\MerchantRelationBusinessUnitSynchronizationDataBulkPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductConcreteMerchantRelationSynchronizationDataBulkPlugin;
 use Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Synchronization\PriceProductOfferSynchronizationDataBulkRepositoryPlugin;
@@ -42,6 +43,7 @@ use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PricePr
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PriceProductConcreteSynchronizationDataPlugin;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization\ProductAlternativeSynchronizationDataBulkPlugin;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization\ProductReplacementForSynchronizationDataBulkPlugin;
+use Spryker\Zed\ProductAttachmentStorage\Communication\Plugin\Synchronization\ProductAbstractAttachmentSynchronizationDataPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Synchronization\ProductBundleSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Synchronization\ProductCategoryFilterSynchronizationDataPlugin;
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Synchronization\ProductCategorySynchronizationDataBulkRepositoryPlugin;
@@ -188,6 +190,8 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new ProductOfferServiceSynchronizationDataBulkRepositoryPlugin(),
             new ProductOfferShipmentTypeSynchronizationDataBulkRepositoryPlugin(),
             new ProductAttributeSynchronizationDataBulkRepositoryPlugin(),
+            new ProductAbstractAttachmentSynchronizationDataPlugin(),
+            new MerchantRelationBusinessUnitSynchronizationDataBulkPlugin(),
         ];
     }
 

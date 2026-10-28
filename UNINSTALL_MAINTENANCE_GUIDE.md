@@ -10,6 +10,11 @@ The marketplace uninstall system consists of three main components:
 
 This architecture separates configuration from execution logic, making it easier to maintain and extend the uninstall process.
 
+The project state the scripts produce is called **B2B mode**: B2B Demo Marketplace without the Merchant Portal and the
+multi-merchant features. CI builds B2B mode on every pull request (`.github/workflows/_cypress.yml`, `b2b` cells, and
+`.github/workflows/_robot-api.yml`, "Robot / API B2B" job), so any change to marketplace wiring in the project must keep
+the configuration in sync. See [Verifying a Change](#verifying-a-change) for what those CI jobs do not cover.
+
 ## File Structure
 
 ```
@@ -17,26 +22,53 @@ project-root/
 ├── uninstall-marketplace-config.json       # Configuration file
 ├── uninstall-marketplace-modules.sh        # Backend cleanup script
 ├── uninstall-frontend-marketplace.sh       # Frontend cleanup script
-└── uninstall_maintenance_guide.md          # This guide
+├── UNINSTALL_MAINTENANCE_GUIDE.md          # This guide
+└── data/import/
+    ├── b2b_common/                         # B2B mode demo data (the scripts switch the install recipes to it)
+    ├── b2b_robot/                          # B2B mode Robot Framework demo data
+    └── local/b2b_full_EU.yml, b2b_full_ROBOT.yml
 ```
+
+The `data/import/b2b_*` files are part of the repository in both modes; they are only *used* once the scripts have run.
 
 ## Configuration File Structure
 
-The `uninstall-marketplace-config.json` file contains the following top-level sections:
+The `uninstall-marketplace-config.json` file contains the following top-level sections, listed in the order the backend
+script processes them:
+
+| Section | Step | Purpose |
+|---|---|---|
+| — (hardcoded in the script) | 1–2 | `MARKETPLACE_FEATURES` and `MARKETPLACE_CORE_MODULES` removed with `composer remove` |
+| `php_dependency_providers` | 3 | Operations on PHP files (plugins, methods, constants, use statements) |
+| `config_files` | 4 | Operations on configuration files (`config/Shared/*.php`, bundles, install recipes, templates) |
+| `directories_to_remove` | 5 | Directories deleted with `rm -rf` |
+| `files_to_remove` | 5 | Single files deleted |
+| `import_entities_to_remove` + `import_yaml_files` | 6 | `data_entity` blocks removed from the marketplace import YAML files |
+| `docker_commands_to_remove` + `docker_config_files` | 7 | Command blocks removed from install recipes |
+| `docker_config_substitutions` + `docker_config_files` | 8 | Literal string replacements in install recipes (marketplace → B2B data import paths) |
+| `deploy_files` | 9 | `merchant-portal` applications, and `entry-point: MerchantPortal` endpoints declared under other applications, removed from deploy files |
+| `xml_files` | 10 | Operations on XML files (OMS, Back Office navigation) |
+| `test_files` | 11 | Operations on tests and test fixtures |
+| `payment_config_updates` | 12 | Re-adds the B2B `DummyPayment` provider (B2B-MP ships only `DummyMarketplacePayment`) |
+
+Steps 3, 4, 10, 11 and 12 share the same operation engine and the same operation types. A file may appear in several
+sections; it is processed once per section, in the step order above.
 
 ```json
 {
   "php_dependency_providers": {},
   "config_files": {},
-  "xml_files": {},
-  "test_files": {},
-  "payment_config_updates": {},
   "import_entities_to_remove": [],
   "import_yaml_files": [],
   "docker_commands_to_remove": [],
   "docker_config_files": [],
   "deploy_files": [],
-  "directories_to_remove": []
+  "docker_config_substitutions": {},
+  "directories_to_remove": [],
+  "files_to_remove": [],
+  "xml_files": {},
+  "test_files": {},
+  "payment_config_updates": {}
 }
 ```
 
@@ -46,10 +78,21 @@ The `uninstall-marketplace-config.json` file contains the following top-level se
 
 Location in JSON: `php_dependency_providers`
 
-Each PHP file can have multiple operations:
+Each PHP file can have multiple operations.
+
+Every operation must change the file. When an operation matches nothing, the script prints
+`⚠ No match in <file>: <operation>` — the configuration has drifted from the code (the plugin was renamed, moved to
+another file or removed). Fix the configuration; do not ignore the warning. `ensure_use_statement` is the only exception,
+because it is idempotent by design.
+
+Removal operations remove the whole line when the removed item (plugin, array value, `add()` call, constant, method)
+occupies its own lines, and fall back to an in-place removal otherwise. This keeps neighbouring statements on separate
+lines, so the result passes the project's code sniffer.
 
 #### Operation: `remove_use`
-Removes use statement (import) for a class.
+Removes use statement (import) for a class. Matches both `use Vendor\...\ExamplePlugin;` and aliased imports
+(`use Vendor\...\HeadersSecurityEventDispatcherPlugin as MerchantPortalHeadersSecurityEventDispatcherPlugin;`) — for an
+aliased import, pass the alias as `class_name`.
 
 ```json
 {
@@ -109,7 +152,8 @@ Removes REST API resource relationships.
 ```
 
 #### Operation: `remove_method`
-Removes entire methods including docblocks.
+Removes an entire method, including its docblock and attributes when present. The method body is matched by brace
+counting, so nesting depth does not matter. Methods without a docblock (typed signatures) are supported.
 
 ```json
 {
@@ -119,7 +163,8 @@ Removes entire methods including docblocks.
 ```
 
 #### Operation: `remove_constant`
-Removes constants with their docblocks.
+Removes a constant with its docblock (when present). Typed constants (`protected const string NAME = ...;`) are
+supported. The whole lines are removed, together with the blank line left behind.
 
 ```json
 {
@@ -129,7 +174,7 @@ Removes constants with their docblocks.
 ```
 
 #### Operation: `remove_array_entry`
-Removes array entries by key.
+Removes a `'key' => [ ... ],` array entry by key (whole lines).
 
 ```json
 {
@@ -269,7 +314,8 @@ Removes array values from configuration arrays.
 ```
 
 #### Operation: `remove_filesystem_config`
-Removes filesystem configuration blocks.
+Removes a `'name' => [ ... ],` filesystem configuration block (whole lines). The block must not contain nested arrays.
+For one-line assignments such as `$config[...]['name'] = $localConfig;` use `remove_line_containing`.
 
 ```json
 {
@@ -314,12 +360,23 @@ Replaces the entire content of a configuration array.
 Location in JSON: `xml_files`
 
 #### Operation: `remove_xml_element`
-Removes XML elements matching a pattern.
+Removes an XML element. `element_pattern` is a **literal** string (not a regex), matched exactly, including line breaks
+and the indentation of every line after the first. When the element occupies whole lines, those lines are removed;
+otherwise the matched text is removed in place.
 
 ```json
 {
   "type": "remove_xml_element",
-  "element_pattern": "<element.*?</element>"
+  "element_pattern": "<process>DummyMerchantCommission</process>"
+}
+```
+
+Multi-line example (Back Office navigation entry):
+
+```json
+{
+  "type": "remove_xml_element",
+  "element_pattern": "<merchant-commission-gui>\n                <label>Merchant Commissions</label>\n                ...\n            </merchant-commission-gui>"
 }
 ```
 
@@ -371,7 +428,21 @@ Lists of docker commands to remove from configuration.
 ]
 ```
 
-### 6. Directory Removal
+#### Docker Config Substitutions
+Literal replacements applied to every file in `docker_config_files` (Step 8). Used to point the install recipes at the
+B2B demo data. A substitution is reported only for the files that contain the old value.
+
+```json
+"docker_config_substitutions": {
+  "data:import --config=data/import/local/full_EU.yml": "data:import --config=data/import/local/b2b_full_EU.yml"
+}
+```
+
+The B2B dataset is EU-only (DE and AT stores), so every regional marketplace import (`full_${SPRYKER_REGION}`,
+`full_${SPRYKER_CURRENT_REGION}`, `full_EU`) is switched to `b2b_full_EU.yml`. A substitution target must exist in the
+repository.
+
+### 6. Directory and File Removal
 
 Format: `"path:DisplayName"`
 
@@ -379,8 +450,15 @@ Format: `"path:DisplayName"`
 "directories_to_remove": [
   "src/Pyz/Zed/Example:Example Module",
   "tests/PyzTest/Zed/Example:Example Tests"
+],
+"files_to_remove": [
+  "config/Zed/navigation-main-merchant-portal.xml:Merchant Portal main navigation"
 ]
 ```
+
+Remove a project module directory when its core module is uninstalled (even indirectly, see
+[Case 11](#case-11-a-plugin-whose-package-is-removed-indirectly)): a `src/Pyz` class that extends a missing core class
+breaks PHPStan for the whole project, and a test directory for a removed module breaks its Codeception suite.
 
 ## How to Add New Cases
 
@@ -584,13 +662,41 @@ And ensure the docker config files are listed:
 }
 ```
 
+### Case 11: A Plugin Whose Package Is Removed Indirectly
+
+`composer remove` also removes every package that only the removed features required. A plugin from such a package can
+still be wired in the project, which compiles but fails at runtime with `Class not found` the first time the stack is
+built. Example: `spryker/merchant-user-password-reset-mail` disappears together with the Merchant Portal features, so
+`MailMerchantUserPasswordResetRequestStrategyPlugin` had to be removed from `UserPasswordResetDependencyProvider`, or the
+Back Office "Forgot password" flow broke in B2B mode.
+
+To find the full package list, run the scripts in a scratch worktree (see [Verifying a Change](#verifying-a-change)) and
+diff `composer.lock`:
+
+```bash
+git show HEAD:composer.lock > /tmp/before.lock
+python3 -c "import json;n=lambda f:{p['name'] for p in json.load(open(f))['packages']};print(*sorted(n('/tmp/before.lock')-n('composer.lock')),sep='\n')"
+```
+
+### Case 12: Marketplace Wiring in a Non-PHP File
+
+Back Office navigation, deploy files and install recipes are configuration too:
+
+- Back Office menu entries → `xml_files` on `config/Zed/navigation.xml` with `remove_xml_element`. Entries whose module
+  is uninstalled are hidden at runtime by `BackofficeNavigationItemCollectionFilterPlugin`, but entries of modules that
+  stay installed (for example Merchant Registrations) stay visible.
+- A new deploy file with a `merchant-portal` application → `deploy_files`.
+- A new install recipe running Merchant Portal or ACL entity commands, or importing marketplace demo data →
+  `docker_config_files`. When a command is the only entry of its section, remove the whole section with a
+  `regex_replace` in `config_files` (see `config/install/production.yml`), so no empty section is left behind.
+
 ## Best Practices
 
 ### 1. Testing Changes
 
 Before running the script:
 - Commit your changes to git
-- Test on a separate branch
+- Test on a separate branch or a scratch worktree (see [Verifying a Change](#verifying-a-change))
 - Verify the configuration JSON is valid:
   ```bash
   python3 -m json.tool uninstall-marketplace-config.json
@@ -637,6 +743,13 @@ Use exact class names without namespace:
 
 ## Troubleshooting
 
+### Issue: "⚠ No match in &lt;file&gt;: &lt;operation&gt;"
+
+**Solution**: The operation targets code that is no longer there. Find where the class, method or line moved
+(`grep -rn ExamplePlugin src/`) and update the entry, or delete the operation if the marketplace wiring is gone. Common
+causes: the plugin moved to another dependency provider, an import is aliased (`remove_use` needs the alias), or a REST
+resource moved to API Platform (the whole `GlueApplicationDependencyProvider` recipe became obsolete this way).
+
 ### Issue: "File not found" error
 
 **Solution**: Verify the file path in the configuration matches the actual file location.
@@ -667,9 +780,13 @@ Use exact class names without namespace:
 
 To add new operation types:
 
-1. Add the operation handler in `/tmp/marketplace_cleanup.py` within the script
+1. Add the operation handler to the `marketplace_cleanup.py` heredoc in `uninstall-marketplace-modules.sh` (the script
+   writes it to `/tmp/marketplace_cleanup.py` at runtime)
 2. Update the `process_file()` function to handle the new operation type
 3. Document the new operation type in this guide
+
+Prefer the `cut_lines()` / `cut_all_matches()` helpers for anything that removes whole lines: they also drop the blank
+line the removal leaves behind, so the result passes the code sniffer.
 
 Example:
 ```python
@@ -702,9 +819,11 @@ This script will:
 - Remove marketplace Composer packages
 - Clean up PHP dependency providers
 - Remove marketplace-specific configuration
-- Remove marketplace directories
+- Remove marketplace directories and files
 - Clean up data import configurations
-- Update Docker configuration files
+- Update install recipes (Merchant Portal and ACL entity commands, B2B data import paths)
+- Remove the Merchant Portal application from deploy files
+- Update OMS, Back Office navigation, tests and payment configuration
 
 ### Frontend Uninstall
 
@@ -717,13 +836,10 @@ chmod +x uninstall-frontend-marketplace.sh
 ```
 
 This script will:
-- Remove marketplace frontend configuration files (tsconfig.mp.json, .stylelintrc.mp.js, angular.json)
-- Remove frontend/merchant-portal directory
-- Clean up eslint.config.mjs (remove Merchant Portal blocks)
-- Remove mp:* scripts from package.json
-- Remove Angular and related dependencies
-- Update npm dependencies
-- Install required Babel packages
+- Remove the `mp:*` scripts from `package.json`
+- Remove the Merchant Portal steps (`mp-zed-ui`, `mp:update:paths`) from the `postinstall` script
+
+See [Frontend Uninstall Script](#frontend-uninstall-script) for why nothing else is needed.
 
 ### Recommended Execution Order
 
@@ -736,6 +852,8 @@ This script will:
    ```bash
    ./uninstall-marketplace-modules.sh
    ```
+   The frontend script must run first: it strips the `postinstall` steps of the `mp-zed-ui` workspace, which the backend
+   script removes with `spryker/zed-ui`. CI uses the same order.
 
 3. Review all changes before committing:
    ```bash
@@ -755,43 +873,131 @@ For questions or issues with the uninstall script:
 
 ## Frontend Uninstall Script
 
-The `uninstall-frontend-marketplace.sh` script handles removal of all marketplace frontend components:
+The Merchant Portal build tooling (Angular workspace, lint and TypeScript configuration) ships inside `spryker/zed-ui` as
+the `mp-zed-ui` npm workspace. The project's `package.json` picks it up through the `vendor/spryker/*` workspace glob, so
+the workspace disappears when the backend script removes `spryker/zed-ui` with Composer.
 
-### Files Removed
-- `tsconfig.mp.json` - Merchant Portal TypeScript configuration
-- `.stylelintrc.mp.js` - Merchant Portal style linting configuration
-- `angular.json` - Angular workspace configuration
+`uninstall-frontend-marketplace.sh` therefore only undoes what the project itself declares in `package.json`:
 
-### Directories Removed
-- `frontend/merchant-portal` - All Merchant Portal frontend code
-
-### Configuration Cleanup
-
-#### eslint.config.mjs
-Removes Merchant Portal configuration blocks:
-- Angular ESLint import statements
-- TypeScript file configurations for Merchant Portal
-- HTML template configurations for Merchant Portal
-
-#### package.json
-Removes:
 - All `mp:*` scripts
-- `postinstall` script if it references `mp:update:paths`
-- Angular packages (@angular/*, angular-eslint)
-- Merchant Portal specific dependencies (ng-zorro-antd, zone.js, rxjs)
-- Jest packages
+- The `postinstall` steps that reference `mp:update:paths` or `mp-zed-ui`. The remaining steps (`update:config` for the
+  Zed and Yves builders) must stay: they generate the TypeScript configuration the Zed and Yves builds read. Leaving the
+  Merchant Portal steps behind makes every later `npm ci` fail on a workspace that no longer exists.
 
-### Post-Cleanup Actions
-The script automatically:
-- Runs `npm install` to update dependencies
-- Installs required Babel packages (@babel/core, @babel/runtime)
-- Cleans npm cache
+The script does not run `npm install`; `docker/sdk up` rebuilds the frontend.
+
+## What B2B Mode Keeps on Purpose
+
+B2B mode is **not** identical to B2B Demo Shop. It removes the Merchant Portal and the multi-merchant features, but keeps
+the following, because the B2B mode demo data and features need them:
+
+| Kept | Why |
+|---|---|
+| `spryker-feature/marketplace-product-offer`, `marketplace-product-offer-prices`, `marketplace-inventory-management` | The B2B dataset (`data/import/b2b_common`) imports product offers, offer prices, offer stock and merchant stock. All offers belong to the single merchant `MERSPRYKER` and back Self-Service Portal services and click & collect. |
+| `spryker-feature/marketplace-merchant`, `marketplace-product`, `marketplace-shipment` | Required by the features above and by merchant relationships (B2B contracts). Their storefront entry points (merchant pages, merchant registration form) are unwired by the configuration. |
+| Product offer, service point and shipment type wiring (widgets, Back Office "Offers") | Self-Service Portal and click & collect. |
+| Merchants, merchant relationships, merchant relation requests | B2B contract features, also part of B2B Demo Shop. |
+
+Everything Merchant Portal-specific must be removed: applications, routers, security, ACL rules, navigation, console
+commands, audit logging, filesystems, OMS processes, data import entities and project modules.
+
+Known limitation: the B2B dataset is EU-only, so B2B mode imports `b2b_full_EU.yml` regardless of region.
+
+## Keeping the B2B Datasets in Sync
+
+B2B mode imports its demo data from `data/import/b2b_common` (and `data/import/b2b_robot` in the Robot CI job), not from
+`data/import/common`. When a feature adds data that B2B mode also renders, add it to the B2B datasets as well, otherwise
+the storefront shows raw glossary keys (`catalog.filter.by`, `customer.login.submit`, `product.attribute.steamoutput`)
+only in B2B mode:
+
+- glossary keys → `data/import/{common,b2b_common,b2b_robot}/common/glossary.csv`
+- product attribute definitions for products that exist in the B2B dataset →
+  `product_attribute_key.csv` and `product_management_attribute.csv`. Note that the B2B
+  `product_management_attribute.csv` has no `visibility` column; drop it when copying rows.
+- navigation nodes and CMS content: check that links do not point at marketplace-only pages (merchant registration,
+  merchant profile pages)
+
+To list glossary keys that the marketplace dataset has and a B2B dataset lacks:
+
+```bash
+python3 - <<'EOF'
+import csv
+keys = lambda p: {r[0] for r in list(csv.reader(open(p, encoding='utf-8')))[1:] if r}
+mp = keys('data/import/common/common/glossary.csv')
+for ds in ('b2b_common', 'b2b_robot'):
+    missing = sorted(mp - keys(f'data/import/{ds}/common/glossary.csv'))
+    print(ds, len(missing), missing[:20])
+EOF
+```
+
+Keys of marketplace-only features (merchant registration, merchant profile and opening hours, commissions, Merchant
+Portal) are expected in that list.
+
+## Verifying a Change
+
+The CI jobs that run B2B mode (Cypress `b2b` cells, Robot "API B2B") exercise the storefront and Glue. They do **not**
+run static analysis or Codeception in B2B mode, nor do they cover the Back Office password reset, the cloud install
+recipes (`production.yml`, `destructive.yml`, `dynamic-store.yml`) or the non-default deploy files. After changing the
+configuration, verify locally in a scratch worktree so the main checkout stays untouched:
+
+```bash
+git worktree add --detach ../b2b-mode HEAD
+cp uninstall-marketplace-config.json uninstall-marketplace-modules.sh uninstall-frontend-marketplace.sh ../b2b-mode/
+cp -cR vendor ../b2b-mode/vendor        # APFS clone on macOS; use cp -R elsewhere
+cd ../b2b-mode
+./uninstall-frontend-marketplace.sh && ./uninstall-marketplace-modules.sh 2>&1 | tee uninstall.log
+```
+
+1. **No warnings.** `grep '⚠' uninstall.log` must return nothing. Every warning is configuration drift.
+2. **No syntax errors.** `git diff --name-only --diff-filter=d -- '*.php' | xargs -n1 php -l`
+3. **PHPStan on the touched files.** Copy the generated code first (`cp -cR ../b2b-demo-marketplace/src/{Generated,Orm} src/`),
+   then run `vendor/bin/phpstan analyze -c phpstan.neon $(git diff --name-only --diff-filter=d -- 'src/*.php')`. A `src/Pyz` class that
+   extends a removed core class aborts PHPStan with an internal error; remove that module directory.
+4. **Code sniffer on the touched files.**
+   `vendor/bin/phpcs --standard=phpcs.xml --no-cache $(git diff --name-only --diff-filter=d -- 'src/*.php')` must report nothing.
+   Use `--no-cache`: a cached run from the marketplace checkout can hide violations. On PHP 8.5, add
+   `-d error_reporting='E_ALL & ~E_DEPRECATED'` to `php`, otherwise a Slevomat sniff aborts with a deprecation notice.
+5. **No orphaned project modules.** Every `src/Pyz/<Layer>/<Module>` must still have a core module of the same name in
+   `vendor/`, unless it is a project-only module.
+6. **No Merchant Portal leftovers.**
+   `grep -rIil "merchant-portal\|merchantportal\|mportal" src config deploy*.yml --exclude-dir=Generated --exclude-dir=Orm`
+   should list only `config/install/ci.restore-db.stage2.yml`. That recipe restores the shared marketplace database dump
+   in CI and is never used in B2B mode, so it is intentionally not processed.
+7. **CI.** Open the pull request and check the Cypress `b2b` and Robot "API B2B" jobs.
+8. **Runtime smoke test** (for larger changes). Boot the scratch worktree with its own namespace so it does not reuse the
+   marketplace environment's volumes (`sed -i '' 's/^namespace: .*/namespace: spryker_b2b_mode_dev/' deploy.dev.yml`,
+   copy `docker/` without `docker/deployment`, stop the marketplace environment, then
+   `PROGRESS_TYPE=plain docker/sdk boot deploy.dev.yml && PROGRESS_TYPE=plain docker/sdk up`). Check the Back Office
+   menu pages, a storefront checkout with `dummyPaymentInvoice`, and the storefront for raw glossary keys
+   (see [Keeping the B2B Datasets in Sync](#keeping-the-b2b-datasets-in-sync)).
+
+Remove the worktree afterwards: `git worktree remove --force ../b2b-mode`.
 
 ## Changelog
 
 Document significant changes to the configuration:
 
 ```
+2026-10-21: CC-41086 B2B mode audit
+            - Fixed: Back Office password reset and the product offer stock table failed with "Class not found"
+              (plugins from packages removed indirectly)
+            - Fixed: production/development/testing install recipes ran removed acl-entity console commands
+            - Removed: the data/import/common/minimal.yml substitution; its target never existed and no B2B mode CI
+              job uses the docker.ci.api install recipe
+            - Fixed: Glue PaymentsRestApiConfig / CheckoutRestApiConfig kept marketplace payment keys or a wrong
+              required-fields structure
+            - Added: deploy files, install recipes and the CURRENT_REGION import substitution that were not processed
+            - Added: removal of Merchant Portal console commands, audit logging, ACL whitelist, filesystems,
+              navigation, OMS processes and orphaned project modules
+            - Added: files_to_remove section; "⚠ No match" warning for operations that change nothing
+            - Changed: remove_use supports aliases; remove_method / remove_constant support code without docblocks
+              and typed constants; all removal operations work line-based, so B2B mode passes the code sniffer;
+              Step 9 also removes MerchantPortal endpoints declared under other applications
+            - Removed: obsolete GlueApplicationDependencyProvider recipe (resources moved to API Platform) and other
+              operations that no longer matched
+            - Fixed (runtime check): B2B datasets missed 367 (b2b_common) / 695 (b2b_robot) glossary keys and 54
+              product attribute definitions; Glue required fields for dummyPaymentInvoice used the wrong provider
+              key; B2B footer linked to the marketplace merchant registration page
 2026-02-05: Updated maintenance guide with all operation types and new sections
 2026-02-05: Added frontend uninstall script documentation
 2026-02-02: Initial configuration file created with all marketplace features
@@ -837,11 +1043,16 @@ Document significant changes to the configuration:
 - `xml_files` - XML configuration files
 - `test_files` - Test files
 - `payment_config_updates` - Payment configuration updates
+  (B2B-MP ships only `DummyMarketplacePayment`; this section re-adds the B2B `DummyPayment` provider:
+  config wiring, `DummyPaymentCheckoutPreConditionPlugin`, `payment.twig` icon block, `payment_method*.csv`
+  and glossary demo data. The matching test fixtures are flipped back to `DummyPayment01` in `test_files`.)
 - `import_entities_to_remove` - Data import entity names
 - `import_yaml_files` - YAML import file paths
 - `docker_commands_to_remove` - Docker command names
 - `docker_config_files` - Docker configuration file paths
+- `docker_config_substitutions` - Literal replacements in the docker configuration files
 - `deploy_files` - Deploy file paths
 - `directories_to_remove` - Directory paths with display names
+- `files_to_remove` - File paths with display names
 
 ---

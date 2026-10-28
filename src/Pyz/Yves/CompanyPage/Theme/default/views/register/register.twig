@@ -1,32 +1,103 @@
-{% extends template('page-layout-company', 'CompanyPage') %}
+{% extends template('page-layout-auth') %}
 
 {% define data = {
-    forms: {
-        register: _view.registerForm,
-    },
+    form: _view.registerForm,
+    action: url('company/register'),
+    heading: 'company.account.registration.title',
+    subtitle: 'company.account.registration.subtitle',
 } %}
 
-{% block pageInfo %}{% endblock %}
-
 {% block content %}
-    {% include molecule('form') with {
-        class: 'box',
+    {% set form = data.form %}
+
+    {% embed molecule('auth-layout', 'CustomerPage') with {
+        modifiers: ['wide'],
         data: {
-            title: 'company.account.registration.title' | trans,
-            form: data.forms.register,
-            shouldRequireMessage: true,
-            options: {
-                action: url('company/register'),
-            },
-            layout: {
-                salutation: 'col col--sm-12 col--lg-2',
-                first_name: 'col col--sm-12 col--lg-5',
-                last_name: 'col col--sm-12 col--lg-5',
-            },
-            submit: {
-                enable: true,
-                text: 'forms.submit.register' | trans,
-            },
+            heading: data.heading | trans,
+            subtitle: data.subtitle | trans,
+        },
+        embed: {
+            registerForm: form,
+            action: data.action,
+            hasError: form.vars.errors | length > 0,
+            rows: [
+                {
+                    modifier: 'name',
+                    fields: [form.salutation, form.first_name, form.last_name],
+                },
+                {
+                    fields: [form.company_name],
+                },
+                {
+                    fields: [form.email],
+                },
+                {
+                    fields: [form.password.pass, form.password.confirm],
+                    errors: form.password,
+                },
+            ],
         },
     } only %}
+        {% block card %}
+            {% set formAttr = {
+                class: config.name ~ '__form' ~ (embed.hasError ? ' ' ~ config.name ~ '__form--error' : ''),
+                novalidate: 'novalidate',
+            } %}
+
+            {{ form_start(embed.registerForm, { action: embed.action, attr: formAttr }) }}
+                <div class="{{ config.name }}__fields">
+                    {% for row in embed.rows %}
+                        <div class="{{ config.name }}__row{{ row.modifier is defined ? ' ' ~ config.name ~ '__row--' ~ row.modifier }}">
+                            {% for field in row.fields %}
+                                <div class="{{ config.name }}__field">
+                                    <label for="{{ field.vars.id }}" class="{{ config.name }}__label">
+                                        {{- field.vars.label | trans -}}
+                                    </label>
+                                    {{ form_widget(field) }}
+                                    {{ form_errors(field) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if row.errors is defined %}
+                            {{ form_errors(row.errors) }}
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="{{ config.name }}__field">
+                        {{ form_widget(embed.registerForm.accept_terms) }}
+                        {{ form_errors(embed.registerForm.accept_terms) }}
+                    </div>
+
+                    {% if embed.hasError %}
+                        {% set errorText %}
+                            {%- for error in embed.registerForm.vars.errors %}{{ error.message | trans }} {% endfor -%}
+                        {% endset %}
+                        {% include molecule('flash-message') with {
+                            modifiers: ['alert', 'notification'],
+                            data: {
+                                isStatic: true,
+                                text: errorText | trim,
+                            },
+                        } only %}
+                    {% endif %}
+                </div>
+
+                <button
+                    type="submit"
+                    class="button {{ config.name }}__submit"
+                    data-init-single-click
+                    {{ qa('submit-button') }}
+                >
+                    {{- 'forms.submit.register' | trans -}}
+                </button>
+
+                <p class="{{ config.name }}__switch">
+                    {{- 'company.account.registration.have_account' | trans -}}
+                    <a href="{{ url('login') }}" class="{{ config.name }}__back" {{ qa('sign-in-link') }}>
+                        {{- 'customer.login.submit' | trans -}}
+                    </a>
+                </p>
+            {{ form_end(embed.registerForm) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

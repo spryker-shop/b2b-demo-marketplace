@@ -1,5 +1,5 @@
 name: 'Validate sync completeness'
-description: 'Checks product sync counts DB vs ES vs Redis; fails if mismatched or sync queues non-empty'
+description: 'Checks product/category/price sync counts DB vs ES vs Redis; fails if mismatched or sync queues non-empty'
 
 runs:
     using: "composite"
@@ -31,6 +31,24 @@ runs:
                     python3 -c "print(\"  \" + \"-\" * 88)"
                     check_row "spy_product_abstract_page_search -> ES *_page (product_abstract)" "$DB_ABSTRACT" "$ES_ABSTRACT"
                     check_row "spy_product_concrete_storage -> Redis kv:product_concrete:*" "$DB_CONCRETE" "$REDIS_CONCRETE"
+
+                    echo ""
+                    echo "=== Category data sync completeness ==="
+                    DB_CATEGORY_NODE=$(mariadb --ssl=false -h "$SPRYKER_DB_HOST" -u "$SPRYKER_DB_USERNAME" -p"$SPRYKER_DB_PASSWORD" "$SPRYKER_DB_DATABASE" -sNe "SELECT COUNT(*) FROM spy_category_node_storage" 2>/dev/null) || DB_CATEGORY_NODE=0
+                    REDIS_CATEGORY_NODE=$(redis-cli -h "$SPRYKER_KEY_VALUE_STORE_HOST" -p "$SPRYKER_KEY_VALUE_STORE_PORT" -n 1 --scan --count 10000 2>/dev/null | grep -c "^kv:category_node:") || REDIS_CATEGORY_NODE=0
+                    DB_CATEGORY_TREE=$(mariadb --ssl=false -h "$SPRYKER_DB_HOST" -u "$SPRYKER_DB_USERNAME" -p"$SPRYKER_DB_PASSWORD" "$SPRYKER_DB_DATABASE" -sNe "SELECT COUNT(*) FROM spy_category_tree_storage" 2>/dev/null) || DB_CATEGORY_TREE=0
+                    REDIS_CATEGORY_TREE=$(redis-cli -h "$SPRYKER_KEY_VALUE_STORE_HOST" -p "$SPRYKER_KEY_VALUE_STORE_PORT" -n 1 --scan --count 10000 2>/dev/null | grep -c "^kv:category_tree:") || REDIS_CATEGORY_TREE=0
+                    check_row "spy_category_node_storage -> Redis kv:category_node:*" "$DB_CATEGORY_NODE" "$REDIS_CATEGORY_NODE"
+                    check_row "spy_category_tree_storage -> Redis kv:category_tree:*" "$DB_CATEGORY_TREE" "$REDIS_CATEGORY_TREE"
+
+                    echo ""
+                    echo "=== Price data sync completeness ==="
+                    DB_PRICE_ABSTRACT=$(mariadb --ssl=false -h "$SPRYKER_DB_HOST" -u "$SPRYKER_DB_USERNAME" -p"$SPRYKER_DB_PASSWORD" "$SPRYKER_DB_DATABASE" -sNe "SELECT COUNT(*) FROM spy_price_product_abstract_storage" 2>/dev/null) || DB_PRICE_ABSTRACT=0
+                    REDIS_PRICE_ABSTRACT=$(redis-cli -h "$SPRYKER_KEY_VALUE_STORE_HOST" -p "$SPRYKER_KEY_VALUE_STORE_PORT" -n 1 --scan --count 10000 2>/dev/null | grep -c "^kv:price_product_abstract:") || REDIS_PRICE_ABSTRACT=0
+                    DB_PRICE_CONCRETE=$(mariadb --ssl=false -h "$SPRYKER_DB_HOST" -u "$SPRYKER_DB_USERNAME" -p"$SPRYKER_DB_PASSWORD" "$SPRYKER_DB_DATABASE" -sNe "SELECT COUNT(*) FROM spy_price_product_concrete_storage" 2>/dev/null) || DB_PRICE_CONCRETE=0
+                    REDIS_PRICE_CONCRETE=$(redis-cli -h "$SPRYKER_KEY_VALUE_STORE_HOST" -p "$SPRYKER_KEY_VALUE_STORE_PORT" -n 1 --scan --count 10000 2>/dev/null | grep -c "^kv:price_product_concrete:") || REDIS_PRICE_CONCRETE=0
+                    check_row "spy_price_product_abstract_storage -> Redis kv:price_product_abstract:*" "$DB_PRICE_ABSTRACT" "$REDIS_PRICE_ABSTRACT"
+                    check_row "spy_price_product_concrete_storage -> Redis kv:price_product_concrete:*" "$DB_PRICE_CONCRETE" "$REDIS_PRICE_CONCRETE"
 
                     echo ""
                     echo "  spy_product_abstract_page_search by store/locale:"

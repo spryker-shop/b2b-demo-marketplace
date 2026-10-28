@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import Twig from 'twig';
 import { preprocess } from './preprocessor';
+import { registerComponentFunctions } from './component-functions';
+import { registerValueFilters } from './value-filters';
 
 interface FailedTemplate {
     id: string;
@@ -53,6 +55,7 @@ export function initTwigEngine(): void {
         return `@${m}/views/${name}/${name}.twig`;
     });
 
+    registerComponentFunctions(Twig);
     Twig.extendFunction('qa', (...args: unknown[]) => {
         const values = (args.flat() as unknown[]).filter(Boolean);
         return values.length ? `data-qa="${values.join(' ').trim()}"` : '';
@@ -96,24 +99,7 @@ export function initTwigEngine(): void {
         }
         return translated;
     });
-    Twig.extendFilter('money', (v: number | string | null | undefined) => {
-        if (v == null) return '';
-        const num = typeof v === 'number' ? v / 100 : parseFloat(String(v));
-        return isNaN(num) ? v : `€${num.toFixed(2)}`;
-    });
-    Twig.extendFilter('moneyRaw', (v: number | string | null | undefined) => {
-        if (v == null) return '';
-        const num = typeof v === 'number' ? v / 100 : parseFloat(String(v));
-        return isNaN(num) ? v : num.toFixed(2);
-    });
-    Twig.extendFilter('trimLocale', (v: unknown) => v);
-    Twig.extendFilter('executeFilterIfExists', (v: unknown) => v);
-    Twig.extendFilter('raw', (v: unknown) => v);
-    Twig.extendFilter('sb_map_first', (value: unknown) =>
-        Array.isArray(value)
-            ? value.map((item: unknown) => (typeof item === 'string' && item.length ? item[0] : ''))
-            : value,
-    );
+    registerValueFilters(Twig);
 
     initialized = true;
 }

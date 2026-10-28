@@ -11,18 +11,12 @@ namespace Pyz\Zed\ExampleProductSalePage\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 
 /**
  * @method \Pyz\Zed\ExampleProductSalePage\Persistence\ExampleProductSalePagePersistenceFactory getFactory()
  */
 interface ExampleProductSalePageQueryContainerInterface
 {
-    /**
-     * @api
-     */
-    public function queryProductLabelByName(string $labelName): SpyProductLabelQuery;
-
     /**
      * @api
      */

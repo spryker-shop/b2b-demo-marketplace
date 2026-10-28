@@ -31,6 +31,11 @@ const docs = componentDocs({
 const meta: Meta = { title: 'Molecules/Range Slider' };
 export default meta;
 
+const DEFAULT_RANGE_START_LOWER = 100;
+const DEFAULT_RANGE_START_UPPER = 900;
+const NARROW_RANGE_START_LOWER = 200;
+const NARROW_RANGE_START_UPPER = 300;
+
 let counter = 0;
 function rangeSliderBlock(label, config) {
     counter += 1;
@@ -61,14 +66,14 @@ export const Overview: StoryObj = {
         counter = 0;
         return (
             rangeSliderBlock('Default range (100 - 900)', {
-                start: [100, 900],
+                start: [DEFAULT_RANGE_START_LOWER, DEFAULT_RANGE_START_UPPER],
                 step: 1,
                 connect: true,
                 margin: 1,
                 range: { min: 1, max: 999 },
             }) +
             rangeSliderBlock('Narrow range (200 - 300)', {
-                start: [200, 300],
+                start: [NARROW_RANGE_START_LOWER, NARROW_RANGE_START_UPPER],
                 step: 10,
                 connect: true,
                 margin: 10,

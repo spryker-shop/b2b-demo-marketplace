@@ -1,5 +1,5 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
 const docs = componentDocs({
     name: 'date-time-picker',

@@ -16,6 +16,13 @@ use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface;
 class Environment extends Module
 {
     /**
+     * @var array<string, mixed>
+     */
+    protected array $config = [
+        'application' => 'docker.devtest',
+    ];
+
+    /**
      * @var string
      */
     protected const TESTING_APPLICATION_ENV_NAME = 'devtest';
@@ -29,7 +36,7 @@ class Environment extends Module
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', (isset($_SERVER['APPLICATION_STORE']) && $_SERVER['APPLICATION_STORE'] !== '') ? $_SERVER['APPLICATION_STORE'] : 'DE'); // phpcs:ignore SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable
         putenv('APPLICATION_STORE=' . APPLICATION_STORE);
 
-        defined('APPLICATION') || define('APPLICATION', '');
+        defined('APPLICATION') || define('APPLICATION', $this->config['application']);
 
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $rootDir);
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');

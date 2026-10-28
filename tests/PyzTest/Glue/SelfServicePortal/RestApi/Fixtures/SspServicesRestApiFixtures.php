@@ -33,7 +33,7 @@ class SspServicesRestApiFixtures implements FixturesBuilderInterface, FixturesCo
 
     protected const TEST_PASSWORD = 'change123';
 
-    protected const STATE_MACHINE_NAME = 'DummyPayment01';
+    protected const STATE_MACHINE_NAME = 'MarketplacePayment01';
 
     protected const TEST_COMPANY_NAME = 'Test Company Services 2';
 

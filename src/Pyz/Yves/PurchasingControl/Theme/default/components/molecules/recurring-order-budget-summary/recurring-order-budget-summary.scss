@@ -1,4 +1,10 @@
 @include purchasing-control-recurring-order-budget-summary {
+    --bar-color: var(--background-brand-primary);
+
+    &--alert {
+        --bar-color: var(--background-state-error-bold);
+    }
+
     &__headline {
         display: flex;
         align-items: baseline;
@@ -22,7 +28,7 @@
     &__bar {
         height: 100%;
         border-radius: var(--radius-full);
-        background: var(--background-brand-primary);
+        background: var(--bar-color);
         transition: width 0.24s ease-out;
     }
 

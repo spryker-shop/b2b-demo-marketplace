@@ -56,7 +56,7 @@ class SspInquiriesRestApiFixtures implements FixturesBuilderInterface, FixturesC
 
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
-    protected const STATE_MACHINE_NAME = 'DummyPayment01';
+    protected const STATE_MACHINE_NAME = 'MarketplacePayment01';
 
     public const PERMISSION_PLUGINS = [
         ViewBusinessUnitSspInquiryPermissionPlugin::class,

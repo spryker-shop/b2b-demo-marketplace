@@ -21,6 +21,7 @@ use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Redis\RedisConstants;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
+use SprykerShop\Shared\ShopUi\ShopUiConstants;
 
 require 'config_default-docker.dev.php';
 
@@ -128,3 +129,4 @@ $publicUrl = sprintf(
 $config[FlysystemConstants::FLYSYSTEM_OPTIONS] = [
     'public_url' => $publicUrl,
 ];
+$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = true;

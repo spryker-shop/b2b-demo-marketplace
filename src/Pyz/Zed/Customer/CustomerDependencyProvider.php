@@ -21,6 +21,7 @@ use Spryker\Zed\CompanyUser\Communication\Plugin\Customer\CustomerTransferCompan
 use Spryker\Zed\CompanyUser\Communication\Plugin\Customer\IsActiveCompanyUserExistsCustomerTransferExpanderPlugin;
 use Spryker\Zed\CompanyUserGui\Communication\Plugin\Customer\CompanyUserCustomerTableActionExpanderPlugin;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\CompanyUserInvitationPostCustomerRegistrationPlugin;
+use Spryker\Zed\Country\Communication\Plugin\Customer\CountryAddressValidatorPlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Customer\AcceptOnlyOauthCustomerAuthenticationStrategyPlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Customer\CreateCustomerOauthCustomerAuthenticationStrategyPlugin;
 use Spryker\Zed\Customer\CustomerDependencyProvider as SprykerCustomerDependencyProvider;
@@ -28,6 +29,7 @@ use Spryker\Zed\CustomerDataChangeRequest\Communication\Plugin\Customer\EmailCha
 use Spryker\Zed\CustomerGroup\Communication\Plugin\CustomerAnonymizer\RemoveCustomerFromGroupPlugin;
 use Spryker\Zed\CustomerUserConnector\Communication\Plugin\CustomerTransferUsernameExpanderPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Communication\Plugin\Customer\LocaleCustomerValidatorPlugin;
 use Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\Customer\ProductListCustomerTransferExpanderPlugin;
 use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Customer\RemoveMultiFactorAuthCustomerTableActionExpanderPlugin;
 use Spryker\Zed\Newsletter\Communication\Plugin\CustomerAnonymizer\CustomerUnsubscribePlugin;
@@ -35,6 +37,7 @@ use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\Customer\KnpuOauthCustome
 use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\Customer\KnpuOauthCustomerIdentityStrategyPlugin;
 use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionCustomerExpanderPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionCustomerExpanderPlugin;
+use Spryker\Zed\Store\Communication\Plugin\Customer\StoreCustomerValidatorPlugin;
 
 class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
 {
@@ -160,6 +163,27 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
     {
         return [
             new KnpuOauthCustomerIdentityPersistencePlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerValidatorPluginInterface>
+     */
+    protected function getCustomerValidatorPlugins(): array
+    {
+        return [
+            new StoreCustomerValidatorPlugin(),
+            new LocaleCustomerValidatorPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\AddressValidatorPluginInterface>
+     */
+    protected function getAddressValidatorPlugins(): array
+    {
+        return [
+            new CountryAddressValidatorPlugin(),
         ];
     }
 }

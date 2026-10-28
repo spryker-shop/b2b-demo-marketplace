@@ -1,0 +1,19 @@
+{% extends molecule('cost-center-detail', '@SprykerFeature:PurchasingControl') %}
+
+{% block budgetSummary %}
+
+    {% if data.budgetSummary %}
+        {% set budgetIsOverused = data.budgetSummary.usedAmount > data.budgetSummary.totalAmount %}
+        
+        {% include molecule('recurring-order-budget-summary', 'PurchasingControl') with {
+            modifiers: budgetIsOverused ? ['alert']: [], 
+            data: {
+                isStatic: true,
+                totalFormatted: data.budgetSummary.totalFormatted,
+                usedFormatted: data.budgetSummary.usedFormatted,
+                remainingFormatted: data.budgetSummary.remainingFormatted,
+                usedPercent: data.budgetSummary.usedPercent,
+            },
+        } only %}
+    {% endif %}
+{% endblock %}

@@ -70,6 +70,8 @@ jobs:
             # Marketplace-uninstalled Cypress has no PostgreSQL counterpart to cover.
             repository-ids: '["b2b-mp"]'
             artifact-platform: "PHP8.3Postgres"
+            # The shared dump is built by mariadb-dump, so this lane imports demodata.
+            restore-db: false
 
     # Own label, own lifecycle: this proves the frontend images build, not that tests pass.
     frontend-assets:

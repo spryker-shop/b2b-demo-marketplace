@@ -283,7 +283,7 @@ rather than derived.
 ### What still can't be generated
 
 - **Payment methods** are bound to a payment plugin registered in project code
-  (`Pyz\Yves\DummyPayment`), so a generated payment method would never be rendered in
+  (`Spryker\Yves\DummyMarketplacePayment`), so a generated payment method would never be rendered in
   checkout. The method _name_ therefore stays in the static fixture — a configuration
   value, not demodata.
 - **Glue shipment and payment identifiers** stay in

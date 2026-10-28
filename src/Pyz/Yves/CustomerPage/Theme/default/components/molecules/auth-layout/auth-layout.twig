@@ -21,7 +21,7 @@
             <div class="{{ config.name }}__body">
                 {% if data.heading %}
                     <div class="{{ config.name }}__head">
-                        <h1 class="{{ config.name }}__title">{{ data.heading }}</h1>
+                        <h1 class="{{ config.name }}__title" {{ qa('page-title')}}>{{ data.heading }}</h1>
                         {% if data.subtitle %}
                             <p class="{{ config.name }}__subtitle">{{ data.subtitle }}</p>
                         {% endif %}

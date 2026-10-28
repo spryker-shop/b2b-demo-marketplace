@@ -22,10 +22,10 @@ use ReflectionProperty;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Client\ZedRequest\Client\HttpClient;
-use Spryker\Shared\DummyPayment\DummyPaymentConfig;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Yves\DummyPayment\Form\AbstractSubForm;
+use Spryker\Yves\DummyMarketplacePayment\Form\InvoiceSubForm;
 use SprykerShop\Yves\CheckoutPage\Controller\CheckoutController;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -336,7 +336,7 @@ class CheckoutControllerTest extends Unit
     }
 
     /**
-     * This test only works with DummyPayment
+     * This test only works with DummyMarketplacePayment
      */
     public function testPaymentAction(): void
     {
@@ -346,10 +346,10 @@ class CheckoutControllerTest extends Unit
         $this->setQuoteForPayment();
 
         $paymentData = $this->getFormData(self::PAYMENT_URL, self::PAYMENT_ACTION, self::PAYMENT_ROUTE, self::PAYMENT_FORM);
-        $paymentData[PaymentForm::PAYMENT_SELECTION] = DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
+        $paymentData[PaymentForm::PAYMENT_SELECTION] = DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE;
 
-        $paymentData[DummyPaymentConfig::PAYMENT_METHOD_INVOICE] = [
-            AbstractSubForm::FIELD_DATE_OF_BIRTH => '06.12.1980',
+        $paymentData[DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE] = [
+            InvoiceSubForm::FIELD_DATE_OF_BIRTH => '06.12.1980',
         ];
 
         $data = [

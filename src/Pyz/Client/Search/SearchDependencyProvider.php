@@ -9,22 +9,22 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\Search;
 
-use Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder;
+use Spryker\Client\Catalog\Plugin\SearchElasticsearch\ElasticsearchCatalogSearchConfigBuilderPlugin;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\MerchantProductOfferSearch\Plugin\Search\MerchantNameSearchConfigExpanderPlugin;
 use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantProductMerchantNameSearchConfigExpanderPlugin;
 use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
 use Spryker\Client\Search\SearchDependencyProvider as SprykerSearchDependencyProvider;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchContextExpanderPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
 use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSearchAdapterPlugin;
 
 class SearchDependencyProvider extends SprykerSearchDependencyProvider
 {
-    protected function createSearchConfigBuilderPlugin(Container $container): SearchConfigBuilderInterface // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+    protected function createSearchConfigBuilderPlugin(Container $container): SearchConfigBuilderPluginInterface // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
-        return new CatalogSearchConfigBuilder();
+        return new ElasticsearchCatalogSearchConfigBuilderPlugin();
     }
 
     /**

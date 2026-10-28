@@ -9,8 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Application\Communication;
 
-use Spryker\Zed\Application\Communication\Bootstrap\ZedBootstrap as SprykerZedBootstrap;
+use Spryker\Zed\Application\Communication\Bootstrap\BackofficeBootstrap as SprykerBackofficeBootstrap;
 
-class ZedBootstrap extends SprykerZedBootstrap
+class ZedBootstrap extends SprykerBackofficeBootstrap
 {
 }

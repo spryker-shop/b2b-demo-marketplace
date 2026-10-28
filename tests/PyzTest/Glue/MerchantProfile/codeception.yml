@@ -1,0 +1,35 @@
+namespace: PyzTest\Glue\MerchantProfile
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    output: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    BackendApiIntegration:
+        path: BackendApi/Integration
+        actor: MerchantProfileBackendApiIntegrationTester
+        modules:
+            enabled:
+                - \SprykerTest\ApiPlatform\Helper\BackendApiIntegrationHelper:
+                      environmentModule: '\PyzTest\Shared\Testify\Helper\Environment'
+                      projectNamespaces: ['Pyz']
+                - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
+                - \SprykerTest\Zed\MerchantUser\Helper\MerchantUserHelper
+                - \PyzTest\Glue\MerchantProfile\Helper\MerchantProfileBackendApiHelper
+                - \SprykerTest\ApiPlatform\Helper\BackendApiLoginHelper
+                - \SprykerTest\ApiPlatform\Helper\ApiPlatformHelper:
+                      mode: 'project'
+                      apiType: 'Backend'
+                      bootOnce: true
+                      reuseApplicationContainer: true

@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\OrderExperienceManagement;
 
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\BiWeeklyCadenceTypePlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\ByDaysCadenceTypePlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\EveryNWeeksCadenceTypePlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\MonthlyCadenceTypePlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\WeeklyCadenceTypePlugin;
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\ScheduleVa
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\ScheduleValidator\PriceScheduleValidatorPlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\OrderExperienceManagementDependencyProvider as SprykerOrderExperienceManagementDependencyProvider;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\OrderExperienceManagement\BudgetApprovalRuleRecurringOrderCheckoutValidatorPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\OrderExperienceManagement\BudgetOrderIntakeQuoteExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\OrderExperienceManagement\ServiceProductAddedItemValidatorPlugin;
 
 class OrderExperienceManagementDependencyProvider extends SprykerOrderExperienceManagementDependencyProvider
@@ -31,6 +33,7 @@ class OrderExperienceManagementDependencyProvider extends SprykerOrderExperience
             new BiWeeklyCadenceTypePlugin(), #RecurringOrdersFeature
             new MonthlyCadenceTypePlugin(), #RecurringOrdersFeature
             new EveryNWeeksCadenceTypePlugin(), #RecurringOrdersFeature
+            new ByDaysCadenceTypePlugin(), #RecurringOrdersFeature
         ];
     }
 
@@ -62,6 +65,16 @@ class OrderExperienceManagementDependencyProvider extends SprykerOrderExperience
     {
         return [
             new BudgetApprovalRuleRecurringOrderCheckoutValidatorPlugin(), #RecurringOrdersFeature
+        ];
+    }
+
+    /**
+     * @return array<\SprykerFeature\Zed\OrderExperienceManagement\Dependency\Plugin\OrderIntakeQuoteExpanderPluginInterface>
+     */
+    protected function getOrderIntakeQuoteExpanderPlugins(): array
+    {
+        return [
+            new BudgetOrderIntakeQuoteExpanderPlugin(), #PurchasingControlFeature
         ];
     }
 }

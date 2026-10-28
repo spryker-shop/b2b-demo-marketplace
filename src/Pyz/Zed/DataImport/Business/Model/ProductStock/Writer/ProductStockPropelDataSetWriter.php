@@ -269,7 +269,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $reservedItems = $this->getReservationQuantityForStore($concreteSku, $storeTransfer);
         $stockProductQuantity = $physicalItems->subtract($reservedItems);
 
-        return $stockProductQuantity->greatherThanOrEquals(0) ? $stockProductQuantity : new Decimal(0);
+        return $stockProductQuantity->greaterThanOrEquals(0) ? $stockProductQuantity : new Decimal(0);
     }
 
     protected function calculateProductStockForSkuAndStore(string $concreteSku, StoreTransfer $storeTransfer): Decimal
