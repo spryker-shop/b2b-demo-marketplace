@@ -88,36 +88,15 @@ sections:
         rest-api-generate-documentation:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
-    build-static:
-        dependencies-install:
-            command: 'vendor/bin/console frontend:project:install-dependencies'
-
+    # Yves, Back Office and Merchant Portal assets are built once by _build-frontend.yml and restored
+    # into public/*/assets before `docker/sdk up` (see the restore-frontend-assets action). Only the
+    # water-treatment configurator (a PHP file copy, no npm) is still built here.
     build-static-production:
         excluded: true
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build -e production'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build -e production'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
         water-treatment-product-configurator:
             command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
     build-static-development:
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
-
         water-treatment-product-configurator:
             command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 

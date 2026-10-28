@@ -1,0 +1,50 @@
+name: "Build frontend assets"
+description: >
+    Build the Yves, Back Office and (b2b-mp only) Merchant Portal assets on the runner and save them
+    under the key restore-frontend-assets resolved. Used by build-frontend (the producer) and by the
+    consumer jobs as a fallback when their restore misses, so the build lives in one place.
+    Needs vendor/ (composer install) and, for the b2b variant, the uninstall-marketplace action first.
+
+inputs:
+    variant:
+        description: "Frontend variant: b2b-mp or b2b."
+        required: true
+    cache-key:
+        description: "Cache key to save under (the key output of restore-frontend-assets)."
+        required: true
+
+runs:
+    using: composite
+    steps:
+        -   uses: actions/setup-node@v5
+            with:
+                node-version: 24
+                cache: npm
+
+        -   name: Install NPM packages
+            shell: bash
+            run: npm ci --no-audit --no-fund
+
+        # The same builds the pipelines ran in the container before (frontend:yves:build etc.).
+        -   name: Yves
+            shell: bash
+            run: npm run yves
+
+        -   name: Back Office
+            shell: bash
+            run: npm run zed
+
+        -   name: Merchant Portal
+            if: ${{ inputs.variant == 'b2b-mp' }}
+            shell: bash
+            run: npm run mp:build
+
+        -   name: Save frontend assets
+            uses: actions/cache/save@v4
+            with:
+                path: |
+                    public/Yves/assets
+                    public/Zed/assets
+                    public/Backoffice/assets
+                    public/MerchantPortal/assets
+                key: ${{ inputs.cache-key }}

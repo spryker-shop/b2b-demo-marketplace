@@ -122,6 +122,31 @@ jobs:
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
+            # Before the frontend restore (it changes package.json and composer.lock, part of the key) and the boot.
+            -   name: Uninstall marketplace
+                if: ${{ matrix.cell.repository_id == 'b2b' }}
+                uses: ./.github/actions/uninstall-marketplace
+
+            # Frontend assets come from _build-frontend.yml; the pipeline no longer builds them in the container.
+            -   name: Restore frontend assets
+                id: fe_cache
+                uses: ./.github/actions/restore-frontend-assets
+                with:
+                    variant: ${{ matrix.cell.repository_id }}
+
+            # Self-healing fallback: build-frontend populates the cache first, so a miss means eviction or
+            # key drift. Warn so it is visible, then build here rather than fail.
+            -   name: Warn on frontend assets cache miss
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                run: echo "::warning::frontend-assets cache miss in a consumer job; build-frontend should have populated this key. Building inline."
+
+            -   name: Build frontend assets
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                uses: ./.github/actions/build-frontend-assets
+                with:
+                    variant: ${{ matrix.cell.repository_id }}
+                    cache-key: ${{ steps.fe_cache.outputs.key }}
+
             -   name: Configure sysctl limits
                 run: |
                     sudo sysctl -w vm.swappiness=10
@@ -142,12 +167,6 @@ jobs:
                 # (CC-39284) for the time saved on the rest of the shard.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
-                    if [ "${{ matrix.cell.repository_id }}" = "b2b" ]; then
-                        chmod +x uninstall-marketplace-modules.sh
-                        chmod +x uninstall-frontend-marketplace.sh
-                        ./uninstall-frontend-marketplace.sh
-                        ./uninstall-marketplace-modules.sh
-                    fi
                     docker/sdk boot "$DEPLOY_FILE"
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     if [ "$RESTORE_DB" = "true" ]; then

@@ -196,8 +196,14 @@ jobs:
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
+    # Builds the frontend assets once per variant (b2b-mp, b2b) in parallel with build-db; the
+    # Codeception, Cypress and Cypress-boilerplate jobs restore them instead of building in the container.
+    build-frontend:
+        uses: ./.github/workflows/_build-frontend.yml
+        secrets: inherit
+
     codeception:
-        needs: [js-validation, validation, build-db]
+        needs: [js-validation, validation, build-db, build-frontend]
         uses: ./.github/workflows/_codeception.yml
         secrets: inherit
 
@@ -233,7 +239,7 @@ jobs:
 
     # [project applicable] Cypress Project tests run
     cypress-e2e:
-        needs: [js-validation, validation, cypress-quality-gate, build-db]
+        needs: [js-validation, validation, cypress-quality-gate, build-db, build-frontend]
         name: "Cypress-boilerplate / E2E"
         runs-on: ubuntu-latest
         env:
@@ -260,6 +266,26 @@ jobs:
             -   name: Install Cypress project dependencies
                 working-directory: tests/cypress-boilerplate
                 run: npm ci
+
+            # Frontend assets come from _build-frontend.yml; the pipeline no longer builds them in the container.
+            -   name: Restore frontend assets
+                id: fe_cache
+                uses: ./.github/actions/restore-frontend-assets
+                with:
+                    variant: b2b-mp
+
+            # Self-healing fallback: build-frontend populates the cache first, so a miss means eviction or
+            # key drift. Warn so it is visible, then build here rather than fail.
+            -   name: Warn on frontend assets cache miss
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                run: echo "::warning::frontend-assets cache miss in a consumer job; build-frontend should have populated this key. Building inline."
+
+            -   name: Build frontend assets
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                uses: ./.github/actions/build-frontend-assets
+                with:
+                    variant: b2b-mp
+                    cache-key: ${{ steps.fe_cache.outputs.key }}
 
             # Must land before the boot so the dump is part of the baked image.
             -   uses: actions/download-artifact@v6
@@ -323,7 +349,7 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, validation, build-db]
+        needs: [js-validation, validation, build-db, build-frontend]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml

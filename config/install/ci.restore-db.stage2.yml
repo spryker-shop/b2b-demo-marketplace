@@ -6,8 +6,8 @@
 # rebuilds the codebase in the container and restores that dump instead of
 # re-importing demodata.
 #
-# Build / build-static sections are b2b's own (from docker.ci.acceptance.yml) —
-# b2b has no separate _build-frontend artifact, so frontend is built here.
+# Build sections are b2b's own (from docker.ci.acceptance.yml). The frontend assets come from
+# _build-frontend.yml (restored before the boot), so build-static only copies the configurator.
 # The demodata section mirrors suite's ci.restore-db.stage2.yml: load the dump,
 # fix auth/permissions, recreate search sources, sync storage from DB, then drain
 # the publish queue. NO data:import. NO cost-center hack — full_EU data is real.
@@ -102,36 +102,15 @@ sections:
         rest-api-generate-documentation:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
-    build-static:
-        dependencies-install:
-            command: 'vendor/bin/console frontend:project:install-dependencies'
-
+    # Yves, Back Office and Merchant Portal assets are built once by _build-frontend.yml and restored
+    # into public/*/assets before `docker/sdk up` (see the restore-frontend-assets action). Only the
+    # water-treatment configurator (a PHP file copy, no npm) is still built here.
     build-static-production:
         excluded: true
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build -e production'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build -e production'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
         water-treatment-product-configurator:
             command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
     build-static-development:
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
-
         water-treatment-product-configurator:
             command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 

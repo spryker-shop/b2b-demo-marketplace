@@ -27,9 +27,14 @@ jobs:
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
+    build-frontend:
+        if: ${{ inputs.framework == 'codeception' || inputs.framework == 'cypress' }}
+        uses: ./.github/workflows/_build-frontend.yml
+        secrets: inherit
+
     codeception:
         if: ${{ inputs.framework == 'codeception' }}
-        needs: [build-db]
+        needs: [build-db, build-frontend]
         uses: ./.github/workflows/_codeception.yml
         secrets: inherit
 
@@ -45,6 +50,6 @@ jobs:
 
     cypress:
         if: ${{ inputs.framework == 'cypress' }}
-        needs: [build-db]
+        needs: [build-db, build-frontend]
         uses: ./.github/workflows/_cypress.yml
         secrets: inherit
