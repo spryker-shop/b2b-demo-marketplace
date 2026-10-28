@@ -34,7 +34,8 @@ jobs:
 
             -   name: Save the b2b changes
                 run: |
-                    git add -A -- . ':!vendor'
+                    # vendor/ and other build output are in .gitignore, so `git add -A` skips them.
+                    git add -A
                     git diff --cached --binary HEAD > "$RUNNER_TEMP/b2b-uninstall.patch"
                     git diff --cached --stat HEAD | tail -1
                     git reset -q
