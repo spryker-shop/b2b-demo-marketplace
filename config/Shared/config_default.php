@@ -1200,6 +1200,4 @@ $config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENA
 
 $config[ProductPageSearchConstants::PRODUCT_CONCRETE_SEARCH_IN_STORAGE_ENABLED] = true;
 
-$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = false;
-
 require 'config_ai.php';
