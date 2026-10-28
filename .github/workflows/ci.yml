@@ -64,6 +64,13 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+                    tools: composer:v2
+                    coverage: none
+
             -   uses: ramsey/composer-install@v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
