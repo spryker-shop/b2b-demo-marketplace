@@ -21,6 +21,16 @@ on:
                 description: "Platform segment of the screenshot upload path."
                 type: string
                 default: "PHP8.5MariaDB"
+            b2b-mp-shards:
+                # b2b-mp has more specs than b2b and its cells were the last to finish: with 5 shards they
+                # ended about 10 minutes after the b2b cells. 7 shards end them at about the same time.
+                description: "Number of core Cypress shards for b2b-mp (the ssp shard comes on top)."
+                type: number
+                default: 7
+            b2b-shards:
+                description: "Number of core Cypress shards for b2b."
+                type: number
+                default: 5
             restore-db:
                 description: "Restore the shared spryker-app-db dump for b2b-mp cells instead of importing demodata."
                 type: boolean
@@ -84,13 +94,16 @@ jobs:
                 name: Generate shard matrix
                 env:
                     REPOSITORY_IDS: ${{ inputs.repository-ids }}
-                # jq crosses each generated shard with the repository_ids that must run it:
-                # the SSP shard is marketplace-only, every core shard runs for all requested ids.
+                    B2B_MP_SHARDS: ${{ inputs.b2b-mp-shards }}
+                    B2B_SHARDS: ${{ inputs.b2b-shards }}
+                # Each repository id gets its own shard count. The SSP shard is marketplace-only, so jq
+                # drops it from the b2b list.
                 run: |
-                    CORE=$(.github/workflows/scripts/generate-cypress-shards.py)
-                    CELLS=$(printf '%s' "$CORE" | jq -c --argjson repos "$REPOSITORY_IDS" '[ .[] as $s
-                        | (if $s.mode == "ssp" then ($repos | map(select(. == "b2b-mp"))) else $repos end)[] as $repo
-                        | $s + {repository_id: $repo, label: "\($repo) \($s.label)"}
+                    MP=$(.github/workflows/scripts/generate-cypress-shards.py --shards "$B2B_MP_SHARDS")
+                    B2B=$(.github/workflows/scripts/generate-cypress-shards.py --shards "$B2B_SHARDS")
+                    CELLS=$(jq -cn --argjson mp "$MP" --argjson b2b "$B2B" --argjson repos "$REPOSITORY_IDS" '[ $repos[] as $repo
+                        | (if $repo == "b2b-mp" then $mp else ($b2b | map(select(.mode != "ssp"))) end)[]
+                        | . + {repository_id: $repo, label: "\($repo) \(.label)"}
                     ]')
                     echo "cells=${CELLS}" >> "$GITHUB_OUTPUT"
                     echo "Computed Cypress cells: ${CELLS}"
