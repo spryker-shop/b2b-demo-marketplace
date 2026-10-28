@@ -118,14 +118,16 @@ jobs:
                 with:
                     persist-credentials: false
 
+            # b2b: the marketplace uninstall from the Prepare B2B job (_prepare-b2b.yml), applied before
+            # `composer install` (it changes composer.json and composer.lock) and before the frontend
+            # restore (part of the key).
+            -   name: Apply b2b changes
+                if: ${{ matrix.cell.repository_id == 'b2b' }}
+                uses: ./.github/actions/apply-b2b-changes
+
             -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
-
-            # Before the frontend restore (it changes package.json and composer.lock, part of the key) and the boot.
-            -   name: Uninstall marketplace
-                if: ${{ matrix.cell.repository_id == 'b2b' }}
-                uses: ./.github/actions/uninstall-marketplace
 
             # Frontend assets come from _build-frontend.yml; the pipeline no longer builds them in the container.
             -   name: Restore frontend assets

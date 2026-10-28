@@ -1,0 +1,48 @@
+name: _prepare-b2b
+
+# Turns the checkout into the B2B (non-marketplace) shop once per run and saves the result as a patch.
+# The uninstall takes about a minute (two `composer remove` runs plus project file edits); the b2b jobs
+# apply the patch with the apply-b2b-changes action instead of repeating it. Their `composer install`
+# then reads the b2b composer.lock, so it gets its own cache key.
+
+on:
+    workflow_call:
+
+jobs:
+    prepare-b2b:
+        name: "Prepare B2B"
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    # Nothing downstream needs the checkout token; every repo cloned or
+                    # composer-installed in this job is public.
+                    persist-credentials: false
+
+            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            # Turns the checkout into the B2B shop: removes the marketplace npm scripts and the
+            # marketplace composer packages, and edits the project files that use them.
+            -   name: Uninstall marketplace
+                run: |
+                    chmod +x uninstall-marketplace-modules.sh uninstall-frontend-marketplace.sh
+                    ./uninstall-frontend-marketplace.sh
+                    ./uninstall-marketplace-modules.sh
+
+            -   name: Save the b2b changes
+                run: |
+                    git add -A -- . ':!vendor'
+                    git diff --cached --binary HEAD > "$RUNNER_TEMP/b2b-uninstall.patch"
+                    git diff --cached --stat HEAD | tail -1
+                    git reset -q
+
+            -   name: Upload the b2b changes
+                uses: actions/upload-artifact@v6
+                with:
+                    name: b2b-uninstall
+                    path: ${{ runner.temp }}/b2b-uninstall.patch
+                    retention-days: 1
+                    if-no-files-found: error

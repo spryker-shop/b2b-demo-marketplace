@@ -3,7 +3,7 @@ description: >
     Build the Yves, Back Office and (b2b-mp only) Merchant Portal assets on the runner and save them
     under the key restore-frontend-assets resolved. Used by build-frontend (the producer) and by the
     consumer jobs as a fallback when their restore misses, so the build lives in one place.
-    Needs vendor/ (composer install) and, for the b2b variant, the uninstall-marketplace action first.
+    Needs vendor/ (composer install) and, for the b2b variant, the apply-b2b-changes action first.
 
 inputs:
     variant:

@@ -196,11 +196,24 @@ jobs:
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
-    # Builds the frontend assets once per variant (b2b-mp, b2b) in parallel with build-db; the
-    # Codeception, Cypress and Cypress-boilerplate jobs restore them instead of building in the container.
+    # Builds the b2b-mp frontend assets once, in parallel with build-db; the Codeception, Cypress and
+    # Cypress-boilerplate jobs restore them instead of building in the container.
     build-frontend:
         uses: ./.github/workflows/_build-frontend.yml
         secrets: inherit
+
+    # Uninstalls the marketplace once and saves the result as the b2b-uninstall artifact, which the b2b
+    # frontend build and the b2b Cypress cells apply instead of running the uninstall again.
+    prepare-b2b:
+        uses: ./.github/workflows/_prepare-b2b.yml
+        secrets: inherit
+
+    build-frontend-b2b:
+        needs: [prepare-b2b]
+        uses: ./.github/workflows/_build-frontend.yml
+        secrets: inherit
+        with:
+            variants: '["b2b"]'
 
     codeception:
         needs: [js-validation, validation, build-db, build-frontend]
@@ -349,7 +362,7 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, validation, build-db, build-frontend]
+        needs: [js-validation, validation, build-db, build-frontend, build-frontend-b2b]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml

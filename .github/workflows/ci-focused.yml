@@ -32,6 +32,19 @@ jobs:
         uses: ./.github/workflows/_build-frontend.yml
         secrets: inherit
 
+    prepare-b2b:
+        if: ${{ inputs.framework == 'cypress' }}
+        uses: ./.github/workflows/_prepare-b2b.yml
+        secrets: inherit
+
+    build-frontend-b2b:
+        if: ${{ inputs.framework == 'cypress' }}
+        needs: [prepare-b2b]
+        uses: ./.github/workflows/_build-frontend.yml
+        secrets: inherit
+        with:
+            variants: '["b2b"]'
+
     codeception:
         if: ${{ inputs.framework == 'codeception' }}
         needs: [build-db, build-frontend]
@@ -50,6 +63,6 @@ jobs:
 
     cypress:
         if: ${{ inputs.framework == 'cypress' }}
-        needs: [build-db, build-frontend]
+        needs: [build-db, build-frontend, build-frontend-b2b]
         uses: ./.github/workflows/_cypress.yml
         secrets: inherit

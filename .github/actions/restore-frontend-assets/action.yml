@@ -5,7 +5,7 @@ description: >
     occur when the build would produce the same output. There is no restore-keys fallback on purpose:
     a partial match would restore stale assets. This action is the single source of the key and the
     paths: build-frontend (producer) and the consumer jobs call it, so they cannot drift.
-    For the b2b variant, run the uninstall-marketplace action first: it changes package.json and
+    For the b2b variant, run the apply-b2b-changes action first: it changes package.json and
     composer.lock, which are part of the key.
 
 inputs:
