@@ -188,11 +188,6 @@
                 <td>{{ 'order_invoice.invoice_template.table.subtotal' | trans }}</td>
                 <td class="text-center">{{ order.totals.subtotal | money(true, order.currencyIsoCode) }}</td>
             </tr>
-            <tr class="background-gray">
-                <td colspan="3"></td>
-                <td>{{ 'order_invoice.invoice_template.table.discount' | trans }}</td>
-                <td class="text-center">{{ (0 - order.totals.discountTotal) | money(true, order.currencyIsoCode) }}</td>
-            </tr>
 
             {% for expense in order.expenses %}
                 {# @var expense \Generated\Shared\Transfer\ExpenseTransfer #}
@@ -206,6 +201,12 @@
                     <td class="text-center">{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</td>
                 </tr>
             {% endfor %}
+
+            <tr class="background-gray">
+                <td colspan="3"></td>
+                <td>{{ 'order_invoice.invoice_template.table.discount' | trans }}</td>
+                <td class="text-center">{{ (0 - order.totals.discountTotal) | money(true, order.currencyIsoCode) }}</td>
+            </tr>
 
             {% for rate, tax in taxes %}
                 <tr>
