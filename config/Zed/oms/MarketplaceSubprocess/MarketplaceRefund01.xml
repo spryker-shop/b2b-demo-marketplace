@@ -5,10 +5,6 @@
     xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
 
     <process name="MarketplaceRefund">
-        <states>
-            <state name="refund pending"/>
-        </states>
-
         <transitions>
             <transition>
                 <source>delivered</source>
