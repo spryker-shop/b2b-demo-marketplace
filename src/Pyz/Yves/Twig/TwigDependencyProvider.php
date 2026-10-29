@@ -22,6 +22,7 @@ use Spryker\Yves\Money\Plugin\Twig\MoneyTwigPlugin;
 use Spryker\Yves\Translator\Plugin\Twig\TranslatorTwigPlugin;
 use Spryker\Yves\Twig\Plugin\FilesystemTwigLoaderPlugin;
 use Spryker\Yves\Twig\Plugin\FormFilesystemTwigLoaderPlugin;
+use Spryker\Yves\Twig\Plugin\SharedThemeTwigLoaderPlugin;
 use Spryker\Yves\Twig\TwigDependencyProvider as SprykerTwigDependencyProvider;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Twig\FileSizeFormatterTwigPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Twig\CartTwigPlugin;
@@ -107,6 +108,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new FilesystemTwigLoaderPlugin(),
             new FormFilesystemTwigLoaderPlugin(),
             new ShopApplicationFormTwigLoaderPlugin(),
+            new SharedThemeTwigLoaderPlugin(),
         ];
 
         if (class_exists(WebProfilerTwigLoaderPlugin::class)) {
