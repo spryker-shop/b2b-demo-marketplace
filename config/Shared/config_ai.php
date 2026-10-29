@@ -90,8 +90,10 @@ $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
             ],
             'additionalModelRequestFields' => [
                 'thinking' => [
-                    'type' => 'enabled',
-                    'budget_tokens' => 2048,
+                    'type' => 'adaptive',
+                ],
+                'output_config' => [
+                    'effort' => 'low',
                 ],
             ],
         ],
@@ -104,8 +106,10 @@ $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
             'max_tokens' => 8192,
             'parameters' => [
                 'thinking' => [
-                    'type' => 'enabled',
-                    'budget_tokens' => 2048,
+                    'type' => 'adaptive',
+                ],
+                'output_config' => [
+                    'effort' => 'low',
                 ],
             ],
         ],
