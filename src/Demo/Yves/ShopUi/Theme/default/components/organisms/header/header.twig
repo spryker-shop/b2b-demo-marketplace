@@ -171,4 +171,8 @@
             </div>
         </div>
     {% endif %}
+
+    {% if widgetGlobalExists('StorefrontAssistantWidget') %}
+        {% widget 'StorefrontAssistantWidget' only %}{% endwidget %}
+    {% endif %}
 {% endblock %}
