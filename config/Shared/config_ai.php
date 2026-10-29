@@ -64,6 +64,52 @@ $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
             'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_QUICK_ORDER_IMAGE_TO_CART_ANTHROPIC_MODEL,
         ],
     ],
+    AiCommerceConstants::AI_CONFIGURATION_STOREFRONT_ASSISTANT_OPENAI => [
+        'provider_name' => AiFoundationConstants::PROVIDER_OPENAI_RESPONSES,
+        'provider_config' => [
+            'key' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_OPENAI_API_TOKEN,
+            'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_STOREFRONT_ASSISTANT_OPENAI_MODEL,
+            'parameters' => [
+                'reasoning' => [
+                    'effort' => 'medium',
+                    'summary' => 'auto',
+                ],
+            ],
+        ],
+    ],
+    AiCommerceConstants::AI_CONFIGURATION_STOREFRONT_ASSISTANT_AWS => [
+        'provider_name' => AiFoundationConstants::PROVIDER_BEDROCK,
+        'provider_config' => [
+            'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_STOREFRONT_ASSISTANT_AWS_MODEL,
+            'bedrockRuntimeClient' => [
+                'region' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_AWS_REGION,
+                'token' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_AWS_API_TOKEN,
+            ],
+            'inferenceConfig' => [
+                'maxTokens' => 8192,
+            ],
+            'additionalModelRequestFields' => [
+                'thinking' => [
+                    'type' => 'enabled',
+                    'budget_tokens' => 2048,
+                ],
+            ],
+        ],
+    ],
+    AiCommerceConstants::AI_CONFIGURATION_STOREFRONT_ASSISTANT_ANTHROPIC => [
+        'provider_name' => AiFoundationConstants::PROVIDER_ANTHROPIC,
+        'provider_config' => [
+            'key' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_ANTHROPIC_API_TOKEN,
+            'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_STOREFRONT_ASSISTANT_ANTHROPIC_MODEL,
+            'max_tokens' => 8192,
+            'parameters' => [
+                'thinking' => [
+                    'type' => 'enabled',
+                    'budget_tokens' => 2048,
+                ],
+            ],
+        ],
+    ],
     AiCommerceConstants::AI_CONFIGURATION_SEARCH_BY_IMAGE_OPENAI => [
         'provider_name' => AiFoundationConstants::PROVIDER_OPENAI_RESPONSES,
         'provider_config' => [

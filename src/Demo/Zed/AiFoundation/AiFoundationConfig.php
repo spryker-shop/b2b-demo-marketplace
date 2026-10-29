@@ -9,11 +9,28 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\AiFoundation;
 
+use Demo\Shared\AiCommerce\AiCommerceConstants;
 use Spryker\Shared\AiFoundation\AiFoundationConstants;
 use Spryker\Zed\AiFoundation\AiFoundationConfig as SprykerAiFoundationConfig;
 
 class AiFoundationConfig extends SprykerAiFoundationConfig
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getClientResolvableAiConfigurationNames(): array
+    {
+        return [
+            AiCommerceConstants::AI_CONFIGURATION_STOREFRONT_ASSISTANT_OPENAI,
+            AiCommerceConstants::AI_CONFIGURATION_STOREFRONT_ASSISTANT_AWS,
+            AiCommerceConstants::AI_CONFIGURATION_STOREFRONT_ASSISTANT_ANTHROPIC,
+        ];
+    }
+
     /**
      * {@inheritDoc}
      *

@@ -69,6 +69,10 @@
                 </div>
 
                 <div class="{{ config.name }}__actions">
+                    {% if widgetGlobalExists('StorefrontAssistantWidget') %}
+                        {% include molecule('storefront-assistant-trigger', 'AiCommerce') only %}
+                    {% endif %}
+
                     {% if data.showUserMenu %}
                         {% if is_granted('ROLE_USER') %}
                             <div class="{{ config.name }}__actions-pills">
