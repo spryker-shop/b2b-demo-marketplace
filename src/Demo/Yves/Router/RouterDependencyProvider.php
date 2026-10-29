@@ -11,6 +11,7 @@ namespace Demo\Yves\Router;
 
 use Pyz\Yves\Router\RouterDependencyProvider as PyzRouterDependencyProvider;
 use SprykerFeature\Yves\AiCommerce\SearchByImage\Plugin\Router\SearchByImageRouteProviderPlugin;
+use SprykerFeature\Yves\AiCommerce\StorefrontAssistant\Plugin\Router\StorefrontAssistantRouteProviderPlugin;
 
 class RouterDependencyProvider extends PyzRouterDependencyProvider
 {
@@ -21,6 +22,7 @@ class RouterDependencyProvider extends PyzRouterDependencyProvider
     {
         return array_merge(parent::getRouteProvider(), [
             new SearchByImageRouteProviderPlugin(),
+            new StorefrontAssistantRouteProviderPlugin(),
         ]);
     }
 }

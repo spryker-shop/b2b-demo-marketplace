@@ -110,4 +110,53 @@ interface AiCommerceConstants extends PyzFeatureAiCommerceConstants
      * @api
      */
     public const string AI_CONFIGURATION_SMART_CMS_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_SMART_CMS_ANTHROPIC';
+
+    /**
+     * Configuration Management key holding the AI vendor selected for the Storefront Assistant.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_STOREFRONT_ASSISTANT_AI_CONFIGURATION = 'ai_commerce:storefront_assistant:ai_vendor:ai_configuration';
+
+    /**
+     * Configuration Management key holding the OpenAI model used by the Storefront Assistant.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_STOREFRONT_ASSISTANT_OPENAI_MODEL = 'ai_commerce:storefront_assistant:ai_vendor:openai_model';
+
+    /**
+     * Configuration Management key holding the AWS Bedrock model used by the Storefront Assistant.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_STOREFRONT_ASSISTANT_AWS_MODEL = 'ai_commerce:storefront_assistant:ai_vendor:aws_model';
+
+    /**
+     * Configuration Management key holding the Anthropic model used by the Storefront Assistant.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_STOREFRONT_ASSISTANT_ANTHROPIC_MODEL = 'ai_commerce:storefront_assistant:ai_vendor:anthropic_model';
+
+    /**
+     * AI configuration name used by the Storefront Assistant backed by OpenAI.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_STOREFRONT_ASSISTANT_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_STOREFRONT_ASSISTANT_OPENAI';
+
+    /**
+     * AI configuration name used by the Storefront Assistant backed by AWS Bedrock.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_STOREFRONT_ASSISTANT_AWS = 'AI_COMMERCE:AI_CONFIGURATION_STOREFRONT_ASSISTANT_AWS';
+
+    /**
+     * AI configuration name used by the Storefront Assistant backed by Anthropic.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_STOREFRONT_ASSISTANT_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_STOREFRONT_ASSISTANT_ANTHROPIC';
 }
