@@ -44,17 +44,11 @@ jobs:
                     # composer-installed in these jobs is public.
                     persist-credentials: false
 
-            #-   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
-            #    with:
-            #        composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
-
-            #  needed for mount:baked
-            -   name: Install robotframework-suite-tests folder
-                run: |
-                    cd data
-                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
-                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
-                    mv vendor ../
+            # mount: native uses the checkout as it is, so vendor/ (including spryker/robotframework-suite-tests,
+            # whose docker-compose.yml the deploy file includes) comes from the host install.
+            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
             -   name: Configure sysctl limits
                 run: |
@@ -127,6 +121,11 @@ jobs:
             -   uses: actions/checkout@v4
                 with:
                     persist-credentials: false
+
+            # mount: native uses the checkout as it is; the uninstall below changes vendor/ in place.
+            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
             -   name: Configure sysctl limits
                 run: |

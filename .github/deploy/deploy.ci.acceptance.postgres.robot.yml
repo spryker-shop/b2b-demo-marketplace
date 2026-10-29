@@ -143,7 +143,9 @@ docker:
         region: EU
 
     mount:
-        baked:
+        native:
+            platforms:
+                - linux
 
     compose:
         yamls:
