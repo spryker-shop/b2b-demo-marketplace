@@ -31,8 +31,8 @@ x-frontend-auth: &frontend-auth
     auth:
         engine: basic
         users:
-            - username: cloud
-              password: cloud
+            - username: agate
+              password: quartz
         exclude:
             - '${ALLOWED_IP}' # AWS gateway
             - 185.60.20.0/24 # PayOne
@@ -111,6 +111,7 @@ groups:
                     demo-water-treatment-configurator.agate.demo-spryker.com:
                         entry-point: WaterTreatmentConfigurator
                     yves.eu.agate.demo-spryker.com:
+                        <<: *frontend-auth
                         region: EU
                         entry-point: Yves
                         services:
@@ -129,12 +130,14 @@ groups:
                 application: backoffice
                 endpoints:
                     backoffice.eu.agate.demo-spryker.com:
+                        <<: *frontend-auth
                         entry-point: Backoffice
                         region: EU
                         services:
                             session:
                                 namespace: 4
                     mp.eu.agate.demo-spryker.com:
+                        <<: *frontend-auth
                         region: EU
                         entry-point: MerchantPortal
                         services:
