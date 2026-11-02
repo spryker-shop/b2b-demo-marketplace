@@ -39,7 +39,6 @@ use Spryker\Glue\Log\Plugin\Log\GlueSecurityAuditLoggerConfigPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\IamAws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Agent\AgentConstants;
 use Spryker\Shared\AgentSecurityBlockerMerchantPortal\AgentSecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
@@ -316,94 +315,7 @@ $config[SecuritySystemUserConstants::AUTH_DEFAULT_CREDENTIALS] = [
 
 $config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv('SPRYKER_URI_SIGNER_SECRET_KEY') ?: null;
 
-// ACL: Special rules for specific users
-$config[AclConstants::ACL_DEFAULT_CREDENTIALS] = [
-    'yves_system' => [
-        'rules' => [
-            [
-                'bundle' => '*',
-                'controller' => 'gateway',
-                'action' => '*',
-                'type' => 'allow',
-            ],
-        ],
-    ],
-];
-
 // >> BACKOFFICE
-
-// ACL: Allow or disallow of urls for Zed Admin GUI for ALL users
-$config[AclConstants::ACL_DEFAULT_RULES] = [
-    [
-        'bundle' => 'security-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'multi-factor-auth',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'multi-factor-auth-merchant-portal',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'acl',
-        'controller' => 'index',
-        'action' => 'denied',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'health-check',
-        'controller' => 'index',
-        'action' => 'index',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'api',
-        'controller' => 'rest',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-merchant-portal-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'agent-security-merchant-portal-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => '_profiler',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-oauth-knpu',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
-// ACL: Allow or disallow of urls for Zed Admin GUI
-$config[AclConstants::ACL_USER_RULE_WHITELIST] = [
-    [
-        'bundle' => 'application',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
 
 // ----------------------------------------------------------------------------
 // ------------------------------ SERVICES ------------------------------------
