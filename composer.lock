@@ -38481,16 +38481,16 @@
         },
         {
             "name": "spryker/customer",
-            "version": "7.88.0",
+            "version": "7.89.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customer.git",
-                "reference": "09ac39b1d083f09df1c9f56e9cf518c6136c0a56"
+                "reference": "44bb70791f8c74ab194c51ce7afd4e64d2b12299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customer/zipball/09ac39b1d083f09df1c9f56e9cf518c6136c0a56",
-                "reference": "09ac39b1d083f09df1c9f56e9cf518c6136c0a56",
+                "url": "https://api.github.com/repos/spryker/customer/zipball/44bb70791f8c74ab194c51ce7afd4e64d2b12299",
+                "reference": "44bb70791f8c74ab194c51ce7afd4e64d2b12299",
                 "shasum": ""
             },
             "require": {
@@ -38512,6 +38512,7 @@
                 "spryker/propel": "^3.0.0",
                 "spryker/propel-orm": "^1.16.0",
                 "spryker/router": "^1.12.0",
+                "spryker/security-blocker": "^1.4.0",
                 "spryker/sequence-number": "^3.0.0",
                 "spryker/session": "^3.0.0 || ^4.0.0",
                 "spryker/storage-redis": "^1.0.0",
@@ -38566,9 +38567,9 @@
             ],
             "description": "Customer module",
             "support": {
-                "source": "https://github.com/spryker/customer/tree/7.88.0"
+                "source": "https://github.com/spryker/customer/tree/7.89.0"
             },
-            "time": "2026-10-23T07:32:17+00:00"
+            "time": "2026-10-30T14:37:09+00:00"
         },
         {
             "name": "spryker/customer-access",
@@ -39454,22 +39455,22 @@
         },
         {
             "name": "spryker/customers-rest-api",
-            "version": "1.35.4",
+            "version": "1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customers-rest-api.git",
-                "reference": "988fc72c12d563f95623e794433e6bf9f36ce64e"
+                "reference": "94f89ba1a32448baac4cf4e31a9bbbedeaa07f78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customers-rest-api/zipball/988fc72c12d563f95623e794433e6bf9f36ce64e",
-                "reference": "988fc72c12d563f95623e794433e6bf9f36ce64e",
+                "url": "https://api.github.com/repos/spryker/customers-rest-api/zipball/94f89ba1a32448baac4cf4e31a9bbbedeaa07f78",
+                "reference": "94f89ba1a32448baac4cf4e31a9bbbedeaa07f78",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
-                "spryker/customer": "^7.82.0",
+                "spryker/customer": "^7.89.0",
                 "spryker/customers-rest-api-extension": "^1.1.0",
                 "spryker/glue-application": "^1.15.0",
                 "spryker/glue-application-authorization-connector-extension": "^1.0.0",
@@ -39513,9 +39514,9 @@
             ],
             "description": "CustomersRestApi module",
             "support": {
-                "source": "https://github.com/spryker/customers-rest-api/tree/1.35.4"
+                "source": "https://github.com/spryker/customers-rest-api/tree/1.36.0"
             },
-            "time": "2026-10-26T13:33:50+00:00"
+            "time": "2026-10-30T14:37:09+00:00"
         },
         {
             "name": "spryker/customers-rest-api-extension",
@@ -78057,16 +78058,16 @@
         },
         {
             "name": "spryker/user",
-            "version": "3.35.2",
+            "version": "3.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/user.git",
-                "reference": "32f41a6fde98994132d844c3de6844fdf535c714"
+                "reference": "e47980e1b06cc65b130ce8cfdef1056e5e3f3a6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/user/zipball/32f41a6fde98994132d844c3de6844fdf535c714",
-                "reference": "32f41a6fde98994132d844c3de6844fdf535c714",
+                "url": "https://api.github.com/repos/spryker/user/zipball/e47980e1b06cc65b130ce8cfdef1056e5e3f3a6e",
+                "reference": "e47980e1b06cc65b130ce8cfdef1056e5e3f3a6e",
                 "shasum": ""
             },
             "require": {
@@ -78075,6 +78076,7 @@
                 "spryker/gui": "^3.33.0 || ^4.0.0 || ^5.8.0",
                 "spryker/kernel": "^3.76.0",
                 "spryker/propel-orm": "^1.0.0",
+                "spryker/security-blocker": "^1.4.0",
                 "spryker/security-extension": "^1.0.0",
                 "spryker/session": "^3.3.0 || ^4.14.0",
                 "spryker/symfony": "^3.21.0",
@@ -78094,6 +78096,7 @@
                 "spryker/form": "*",
                 "spryker/installer": "*",
                 "spryker/log": "*",
+                "spryker/messenger": "*",
                 "spryker/propel": "*",
                 "spryker/router": "*",
                 "spryker/security": "*",
@@ -78129,9 +78132,9 @@
             ],
             "description": "User module",
             "support": {
-                "source": "https://github.com/spryker/user/tree/3.35.2"
+                "source": "https://github.com/spryker/user/tree/3.36.0"
             },
-            "time": "2026-10-02T10:51:43+00:00"
+            "time": "2026-10-30T14:37:09+00:00"
         },
         {
             "name": "spryker/user-extension",
@@ -78285,16 +78288,16 @@
         },
         {
             "name": "spryker/user-merchant-portal-gui",
-            "version": "4.4.3",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/user-merchant-portal-gui.git",
-                "reference": "0abcef7d7740a135accf641e626928d17609b122"
+                "reference": "e8efc332d8dabd9349b52797054e6bcfea7cdde4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/user-merchant-portal-gui/zipball/0abcef7d7740a135accf641e626928d17609b122",
-                "reference": "0abcef7d7740a135accf641e626928d17609b122",
+                "url": "https://api.github.com/repos/spryker/user-merchant-portal-gui/zipball/e8efc332d8dabd9349b52797054e6bcfea7cdde4",
+                "reference": "e8efc332d8dabd9349b52797054e6bcfea7cdde4",
                 "shasum": ""
             },
             "require": {
@@ -78304,7 +78307,7 @@
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^3.3.0 || ^4.0.0",
                 "spryker/merchant-user": "^1.9.2",
-                "spryker/security-blocker": "^1.2.0",
+                "spryker/security-blocker": "^1.4.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.27.0",
                 "spryker/translator": "^1.1.0",
@@ -78334,9 +78337,9 @@
             ],
             "description": "UserMerchantPortalGui module",
             "support": {
-                "source": "https://github.com/spryker/user-merchant-portal-gui/tree/4.4.3"
+                "source": "https://github.com/spryker/user-merchant-portal-gui/tree/4.5.0"
             },
-            "time": "2026-10-26T09:11:27+00:00"
+            "time": "2026-10-30T14:37:09+00:00"
         },
         {
             "name": "spryker/user-merchant-portal-gui-extension",
@@ -82796,16 +82799,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v7.4.19",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "f8ac7d0a800bcabbcd1f7de56594cf05e6cd5693"
+                "reference": "94a4c017435bc515f5ac80421a2c555fb9ca3676"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/f8ac7d0a800bcabbcd1f7de56594cf05e6cd5693",
-                "reference": "f8ac7d0a800bcabbcd1f7de56594cf05e6cd5693",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/94a4c017435bc515f5ac80421a2c555fb9ca3676",
+                "reference": "94a4c017435bc515f5ac80421a2c555fb9ca3676",
                 "shasum": ""
             },
             "require": {
@@ -82861,7 +82864,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v7.4.19"
+                "source": "https://github.com/symfony/mime/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -82881,7 +82884,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-04T10:45:44+00:00"
+            "time": "2026-10-28T17:57:58+00:00"
         },
         {
             "name": "symfony/monolog-bridge",
@@ -92462,7 +92465,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "c1826d65f7d21f7b8836500d6ce60db08e783cc9"
+                "reference": "688c3790ec6841d630da5f00fe8549e9d98a1894"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -92470,7 +92473,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-10-27T08:31:33+00:00"
+            "time": "2026-10-30T14:28:34+00:00"
         },
         {
             "name": "spryker/development",
