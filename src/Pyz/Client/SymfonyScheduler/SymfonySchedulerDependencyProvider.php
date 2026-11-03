@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\SymfonyScheduler;
 
-use Spryker\Client\SymfonyScheduler\Plugin\SymfonyScheduler\CompiledCronTransportsHandlerProviderPlugin;
+use Spryker\Client\SymfonyScheduler\Plugin\SymfonyScheduler\AsyncCompiledCronTransportsHandlerProviderPlugin;
 use Spryker\Client\SymfonyScheduler\SymfonySchedulerDependencyProvider as SprykerSymfonySchedulerDependencyProvider;
 
 class SymfonySchedulerDependencyProvider extends SprykerSymfonySchedulerDependencyProvider
@@ -20,7 +20,7 @@ class SymfonySchedulerDependencyProvider extends SprykerSymfonySchedulerDependen
     protected function getSchedulerHandlerProviderPlugins(): array
     {
         return [
-            new CompiledCronTransportsHandlerProviderPlugin(),
+            new AsyncCompiledCronTransportsHandlerProviderPlugin(),
         ];
     }
 }
