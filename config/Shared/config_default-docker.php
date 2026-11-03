@@ -5,7 +5,6 @@ declare(strict_types = 1);
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\Cms\CmsConstants;
@@ -115,13 +114,6 @@ if (interface_exists(WebProfilerConstants::class)) {
 if (interface_exists(WebProfilerWidgetConstants::class)) {
     $config[WebProfilerWidgetConstants::IS_WEB_PROFILER_ENABLED] = false;
 }
-
-$config[AclConstants::ACL_USER_RULE_WHITELIST][] = [
-    'bundle' => 'wdt',
-    'controller' => '*',
-    'action' => '*',
-    'type' => 'allow',
-];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',

@@ -125,6 +125,7 @@ use Spryker\Zed\UserPasswordReset\Communication\Plugin\AclMerchantPortal\UserPas
 use SprykerEco\Zed\Stripe\Communication\Plugin\AclMerchantPortal\StripeAclEntityConfigurationExpanderPlugin;
 use SprykerEco\Zed\Stripe\Communication\Plugin\AclMerchantPortal\StripeMerchantAclRuleExpanderPlugin;
 use SprykerEco\Zed\Vertex\Communication\Plugin\AclMerchantPortal\VertexAclEntityConfigurationExpanderPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\AclMerchantPortal\PurchasingControlAclEntityConfigurationExpanderPlugin;
 
 class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDependencyProvider
 {
@@ -286,6 +287,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new SecurityOauthKnpuMerchantUserAclEntityConfigurationExpanderPlugin(),
             new VertexAclEntityConfigurationExpanderPlugin(),
             new StockAddressAclEntityConfigurationExpanderPlugin(),
+            new PurchasingControlAclEntityConfigurationExpanderPlugin(),
         ];
     }
 }

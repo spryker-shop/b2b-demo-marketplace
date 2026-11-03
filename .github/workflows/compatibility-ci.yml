@@ -58,7 +58,18 @@ jobs:
             deploy-file: ".github/deploy/deploy.ci.acceptance.postgres.robot.yml"
             db-engine: psycopg2
 
+    # docker.ci.acceptance no longer builds the frontend; compat-cypress restores the b2b-mp assets.
+    compat-build-frontend:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: ./.github/workflows/_build-frontend.yml
+        secrets: inherit
+        with:
+            variants: '["b2b-mp"]'
+
     compat-cypress:
+        needs: [compat-build-frontend]
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

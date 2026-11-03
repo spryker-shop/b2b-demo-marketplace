@@ -115,8 +115,11 @@ docker:
         region: EU
 
     mount:
-        baked:
+        native:
+            platforms:
+                - linux
 
     compose:
         yamls:
             - vendor/spryker/robotframework-suite-tests/docker-compose.yml
+

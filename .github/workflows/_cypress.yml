@@ -21,6 +21,16 @@ on:
                 description: "Platform segment of the screenshot upload path."
                 type: string
                 default: "PHP8.5MariaDB"
+            b2b-mp-shards:
+                # b2b-mp has more specs than b2b and its cells were the last to finish: with 5 shards they
+                # ended about 10 minutes after the b2b cells. 7 shards end them at about the same time.
+                description: "Number of core Cypress shards for b2b-mp (the ssp shard comes on top)."
+                type: number
+                default: 7
+            b2b-shards:
+                description: "Number of core Cypress shards for b2b."
+                type: number
+                default: 5
             restore-db:
                 description: "Restore the shared spryker-app-db dump for b2b-mp cells instead of importing demodata."
                 type: boolean
@@ -44,21 +54,56 @@ jobs:
                     # composer-installed in these jobs is public.
                     persist-credentials: false
 
-            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
+            # Only the specs are needed here, not the whole vendor tree: fetch the exact
+            # spryker/cypress-tests commit pinned in composer.lock (one commit, no history).
+            -   name: Fetch cypress-tests at the locked commit
+                run: |
+                    SHA=$(python3 -c "import json; l = json.load(open('composer.lock')); print(next(p['source']['reference'] for p in l['packages'] + l['packages-dev'] if p['name'] == 'spryker/cypress-tests'))")
+                    mkdir -p tests/cypress-tests
+                    cd tests/cypress-tests
+                    git init -q
+                    git fetch -q --depth 1 https://github.com/spryker/cypress-tests.git "$SHA"
+                    git checkout -q FETCH_HEAD
+                    echo "cypress-tests at ${SHA}"
+
+            # Warm the npm and Cypress binary caches once here, so the cell jobs (which start in
+            # parallel and cannot see each other's post-job cache save) only restore them.
+            -   uses: actions/setup-node@v5
                 with:
-                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    node-version: 24
+                    cache: npm
+                    cache-dependency-path: tests/cypress-tests/package-lock.json
+
+            -   name: Cache Cypress dependencies
+                id: cypress_deps
+                uses: actions/cache@v4
+                with:
+                    path: |
+                        ~/.cache/Cypress
+                        tests/cypress-tests/node_modules
+                    key: cypress-deps-${{ runner.os }}-${{ hashFiles('tests/cypress-tests/package-lock.json') }}
+
+            -   name: Warm Cypress caches
+                if: ${{ steps.cypress_deps.outputs.cache-hit != 'true' }}
+                working-directory: tests/cypress-tests
+                run: |
+                    npm ci --no-audit --no-fund
+                    npx cypress install
 
             -   id: compute
                 name: Generate shard matrix
                 env:
                     REPOSITORY_IDS: ${{ inputs.repository-ids }}
-                # jq crosses each generated shard with the repository_ids that must run it:
-                # the SSP shard is marketplace-only, every core shard runs for all requested ids.
+                    B2B_MP_SHARDS: ${{ inputs.b2b-mp-shards }}
+                    B2B_SHARDS: ${{ inputs.b2b-shards }}
+                # Each repository id gets its own shard count. The SSP shard is marketplace-only, so jq
+                # drops it from the b2b list.
                 run: |
-                    CORE=$(.github/workflows/scripts/generate-cypress-shards.py)
-                    CELLS=$(printf '%s' "$CORE" | jq -c --argjson repos "$REPOSITORY_IDS" '[ .[] as $s
-                        | (if $s.mode == "ssp" then ($repos | map(select(. == "b2b-mp"))) else $repos end)[] as $repo
-                        | $s + {repository_id: $repo, label: "\($repo) \($s.label)"}
+                    MP=$(.github/workflows/scripts/generate-cypress-shards.py --shards "$B2B_MP_SHARDS")
+                    B2B=$(.github/workflows/scripts/generate-cypress-shards.py --shards "$B2B_SHARDS")
+                    CELLS=$(jq -cn --argjson mp "$MP" --argjson b2b "$B2B" --argjson repos "$REPOSITORY_IDS" '[ $repos[] as $repo
+                        | (if $repo == "b2b-mp" then $mp else ($b2b | map(select(.mode != "ssp"))) end)[]
+                        | . + {repository_id: $repo, label: "\($repo) \(.label)"}
                     ]')
                     echo "cells=${CELLS}" >> "$GITHUB_OUTPUT"
                     echo "Computed Cypress cells: ${CELLS}"
@@ -86,9 +131,36 @@ jobs:
                 with:
                     persist-credentials: false
 
+            # b2b: the marketplace uninstall from the Prepare B2B job (_prepare-b2b.yml), applied before
+            # `composer install` (it changes composer.json and composer.lock) and before the frontend
+            # restore (part of the key).
+            -   name: Apply b2b changes
+                if: ${{ matrix.cell.repository_id == 'b2b' }}
+                uses: ./.github/actions/apply-b2b-changes
+
             -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            # Frontend assets come from _build-frontend.yml; the pipeline no longer builds them in the container.
+            -   name: Restore frontend assets
+                id: fe_cache
+                uses: ./.github/actions/restore-frontend-assets
+                with:
+                    variant: ${{ matrix.cell.repository_id }}
+
+            # Self-healing fallback: build-frontend populates the cache first, so a miss means eviction or
+            # key drift. Warn so it is visible, then build here rather than fail.
+            -   name: Warn on frontend assets cache miss
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                run: echo "::warning::frontend-assets cache miss in a consumer job; build-frontend should have populated this key. Building inline."
+
+            -   name: Build frontend assets
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                uses: ./.github/actions/build-frontend-assets
+                with:
+                    variant: ${{ matrix.cell.repository_id }}
+                    cache-key: ${{ steps.fe_cache.outputs.key }}
 
             -   name: Configure sysctl limits
                 run: |
@@ -110,12 +182,6 @@ jobs:
                 # (CC-39284) for the time saved on the rest of the shard.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
-                    if [ "${{ matrix.cell.repository_id }}" = "b2b" ]; then
-                        chmod +x uninstall-marketplace-modules.sh
-                        chmod +x uninstall-frontend-marketplace.sh
-                        ./uninstall-frontend-marketplace.sh
-                        ./uninstall-marketplace-modules.sh
-                    fi
                     docker/sdk boot "$DEPLOY_FILE"
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     if [ "$RESTORE_DB" = "true" ]; then
@@ -129,15 +195,53 @@ jobs:
                 if: ${{ inputs.restore-db && matrix.cell.repository_id == 'b2b-mp' }}
                 uses: ./.github/actions/validate-sync-completeness
 
+            -   uses: actions/setup-node@v5
+                with:
+                    node-version: 24
+
+            -   name: Restore Cypress dependencies
+                id: cypress_deps
+                uses: actions/cache/restore@v4
+                with:
+                    path: |
+                        ~/.cache/Cypress
+                        tests/cypress-tests/node_modules
+                    key: cypress-deps-${{ runner.os }}-${{ hashFiles('tests/cypress-tests/package-lock.json') }}
+
+            -   name: Install Cypress
+                # node_modules and the binary normally come from the cache warmed in the shards job.
+                if: ${{ steps.cypress_deps.outputs.cache-hit != 'true' }}
+                working-directory: tests/cypress-tests
+                run: |
+                    npm ci --no-audit --no-fund
+                    npx cypress install
+
+            -   name: Configure Cypress
+                run: |
+                    cp tests/cypress-tests/.env.dynamic-store.example tests/cypress-tests/.env
+                    # Map every Spryker hostname (deploy file + cypress env) to the docker-sdk frontend published on the runner host.
+                    HOSTS=$(grep -hoE '[A-Za-z0-9.-]+\.spryker\.local' "$DEPLOY_FILE" tests/cypress-tests/.env | sort -u | tr '\n' ' ')
+                    echo "127.0.0.1 ${HOSTS}" | sudo tee -a /etc/hosts
+                    # Keep artifacts where the workflow steps expect them (repo-root .cypress/).
+                    for d in screenshots videos downloads logs; do
+                        mkdir -p ".cypress/$d"
+                        rm -rf "tests/cypress-tests/cypress/$d"
+                        ln -s "$GITHUB_WORKSPACE/.cypress/$d" "tests/cypress-tests/cypress/$d"
+                    done
+
             -   name: Run Tests
                 id: run_tests
+                working-directory: tests/cypress-tests
+                env:
+                    ENV_REPOSITORY_ID: ${{ matrix.cell.repository_id }}
+                    ENV_IS_SSP_ENABLED: true
+                    CELL_MODE: ${{ matrix.cell.mode }}
+                    CELL_SPECS: ${{ matrix.cell.specs }}
                 run: |
-                    docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
-                    docker/sdk exec cypress-tests npx cypress install
-                    if [ "${{ matrix.cell.mode }}" = "ssp" ]; then
-                        docker/sdk exec --env "ENV_REPOSITORY_ID=${{ matrix.cell.repository_id }}" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:ssp
+                    if [ "$CELL_MODE" = "ssp" ]; then
+                        npm run cy:ci:ssp
                     else
-                        docker/sdk exec --env "ENV_REPOSITORY_ID=${{ matrix.cell.repository_id }}" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npx cypress run --headless --browser chrome --config retries=2 --spec "${{ matrix.cell.specs }}"
+                        npx cypress run --headless --browser chrome --config retries=2 --spec "$CELL_SPECS"
                     fi
 
             -   name: Upload Screenshots

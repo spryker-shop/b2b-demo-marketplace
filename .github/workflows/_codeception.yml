@@ -52,6 +52,27 @@ jobs:
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
+            # Frontend assets come from _build-frontend.yml; the pipeline no longer builds them in the container.
+            -   name: Restore frontend assets
+                id: fe_cache
+                if: ${{ inputs.restore-db }}
+                uses: ./.github/actions/restore-frontend-assets
+                with:
+                    variant: b2b-mp
+
+            # Self-healing fallback: build-frontend populates the cache first, so a miss means eviction or
+            # key drift. Warn so it is visible, then build here rather than fail.
+            -   name: Warn on frontend assets cache miss
+                if: ${{ inputs.restore-db && steps.fe_cache.outputs.cache-hit != 'true' }}
+                run: echo "::warning::frontend-assets cache miss in a consumer job; build-frontend should have populated this key. Building inline."
+
+            -   name: Build frontend assets
+                if: ${{ inputs.restore-db && steps.fe_cache.outputs.cache-hit != 'true' }}
+                uses: ./.github/actions/build-frontend-assets
+                with:
+                    variant: b2b-mp
+                    cache-key: ${{ steps.fe_cache.outputs.key }}
+
             -   name: Configure sysctl limits
                 run: |
                     sudo sysctl -w vm.swappiness=10
