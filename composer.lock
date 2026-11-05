@@ -29086,21 +29086,21 @@
         },
         {
             "name": "spryker/catalog",
-            "version": "5.13.0",
+            "version": "5.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/catalog.git",
-                "reference": "8b1134450e26c0f8fb676140eb992de04b0e92ba"
+                "reference": "b6f79f77f9910abb9bec9aa3691b73f4aea9b645"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/catalog/zipball/8b1134450e26c0f8fb676140eb992de04b0e92ba",
-                "reference": "8b1134450e26c0f8fb676140eb992de04b0e92ba",
+                "url": "https://api.github.com/repos/spryker/catalog/zipball/b6f79f77f9910abb9bec9aa3691b73f4aea9b645",
+                "reference": "b6f79f77f9910abb9bec9aa3691b73f4aea9b645",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
-                "spryker/catalog-extension": "^1.2.0",
+                "spryker/catalog-extension": "^1.3.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/search": "^6.0.0 || ^7.0.0 || ^8.27.0",
                 "spryker/search-extension": "^1.5.0",
@@ -29110,7 +29110,8 @@
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/elastica": "*",
-                "spryker/product-page-search": "*"
+                "spryker/product-page-search": "*",
+                "spryker/testify": "*"
             },
             "suggest": {
                 "spryker/config": "If you want to use Elastica plugins.",
@@ -29135,22 +29136,22 @@
             ],
             "description": "Catalog module",
             "support": {
-                "source": "https://github.com/spryker/catalog/tree/5.13.0"
+                "source": "https://github.com/spryker/catalog/tree/5.14.0"
             },
-            "time": "2026-05-29T13:09:49+00:00"
+            "time": "2026-11-03T09:24:13+00:00"
         },
         {
             "name": "spryker/catalog-extension",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/catalog-extension.git",
-                "reference": "1e09390c260c521ad5c7e089e1ed46a7519f14f2"
+                "reference": "299699f6f895b927ded0c9dc0a8f513141085ec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/catalog-extension/zipball/1e09390c260c521ad5c7e089e1ed46a7519f14f2",
-                "reference": "1e09390c260c521ad5c7e089e1ed46a7519f14f2",
+                "url": "https://api.github.com/repos/spryker/catalog-extension/zipball/299699f6f895b927ded0c9dc0a8f513141085ec9",
+                "reference": "299699f6f895b927ded0c9dc0a8f513141085ec9",
                 "shasum": ""
             },
             "require": {
@@ -29176,9 +29177,9 @@
             ],
             "description": "CatalogExtension module",
             "support": {
-                "source": "https://github.com/spryker/catalog-extension/tree/1.2.0"
+                "source": "https://github.com/spryker/catalog-extension/tree/1.3.0"
             },
-            "time": "2026-05-29T13:09:49+00:00"
+            "time": "2026-11-03T09:24:13+00:00"
         },
         {
             "name": "spryker/catalog-price-product-connector",
@@ -60367,26 +60368,27 @@
         },
         {
             "name": "spryker/product-list-storage",
-            "version": "1.21.0",
+            "version": "1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-list-storage.git",
-                "reference": "3109dd0bfc88428ea146d65c6c92776bfc24013f"
+                "reference": "bd619b357260dc72fd7bc863df2dfe816f5b5944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-list-storage/zipball/3109dd0bfc88428ea146d65c6c92776bfc24013f",
-                "reference": "3109dd0bfc88428ea146d65c6c92776bfc24013f",
+                "url": "https://api.github.com/repos/spryker/product-list-storage/zipball/bd619b357260dc72fd7bc863df2dfe816f5b5944",
+                "reference": "bd619b357260dc72fd7bc863df2dfe816f5b5944",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker/catalog-extension": "^1.3.0",
                 "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
                 "spryker/event-behavior": "^1.0.0",
                 "spryker/kernel": "^3.49.0",
                 "spryker/product": "^5.0.0 || ^6.0.0",
                 "spryker/product-category": "^4.0.0",
-                "spryker/product-list": "^1.7.0",
+                "spryker/product-list": "^1.10.0",
                 "spryker/product-storage-extension": "^1.3.0",
                 "spryker/propel": "^3.47.0",
                 "spryker/publisher-extension": "^1.0.0",
@@ -60397,6 +60399,7 @@
                 "spryker/transfer": "^3.27.0"
             },
             "require-dev": {
+                "spryker/category": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/event": "*",
                 "spryker/testify": "*"
@@ -60423,9 +60426,9 @@
             ],
             "description": "ProductListStorage module",
             "support": {
-                "source": "https://github.com/spryker/product-list-storage/tree/1.21.0"
+                "source": "https://github.com/spryker/product-list-storage/tree/1.22.0"
             },
-            "time": "2026-05-12T11:37:21+00:00"
+            "time": "2026-11-03T09:24:13+00:00"
         },
         {
             "name": "spryker/product-management",
@@ -92467,7 +92470,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "a9f802e4be060e276c0ac62a4bae14b97e42a19b"
+                "reference": "e0f880e848ebb10b2f42c508659052a448f5789e"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -92475,7 +92478,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-11-03T08:28:25+00:00"
+            "time": "2026-11-05T10:45:31+00:00"
         },
         {
             "name": "spryker/development",
