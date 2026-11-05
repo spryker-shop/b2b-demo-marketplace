@@ -35,6 +35,7 @@ use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantReferenceQueryExp
 use Spryker\Client\ProductLabelStorage\Plugin\Catalog\ProductLabelSearchHttpFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin as ProductListSearchProductListQueryExpanderPlugin;
+use Spryker\Client\ProductListStorage\Plugin\Catalog\ProductListProductConcreteStorageSearchResultFilterPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingSortConfigTransferBuilderPlugin;
 use Spryker\Client\ProductStorage\Plugin\Catalog\ProductConcreteStorageSearchPlugin;
@@ -389,6 +390,16 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     {
         return [
             new ProductConcreteStorageSearchPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\CatalogExtension\Dependency\Plugin\ProductConcreteStorageSearchResultFilterPluginInterface>
+     */
+    protected function getProductConcreteStorageSearchResultFilterPlugins(): array
+    {
+        return [
+            new ProductListProductConcreteStorageSearchResultFilterPlugin(),
         ];
     }
 }
