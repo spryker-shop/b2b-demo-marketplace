@@ -10200,12 +10200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ai-commerce.git",
-                "reference": "0110172ce4aba52ffc9f88025a65576dd75ed54b"
+                "reference": "e33e1c7421fd3fb4cec50a15b015a376124c45df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/0110172ce4aba52ffc9f88025a65576dd75ed54b",
-                "reference": "0110172ce4aba52ffc9f88025a65576dd75ed54b",
+                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/e33e1c7421fd3fb4cec50a15b015a376124c45df",
+                "reference": "e33e1c7421fd3fb4cec50a15b015a376124c45df",
                 "shasum": ""
             },
             "require": {
@@ -10221,13 +10221,13 @@
                 "spryker/cms-storage": "^2.4.0",
                 "spryker/configuration": "^1.0.0",
                 "spryker/content": "^2.0.0",
-                "spryker/content-gui": "^3.0.0",
+                "spryker/content-gui": "^3.3.0",
                 "spryker/content-gui-extension": "^1.0.0",
                 "spryker/currency": "^4.0.0",
                 "spryker/customer": "^7.0.0",
                 "spryker/discount": "^9.0.0",
                 "spryker/glossary-storage": "^1.0.0",
-                "spryker/gui": "^5.12.0",
+                "spryker/gui": "^5.14.0",
                 "spryker/kernel": "^3.72.0",
                 "spryker/locale": "^4.12.0",
                 "spryker/log": "^3.0.0",
@@ -10237,6 +10237,7 @@
                 "spryker/oms": "^11.0.0",
                 "spryker/permission": "^1.0.0",
                 "spryker/price": "^5.0.0",
+                "spryker/price-product": "^4.40.0",
                 "spryker/price-product-storage": "^4.0.0",
                 "spryker/product-alternative-storage": "^1.0.0",
                 "spryker/product-bundle-storage": "^1.0.0",
@@ -10282,6 +10283,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker-shop/product-comparison-page": "When the Storefront Assistant links a product comparison to the full comparison page (enable AiCommerceConfig::isStorefrontAssistantProductComparisonPageEnabled())",
                 "spryker/container": "When using BackofficeAssistant",
                 "spryker/product": "When using AI-based product management features",
                 "spryker/product-category": "When using category suggestions in product management.",
@@ -10309,7 +10311,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/ai-commerce/tree/master"
             },
-            "time": "2026-10-28T15:48:39+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker-feature/alternative-products",
@@ -25777,23 +25779,23 @@
         },
         {
             "name": "spryker/ai-foundation",
-            "version": "0.9.3",
+            "version": "0.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/ai-foundation.git",
-                "reference": "c42d0e0c7b80435b9114ced257acd34a83d1a37f"
+                "reference": "607a1853ef37945d6307a6972638d1536373eace"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/c42d0e0c7b80435b9114ced257acd34a83d1a37f",
-                "reference": "c42d0e0c7b80435b9114ced257acd34a83d1a37f",
+                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/607a1853ef37945d6307a6972638d1536373eace",
+                "reference": "607a1853ef37945d6307a6972638d1536373eace",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "^3.380",
-                "neuron-core/neuron-ai": "^3.15.0",
+                "neuron-core/neuron-ai": "^3.17.0",
                 "php": ">=8.3",
-                "spryker/gui": "^5.8.0",
+                "spryker/gui": "^5.14.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/log": "^3.0.0",
                 "spryker/log-extension": "^1.0.0",
@@ -25828,9 +25830,9 @@
             ],
             "description": "AiFoundation module",
             "support": {
-                "source": "https://github.com/spryker/ai-foundation/tree/0.9.3"
+                "source": "https://github.com/spryker/ai-foundation/tree/0.9.6"
             },
-            "time": "2026-10-15T10:07:09+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker/alternative-products-rest-api",
@@ -30748,16 +30750,16 @@
         },
         {
             "name": "spryker/cms",
-            "version": "7.22.1",
+            "version": "7.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cms.git",
-                "reference": "4410ac9ce362ce1036282d4f4b5651954f95683b"
+                "reference": "a36b5c2c6044ea449f68e6d7611a24d0c6c9f4ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cms/zipball/4410ac9ce362ce1036282d4f4b5651954f95683b",
-                "reference": "4410ac9ce362ce1036282d4f4b5651954f95683b",
+                "url": "https://api.github.com/repos/spryker/cms/zipball/a36b5c2c6044ea449f68e6d7611a24d0c6c9f4ca",
+                "reference": "a36b5c2c6044ea449f68e6d7611a24d0c6c9f4ca",
                 "shasum": ""
             },
             "require": {
@@ -30766,7 +30768,7 @@
                 "spryker/cms-extension": "^1.1.0",
                 "spryker/event": "^2.3.0",
                 "spryker/glossary": "^3.1.0",
-                "spryker/gui": "^3.48.0 || ^4.0.0 || ^5.8.0",
+                "spryker/gui": "^3.48.0 || ^4.0.0 || ^5.14.0",
                 "spryker/kernel": "^3.76.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
                 "spryker/log": "^3.0.0",
@@ -30819,9 +30821,9 @@
             ],
             "description": "Cms module",
             "support": {
-                "source": "https://github.com/spryker/cms/tree/7.22.1"
+                "source": "https://github.com/spryker/cms/tree/7.23.0"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker/cms-block",
@@ -31050,23 +31052,23 @@
         },
         {
             "name": "spryker/cms-block-gui",
-            "version": "2.18.2",
+            "version": "2.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cms-block-gui.git",
-                "reference": "2d48b0c1789ff2bde87767f4c2e3cd15237482bf"
+                "reference": "3d31f62ecd7d579d1ed5ce068bc6ee14d32c139b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cms-block-gui/zipball/2d48b0c1789ff2bde87767f4c2e3cd15237482bf",
-                "reference": "2d48b0c1789ff2bde87767f4c2e3cd15237482bf",
+                "url": "https://api.github.com/repos/spryker/cms-block-gui/zipball/3d31f62ecd7d579d1ed5ce068bc6ee14d32c139b",
+                "reference": "3d31f62ecd7d579d1ed5ce068bc6ee14d32c139b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/cms-block": "^2.0.0 || ^3.0.0",
                 "spryker/cms-block-gui-extension": "^1.0.0",
-                "spryker/gui": "^3.48.0 || ^4.3.3 || ^5.8.0",
+                "spryker/gui": "^3.48.0 || ^4.3.3 || ^5.14.0",
                 "spryker/kernel": "^3.52.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
                 "spryker/propel-orm": "^1.0.0",
@@ -31105,9 +31107,9 @@
             ],
             "description": "CmsBlockGui module",
             "support": {
-                "source": "https://github.com/spryker/cms-block-gui/tree/2.18.2"
+                "source": "https://github.com/spryker/cms-block-gui/tree/2.19.0"
             },
-            "time": "2026-10-29T13:59:11+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker/cms-block-gui-extension",
@@ -31379,16 +31381,16 @@
         },
         {
             "name": "spryker/cms-content-widget",
-            "version": "1.13.1",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cms-content-widget.git",
-                "reference": "8038b9997c007cb735ebdde93f90653d6e972a11"
+                "reference": "7db01fa756668c5552a252c13db81093d4bd6ce1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cms-content-widget/zipball/8038b9997c007cb735ebdde93f90653d6e972a11",
-                "reference": "8038b9997c007cb735ebdde93f90653d6e972a11",
+                "url": "https://api.github.com/repos/spryker/cms-content-widget/zipball/7db01fa756668c5552a252c13db81093d4bd6ce1",
+                "reference": "7db01fa756668c5552a252c13db81093d4bd6ce1",
                 "shasum": ""
             },
             "require": {
@@ -31396,7 +31398,7 @@
                 "spryker/application": "^3.0.0",
                 "spryker/cms-extension": "^1.0.0",
                 "spryker/glossary": "^3.0.0",
-                "spryker/gui": "^3.21.0 || ^4.0.0 || ^5.8.0",
+                "spryker/gui": "^3.21.0 || ^4.0.0 || ^5.14.0",
                 "spryker/kernel": "^3.52.0",
                 "spryker/log": "^3.0.0",
                 "spryker/symfony": "^3.0.0",
@@ -31441,9 +31443,9 @@
             ],
             "description": "CmsContentWidget module",
             "support": {
-                "source": "https://github.com/spryker/cms-content-widget/tree/1.13.1"
+                "source": "https://github.com/spryker/cms-content-widget/tree/1.14.0"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker/cms-content-widget-cms-block-connector",
@@ -31784,25 +31786,25 @@
         },
         {
             "name": "spryker/cms-gui",
-            "version": "5.21.2",
+            "version": "5.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cms-gui.git",
-                "reference": "beafe46d1e2efd119957ecc94ae8e6e247a2f147"
+                "reference": "6549c238a971ca6df30cc719109978bdb16356d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cms-gui/zipball/beafe46d1e2efd119957ecc94ae8e6e247a2f147",
-                "reference": "beafe46d1e2efd119957ecc94ae8e6e247a2f147",
+                "url": "https://api.github.com/repos/spryker/cms-gui/zipball/6549c238a971ca6df30cc719109978bdb16356d1",
+                "reference": "6549c238a971ca6df30cc719109978bdb16356d1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/application": "^3.2.0",
-                "spryker/cms": "^7.21.0",
+                "spryker/cms": "^7.23.0",
                 "spryker/cms-gui-extension": "^1.0.0",
                 "spryker/glossary": "^3.0.0",
-                "spryker/gui": "^3.48.0 || ^4.0.0 || ^5.8.0",
+                "spryker/gui": "^3.48.0 || ^4.0.0 || ^5.14.0",
                 "spryker/kernel": "^3.52.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
                 "spryker/propel-orm": "^1.0.0",
@@ -31843,9 +31845,9 @@
             ],
             "description": "CmsGui module",
             "support": {
-                "source": "https://github.com/spryker/cms-gui/tree/5.21.2"
+                "source": "https://github.com/spryker/cms-gui/tree/5.22.0"
             },
-            "time": "2026-10-29T13:59:11+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker/cms-gui-extension",
@@ -37389,16 +37391,16 @@
         },
         {
             "name": "spryker/content-gui",
-            "version": "3.2.2",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/content-gui.git",
-                "reference": "377c5cf985b20bdfd6e65475aebb68e4feb6c76b"
+                "reference": "75a4bb80603008788f420da7193fba2321d6f719"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/content-gui/zipball/377c5cf985b20bdfd6e65475aebb68e4feb6c76b",
-                "reference": "377c5cf985b20bdfd6e65475aebb68e4feb6c76b",
+                "url": "https://api.github.com/repos/spryker/content-gui/zipball/75a4bb80603008788f420da7193fba2321d6f719",
+                "reference": "75a4bb80603008788f420da7193fba2321d6f719",
                 "shasum": ""
             },
             "require": {
@@ -37408,7 +37410,7 @@
                 "spryker/cms-gui-extension": "^1.0.0",
                 "spryker/content": "^2.0.0",
                 "spryker/content-gui-extension": "^1.1.0",
-                "spryker/gui": "^4.0.0 || ^5.8.0",
+                "spryker/gui": "^4.0.0 || ^5.14.0",
                 "spryker/kernel": "^3.32.0",
                 "spryker/locale": "^3.2.0 || ^4.0.0",
                 "spryker/symfony": "^3.2.0",
@@ -37421,7 +37423,8 @@
                 "spryker/container": "*",
                 "spryker/propel": "*",
                 "spryker/store": "*",
-                "spryker/testify": "*"
+                "spryker/testify": "*",
+                "spryker/twig": "*"
             },
             "type": "library",
             "extra": {
@@ -37440,9 +37443,9 @@
             ],
             "description": "ContentGui module",
             "support": {
-                "source": "https://github.com/spryker/content-gui/tree/3.2.2"
+                "source": "https://github.com/spryker/content-gui/tree/3.3.0"
             },
-            "time": "2026-10-28T11:18:50+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker/content-gui-extension",
@@ -43252,16 +43255,16 @@
         },
         {
             "name": "spryker/gui",
-            "version": "5.12.1",
+            "version": "5.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui.git",
-                "reference": "c23d203f28ae28eb67de031d1d1c5ca307cc2139"
+                "reference": "b588cc4a31998a54ffce1f334b2685f1e22697a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui/zipball/c23d203f28ae28eb67de031d1d1c5ca307cc2139",
-                "reference": "c23d203f28ae28eb67de031d1d1c5ca307cc2139",
+                "url": "https://api.github.com/repos/spryker/gui/zipball/b588cc4a31998a54ffce1f334b2685f1e22697a6",
+                "reference": "b588cc4a31998a54ffce1f334b2685f1e22697a6",
                 "shasum": ""
             },
             "require": {
@@ -43311,9 +43314,9 @@
             ],
             "description": "Gui module",
             "support": {
-                "source": "https://github.com/spryker/gui/tree/5.12.1"
+                "source": "https://github.com/spryker/gui/tree/5.14.0"
             },
-            "time": "2026-10-29T13:59:11+00:00"
+            "time": "2026-11-05T12:27:12+00:00"
         },
         {
             "name": "spryker/gui-extension",
