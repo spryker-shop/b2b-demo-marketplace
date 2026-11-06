@@ -77024,16 +77024,16 @@
         },
         {
             "name": "spryker/synchronization",
-            "version": "1.21.0",
+            "version": "1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/synchronization.git",
-                "reference": "33f5c7e729733e75a1cf8fb2e0c0337b0e885179"
+                "reference": "f0a67bf9aa6ca5467af255c617db79710f166d12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/synchronization/zipball/33f5c7e729733e75a1cf8fb2e0c0337b0e885179",
-                "reference": "33f5c7e729733e75a1cf8fb2e0c0337b0e885179",
+                "url": "https://api.github.com/repos/spryker/synchronization/zipball/f0a67bf9aa6ca5467af255c617db79710f166d12",
+                "reference": "f0a67bf9aa6ca5467af255c617db79710f166d12",
                 "shasum": ""
             },
             "require": {
@@ -77092,7 +77092,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Spryker\\": "src/Spryker/"
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Zed\\Synchronization\\Helper\\": "tests/SprykerTest/Zed/Synchronization/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -77101,9 +77102,9 @@
             ],
             "description": "Synchronization module",
             "support": {
-                "source": "https://github.com/spryker/synchronization/tree/1.21.0"
+                "source": "https://github.com/spryker/synchronization/tree/1.22.0"
             },
-            "time": "2026-10-20T13:25:16+00:00"
+            "time": "2026-11-06T12:02:44+00:00"
         },
         {
             "name": "spryker/synchronization-behavior",
