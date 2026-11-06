@@ -19,6 +19,17 @@ $dsn = sprintf(
     $config[PropelConstants::ZED_DB_DATABASE],
 );
 
+$settings = [
+    PropelConfig::DB_ENGINE_PGSQL => [],
+    PropelConfig::DB_ENGINE_MYSQL => [
+        'charset' => 'utf8',
+        'queries' => [
+            'utf8' => 'SET NAMES utf8 COLLATE utf8_unicode_ci, COLLATION_CONNECTION = utf8_unicode_ci, COLLATION_DATABASE = utf8_unicode_ci, COLLATION_SERVER = utf8_unicode_ci',
+            'snapshot_isolation' => 'SET SESSION innodb_snapshot_isolation = OFF',
+        ],
+    ],
+];
+
 $slaves = [];
 foreach ($config[PropelConstants::ZED_DB_REPLICAS] ?? [] as $slaveData) {
     $slaves[] = [
@@ -31,30 +42,26 @@ foreach ($config[PropelConstants::ZED_DB_REPLICAS] ?? [] as $slaveData) {
         ),
         'user' => $config[PropelConstants::ZED_DB_USERNAME],
         'password' => $config[PropelConstants::ZED_DB_PASSWORD],
+        'settings' => $settings[$config[PropelConstants::ZED_DB_ENGINE]],
     ];
 }
 
 $connections = [
-    'pgsql' => [
+    PropelConfig::DB_ENGINE_PGSQL => [
         'adapter' => PropelConfig::DB_ENGINE_PGSQL,
         'dsn' => $dsn,
         'user' => $config[PropelConstants::ZED_DB_USERNAME],
         'password' => $config[PropelConstants::ZED_DB_PASSWORD],
         'slaves' => $slaves,
-        'settings' => [],
+        'settings' => $settings[PropelConfig::DB_ENGINE_PGSQL],
     ],
-    'mysql' => [
+    PropelConfig::DB_ENGINE_MYSQL => [
         'adapter' => PropelConfig::DB_ENGINE_MYSQL,
         'dsn' => $dsn,
         'user' => $config[PropelConstants::ZED_DB_USERNAME],
         'password' => $config[PropelConstants::ZED_DB_PASSWORD],
         'slaves' => $slaves,
-        'settings' => [
-            'charset' => 'utf8',
-            'queries' => [
-                'utf8' => 'SET NAMES utf8 COLLATE utf8_unicode_ci, COLLATION_CONNECTION = utf8_unicode_ci, COLLATION_DATABASE = utf8_unicode_ci, COLLATION_SERVER = utf8_unicode_ci',
-            ],
-        ],
+        'settings' => $settings[PropelConfig::DB_ENGINE_MYSQL],
     ],
 ];
 
