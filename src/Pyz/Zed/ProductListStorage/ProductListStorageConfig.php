@@ -39,4 +39,9 @@ class ProductListStorageConfig extends SprykerProductListStorageConfig
     {
         return SprykerSharedProductListStorageConfig::PUBLISH_PRODUCT_LIST_QUEUE;
     }
+
+    public function isProductConcreteOwnProductListsPublishingEnabled(): bool
+    {
+        return true;
+    }
 }
