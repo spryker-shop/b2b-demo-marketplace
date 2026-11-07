@@ -22,6 +22,12 @@
             min-width: 0;
         }
 
+        &__quantity-note {
+            @include typography(body-sm);
+            margin: var(--scale-8) 0 var(--scale-12);
+            color: var(--text-secondary);
+        }
+
         &__new-price {
             display: flex;
             align-items: center;
