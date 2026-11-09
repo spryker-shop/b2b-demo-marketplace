@@ -39,7 +39,6 @@ use Spryker\Glue\Log\Plugin\Log\GlueSecurityAuditLoggerConfigPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\IamAws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Agent\AgentConstants;
 use Spryker\Shared\AgentSecurityBlockerMerchantPortal\AgentSecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
@@ -317,94 +316,7 @@ $config[SecuritySystemUserConstants::AUTH_DEFAULT_CREDENTIALS] = [
 
 $config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv('SPRYKER_URI_SIGNER_SECRET_KEY') ?: null;
 
-// ACL: Special rules for specific users
-$config[AclConstants::ACL_DEFAULT_CREDENTIALS] = [
-    'yves_system' => [
-        'rules' => [
-            [
-                'bundle' => '*',
-                'controller' => 'gateway',
-                'action' => '*',
-                'type' => 'allow',
-            ],
-        ],
-    ],
-];
-
 // >> BACKOFFICE
-
-// ACL: Allow or disallow of urls for Zed Admin GUI for ALL users
-$config[AclConstants::ACL_DEFAULT_RULES] = [
-    [
-        'bundle' => 'security-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'multi-factor-auth',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'multi-factor-auth-merchant-portal',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'acl',
-        'controller' => 'index',
-        'action' => 'denied',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'health-check',
-        'controller' => 'index',
-        'action' => 'index',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'api',
-        'controller' => 'rest',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-merchant-portal-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'agent-security-merchant-portal-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => '_profiler',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-oauth-knpu',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
-// ACL: Allow or disallow of urls for Zed Admin GUI
-$config[AclConstants::ACL_USER_RULE_WHITELIST] = [
-    [
-        'bundle' => 'application',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
 
 // ----------------------------------------------------------------------------
 // ------------------------------ SERVICES ------------------------------------
@@ -672,6 +584,13 @@ foreach ($rabbitConnections as $key => $connection) {
     $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
     $config[SymfonyMessengerConstants::QUEUE_AMQP_PROTOCOL] = getenv('SPRYKER_BROKER_PROTOCOL') ?: null;
     $config[SymfonyMessengerConstants::QUEUE_AMQP_SSL_CA_CERT_PATH] = getenv('SPRYKER_SSL_CA_CERT') ?: null;
+
+    // Symfony Scheduler connection for jobs queue
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_HOST] = $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_PORT] = $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_USERNAME] = $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_PASSWORD] = $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_VIRTUAL_HOST] = $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST];
 }
 
 // >>> SYNCHRONIZATION
@@ -1199,6 +1118,6 @@ $config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENA
 
 $config[ProductPageSearchConstants::PRODUCT_CONCRETE_SEARCH_IN_STORAGE_ENABLED] = true;
 
-$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = false;
+$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = (bool)getenv('IS_QA_ATTRIBUTES_ENABLED') ?? false;
 
 require 'config_ai.php';

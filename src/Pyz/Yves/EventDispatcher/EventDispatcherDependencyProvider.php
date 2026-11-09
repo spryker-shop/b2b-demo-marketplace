@@ -26,6 +26,7 @@ use Spryker\Yves\Profiler\Plugin\EventDispatcher\ProfilerRequestEventDispatcherP
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterLocaleEventDispatcherPlugin;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin;
+use Spryker\Yves\Router\Plugin\EventDispatcher\StoreLocaleRedirectEventDispatcherPlugin;
 use Spryker\Yves\Session\Plugin\EventDispatcher\SaveSessionEventDispatcherPlugin;
 use Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin;
 use Spryker\Yves\Storage\Plugin\EventDispatcher\StorageCacheEventDispatcherPlugin;
@@ -57,6 +58,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new LastVisitCookieEventDispatcherPlugin(),
             new RouterListenerEventDispatcherPlugin(),
             new RouterSslRedirectEventDispatcherPlugin(),
+            new StoreLocaleRedirectEventDispatcherPlugin(),
             new CookieEventDispatcherPlugin(),
             new FragmentEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),

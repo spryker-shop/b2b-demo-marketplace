@@ -1,0 +1,54 @@
+name: _build-frontend
+
+# Builds the frontend assets once per variant, in parallel with build-db, and stores them in a
+# content-addressed cache. The b2b variant needs the b2b-uninstall artifact of _prepare-b2b.yml, so a
+# caller runs b2b in its own call after Prepare B2B and b2b-mp without waiting. The consumer jobs restore them before `docker/sdk up`, and the pipelines they
+# use no longer build the frontend in the container. A PR without frontend changes restores master's
+# build and skips the build here.
+
+on:
+    workflow_call:
+        inputs:
+            variants:
+                description: "JSON array of frontend variants to build (b2b-mp, b2b). b2b needs the b2b-uninstall artifact (_prepare-b2b.yml)."
+                type: string
+                default: '["b2b-mp"]'
+
+jobs:
+    build-frontend:
+        name: "Build Frontend (${{ matrix.variant }})"
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        strategy:
+            fail-fast: false
+            matrix:
+                variant: ${{ fromJson(inputs.variants) }}
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    # Nothing downstream needs the checkout token; every repo cloned or
+                    # composer-installed in this job is public.
+                    persist-credentials: false
+
+            # b2b: the marketplace uninstall from the Prepare B2B job (_prepare-b2b.yml), applied before
+            # `composer install` so the install reads the b2b composer.lock.
+            -   name: Apply b2b changes
+                if: ${{ matrix.variant == 'b2b' }}
+                uses: ./.github/actions/apply-b2b-changes
+
+            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Restore frontend assets
+                id: fe_cache
+                uses: ./.github/actions/restore-frontend-assets
+                with:
+                    variant: ${{ matrix.variant }}
+
+            -   name: Build frontend assets
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                uses: ./.github/actions/build-frontend-assets
+                with:
+                    variant: ${{ matrix.variant }}
+                    cache-key: ${{ steps.fe_cache.outputs.key }}

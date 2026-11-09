@@ -64,6 +64,13 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+                    tools: composer:v2
+                    coverage: none
+
             -   uses: ramsey/composer-install@v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
@@ -193,12 +200,30 @@ jobs:
                 if: always()
 
     build-db:
-        needs: [js-validation]
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
+    # Builds the b2b-mp frontend assets once, in parallel with build-db; the Codeception, Cypress and
+    # Cypress-boilerplate jobs restore them instead of building in the container.
+    build-frontend:
+        uses: ./.github/workflows/_build-frontend.yml
+        secrets: inherit
+
+    # Uninstalls the marketplace once and saves the result as the b2b-uninstall artifact, which the b2b
+    # frontend build and the b2b Cypress cells apply instead of running the uninstall again.
+    prepare-b2b:
+        uses: ./.github/workflows/_prepare-b2b.yml
+        secrets: inherit
+
+    build-frontend-b2b:
+        needs: [prepare-b2b]
+        uses: ./.github/workflows/_build-frontend.yml
+        secrets: inherit
+        with:
+            variants: '["b2b"]'
+
     codeception:
-        needs: [js-validation, validation, build-db]
+        needs: [js-validation, validation, build-db, build-frontend]
         uses: ./.github/workflows/_codeception.yml
         secrets: inherit
 
@@ -234,7 +259,7 @@ jobs:
 
     # [project applicable] Cypress Project tests run
     cypress-e2e:
-        needs: [js-validation, validation, cypress-quality-gate]
+        needs: [js-validation, validation, cypress-quality-gate, build-db, build-frontend]
         name: "Cypress-boilerplate / E2E"
         runs-on: ubuntu-latest
         env:
@@ -262,21 +287,43 @@ jobs:
                 working-directory: tests/cypress-boilerplate
                 run: npm ci
 
+            # Frontend assets come from _build-frontend.yml; the pipeline no longer builds them in the container.
+            -   name: Restore frontend assets
+                id: fe_cache
+                uses: ./.github/actions/restore-frontend-assets
+                with:
+                    variant: b2b-mp
+
+            # Self-healing fallback: build-frontend populates the cache first, so a miss means eviction or
+            # key drift. Warn so it is visible, then build here rather than fail.
+            -   name: Warn on frontend assets cache miss
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                run: echo "::warning::frontend-assets cache miss in a consumer job; build-frontend should have populated this key. Building inline."
+
+            -   name: Build frontend assets
+                if: ${{ steps.fe_cache.outputs.cache-hit != 'true' }}
+                uses: ./.github/actions/build-frontend-assets
+                with:
+                    variant: b2b-mp
+                    cache-key: ${{ steps.fe_cache.outputs.key }}
+
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-app-db
+
             -   name: Run docker
+                # The pipeline override restores the shared dump (see _build-db.yml) instead of
+                # importing demodata; the deploy file's own pipeline key is untouched.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress-boilerplate.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
-            -   name: Start queue worker
-                run: docker/sdk console queue:worker:start --stop-when-empty
-
-            -   name: Warm up merchant search index
-                run: |
-                    docker/sdk console sync:data merchant
-                    docker/sdk console queue:worker:start --stop-when-empty
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Cypress E2E tests
                 id: cypress-tests
@@ -322,7 +369,7 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, validation, build-db]
+        needs: [js-validation, validation, build-db, build-frontend, build-frontend-b2b]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml

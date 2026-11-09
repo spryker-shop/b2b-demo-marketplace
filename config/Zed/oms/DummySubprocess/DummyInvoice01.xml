@@ -23,7 +23,7 @@
         </transitions>
 
         <events>
-            <event name="invoice-generate" manual="true" command="Invoice/Generate"/>
+            <event name="invoice-generate" manual="true" command="MerchantInvoice/Generate"/>
             <event name="invoice-generated" onEnter="true"/>
         </events>
     </process>

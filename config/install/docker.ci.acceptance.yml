@@ -88,38 +88,10 @@ sections:
         rest-api-generate-documentation:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
-    build-static:
-        dependencies-install:
-            command: 'vendor/bin/console frontend:project:install-dependencies'
-
-    build-static-production:
-        excluded: true
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build -e production'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build -e production'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
-        water-treatment-product-configurator:
-            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
-
-    build-static-development:
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
-
-        water-treatment-product-configurator:
-            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
+    # No build-static section: the Yves, Back Office and Merchant Portal assets are built once by
+    # _build-frontend.yml and restored into public/*/assets before `docker/sdk up`, and docker/sdk then
+    # skips the whole static phase ("Checking assets are built... [BUILT]"). The water-treatment
+    # configurator copy runs at the end of demodata instead.
 
     init-storages-per-store:
         queue-setup:
@@ -189,3 +161,9 @@ sections:
 
         api-generate-documentation:
             command: 'vendor/bin/glue api:generate:documentation'
+
+        # Copies the prebuilt configurator app into public/WaterTreatmentConfigurator/dist (PHP, no npm).
+        # Here and not in build-static, because docker/sdk skips the static phase when the restored
+        # assets exist.
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'

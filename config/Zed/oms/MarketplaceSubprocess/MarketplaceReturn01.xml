@@ -20,6 +20,12 @@
             </transition>
 
             <transition>
+                <source>invoice generated</source>
+                <target>waiting for return</target>
+                <event>start-return</event>
+            </transition>
+
+            <transition>
                 <source>delivered</source>
                 <target>waiting for return</target>
                 <event>start-return</event>
