@@ -349,6 +349,10 @@ $cart-item-image-width: 76;
             overflow: hidden;
         }
 
+        &__panel-inner[aria-busy='true'] > * {
+            visibility: hidden;
+        }
+
         &__col--description:has(&__toggle[aria-expanded='true']) &__panel {
             grid-template-rows: 1fr;
             border-top-width: var(--stroke-sm);
@@ -361,6 +365,12 @@ $cart-item-image-width: 76;
         &__col--description:has(&__toggle[aria-expanded='true']) &__panel-inner {
             overflow: visible;
             padding-top: var(--scale-16);
+        }
+
+        // Reserve space for the loader only while the panel is open: a min-height on the collapsed
+        // panel would break the 0fr collapse.
+        &__col--description:has(&__toggle[aria-expanded='true']) &__panel-inner[aria-busy='true'] {
+            min-height: rem(56);
         }
     }
 }

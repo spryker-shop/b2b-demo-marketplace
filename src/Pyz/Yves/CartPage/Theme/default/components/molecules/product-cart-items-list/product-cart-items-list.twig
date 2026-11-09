@@ -1,11 +1,18 @@
 {% extends molecule('product-cart-items-list', 'SprykerShop:CartPage') %}
 
 {% block body %}
+    {% set canEditItems = data.isQuoteEditable and can('ChangeCartItemPermissionPlugin', data.cart.idQuote) %}
+    {% set canRemoveItems = data.isQuoteEditable and can('RemoveCartItemPermissionPlugin') %}
+    {% set canSeePrice = can('SeePricePermissionPlugin') %}
+
     {% widget 'ListCartItemsByShipmentTypeWidget' args [data.cartItems] with {
         embed: {
             cart: data.cart,
             cartItems: data.cartItems,
             isQuoteEditable: data.isQuoteEditable,
+            canEditItems: canEditItems,
+            canRemoveItems: canRemoveItems,
+            canSeePrice: canSeePrice,
             attributes: data.attributes,
             ajaxTriggerAttribute: data.ajaxTriggerAttribute,
         },
@@ -17,8 +24,10 @@
                         list: embed.cart,
                         listItem: cartItem,
                         attributes: embed.attributes[cartItem.sku] | default([]),
-                        canEdit: embed.isQuoteEditable and can('ChangeCartItemPermissionPlugin', embed.cart.idQuote),
-                        canRemove: embed.isQuoteEditable and can('RemoveCartItemPermissionPlugin'),
+                        canEdit: embed.canEditItems,
+                        canRemove: embed.canRemoveItems,
+                        canSeePrice: embed.canSeePrice,
+                        isLazyDetails: true,
                         hasAdditionalTitle: cartItem.cartNote | default(false),
                         currencyIsoCode: embed.cart.currency.code | default(null),
                         ajaxTriggerAttribute: embed.ajaxTriggerAttribute,
@@ -35,8 +44,10 @@
                             list: data.cart,
                             listItem: cartItem,
                             attributes: data.attributes[cartItem.sku] | default([]),
-                            canEdit: data.isQuoteEditable and can('ChangeCartItemPermissionPlugin', data.cart.idQuote),
-                            canRemove: data.isQuoteEditable and can('RemoveCartItemPermissionPlugin'),
+                            canEdit: canEditItems,
+                            canRemove: canRemoveItems,
+                            canSeePrice: canSeePrice,
+                            isLazyDetails: true,
                             hasAdditionalTitle: cartItem.cartNote | default(false),
                             currencyIsoCode: data.cart.currency.code | default(null),
                             ajaxTriggerAttribute: data.ajaxTriggerAttribute,

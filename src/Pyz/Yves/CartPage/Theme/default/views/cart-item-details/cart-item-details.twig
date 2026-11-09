@@ -1,0 +1,19 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _view.cart,
+    listItem: _view.listItem,
+    isQuoteEditable: _view.isQuoteEditable,
+    ajaxTriggerAttribute: _view.isCartActionsAsyncModeEnabled ? 'data-cart-ajax-form-submitter' : null,
+} %}
+
+{% block body %}
+    {% include molecule('cart-item-details', 'CartPage') with {
+        data: {
+            listItem: data.listItem,
+            list: data.cart,
+            canEdit: data.isQuoteEditable and can('ChangeCartItemPermissionPlugin', data.cart.idQuote),
+            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+        },
+    } only %}
+{% endblock %}
