@@ -14,6 +14,10 @@ use Spryker\Zed\Sales\Business\Exception\DuplicateOrderReferenceException;
 
 class CheckoutConfig extends SprykerCheckoutConfig
 {
+    protected const int DRIVER_CODE_SNAPSHOT_CONFLICT = 1020;
+
+    protected const int DRIVER_CODE_DEADLOCK = 1213;
+
     /**
      * @return list<string>
      */
@@ -21,6 +25,17 @@ class CheckoutConfig extends SprykerCheckoutConfig
     {
         return [
             DuplicateOrderReferenceException::class,
+        ];
+    }
+
+    /**
+     * @return list<int>
+     */
+    public function getRetryableDriverErrorCodes(): array
+    {
+        return [
+            static::DRIVER_CODE_SNAPSHOT_CONFLICT,
+            static::DRIVER_CODE_DEADLOCK,
         ];
     }
 }

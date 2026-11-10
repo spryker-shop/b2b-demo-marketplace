@@ -26,6 +26,9 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'command' => $logger . '$PHP_BIN vendor/bin/console queue:worker:start',
                 'schedule' => '* * * * *',
                 'priority' => 250,
+                // Runs in its own consumer rather than through the shared execution queue, so the
+                // queue workers it starts are not themselves waiting on a scheduler execution slot.
+                'sync' => true,
             ],
             'check-product-validity' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console product:check-validity',
@@ -98,12 +101,12 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'priority' => 200,
             ],
             'deactivate-discontinued-products' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console product:deactivate-discontinued-products',
+                'command' => $logger . '$PHP_BIN vendor/bin/console deactivate-discontinued-products',
                 'schedule' => '0 0 * * *',
                 'priority' => 200,
             ],
             'clean-expired-guest-cart' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console cart:guest:clean-expired',
+                'command' => $logger . '$PHP_BIN vendor/bin/console quote:delete-expired-guest-quotes',
                 'schedule' => '30 1 * * *',
                 'priority' => 200,
             ],
@@ -113,7 +116,7 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'priority' => 200,
             ],
             'apply-price-product-schedule' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console price-product:schedule:apply',
+                'command' => $logger . '$PHP_BIN vendor/bin/console price-product-schedule:apply',
                 'schedule' => '0 6 * * *',
                 'priority' => 200,
             ],
@@ -123,7 +126,7 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'priority' => 200,
             ],
             'delete-expired-customer-invalidated' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console customer:delete-expired-invalidated',
+                'command' => $logger . '$PHP_BIN vendor/bin/console customer:delete-expired-customer-invalidated',
                 'schedule' => '0 0 * * 0',
                 'priority' => 200,
             ],
