@@ -5,12 +5,14 @@
 {% set buyBoxWidget = findWidget('BuyBoxWidget', [data.product, app.request]) %}
 {% set productOffersCount = buyBoxWidget.products | length %}
 {% set showProductAvailability = isProductConcrete and productOffersCount == 0 %}
+{% set productDiscontinuedNoteWidget = isProductConcrete ? findWidget('ProductDiscontinuedNoteWidget', [data.product.sku]) : null %}
+{% set isDiscontinued = productDiscontinuedNoteWidget and productDiscontinuedNoteWidget.isDiscontinued %}
 {% set isAvailable = isProductConcrete and (data.product.available or productOffersCount) %}
-{% set showAvailabilityNotification = (not isAvailable or not data.product.available) and isProductConcrete %}
+{% set showAvailabilityNotification = (not isAvailable or not data.product.available) and isProductConcrete and not isDiscontinued %}
 {% set hasConfigurableAttributes = data.product.attributeMap.superAttributes is defined and data.product.attributeMap.superAttributes is not empty %}
 
 {% block body %}
-    {% set isDisabled = isDisabled or not data.product.available %}
+    {% set isDisabled = isDisabled or not data.product.available or isDiscontinued %}
     {% set isAddToCartDisabled = isProductConcrete and isDisabled %}
     {% set saveToListTriggerClass = config.jsName ~ '__save-to-list-trigger-' ~ data.product.sku %}
 
@@ -18,8 +20,14 @@
         <div class="{{ config.name }}__top-block">
             <h1 itemprop="name" class="{{ config.name }}__title title title--h4">{{ data.product.name }}</h1>
 
-            {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
+            {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] with { isDiscontinued: isDiscontinued } only %}
                 {% block body %}
+                    {% set discontinuedLabelType = 'discontinued' %}
+                    {% set hasDiscontinuedLabel = labels | filter(label => label.type == discontinuedLabelType) | length > 0 %}
+                    {% set labels = isDiscontinued and not hasDiscontinuedLabel
+                        ? [{ text: 'product_discontinued.label' | trans, type: discontinuedLabelType }] | merge(labels)
+                        : labels %}
+
                     {% if labels | length %}
                         {% include molecule('label-group', 'ProductLabelWidget') with {
                             modifiers: ['pdp'],
@@ -110,6 +118,7 @@
             isAddToCartDisabled: isAddToCartDisabled,
             saveToListTriggerClass: saveToListTriggerClass,
             showAvailabilityNotification: showAvailabilityNotification,
+            isDiscontinued: isDiscontinued,
         },
     } only %}
         {% block embeddedData %}
@@ -162,6 +171,7 @@
                             <button
                                 type="button"
                                 class="button button--hollow button--expand {{ data.config.name }}__save-to-list js-save-to-shopping-list__trigger {{ embed.saveToListTriggerClass }}"
+                                {{ embed.isDiscontinued ? 'disabled' }}
                                 {{ qa('save-to-shopping-list-trigger') }}
                             >
                                 {{ 'shopping_list_widget.save_to_shopping_list' | trans }}

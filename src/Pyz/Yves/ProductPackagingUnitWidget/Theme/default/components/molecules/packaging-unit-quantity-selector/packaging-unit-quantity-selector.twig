@@ -18,6 +18,7 @@
             {% include molecule('quantity-counter') with {
                 class: config.name ~ '__counter',
                 data: {
+                    isDisabled: data.isAddToCartDisabled,
                     numberFormatConfig: data.numberFormatConfig,
                     inputExtraClasses: 'js-volume-price__quantity',
                 },
@@ -90,6 +91,7 @@
                                 name: 'sales-unit-quantity',
                             },
                             data: {
+                                isDisabled: data.isAddToCartDisabled,
                                 formattedNumberExtraClasses: config.jsName ~ '__formatted-sales-unit-quantity',
                                 numberFormatConfig: data.numberFormatConfig,
                                 inputExtraClasses: config.jsName ~ '__sales-unit-quantity js-volume-price__quantity quantity-counter__input--medium-width',
