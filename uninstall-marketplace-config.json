@@ -1365,8 +1365,7 @@
         "data/import/local/full_EU.yml",
         "data/import/local/full_US.yml",
         "data/import/production/full_EU.yml",
-        "data/import/production/full_US.yml",
-        "data/import/local/full_ROBOT.yml"
+        "data/import/production/full_US.yml"
     ],
     "docker_commands_to_remove": [
         "router-cache-warmup-merchant-portal",
@@ -1380,8 +1379,6 @@
         "config/install/docker.ci.acceptance.yml",
         "config/install/docker.ci.api.full.yml",
         "config/install/docker.ci.api.yml",
-        "config/install/docker.robot.ci.acceptance.yml",
-        "config/install/docker.robot.ci.api.full.yml",
         "config/install/ci.yml",
         "config/install/destructive.yml",
         "config/install/development.yml",
@@ -1400,7 +1397,6 @@
     "docker_config_substitutions": {
         "data:import --config=data/import/local/full_${SPRYKER_REGION}.yml": "data:import --config=data/import/local/b2b_full_EU.yml",
         "data:import --config=data/import/local/full_${SPRYKER_CURRENT_REGION}.yml": "data:import --config=data/import/local/b2b_full_EU.yml",
-        "data:import --config=data/import/local/full_ROBOT.yml": "data:import --config=data/import/local/b2b_full_ROBOT.yml",
         "data:import --config=data/import/local/full_EU.yml": "data:import --config=data/import/local/b2b_full_EU.yml"
     },
     "directories_to_remove": [
