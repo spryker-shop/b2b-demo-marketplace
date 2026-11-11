@@ -345,27 +345,11 @@ jobs:
                 if: always()
 
     # =========================================================================
-    # REMOVE FOR PROJECT — the reusable workflows called below are
-    # product-delivery / upstream maintenance suites (robot, cypress) and are
-    # NOT part of the project CI. Delete these calls when adopting this
+    # REMOVE FOR PROJECT — the reusable workflow called below is a
+    # product-delivery / upstream maintenance suite (cypress) and is
+    # NOT part of the project CI. Delete this call when adopting this
     # workflow for project work.
     # =========================================================================
-
-    # [remove for project]
-    robot-api:
-        needs: [validation]
-        # Draft PRs skip the E2E tier; it runs on ready_for_review.
-        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
-        uses: ./.github/workflows/_robot-api.yml
-        secrets: inherit
-
-    # [remove for project]
-    robot-ui:
-        needs: [js-validation, validation]
-        # Draft PRs skip the E2E tier; it runs on ready_for_review.
-        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
-        uses: ./.github/workflows/_robot-ui.yml
-        secrets: inherit
 
     # [remove for project]
     cypress:
