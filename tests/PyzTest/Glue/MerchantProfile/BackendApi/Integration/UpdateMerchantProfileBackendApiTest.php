@@ -289,15 +289,9 @@ class UpdateMerchantProfileBackendApiTest extends AbstractMerchantProfileBackend
         $this->assertRespondsWithErrorDetail($response, Response::HTTP_UNPROCESSABLE_ENTITY, MerchantProfileConfig::RESPONSE_DETAILS_UNKNOWN_LOCALE);
     }
 
-    /**
-     * Without dynamic store mode `LocaleFacade::getLocaleCollection()` ignores its criteria and returns the
-     * locales of the store configuration for every store, so a locale outside the merchant's stores cannot
-     * exist and the rule has nothing to reject.
-     */
     public function testGivenALocaleOutsideTheMerchantStoresWhenPatchOwnProfileThenItRespondsUnprocessable(): void
     {
         // Arrange
-        $this->skipUnlessDynamicStoreModeIsEnabled();
         $merchantTransfer = $this->tester->haveMerchantWithProfile();
         $localeTransfer = $this->tester->haveLocaleOfAnotherStore($merchantTransfer);
         $this->tester->actingAsMerchantUser($this->tester->haveUserOfMerchant($merchantTransfer));
@@ -317,14 +311,9 @@ class UpdateMerchantProfileBackendApiTest extends AbstractMerchantProfileBackend
         $this->assertRespondsWithErrorDetail($response, Response::HTTP_UNPROCESSABLE_ENTITY, MerchantProfileConfig::RESPONSE_DETAILS_LOCALE_NOT_ALLOWED);
     }
 
-    /**
-     * Without dynamic store mode every configured locale belongs to every store, so the locale created
-     * for another store is not configured at all and the Back Office route refuses it as unknown.
-     */
     public function testGivenALocaleOutsideTheMerchantStoresWhenPatchByReferenceThenItIsAccepted(): void
     {
         // Arrange
-        $this->skipUnlessDynamicStoreModeIsEnabled();
         $merchantTransfer = $this->tester->haveMerchantWithProfile();
         $localeTransfer = $this->tester->haveLocaleOfAnotherStore($merchantTransfer);
         $this->tester->actingAsUser();
@@ -699,15 +688,6 @@ class UpdateMerchantProfileBackendApiTest extends AbstractMerchantProfileBackend
     protected function buildMerchantUrlSuffix(MerchantTransfer $merchantTransfer): string
     {
         return strtolower($merchantTransfer->getMerchantReferenceOrFail());
-    }
-
-    protected function skipUnlessDynamicStoreModeIsEnabled(): void
-    {
-        if ($this->tester->isDynamicStoreEnabled()) {
-            return;
-        }
-
-        $this->markTestSkipped('Requires SPRYKER_DYNAMIC_STORE_MODE=true: without it every configured locale belongs to every store.');
     }
 
     protected function getLanguageCode(string $localeName): string
