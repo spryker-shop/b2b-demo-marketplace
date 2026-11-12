@@ -195,7 +195,7 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[SecurityBlockerPageConstants::IS_STORE_ROUTING_ENABLED]
-    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = true;
 
 // >>> DEV TOOLS
 
@@ -355,7 +355,7 @@ $config[RedisConstants::REDIS_SSL_CA_FILE_PATH] = getenv('SPRYKER_REDIS_SSL_CA_F
 $config[RedisConstants::REDIS_KEY_PREFIX] = getenv('SPRYKER_KEY_VALUE_PREFIX') ?: '';
 
 $keyValueRegionNamespaces = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTIONS') ?: '[]', true);
-$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
+$namespaceKey = getenv('SPRYKER_CURRENT_REGION');
 $config[StorageConstants::STORAGE_KV_SOURCE] = getenv('SPRYKER_KEY_VALUE_STORE_ENGINE') ? strtolower(getenv('SPRYKER_KEY_VALUE_STORE_ENGINE')) : 'redis';
 $config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION] = true;
 $config[StorageRedisConstants::STORAGE_REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
@@ -559,9 +559,6 @@ $connectionKeys = array_keys($rabbitConnections);
 $defaultKey = reset($connectionKeys);
 if (getenv('SPRYKER_CURRENT_REGION')) {
     $defaultKey = getenv('SPRYKER_CURRENT_REGION');
-}
-if (getenv('APPLICATION_STORE') && (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
-    $defaultKey = getenv('APPLICATION_STORE');
 }
 foreach ($rabbitConnections as $key => $connection) {
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key] = $defaultConnection;

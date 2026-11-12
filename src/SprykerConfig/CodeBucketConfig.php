@@ -10,7 +10,6 @@ declare(strict_types = 1);
 namespace SprykerConfig;
 
 use Spryker\Shared\Kernel\CodeBucket\Config\AbstractCodeBucketConfig;
-use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\Request;
 
 class CodeBucketConfig extends AbstractCodeBucketConfig
@@ -20,10 +19,6 @@ class CodeBucketConfig extends AbstractCodeBucketConfig
      */
     public function getCodeBuckets(): array
     {
-        if ($this->isAcpDevOn()) {
-            return Store::getInstance()->getAllowedStores();
-        }
-
         return [
             'EU',
             'US',
@@ -37,10 +32,6 @@ class CodeBucketConfig extends AbstractCodeBucketConfig
      */
     public function getDefaultCodeBucket(): string
     {
-        if ($this->isAcpDevOn()) {
-            return APPLICATION_STORE;
-        }
-
         $codeBuckets = $this->getCodeBuckets();
 
         $parts = explode('/', $this->getPathInfo());
@@ -49,11 +40,6 @@ class CodeBucketConfig extends AbstractCodeBucketConfig
         }
 
         return defined('APPLICATION_REGION') ? APPLICATION_REGION : reset($codeBuckets);
-    }
-
-    protected function isAcpDevOn(): bool
-    {
-        return APPLICATION_ENV === 'docker.acp.dev';
     }
 
     protected function getPathInfo(): string
