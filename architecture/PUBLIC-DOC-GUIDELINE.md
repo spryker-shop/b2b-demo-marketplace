@@ -42,7 +42,7 @@ You control the depth. Start at C1 (context) and continue only as deep as your d
 
 ### Why Mermaid and PlantUML?
 
-**Mermaid** - Our primary choice for diagramming-as-cde tool:
+**Mermaid** - Our primary choice for diagramming-as-code tool:
 - Renders automatically in GitHub, GitLab and can be rendered via plugins in popular IDEs.
 - No proprietary tools required.
 - Covers 90% of diagram needs: flowcharts, sequences, C4 diagrams.
