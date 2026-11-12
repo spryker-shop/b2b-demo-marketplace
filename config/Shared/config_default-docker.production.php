@@ -12,7 +12,6 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -152,7 +151,7 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
 // ------------------------------ Twig -----------------------------------------
 // ----------------------------------------------------------------------------
 
-$CURRENT_CACHE_KEY = !Store::isDynamicStoreMode() ? Store::getInstance()->getStoreName() : getenv('SPRYKER_CURRENT_REGION');
+$CURRENT_CACHE_KEY = getenv('SPRYKER_CURRENT_REGION');
 
 $config[TwigConstants::ZED_TWIG_OPTIONS] = [
     'cache' => new FilesystemCache(

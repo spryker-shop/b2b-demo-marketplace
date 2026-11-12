@@ -19,7 +19,6 @@ use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
 use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
@@ -57,16 +56,14 @@ use SprykerShop\Shared\ShopUi\ShopUiConstants;
 // ############################## TESTING IN CI ###############################
 // ############################################################################
 
-$dynamicStoreEnabled = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
-
-$yvesHost = $dynamicStoreEnabled ? 'www.eu.spryker.test' : 'www.de.spryker.test';
-$glueHost = $dynamicStoreEnabled ? 'glue.eu.spryker.test' : 'glue.de.spryker.test';
-$glueBackendHost = $dynamicStoreEnabled ? 'gluebackend.eu.spryker.test' : 'gluebackend.de.spryker.test';
-$glueStorefrontHost = $dynamicStoreEnabled ? 'gluestorefront.eu.spryker.test' : 'gluestorefront.de.spryker.test';
-$backofficeHost = $dynamicStoreEnabled ? 'backoffice.eu.spryker.test' : 'backoffice.de.spryker.test';
-$merchantPortalHost = $dynamicStoreEnabled ? 'mp.eu.spryker.test' : 'mp.de.spryker.test';
-$backendGatewayHost = $dynamicStoreEnabled ? 'backend-gateway.eu.spryker.test' : 'backend-gateway.de.spryker.test';
-$backendApiHost = $dynamicStoreEnabled ? 'backend-api.eu.spryker.test' : 'backend-api.de.spryker.test';
+$yvesHost = 'www.eu.spryker.test';
+$glueHost = 'glue.eu.spryker.test';
+$glueBackendHost = 'gluebackend.eu.spryker.test';
+$glueStorefrontHost = 'gluestorefront.eu.spryker.test';
+$backofficeHost = 'backoffice.eu.spryker.test';
+$merchantPortalHost = 'mp.eu.spryker.test';
+$backendGatewayHost = 'backend-gateway.eu.spryker.test';
+$backendApiHost = 'backend-api.eu.spryker.test';
 
 $isTestifyConstantsClassExists = class_exists(TestifyConstants::class);
 
@@ -206,7 +203,7 @@ $config[QueueConstants::QUEUE_WORKER_MAX_WAITING_SECONDS] = 1;
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = getenv('TEST_GROUP') === 'acceptance';
 
 $currentRegion = getenv('SPRYKER_CURRENT_REGION') ?: null;
-$config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = array_map(static function ($storeName) use ($currentRegion, $dynamicStoreEnabled) {
+$config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = array_map(static function ($storeName) use ($currentRegion) {
     return [
         RabbitMqEnv::RABBITMQ_CONNECTION_NAME => $storeName . '-connection',
         RabbitMqEnv::RABBITMQ_HOST => 'localhost',
@@ -214,10 +211,10 @@ $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = array_map(static function ($storeNa
         RabbitMqEnv::RABBITMQ_PASSWORD => 'guest',
         RabbitMqEnv::RABBITMQ_USERNAME => 'guest',
         RabbitMqEnv::RABBITMQ_VIRTUAL_HOST => '/',
-        RabbitMqEnv::RABBITMQ_STORE_NAMES => $dynamicStoreEnabled ? [] : [$storeName],
-        RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION => $dynamicStoreEnabled ? $storeName === $currentRegion : $storeName === getenv('APPLICATION_STORE'),
+        RabbitMqEnv::RABBITMQ_STORE_NAMES => [],
+        RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION => $storeName === $currentRegion,
     ];
-}, $dynamicStoreEnabled ? [$currentRegion] : Store::getInstance()->getAllowedStores());
+}, [$currentRegion]);
 
 foreach ($config[RabbitMqEnv::RABBITMQ_CONNECTIONS] as $connection) {
     if ($connection[RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION] === false) {
