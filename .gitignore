@@ -36,6 +36,10 @@ FOSS.md
 
 /data/*
 !/data/import/
+# Environment-specific configuration values (e.g. internal analytics IDs).
+# Generated at install time from environment variables - never committed,
+# so installing this boilerplate never carries Spryker-internal configuration.
+/data/import/**/*.local.csv
 !/data/export/
 !/data/configuration/
 /data/export/merchants/*
