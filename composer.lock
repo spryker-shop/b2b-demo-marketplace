@@ -10236,19 +10236,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ai-commerce.git",
-                "reference": "e33e1c7421fd3fb4cec50a15b015a376124c45df"
+                "reference": "366cde4f62a5b3bb0428f9468d22556d9b953868"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/e33e1c7421fd3fb4cec50a15b015a376124c45df",
-                "reference": "e33e1c7421fd3fb4cec50a15b015a376124c45df",
+                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/366cde4f62a5b3bb0428f9468d22556d9b953868",
+                "reference": "366cde4f62a5b3bb0428f9468d22556d9b953868",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker-shop/quick-order-page-extension": "^1.3.0",
                 "spryker-shop/shop-ui": "^2.7.0",
-                "spryker/ai-foundation": "^0.9.0",
+                "spryker/ai-foundation": "^0.10.0",
+                "spryker/ai-foundation-extension": "^1.0.0",
                 "spryker/application": "^3.46.0",
                 "spryker/availability-storage": "^2.2.0",
                 "spryker/catalog": "^5.12.0",
@@ -10347,7 +10348,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/ai-commerce/tree/master"
             },
-            "time": "2026-11-05T12:27:12+00:00"
+            "time": "2026-11-13T12:42:31+00:00"
         },
         {
             "name": "spryker-feature/alternative-products",
@@ -25817,22 +25818,23 @@
         },
         {
             "name": "spryker/ai-foundation",
-            "version": "0.9.6",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/ai-foundation.git",
-                "reference": "607a1853ef37945d6307a6972638d1536373eace"
+                "reference": "3cb9a3e009b8acf6d5282117e150e98601cb2484"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/607a1853ef37945d6307a6972638d1536373eace",
-                "reference": "607a1853ef37945d6307a6972638d1536373eace",
+                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/3cb9a3e009b8acf6d5282117e150e98601cb2484",
+                "reference": "3cb9a3e009b8acf6d5282117e150e98601cb2484",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "^3.380",
                 "neuron-core/neuron-ai": "^3.17.0",
                 "php": ">=8.3",
+                "spryker/ai-foundation-extension": "^1.0.0",
                 "spryker/gui": "^5.14.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/log": "^3.0.0",
@@ -25868,9 +25870,50 @@
             ],
             "description": "AiFoundation module",
             "support": {
-                "source": "https://github.com/spryker/ai-foundation/tree/0.9.6"
+                "source": "https://github.com/spryker/ai-foundation/tree/0.10.0"
             },
-            "time": "2026-11-05T12:27:12+00:00"
+            "time": "2026-11-13T10:54:24+00:00"
+        },
+        {
+            "name": "spryker/ai-foundation-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/ai-foundation-extension.git",
+                "reference": "d665d90609330bc0a4b8552d0bb8b1a6364affe7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/ai-foundation-extension/zipball/d665d90609330bc0a4b8552d0bb8b1a6364affe7",
+                "reference": "d665d90609330bc0a4b8552d0bb8b1a6364affe7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AiFoundationExtension module",
+            "support": {
+                "source": "https://github.com/spryker/ai-foundation-extension/tree/1.0.0"
+            },
+            "time": "2026-11-13T10:54:24+00:00"
         },
         {
             "name": "spryker/alternative-products-rest-api",
