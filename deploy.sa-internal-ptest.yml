@@ -102,6 +102,7 @@ groups:
         endpoints:
           mp.eu.ptest.cloud.spryker.toys:
             region: EU
+            <<: *frontend-auth
             entry-point: MerchantPortal
             primal: true
             services:
@@ -112,6 +113,7 @@ groups:
         endpoints:
           yves.eu.ptest.cloud.spryker.toys:
             region: EU
+            <<: *frontend-auth
             services:
               session:
                 namespace: 1
@@ -137,12 +139,7 @@ groups:
             region: EU
             primal: true
       
-      gluestorefront:
-        application: glue-storefront
-        endpoints:
-          glue-storefront.eu.ptest.cloud.spryker.toys:
-            region: EU
-
+      
       gluebackend:
         application: glue-backend
         endpoints:
