@@ -17304,16 +17304,16 @@
         },
         {
             "name": "spryker-shop/company-page",
-            "version": "2.39.0",
+            "version": "2.41.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/company-page.git",
-                "reference": "cc2e5f0050c508a40e284ac8acf185058920eded"
+                "reference": "20ea4e14a5fe9a8743edea7193b1da6e48262af5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/company-page/zipball/cc2e5f0050c508a40e284ac8acf185058920eded",
-                "reference": "cc2e5f0050c508a40e284ac8acf185058920eded",
+                "url": "https://api.github.com/repos/spryker-shop/company-page/zipball/20ea4e14a5fe9a8743edea7193b1da6e48262af5",
+                "reference": "20ea4e14a5fe9a8743edea7193b1da6e48262af5",
                 "shasum": ""
             },
             "require": {
@@ -17377,9 +17377,9 @@
             ],
             "description": "CompanyPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/company-page/tree/2.39.0"
+                "source": "https://github.com/spryker-shop/company-page/tree/2.41.0"
             },
-            "time": "2026-10-28T12:32:21+00:00"
+            "time": "2026-11-13T09:53:25+00:00"
         },
         {
             "name": "spryker-shop/company-user-agent-widget",
@@ -17435,16 +17435,16 @@
         },
         {
             "name": "spryker-shop/company-user-invitation-page",
-            "version": "2.7.0",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/company-user-invitation-page.git",
-                "reference": "1b174e16f53c2dd1d0b327b62b750e8b64bb63ca"
+                "reference": "315cdb55e983c21c3c18294ca2c864f6f41e404b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/company-user-invitation-page/zipball/1b174e16f53c2dd1d0b327b62b750e8b64bb63ca",
-                "reference": "1b174e16f53c2dd1d0b327b62b750e8b64bb63ca",
+                "url": "https://api.github.com/repos/spryker-shop/company-user-invitation-page/zipball/315cdb55e983c21c3c18294ca2c864f6f41e404b",
+                "reference": "315cdb55e983c21c3c18294ca2c864f6f41e404b",
                 "shasum": ""
             },
             "require": {
@@ -17464,7 +17464,8 @@
                 "spryker-shop/company-page": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/router": "*",
-                "spryker/silex": "*"
+                "spryker/silex": "*",
+                "spryker/testify": "*"
             },
             "suggest": {
                 "spryker-shop/company-page": "Use this module when you want to use the CompanyPage plugins.",
@@ -17479,7 +17480,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerShop\\": "src/SprykerShop/"
+                    "SprykerShop\\": "src/SprykerShop/",
+                    "SprykerShopTest\\Yves\\CompanyUserInvitationPage\\Helper\\": "tests/SprykerShopTest/Yves/CompanyUserInvitationPage/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -17488,9 +17490,9 @@
             ],
             "description": "CompanyUserInvitationPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/company-user-invitation-page/tree/2.7.0"
+                "source": "https://github.com/spryker-shop/company-user-invitation-page/tree/2.8.0"
             },
-            "time": "2026-09-14T12:38:19+00:00"
+            "time": "2026-11-13T09:53:25+00:00"
         },
         {
             "name": "spryker-shop/company-widget",
@@ -35090,16 +35092,16 @@
         },
         {
             "name": "spryker/company-unit-address",
-            "version": "1.20.0",
+            "version": "1.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-unit-address.git",
-                "reference": "cc1b97524b71b2662dc46adaa9db74c8646fe0b7"
+                "reference": "b9a9e10cdb374a63f610c03af473f7229c86c04b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-unit-address/zipball/cc1b97524b71b2662dc46adaa9db74c8646fe0b7",
-                "reference": "cc1b97524b71b2662dc46adaa9db74c8646fe0b7",
+                "url": "https://api.github.com/repos/spryker/company-unit-address/zipball/b9a9e10cdb374a63f610c03af473f7229c86c04b",
+                "reference": "b9a9e10cdb374a63f610c03af473f7229c86c04b",
                 "shasum": ""
             },
             "require": {
@@ -35143,9 +35145,9 @@
             ],
             "description": "CompanyUnitAddress module",
             "support": {
-                "source": "https://github.com/spryker/company-unit-address/tree/1.20.0"
+                "source": "https://github.com/spryker/company-unit-address/tree/1.20.1"
             },
-            "time": "2026-09-30T16:27:09+00:00"
+            "time": "2026-11-13T09:53:25+00:00"
         },
         {
             "name": "spryker/company-unit-address-data-import",
@@ -35244,16 +35246,16 @@
         },
         {
             "name": "spryker/company-unit-address-gui",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-unit-address-gui.git",
-                "reference": "eaef90c10dfd026c5d08271d2d8b2027c30e42d7"
+                "reference": "efca4755ce5d6dd5111fccc466749cdcf8871768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-unit-address-gui/zipball/eaef90c10dfd026c5d08271d2d8b2027c30e42d7",
-                "reference": "eaef90c10dfd026c5d08271d2d8b2027c30e42d7",
+                "url": "https://api.github.com/repos/spryker/company-unit-address-gui/zipball/efca4755ce5d6dd5111fccc466749cdcf8871768",
+                "reference": "efca4755ce5d6dd5111fccc466749cdcf8871768",
                 "shasum": ""
             },
             "require": {
@@ -35290,9 +35292,9 @@
             ],
             "description": "CompanyUnitAddressGui module",
             "support": {
-                "source": "https://github.com/spryker/company-unit-address-gui/tree/1.7.2"
+                "source": "https://github.com/spryker/company-unit-address-gui/tree/1.7.3"
             },
-            "time": "2026-11-10T16:17:39+00:00"
+            "time": "2026-11-13T09:53:25+00:00"
         },
         {
             "name": "spryker/company-unit-address-gui-extension",
@@ -35844,20 +35846,20 @@
         },
         {
             "name": "spryker/company-user-invitation",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-user-invitation.git",
-                "reference": "51e98a454ca318a6d9075a2019cbe8b5e63f2148"
+                "reference": "c59e22954cb78dec0c5316259e31006ff09fa640"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-user-invitation/zipball/51e98a454ca318a6d9075a2019cbe8b5e63f2148",
-                "reference": "51e98a454ca318a6d9075a2019cbe8b5e63f2148",
+                "url": "https://api.github.com/repos/spryker/company-user-invitation/zipball/c59e22954cb78dec0c5316259e31006ff09fa640",
+                "reference": "c59e22954cb78dec0c5316259e31006ff09fa640",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/application": "^3.9.0",
                 "spryker/company-business-unit": "^1.1.0 || ^2.0.0",
                 "spryker/company-user": "^1.0.0 || ^2.0.0",
@@ -35907,9 +35909,9 @@
             ],
             "description": "CompanyUserInvitation module",
             "support": {
-                "source": "https://github.com/spryker/company-user-invitation/tree/1.4.0"
+                "source": "https://github.com/spryker/company-user-invitation/tree/1.5.0"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-11-13T09:53:25+00:00"
         },
         {
             "name": "spryker/company-user-storage",
@@ -47829,16 +47831,16 @@
         },
         {
             "name": "spryker/merchant-relation-request",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-relation-request.git",
-                "reference": "0f80822333a37a84332663df90a264c971deda1f"
+                "reference": "65a5afa478a452e1a2411bcf0d1bbd3b69023871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-relation-request/zipball/0f80822333a37a84332663df90a264c971deda1f",
-                "reference": "0f80822333a37a84332663df90a264c971deda1f",
+                "url": "https://api.github.com/repos/spryker/merchant-relation-request/zipball/65a5afa478a452e1a2411bcf0d1bbd3b69023871",
+                "reference": "65a5afa478a452e1a2411bcf0d1bbd3b69023871",
                 "shasum": ""
             },
             "require": {
@@ -47893,9 +47895,9 @@
             ],
             "description": "MerchantRelationRequest module",
             "support": {
-                "source": "https://github.com/spryker/merchant-relation-request/tree/1.2.0"
+                "source": "https://github.com/spryker/merchant-relation-request/tree/1.3.0"
             },
-            "time": "2026-09-22T13:11:22+00:00"
+            "time": "2026-11-13T09:53:25+00:00"
         },
         {
             "name": "spryker/merchant-relation-request-extension",
@@ -78211,16 +78213,16 @@
         },
         {
             "name": "spryker/user",
-            "version": "3.36.0",
+            "version": "3.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/user.git",
-                "reference": "e47980e1b06cc65b130ce8cfdef1056e5e3f3a6e"
+                "reference": "096390e424d5dae00bb328082b07a74d449438cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/user/zipball/e47980e1b06cc65b130ce8cfdef1056e5e3f3a6e",
-                "reference": "e47980e1b06cc65b130ce8cfdef1056e5e3f3a6e",
+                "url": "https://api.github.com/repos/spryker/user/zipball/096390e424d5dae00bb328082b07a74d449438cd",
+                "reference": "096390e424d5dae00bb328082b07a74d449438cd",
                 "shasum": ""
             },
             "require": {
@@ -78285,9 +78287,9 @@
             ],
             "description": "User module",
             "support": {
-                "source": "https://github.com/spryker/user/tree/3.36.0"
+                "source": "https://github.com/spryker/user/tree/3.36.1"
             },
-            "time": "2026-10-30T14:37:09+00:00"
+            "time": "2026-11-13T09:53:25+00:00"
         },
         {
             "name": "spryker/user-extension",
@@ -92211,7 +92213,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "228bf4e38cb07b94853f4d61e5285089e1d2dc40"
+                "reference": "514aa4dac05691e4a0b1aca25bb30d552853f278"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -92219,7 +92221,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-11-09T15:32:58+00:00"
+            "time": "2026-11-13T09:46:16+00:00"
         },
         {
             "name": "spryker/development",
