@@ -1,9 +1,8 @@
 $name: '.rating-selector';
-
 $product-review-rating-selector-icon-size: 16px;
+
 @include product-review-widget-rating-selector {
     @include typography(body-sm);
-
     --product-review-rating-selector-icon-size: 12px;
     --product-review-rating-selector-cell-size: var(--product-review-rating-selector-icon-size);
     --product-review-rating-selector-star-mask: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzUwMDFfOTk3KSI+CjxwYXRoIGQ9Ik02IDguNjM1TDkuMDkgMTAuNUw4LjI3IDYuOTg1TDExIDQuNjJMNy40MDUgNC4zMTVMNiAxTDQuNTk1IDQuMzE1TDEgNC42MkwzLjczIDYuOTg1TDIuOTEgMTAuNUw2IDguNjM1WiIgZmlsbD0iIzdCN0I3QiIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzUwMDFfOTk3Ij4KPHJlY3Qgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSJ3aGl0ZSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM+Cjwvc3ZnPgo=');
