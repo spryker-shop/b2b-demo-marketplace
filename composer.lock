@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64172f3ed8e892f4d187d5e5273de834",
+    "content-hash": "5dcdda22d1fa4394d288def212789ce1",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -16531,21 +16531,21 @@
         },
         {
             "name": "spryker-shop/chart-widget",
-            "version": "0.2.3",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/chart-widget.git",
-                "reference": "887c3fb482de2302f03c341a83311de41d7e3885"
+                "reference": "f000da21c4a0a7002779122123840d5c1c7fcd1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/chart-widget/zipball/887c3fb482de2302f03c341a83311de41d7e3885",
-                "reference": "887c3fb482de2302f03c341a83311de41d7e3885",
+                "url": "https://api.github.com/repos/spryker-shop/chart-widget/zipball/f000da21c4a0a7002779122123840d5c1c7fcd1b",
+                "reference": "f000da21c4a0a7002779122123840d5c1c7fcd1b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2",
-                "spryker/chart": "^1.0.0",
+                "php": ">=8.3",
+                "spryker/chart": "^1.0.0 || ^2.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/twig-extension": "^1.0.0"
             },
@@ -16579,9 +16579,10 @@
             ],
             "description": "ChartWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/chart-widget/tree/0.2.3"
+                "source": "https://github.com/spryker-shop/chart-widget/tree/0.2.4"
             },
-            "time": "2020-08-07T12:22:18+00:00"
+            "time": "2026-11-16T14:06:22+00:00",
+            "published-time": "2026-11-16T14:13:05+00:00"
         },
         {
             "name": "spryker-shop/checkout-page",
@@ -30385,39 +30386,33 @@
         },
         {
             "name": "spryker/chart",
-            "version": "1.7.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/chart.git",
-                "reference": "39c3e4d122f9a0d00eb50d91ee0211c6444bb767"
+                "reference": "b069f3cfe6c21a6553b913aad94c3f403ba7dbdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/chart/zipball/39c3e4d122f9a0d00eb50d91ee0211c6444bb767",
-                "reference": "39c3e4d122f9a0d00eb50d91ee0211c6444bb767",
+                "url": "https://api.github.com/repos/spryker/chart/zipball/b069f3cfe6c21a6553b913aad94c3f403ba7dbdb",
+                "reference": "b069f3cfe6c21a6553b913aad94c3f403ba7dbdb",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
-                "spryker/kernel": "^3.30.0",
-                "spryker/twig-extension": "^1.0.0"
+                "spryker/kernel": "^3.30.0"
+            },
+            "conflict": {
+                "spryker/chart-gui": "<2.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
-                "spryker/container": "*",
-                "spryker/silex": "*",
-                "spryker/testify": "*",
-                "spryker/twig": "*"
-            },
-            "suggest": {
-                "spryker/container": "If you want to use Twig Plugins",
-                "spryker/silex": "*",
-                "spryker/twig": "*"
+                "spryker/testify": "*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -30431,45 +30426,48 @@
             ],
             "description": "Chart module",
             "support": {
-                "source": "https://github.com/spryker/chart/tree/1.7.0"
+                "source": "https://github.com/spryker/chart/tree/2.0.0"
             },
-            "time": "2026-09-10T06:35:29+00:00"
+            "time": "2026-11-16T14:06:22+00:00",
+            "published-time": "2026-11-16T14:12:54+00:00"
         },
         {
             "name": "spryker/chart-gui",
-            "version": "1.1.2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/chart-gui.git",
-                "reference": "63eb1276d72c4d6876d15828a8046ad1ebb7dd34"
+                "reference": "b185490713c7304953a235a0358e91114bb0a926"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/chart-gui/zipball/63eb1276d72c4d6876d15828a8046ad1ebb7dd34",
-                "reference": "63eb1276d72c4d6876d15828a8046ad1ebb7dd34",
+                "url": "https://api.github.com/repos/spryker/chart-gui/zipball/b185490713c7304953a235a0358e91114bb0a926",
+                "reference": "b185490713c7304953a235a0358e91114bb0a926",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker/chart": "^2.0.0",
                 "spryker/kernel": "^3.30.0",
+                "spryker/twig": "^3.0.0",
                 "spryker/twig-extension": "^1.0.0"
             },
+            "conflict": {
+                "spryker/sales-statistics": "<1.4.0"
+            },
             "require-dev": {
-                "spryker/chart": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
-                "spryker/twig": "*"
+                "spryker/testify": "*"
             },
             "suggest": {
-                "spryker/chart": "If you want to use Chart Plugins. Minimum required version: 1.0.1.",
                 "spryker/container": "If you want to use Twig Plugins",
-                "spryker/gui": "If you want to use Gui twig functions. Minimum required version: 3.26.0.",
-                "spryker/twig": "If you want to use Twig Plugins."
+                "spryker/gui": "If you want to use Gui twig functions. Minimum required version: 3.26.0."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -30483,9 +30481,10 @@
             ],
             "description": "ChartGui module",
             "support": {
-                "source": "https://github.com/spryker/chart-gui/tree/1.1.2"
+                "source": "https://github.com/spryker/chart-gui/tree/2.0.0"
             },
-            "time": "2026-01-15T16:27:48+00:00"
+            "time": "2026-11-16T14:06:22+00:00",
+            "published-time": "2026-11-16T14:12:57+00:00"
         },
         {
             "name": "spryker/checkout",
@@ -39653,16 +39652,16 @@
         },
         {
             "name": "spryker/dashboard",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/dashboard.git",
-                "reference": "de1ab5e517cc7b57feea18a4073141d0a0ce3a94"
+                "reference": "977ef9e54bdcd331812241b6b33d025dc8a3c61c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/dashboard/zipball/de1ab5e517cc7b57feea18a4073141d0a0ce3a94",
-                "reference": "de1ab5e517cc7b57feea18a4073141d0a0ce3a94",
+                "url": "https://api.github.com/repos/spryker/dashboard/zipball/977ef9e54bdcd331812241b6b33d025dc8a3c61c",
+                "reference": "977ef9e54bdcd331812241b6b33d025dc8a3c61c",
                 "shasum": ""
             },
             "require": {
@@ -39700,9 +39699,10 @@
             ],
             "description": "Dashboard module",
             "support": {
-                "source": "https://github.com/spryker/dashboard/tree/1.4.1"
+                "source": "https://github.com/spryker/dashboard/tree/1.5.0"
             },
-            "time": "2026-09-29T16:09:01+00:00"
+            "time": "2026-11-16T14:06:22+00:00",
+            "published-time": "2026-11-16T14:13:00+00:00"
         },
         {
             "name": "spryker/dashboard-merchant-portal-gui",
@@ -70582,21 +70582,21 @@
         },
         {
             "name": "spryker/sales-statistics",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-statistics.git",
-                "reference": "0447b5ac503ef014867b910812a35e31d9d5c897"
+                "reference": "23de8b474b625a1cb29c5660913149d0d5ecb802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-statistics/zipball/0447b5ac503ef014867b910812a35e31d9d5c897",
-                "reference": "0447b5ac503ef014867b910812a35e31d9d5c897",
+                "url": "https://api.github.com/repos/spryker/sales-statistics/zipball/23de8b474b625a1cb29c5660913149d0d5ecb802",
+                "reference": "23de8b474b625a1cb29c5660913149d0d5ecb802",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
-                "spryker/kernel": "^3.52.0",
+                "php": ">=8.3",
+                "spryker/kernel": "^3.76.0",
                 "spryker/oms": "^8.0.0 || ^10.0.0 || ^11.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/sales": "^8.0.0 || ^10.0.0 || ^11.0.0",
@@ -70630,9 +70630,10 @@
             ],
             "description": "SalesStatistics module",
             "support": {
-                "source": "https://github.com/spryker/sales-statistics/tree/1.3.0"
+                "source": "https://github.com/spryker/sales-statistics/tree/1.4.0"
             },
-            "time": "2024-05-06T12:15:28+00:00"
+            "time": "2026-11-16T14:06:22+00:00",
+            "published-time": "2026-11-16T14:13:02+00:00"
         },
         {
             "name": "spryker/scheduler",
@@ -93112,9 +93113,9 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/ai-commerce": 20,
+        "spryker-feature/development-tools": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
-        "spryker-feature/development-tools": 20,
         "spryker/architecture-sniffer": 20,
         "spryker/cypress-tests": 20
     },
@@ -93133,9 +93134,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.11.0"
 }
