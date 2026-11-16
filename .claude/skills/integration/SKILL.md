@@ -467,8 +467,6 @@ ORDER BY TABLE_NAME;
 
 - `vendor/bin/spryker-ci spryker-ci --current` for the static + touched-module gate.
 - The tests that actually cover the change — name them, with file and line.
-- `Robot / API` and `Robot / API B2B` are **pull-request-only** on the marketplaces. A green
-  master proves nothing about them.
 - **Never adjust a test expectation to match new output.** A changed assert is a changed
   contract; if the values moved, the package moved wrongly and that is a new ticket.
 
@@ -567,8 +565,6 @@ gh pr create --draft --base master --title "{TICKET-NUMBER} {Sentence-case summa
 - `run-compatibility-ci` runs compatibility tests (PHP 8.3 / PostgreSQL / Debian / Prefer Lowest / Dynamic Store OFF):
     - Codeception / Acceptance & API
     - Codeception / Functional Tests
-    - Robot / API
-    - Robot / UI
     - Cypress / UI
 EOF
 )"

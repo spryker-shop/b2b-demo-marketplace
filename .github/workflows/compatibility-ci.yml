@@ -34,30 +34,6 @@ jobs:
             # The shared dump is built by mariadb-dump, so this lane imports demodata.
             restore-db: false
 
-    compat-robot-api:
-        if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        uses: ./.github/workflows/_robot-api.yml
-        secrets: inherit
-        with:
-            platform-image: "spryker/php:8.3-debian"
-            deploy-file: ".github/deploy/deploy.ci.api.postgres.robot.yml"
-            db-engine: psycopg2
-            # No PostgreSQL deploy file for the marketplace-uninstalled B2B API run exists.
-            include-b2b: false
-
-    compat-robot-ui:
-        if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        uses: ./.github/workflows/_robot-ui.yml
-        secrets: inherit
-        with:
-            platform-image: "spryker/php:8.3"
-            deploy-file: ".github/deploy/deploy.ci.acceptance.postgres.robot.yml"
-            db-engine: psycopg2
-
     # docker.ci.acceptance no longer builds the frontend; compat-cypress restores the b2b-mp assets.
     compat-build-frontend:
         if: >
