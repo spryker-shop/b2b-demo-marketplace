@@ -11,9 +11,9 @@ The marketplace uninstall system consists of three main components:
 This architecture separates configuration from execution logic, making it easier to maintain and extend the uninstall process.
 
 The project state the scripts produce is called **B2B mode**: B2B Demo Marketplace without the Merchant Portal and the
-multi-merchant features. CI builds B2B mode on every pull request (`.github/workflows/_cypress.yml`, `b2b` cells, and
-`.github/workflows/_robot-api.yml`, "Robot / API B2B" job), so any change to marketplace wiring in the project must keep
-the configuration in sync. See [Verifying a Change](#verifying-a-change) for what those CI jobs do not cover.
+multi-merchant features. CI builds B2B mode on every pull request (the `b2b` cells of `.github/workflows/_cypress.yml`),
+so any change to marketplace wiring in the project must keep the configuration in sync. See
+[Verifying a Change](#verifying-a-change) for what those CI jobs do not cover.
 
 ## File Structure
 
@@ -25,8 +25,7 @@ project-root/
 ├── UNINSTALL_MAINTENANCE_GUIDE.md          # This guide
 └── data/import/
     ├── b2b_common/                         # B2B mode demo data (the scripts switch the install recipes to it)
-    ├── b2b_robot/                          # B2B mode Robot Framework demo data
-    └── local/b2b_full_EU.yml, b2b_full_ROBOT.yml
+    └── local/b2b_full_EU.yml
 ```
 
 The `data/import/b2b_*` files are part of the repository in both modes; they are only *used* once the scripts have run.
@@ -905,12 +904,11 @@ Known limitation: the B2B dataset is EU-only, so B2B mode imports `b2b_full_EU.y
 
 ## Keeping the B2B Datasets in Sync
 
-B2B mode imports its demo data from `data/import/b2b_common` (and `data/import/b2b_robot` in the Robot CI job), not from
-`data/import/common`. When a feature adds data that B2B mode also renders, add it to the B2B datasets as well, otherwise
+B2B mode imports its demo data from `data/import/b2b_common`, not from `data/import/common`. When a feature adds data that B2B mode also renders, add it to the B2B datasets as well, otherwise
 the storefront shows raw glossary keys (`catalog.filter.by`, `customer.login.submit`, `product.attribute.steamoutput`)
 only in B2B mode:
 
-- glossary keys → `data/import/{common,b2b_common,b2b_robot}/common/glossary.csv`
+- glossary keys → `data/import/{common,b2b_common}/common/glossary.csv`
 - product attribute definitions for products that exist in the B2B dataset →
   `product_attribute_key.csv` and `product_management_attribute.csv`. Note that the B2B
   `product_management_attribute.csv` has no `visibility` column; drop it when copying rows.
@@ -924,9 +922,8 @@ python3 - <<'EOF'
 import csv
 keys = lambda p: {r[0] for r in list(csv.reader(open(p, encoding='utf-8')))[1:] if r}
 mp = keys('data/import/common/common/glossary.csv')
-for ds in ('b2b_common', 'b2b_robot'):
-    missing = sorted(mp - keys(f'data/import/{ds}/common/glossary.csv'))
-    print(ds, len(missing), missing[:20])
+missing = sorted(mp - keys('data/import/b2b_common/common/glossary.csv'))
+print('b2b_common', len(missing), missing[:20])
 EOF
 ```
 
@@ -935,7 +932,7 @@ Portal) are expected in that list.
 
 ## Verifying a Change
 
-The CI jobs that run B2B mode (Cypress `b2b` cells, Robot "API B2B") exercise the storefront and Glue. They do **not**
+The CI jobs that run B2B mode (Cypress `b2b` cells) exercise the storefront and Glue. They do **not**
 run static analysis or Codeception in B2B mode, nor do they cover the Back Office password reset, the cloud install
 recipes (`production.yml`, `destructive.yml`, `dynamic-store.yml`) or the non-default deploy files. After changing the
 configuration, verify locally in a scratch worktree so the main checkout stays untouched:
@@ -963,7 +960,7 @@ cd ../b2b-mode
    `grep -rIil "merchant-portal\|merchantportal\|mportal" src config deploy*.yml --exclude-dir=Generated --exclude-dir=Orm`
    should list only `config/install/ci.restore-db.stage2.yml`. That recipe restores the shared marketplace database dump
    in CI and is never used in B2B mode, so it is intentionally not processed.
-7. **CI.** Open the pull request and check the Cypress `b2b` and Robot "API B2B" jobs.
+7. **CI.** Open the pull request and check the Cypress `b2b` jobs.
 8. **Runtime smoke test** (for larger changes). Boot the scratch worktree with its own namespace so it does not reuse the
    marketplace environment's volumes (`sed -i '' 's/^namespace: .*/namespace: spryker_b2b_mode_dev/' deploy.dev.yml`,
    copy `docker/` without `docker/deployment`, stop the marketplace environment, then
@@ -978,6 +975,9 @@ Remove the worktree afterwards: `git worktree remove --force ../b2b-mode`.
 Document significant changes to the configuration:
 
 ```
+2026-11-11: CC-41469 Robot Framework tests removed
+            - Removed: b2b_robot dataset, b2b_full_ROBOT.yml / full_ROBOT.yml and the docker.robot.* install recipes,
+              together with their entries in uninstall-marketplace-config.json
 2026-10-21: CC-41086 B2B mode audit
             - Fixed: Back Office password reset and the product offer stock table failed with "Class not found"
               (plugins from packages removed indirectly)

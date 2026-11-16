@@ -11,6 +11,4 @@
 - `run-compatibility-ci` runs compatibility tests (PHP 8.3 / PostgreSQL / Debian / Prefer Lowest / Dynamic Store OFF):
     - Codeception / Acceptance & API
     - Codeception / Functional Tests
-    - Robot / API
-    - Robot / UI
     - Cypress / UI

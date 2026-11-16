@@ -15,10 +15,7 @@ use Spryker\Zed\Acl\AclConfig as SprykerAclConfig;
 
 class AclConfig extends SprykerAclConfig
 {
-    /**
-     * @var string
-     */
-    protected const RULE_TYPE_DENY = 'deny';
+    protected const string RULE_TYPE_DENY = 'deny';
 
     /**
      * @var string
@@ -49,6 +46,117 @@ class AclConfig extends SprykerAclConfig
         }
 
         return parent::getAccessDeniedUri();
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getRules(): array
+    {
+        $rules = [
+            [
+                'bundle' => 'security-gui',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'multi-factor-auth',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'multi-factor-auth-merchant-portal',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'acl',
+                'controller' => 'index',
+                'action' => 'denied',
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'health-check',
+                'controller' => 'index',
+                'action' => 'index',
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'api',
+                'controller' => 'rest',
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'security-merchant-portal-gui',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'agent-security-merchant-portal-gui',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => '_profiler',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'security-oauth-knpu',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+        ];
+
+        return array_merge($rules, $this->rules);
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    public function getCredentials(): array
+    {
+        return [
+            'yves_system' => [
+                'rules' => [
+                    [
+                        'bundle' => AclConstants::VALIDATOR_WILDCARD,
+                        'controller' => 'gateway',
+                        'action' => AclConstants::VALIDATOR_WILDCARD,
+                        'type' => AclConstants::ALLOW,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getUserRuleWhitelist(): array
+    {
+        return [
+            [
+                'bundle' => 'application',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'wdt',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+            ],
+        ];
     }
 
     /**

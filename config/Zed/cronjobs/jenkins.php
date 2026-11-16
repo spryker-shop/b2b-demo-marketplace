@@ -26,7 +26,11 @@ if ($isSymfonyMessengerEnabled) {
     ];
     $jobs[] = [
         'name' => 'consume-other-cron-jobs',
-        'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume compiled-cron-scheduler --time-limit=900 --exclude-from-group=queue-worker-start',
+        'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume scheduler-jobs'
+            . ' --worker-receivers=compiled-cron-scheduler'
+            . ' --parallel=3'
+            . ' --time-limit=900'
+            . ' --exclude-from-group=queue-worker-start',
         'schedule' => '* * * * *',
         'enable' => true,
     ];
