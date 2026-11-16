@@ -18,6 +18,7 @@
             {% include molecule('quantity-counter') with {
                 class: config.name ~ '__counter',
                 data: {
+                    isDisabled: data.isAddToCartDisabled,
                     numberFormatConfig: data.numberFormatConfig,
                     inputExtraClasses: 'js-volume-price__quantity',
                 },
@@ -35,6 +36,21 @@
                 </button>
             {% endblock %}
         </div>
+
+        {% block quantityNote %}
+            {% set quantityNoteKey = 'product.quantity-note.' ~ data.product.abstractSku | lower %}
+            {% set quantityNote = quantityNoteKey | trans %}
+            {% set quantityMaxNoteKey = 'product.quantity-max-note.' ~ data.product.abstractSku | lower %}
+            {% set quantityMaxNote = quantityMaxNoteKey | trans %}
+
+            {% if data.product.abstractSku and quantityNote != quantityNoteKey %}
+                <p class="{{ config.name }}__quantity-note {{ config.jsName }}__quantity-note">{{ quantityNote }}</p>
+            {% endif %}
+
+            {% if data.product.abstractSku and quantityMaxNote != quantityMaxNoteKey %}
+                <p class="{{ config.name }}__quantity-note {{ config.jsName }}__quantity-max-note is-hidden">{{ quantityMaxNote }}</p>
+            {% endif %}
+        {% endblock %}
     {% endif %}
 
     {% if salesUnitCount %}
@@ -75,6 +91,7 @@
                                 name: 'sales-unit-quantity',
                             },
                             data: {
+                                isDisabled: data.isAddToCartDisabled,
                                 formattedNumberExtraClasses: config.jsName ~ '__formatted-sales-unit-quantity',
                                 numberFormatConfig: data.numberFormatConfig,
                                 inputExtraClasses: config.jsName ~ '__sales-unit-quantity js-volume-price__quantity quantity-counter__input--medium-width',
@@ -120,6 +137,8 @@
                 {% endif %}
             </div>
         {% endblock %}
+
+        {{ block('quantityNote') }}
 
         {% block packagingUnitChoice %}
             <div class="{{ config.name }}__unit-choice {{ config.jsName }}__packaging-unit-choice is-hidden">

@@ -33,6 +33,8 @@ class CustomerConfig extends SprykerCustomerConfig
      */
     protected const IS_CUSTOMER_EMAIL_VALIDATION_CASE_SENSITIVE = true;
 
+    protected const string CUSTOMER_PASSWORD_EXPIRATION_PERIOD = '+15 min';
+
     /**
      * {@inheritDoc}
      *

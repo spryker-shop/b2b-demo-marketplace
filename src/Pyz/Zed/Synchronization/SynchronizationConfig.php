@@ -22,4 +22,9 @@ class SynchronizationConfig extends SprykerSynchronizationConfig
     {
         return true;
     }
+
+    public function isQueryContainerSyncExportKeysetPaginationEnabled(): bool
+    {
+        return true;
+    }
 }

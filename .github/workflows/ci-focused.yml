@@ -4,13 +4,11 @@ on:
     workflow_dispatch:
         inputs:
             framework:
-                description: "Which framework to run (and only that). robot-api / cypress run both their mp + b2b variants."
+                description: "Which framework to run (and only that). cypress runs both its mp + b2b variants."
                 required: true
                 type: choice
                 options:
                     - codeception
-                    - robot-api
-                    - robot-ui
                     - cypress
 
 concurrency:
@@ -21,7 +19,7 @@ concurrency:
 
 jobs:
     # codeception restores a dump for both cells; cypress restores it for b2b-mp only (see
-    # _cypress.yml). The robot lanes import their own demodata regardless.
+    # _cypress.yml).
     build-db:
         if: ${{ inputs.framework == 'codeception' || inputs.framework == 'cypress' }}
         uses: ./.github/workflows/_build-db.yml
@@ -49,16 +47,6 @@ jobs:
         if: ${{ inputs.framework == 'codeception' }}
         needs: [build-db, build-frontend]
         uses: ./.github/workflows/_codeception.yml
-        secrets: inherit
-
-    robot-api:
-        if: ${{ inputs.framework == 'robot-api' }}
-        uses: ./.github/workflows/_robot-api.yml
-        secrets: inherit
-
-    robot-ui:
-        if: ${{ inputs.framework == 'robot-ui' }}
-        uses: ./.github/workflows/_robot-ui.yml
         secrets: inherit
 
     cypress:

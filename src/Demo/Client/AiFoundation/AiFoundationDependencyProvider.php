@@ -30,7 +30,7 @@ use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ReadShopPag
 class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvider
 {
     /**
-     * @return array<\Spryker\Client\AiFoundation\Dependency\Tools\ToolPluginInterface>
+     * @return array<\Spryker\Client\AiFoundationExtension\Dependency\Tools\ToolPluginInterface>
      */
     protected function getAiToolPlugins(): array
     {
