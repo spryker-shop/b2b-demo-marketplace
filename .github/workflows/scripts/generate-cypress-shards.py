@@ -33,15 +33,16 @@ def log_notice(message: str) -> None:
 def list_installed_specs(package_dir: str) -> list[str]:
     """Return sorted core spec paths relative to the package root.
 
-    Glob under the package, excluding any path containing ``/smoke/`` or whose
-    basename starts with ``ssp`` (SSP runs as its own standalone shard).
+    Glob under the package, excluding any path containing ``/smoke/`` or ``/demo/``,
+    or whose basename starts with ``ssp`` (SSP runs as its own standalone shard).
+    [demo only] ``/demo/`` specs run only in the standalone "Cypress / UI Demo" job (cy:demo).
     """
     specs: list[str] = []
     cwd = Path.cwd()
     os.chdir(package_dir)
     try:
         for p in glob.iglob(E2E_GLOB, recursive=True):
-            if "/smoke/" in p or os.path.basename(p).startswith("ssp"):
+            if "/smoke/" in p or "/demo/" in p or os.path.basename(p).startswith("ssp"):
                 continue
             specs.append(p)
     finally:
