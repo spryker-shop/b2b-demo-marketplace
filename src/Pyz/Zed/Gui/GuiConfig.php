@@ -23,7 +23,7 @@ class GuiConfig extends SprykerGuiConfig
     public function getDefaultTemplateFileNames(): array
     {
         return array_merge(parent::getDefaultTemplateFileNames(), [
-            '@Captcha/Form/Type/captcha.twig',
+            '@Captcha/Form/Type/captcha-full-width.twig',
         ]);
     }
 }

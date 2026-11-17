@@ -62,7 +62,7 @@ class AclConfigTest extends Unit
         );
     }
 
-    public function testGetRulesAllowsTheCaptchaChallengeEndpoints(): void
+    public function testGetRulesAllowsTheBackofficeCaptchaChallengeEndpoint(): void
     {
         // Arrange
         $aclConfig = new AclConfig();
@@ -71,17 +71,35 @@ class AclConfigTest extends Unit
         $rules = $aclConfig->getRules();
 
         // Assert
-        foreach (['challenge', 'merchant-portal-challenge'] as $controller) {
-            $this->assertContains(
-                [
-                    'bundle' => 'captcha',
-                    'controller' => $controller,
-                    'action' => 'index',
-                    'type' => 'allow',
-                ],
-                $rules,
-            );
-        }
+        $this->assertContains(
+            [
+                'bundle' => 'captcha',
+                'controller' => 'challenge',
+                'action' => 'index',
+                'type' => 'allow',
+            ],
+            $rules,
+        );
+    }
+
+    public function testGetRulesAllowsTheMerchantPortalCaptchaChallengeEndpoint(): void
+    {
+        // Arrange
+        $aclConfig = new AclConfig();
+
+        // Act
+        $rules = $aclConfig->getRules();
+
+        // Assert
+        $this->assertContains(
+            [
+                'bundle' => 'captcha',
+                'controller' => 'merchant-portal-challenge',
+                'action' => 'index',
+                'type' => 'allow',
+            ],
+            $rules,
+        );
     }
 
     public function testGetCredentialsIncludesTheYvesSystemGatewayCredentials(): void

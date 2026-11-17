@@ -11,16 +11,19 @@
     subtitle: '',
     formQa: null,
     showForgotPassword: false,
-    hasFlashError: false,
+    errorMessages: [],
+    authenticationFailedMessage: '',
     errorText: 'customer.login.error',
     mfaUrl: '',
 } %}
 
 {% block body %}
-    {% set hasError = data.hasFlashError
+    {% set hasCredentialError = data.authenticationFailedMessage in data.errorMessages
         or data.form.vars.errors | length > 0
         or data.form.email.vars.errors | length > 0
         or data.form.password.vars.errors | length > 0 %}
+    {% set errorMessages = data.errorMessages | filter(errorMessage => errorMessage != data.authenticationFailedMessage) %}
+    {% set errorMessages = hasCredentialError ? [data.errorText] | merge(errorMessages) : errorMessages %}
 
     {% embed molecule('auth-layout', 'CustomerPage') with {
         data: {
@@ -31,13 +34,13 @@
             loginForm: data.form,
             formQa: data.formQa,
             showForgotPassword: data.showForgotPassword,
-            hasError: hasError,
-            errorText: data.errorText,
+            hasCredentialError: hasCredentialError,
+            errorMessages: errorMessages,
         },
     } only %}
         {% block card %}
             {% set formAttr = {
-                class: config.name ~ '__form' ~ (embed.hasError ? ' ' ~ config.name ~ '__form--error' : ''),
+                class: config.name ~ '__form' ~ (embed.errorMessages is not empty ? ' ' ~ config.name ~ '__form--error' : ''),
                 novalidate: 'novalidate',
             } %}
             {% if embed.formQa %}
@@ -53,7 +56,7 @@
                         {{ form_widget(embed.loginForm.email, {
                             attr: {
                                 autocomplete: 'email',
-                                class: embed.hasError ? 'input--error ' : '',
+                                class: embed.hasCredentialError ? 'input--error ' : '',
                             },
                         }) }}
                     </div>
@@ -75,20 +78,26 @@
                         </div>
                         {{ form_widget(embed.loginForm.password, {
                             attr: {
-                                class: embed.hasError ? 'input--error ' : '',
+                                class: embed.hasCredentialError ? 'input--error ' : '',
                             },
                         }) }}
                     </div>
 
-                    {% if embed.hasError %}
+                    {% if embed.loginForm.captcha is defined %}
+                        <div class="{{ config.name }}__field {{ config.name }}__captcha">
+                            {{ form_widget(embed.loginForm.captcha) }}
+                        </div>
+                    {% endif %}
+
+                    {% for errorMessage in embed.errorMessages %}
                         {% include molecule('flash-message') with {
                             modifiers: ['alert', 'notification'],
                             data: {
                                 isStatic: true,
-                                text: embed.errorText | trans,
+                                text: errorMessage,
                             },
                         } only %}
-                    {% endif %}
+                    {% endfor %}
                 </div>
 
                 <button

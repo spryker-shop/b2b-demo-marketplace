@@ -37,7 +37,12 @@ runs:
         -   name: Merchant Portal
             if: ${{ inputs.variant == 'b2b-mp' }}
             shell: bash
-            run: npm run mp:build
+            env:
+                APPLICATION_ENV: devtest
+            run: |
+                mkdir -p data/logs
+                vendor/bin/console transfer:generate
+                vendor/bin/console frontend:mp:build
 
         -   name: Save frontend assets
             uses: actions/cache/save@v4
