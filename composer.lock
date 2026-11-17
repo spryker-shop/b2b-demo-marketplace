@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54215298e11ac40dcc9e931059cd54a6",
+    "content-hash": "1d0736c87dea76bd8f859cef5e2b2926",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -15185,16 +15185,16 @@
         },
         {
             "name": "spryker-feature/spryker-core",
-            "version": "202610.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/spryker-core.git",
-                "reference": "9681f2b6adb7261b4e610ca5618ce83ae486bb92"
+                "reference": "bdb7bed1742e19c85912a9241d0fc6dc633ec09b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/spryker-core/zipball/9681f2b6adb7261b4e610ca5618ce83ae486bb92",
-                "reference": "9681f2b6adb7261b4e610ca5618ce83ae486bb92",
+                "url": "https://api.github.com/repos/spryker-feature/spryker-core/zipball/bdb7bed1742e19c85912a9241d0fc6dc633ec09b",
+                "reference": "bdb7bed1742e19c85912a9241d0fc6dc633ec09b",
                 "shasum": ""
             },
             "require": {
@@ -15219,6 +15219,8 @@
                 "spryker/authentication": "^1.2.0",
                 "spryker/authentication-oauth": "^1.3.0",
                 "spryker/authorization": "^1.6.0",
+                "spryker/captcha": "^1.0.0",
+                "spryker/chart": "^2.0.0",
                 "spryker/country": "^4.10.0",
                 "spryker/country-data-import": "^0.1.0",
                 "spryker/country-gui": "^1.3.0",
@@ -15287,10 +15289,11 @@
                 "spryker/vault": "^1.4.0",
                 "spryker/zed-request": "^3.30.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "202610.x-dev"
+                    "dev-master": "202612.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -15299,9 +15302,10 @@
             ],
             "description": "Spryker Core [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/spryker-core/tree/202610.0"
+                "source": "https://github.com/spryker-feature/spryker-core/tree/master"
             },
-            "time": "2026-10-27T16:33:28+00:00"
+            "time": "2026-11-16T17:00:34+00:00",
+            "published-time": "2026-11-16T17:00:45+00:00"
         },
         {
             "name": "spryker-feature/spryker-core-back-office",
@@ -93387,6 +93391,12 @@
             "version": "9999999-dev",
             "alias": "202610.0",
             "alias_normalized": "202610.0"
+        },
+        {
+            "package": "spryker-feature/spryker-core",
+            "version": "9999999-dev",
+            "alias": "202610.0",
+            "alias_normalized": "202610.0"
         }
     ],
     "minimum-stability": "dev",
@@ -93395,6 +93405,7 @@
         "spryker-feature/development-tools": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
+        "spryker-feature/spryker-core": 20,
         "spryker/architecture-sniffer": 20,
         "spryker/cypress-tests": 20
     },
