@@ -114,6 +114,18 @@ class AclConfig extends SprykerAclConfig
                 'action' => AclConstants::VALIDATOR_WILDCARD,
                 'type' => AclConstants::ALLOW,
             ],
+            [
+                'bundle' => 'captcha',
+                'controller' => 'challenge',
+                'action' => 'index',
+                'type' => AclConstants::ALLOW,
+            ],
+            [
+                'bundle' => 'captcha',
+                'controller' => 'merchant-portal-challenge',
+                'action' => 'index',
+                'type' => AclConstants::ALLOW,
+            ],
         ];
 
         return array_merge($rules, $this->rules);

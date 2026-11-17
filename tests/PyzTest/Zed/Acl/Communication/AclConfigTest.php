@@ -28,15 +28,29 @@ class AclConfigTest extends Unit
 {
     public function testAclModuleConfigKeysAreNotDefinedInTheEnvironmentConfig(): void
     {
-        $this->assertFalse(Config::hasKey(AclConstants::ACL_DEFAULT_RULES));
-        $this->assertFalse(Config::hasKey(AclConstants::ACL_DEFAULT_CREDENTIALS));
-        $this->assertFalse(Config::hasKey(AclConstants::ACL_USER_RULE_WHITELIST));
+        // Arrange
+        $aclConfigKeys = [
+            AclConstants::ACL_DEFAULT_RULES,
+            AclConstants::ACL_DEFAULT_CREDENTIALS,
+            AclConstants::ACL_USER_RULE_WHITELIST,
+        ];
+
+        // Act
+        $definedAclConfigKeys = array_filter($aclConfigKeys, Config::hasKey(...));
+
+        // Assert
+        $this->assertSame([], $definedAclConfigKeys);
     }
 
     public function testGetRulesIncludesTheMerchantPortalDefaultRule(): void
     {
+        // Arrange
         $aclConfig = new AclConfig();
 
+        // Act
+        $rules = $aclConfig->getRules();
+
+        // Assert
         $this->assertContains(
             [
                 'bundle' => 'security-merchant-portal-gui',
@@ -44,24 +58,53 @@ class AclConfigTest extends Unit
                 'action' => '*',
                 'type' => 'allow',
             ],
-            $aclConfig->getRules(),
+            $rules,
         );
+    }
+
+    public function testGetRulesAllowsTheCaptchaChallengeEndpoints(): void
+    {
+        // Arrange
+        $aclConfig = new AclConfig();
+
+        // Act
+        $rules = $aclConfig->getRules();
+
+        // Assert
+        foreach (['challenge', 'merchant-portal-challenge'] as $controller) {
+            $this->assertContains(
+                [
+                    'bundle' => 'captcha',
+                    'controller' => $controller,
+                    'action' => 'index',
+                    'type' => 'allow',
+                ],
+                $rules,
+            );
+        }
     }
 
     public function testGetCredentialsIncludesTheYvesSystemGatewayCredentials(): void
     {
+        // Arrange
         $aclConfig = new AclConfig();
 
-        $this->assertSame(
-            'gateway',
-            $aclConfig->getCredentials()['yves_system']['rules'][0]['controller'],
-        );
+        // Act
+        $credentials = $aclConfig->getCredentials();
+
+        // Assert
+        $this->assertSame('gateway', $credentials['yves_system']['rules'][0]['controller']);
     }
 
     public function testGetUserRuleWhitelistIncludesTheApplicationWildcardRule(): void
     {
+        // Arrange
         $aclConfig = new AclConfig();
 
+        // Act
+        $userRuleWhitelist = $aclConfig->getUserRuleWhitelist();
+
+        // Assert
         $this->assertContains(
             [
                 'bundle' => 'application',
@@ -69,7 +112,7 @@ class AclConfigTest extends Unit
                 'action' => '*',
                 'type' => 'allow',
             ],
-            $aclConfig->getUserRuleWhitelist(),
+            $userRuleWhitelist,
         );
     }
 }
