@@ -31,6 +31,7 @@
 #   SAMPLE_S          sampler interval, default 2
 #   WORK_QUEUE_EXCLUDE  comma list of queues not counted as P&S work, default scheduler-jobs
 #   GIT_BRANCH_NAME, GIT_SHA  recorded in meta.json (the image has no .git)
+#   TOOLS_DIR         where sync-mode.php and queue-sampler.sh are, default data/ps-metrics
 
 set -uo pipefail
 
@@ -48,6 +49,7 @@ MAX_WAIT_S="${MAX_WAIT_S:-14400}"
 STALL_S="${STALL_S:-1800}"
 SAMPLE_S="${SAMPLE_S:-2}"
 WORK_QUEUE_EXCLUDE="${WORK_QUEUE_EXCLUDE:-scheduler-jobs}"
+TOOLS_DIR="${TOOLS_DIR:-data/ps-metrics}"
 SETTINGS_FILE="$(php -r 'echo sys_get_temp_dir();')/queue-metrics.settings.json"
 IMPORT_DIR="/data/data/import/${DATA_SET}"
 CONFIG="${IMPORT_DIR}/import.yml"
@@ -149,8 +151,9 @@ curl -sf -u "${API_AUTH}" "${API}/overview" >/dev/null || fail "broker managemen
 search_docs >/dev/null || fail "search ${SEARCH} not reachable"
 kv_keys >/dev/null || fail "key-value store not reachable"
 php -m | grep -qi opentelemetry || fail "opentelemetry extension missing, no hook can register"
-[ "$(consumer_total)" -gt 0 ] || fail "no queue has a consumer: the scheduler workers are not running"
-php data/ps-metrics/sync-mode.php --control > "${OUT}/sync-mode.json" 2> "${OUT}/sync-mode.err" \
+# On PaaS a worker connects only while a task runs, so an idle broker shows 0 consumers: check the process.
+pgrep -f 'queue:worker:start' >/dev/null || fail "no queue:worker:start process in this container: the scheduler workers are not running"
+php "${TOOLS_DIR}/sync-mode.php" --control > "${OUT}/sync-mode.json" 2> "${OUT}/sync-mode.err" \
     || fail "sync-mode probe failed: $(tail -3 "${OUT}/sync-mode.err")"
 SYNC_MODE=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("sync_mode",""))' "${OUT}/sync-mode.json")
 rm -f "${SETTINGS_FILE}"   # a file left by an interrupted run would instrument the next workers
@@ -220,7 +223,7 @@ fi
 say "samplers"
 OUT_FILE="${OUT}/queue-samples.jsonl" RABBITMQ_HOST="${SPRYKER_BROKER_API_HOST}" RABBITMQ_MANAGEMENT_PORT="${SPRYKER_BROKER_API_PORT:-15672}" \
     RABBITMQ_USER="${SPRYKER_BROKER_API_USERNAME}" RABBITMQ_PASS="${SPRYKER_BROKER_API_PASSWORD}" SAMPLE_INTERVAL_SECONDS="${SAMPLE_S}" \
-    bash data/ps-metrics/queue-sampler.sh > "${OUT}/queue-sampler.log" 2>&1 &
+    bash "${TOOLS_DIR}/queue-sampler.sh" > "${OUT}/queue-sampler.log" 2>&1 &
 SAMPLER_PIDS="$!"
 ( while :; do printf '{"ts":%s,"kv_keys":%s,"search_docs":%s}\n' "$(date +%s.%N)" "$(kv_keys 2>/dev/null || echo null)" "$(search_docs 2>/dev/null || echo null)"; sleep 5; done ) \
     >> "${OUT}/storage-samples.jsonl" 2>/dev/null &
