@@ -50,6 +50,12 @@ if (getenv('SPRYKER_ACTIVE_STORES')) {
         'storesWithSharedPersistence' => [],
     ];
 
+    // FR: imaginary store added to test introducing a store with the normal pipeline (multi-DB).
+    $templates['FR'] = [
+        'countries' => ['FR', 'DE', 'AT'],
+    ] + $templates['default'];
+    $templates['FR']['contexts']['*']['timezone'] = 'Europe/Paris';
+
     $templates['US'] = [
         // different contexts
         'contexts' => [

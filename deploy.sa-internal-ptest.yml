@@ -51,6 +51,7 @@ image:
     SPRYKER_DEBUG_ENABLED: false
     SPRYKER_YVES_HOST_DE: yves.de.ptest.cloud.spryker.toys
     SPRYKER_YVES_HOST_AT: yves.at.ptest.cloud.spryker.toys
+    SPRYKER_YVES_HOST_FR: yves.fr.ptest.cloud.spryker.toys
     AWS_REGION: "eu-west-1"
   node:
     version: 24
@@ -88,6 +89,7 @@ regions:
       databases:
         de:
         at:
+        fr:
     stores:
       DE:
         services:
@@ -109,6 +111,16 @@ regions:
             namespace: at_search
           database:
             name: at
+      FR:
+        services:
+          broker:
+            namespace: fr-docker
+          key_value_store:
+            namespace: 3
+          search:
+            namespace: fr_search
+          database:
+            name: fr
 
 groups:
   EU:
@@ -132,6 +144,13 @@ groups:
             services:
               session:
                 namespace: 8
+          mp.fr.ptest.cloud.spryker.toys:
+            store: FR
+            <<: *frontend-auth
+            entry-point: MerchantPortal
+            services:
+              session:
+                namespace: 9
       yves:
         application: yves
         endpoints:
@@ -147,6 +166,12 @@ groups:
             services:
               session:
                 namespace: 2
+          yves.fr.ptest.cloud.spryker.toys:
+            store: FR
+            <<: *frontend-auth
+            services:
+              session:
+                namespace: 5
       glue:
         application: glue
         endpoints:
@@ -154,6 +179,8 @@ groups:
             store: DE
           glue.at.ptest.cloud.spryker.toys:
             store: AT
+          glue.fr.ptest.cloud.spryker.toys:
+            store: FR
       boffice:
         application: backoffice
         endpoints:
@@ -170,6 +197,12 @@ groups:
             services:
               session:
                 namespace: 4
+          backoffice.fr.ptest.cloud.spryker.toys:
+            store: FR
+            <<: *frontend-auth
+            services:
+              session:
+                namespace: 6
       backgw:
         application: backend-gateway
         endpoints:
@@ -179,6 +212,9 @@ groups:
           backend-gateway.at.ptest.cloud.spryker.toys:
             store: AT
             primal: true
+          backend-gateway.fr.ptest.cloud.spryker.toys:
+            store: FR
+            primal: true
       gluebackend:
         application: glue-backend
         endpoints:
@@ -186,6 +222,8 @@ groups:
             store: DE
           glue-backend.at.ptest.cloud.spryker.toys:
             store: AT
+          glue-backend.fr.ptest.cloud.spryker.toys:
+            store: FR
 
 services:
   database:

@@ -51,10 +51,10 @@ def clone_store_data(new: str, base: str, country: str) -> None:
         yml.rename(yml.with_name(yml.name.replace(base, new)))
 
 
-def write_config(store: str) -> pathlib.Path:
+def write_config(store: str, base: str | None = None) -> pathlib.Path:
     (COMMON / store).mkdir(exist_ok=True)
     (COMMON / store / 'store.csv').write_text(f'name\n{store}\n')
-    others = [s for s in REGION_STORES if s != store]
+    others = [s for s in REGION_STORES if s != (base or store)]
     out, skip = [], False
     for line in SOURCE.read_text().splitlines(keepends=True):
         m = re.match(r'\s*source:\s*(\S+)', line)
@@ -79,4 +79,4 @@ if __name__ == '__main__':
     a = ap.parse_args()
     if a.base:
         clone_store_data(a.store, a.base, a.country or a.store)
-    print(write_config(a.store).relative_to(ROOT))
+    print(write_config(a.store, a.base).relative_to(ROOT))
