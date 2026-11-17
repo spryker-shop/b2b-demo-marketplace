@@ -74,9 +74,7 @@ sections:
         # No stripe demo data: vendor/spryker-eco/stripe/data/import has rows for every store,
         # which fail in a database that holds only one store ('Store not found').
 
-        punchout:
-            command: 'vendor/bin/console punchout-gateway:demo-connection:create'
-            stores: true
+        # No punchout demo connection: its demo data fits one store only (fails for AT).
 
     scheduler-start:
         trigger-events:
