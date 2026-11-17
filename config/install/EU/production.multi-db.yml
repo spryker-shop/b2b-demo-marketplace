@@ -1,0 +1,62 @@
+# Normal (non-destructive) install for the non-DMS multi-DB setup.
+# Only idempotent per-store steps: migrate each store database, declare missing queues,
+# create missing search sources, (re)register the store's Jenkins jobs. No data is deleted.
+# A store that is new in this deploy gets its schema and queues here; its data is loaded
+# afterwards with: vendor/bin/install -s <STORE> -r SHARED/setup-store
+env:
+    NEW_RELIC_ENABLED: 0
+    SPRYKER_CURRENT_REGION: EU
+
+command-timeout: 1200
+
+stores:
+    - DE
+    - AT
+
+sections:
+    clean-oms:
+        clear-oms-locks:
+            command: 'vendor/bin/console oms:clear-locks -vvv --no-ansi'
+            stores: true
+
+    diff:
+        propel-migration-delete:
+            command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
+
+        propel-diff-and-migrate:
+            command: 'vendor/bin/console propel:diff -vvv --no-ansi && (ls -al ./src/Orm/Propel/Migration_*/*.php 2>/dev/null || true) && vendor/bin/console propel:migrate -vvv --no-ansi && vendor/bin/console propel:migration:delete -vvv --no-ansi'
+            stores: true
+
+    configuration:
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+            stores: true
+
+    queues-and-search:
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+            stores: true
+
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources -vvv --no-ansi'
+            stores: true
+
+    acl:
+        acl-entity-synchronize:
+            command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'
+            stores: true
+
+    api-router-cache-warmup:
+        storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:warmup'
+        backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:warmup'
+
+    scheduler-start:
+        scheduler-setup:
+            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
+            stores: true
+
+        scheduler-resume:
+            command: 'vendor/bin/console scheduler:resume -vvv --no-ansi'
+            stores: true

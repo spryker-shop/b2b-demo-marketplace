@@ -6,6 +6,7 @@ $stores = [];
 
 if (getenv('SPRYKER_ACTIVE_STORES')) {
     $activeStores = array_map('trim', explode(',', getenv('SPRYKER_ACTIVE_STORES')));
+    $paasServices = json_decode(getenv('SPRYKER_PAAS_SERVICES') ?: '[]', true);
 
     $templates = [];
     $templates['default'] = [
@@ -85,12 +86,19 @@ if (getenv('SPRYKER_ACTIVE_STORES')) {
         'currencyIsoCodes' => ['USD'],
     ] + $templates['default'];
 
+    // Multi-DB: every store has its own database and its own synchronization connection,
+    // and a process only knows the store it runs for.
+    $isMultiDbEnabled = !empty($paasServices['databases']);
     foreach ($activeStores as $store) {
         $stores[$store] = $templates[$store] ?? $templates['default'];
-        $stores[$store]['storesWithSharedPersistence'] = array_diff($activeStores, [$store]);
-        $stores[$store]['queuePools']['synchronizationPool'] = array_map(static function ($store) {
+        $stores[$store]['storesWithSharedPersistence'] = $isMultiDbEnabled ? [] : array_diff($activeStores, [$store]);
+        $stores[$store]['queuePools']['synchronizationPool'] = $isMultiDbEnabled ? [$store . '-connection'] : array_map(static function ($store) {
             return $store . '-connection';
         }, $activeStores);
+    }
+
+    if ($isMultiDbEnabled && defined('APPLICATION_STORE') && isset($stores[APPLICATION_STORE])) {
+        return [APPLICATION_STORE => $stores[APPLICATION_STORE]];
     }
 
     return $stores;

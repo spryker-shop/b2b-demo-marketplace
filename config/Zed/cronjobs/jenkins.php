@@ -12,17 +12,22 @@ declare(strict_types = 1);
 //$logger = 'config/Zed/cronjobs/bin/loggable.sh '; // script for jenkins logging
 $logger = '';
 
+// Non-DMS: every job runs per store, so the job gets APPLICATION_STORE (and with multi-DB its own database).
+$allStores = array_keys(require APPLICATION_ROOT_DIR . '/config/Shared/stores.php');
+
 $jobs[] = [
     'name' => 'consume-queue',
     'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume queue-worker-start --time-limit=900',
     'schedule' => '* * * * *',
     'enable' => true,
+    'stores' => $allStores,
 ];
 $jobs[] = [
     'name' => 'consume-other-cron-jobs',
     'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume compiled-cron-scheduler --time-limit=900 --exclude-from-group=queue-worker-start',
     'schedule' => '* * * * *',
     'enable' => true,
+    'stores' => $allStores,
 ];
 
 if (getenv('SPRYKER_CURRENT_REGION')) {

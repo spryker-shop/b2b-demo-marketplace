@@ -1,0 +1,64 @@
+# Set up the data of ONE new store in the non-DMS multi-DB setup, after the normal deploy
+# that introduced it (that deploy created its database schema, vhost queues and search sources).
+# Run once, from the Jenkins container or a one-off task:
+#   vendor/bin/install -s FR -r SHARED/setup-store
+# Touches only the given store: its database, vhost, key-value namespace and search namespace.
+env:
+    NEW_RELIC_ENABLED: 0
+    SPRYKER_CURRENT_REGION: EU
+
+command-timeout: 7200
+
+stores:
+    - DE
+    - AT
+    - FR
+
+sections:
+    init-storage:
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+            stores: true
+
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources -vvv --no-ansi'
+            stores: true
+
+    init-database:
+        propel-migrate:
+            command: 'vendor/bin/console propel:migrate -vvv --no-ansi'
+            stores: true
+
+        init-database:
+            command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
+            stores: true
+
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+            stores: true
+
+    demodata:
+        import-store-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/production/full_${APPLICATION_STORE}.yml'
+            stores: true
+
+        update-product-labels:
+            command: 'vendor/bin/console product-label:relations:update -vvv --no-ansi'
+            stores: true
+
+        check-product-validity:
+            command: 'vendor/bin/console product:check-validity'
+            stores: true
+
+        stripe:
+            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
+            stores: true
+
+    publish-and-schedule:
+        trigger-events:
+            command: 'vendor/bin/console publish:trigger-events'
+            stores: true
+
+        scheduler-setup:
+            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
+            stores: true

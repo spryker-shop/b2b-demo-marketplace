@@ -419,6 +419,18 @@ $config[PropelConstants::ZED_DB_USERNAME] = getenv('SPRYKER_DB_USERNAME');
 $config[PropelConstants::ZED_DB_PASSWORD] = getenv('SPRYKER_DB_PASSWORD');
 $config[PropelConstants::ZED_DB_DATABASE] = getenv('SPRYKER_DB_DATABASE');
 $config[PropelConstants::ZED_DB_REPLICAS] = json_decode(getenv('SPRYKER_DB_REPLICAS') ?: '[]', true);
+
+// Multi-DB (non-DMS): one logical database per store, provisioned by the platform into SPRYKER_PAAS_SERVICES.
+// Code buckets are regions in this project, so the store selects the database.
+$paasServices = json_decode(getenv('SPRYKER_PAAS_SERVICES') ?: '[]', true);
+if (defined('APPLICATION_STORE') && !empty($paasServices['databases'][APPLICATION_STORE])) {
+    $databasesConfig = $paasServices['databases'][APPLICATION_STORE];
+    $config[PropelConstants::ZED_DB_HOST] = $databasesConfig['host'];
+    $config[PropelConstants::ZED_DB_PORT] = $databasesConfig['port'];
+    $config[PropelConstants::ZED_DB_USERNAME] = $databasesConfig['username'];
+    $config[PropelConstants::ZED_DB_PASSWORD] = $databasesConfig['password'];
+    $config[PropelConstants::ZED_DB_DATABASE] = $databasesConfig['database'];
+}
 $config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 
 // >>> DATABASE REPLICA CACHE
