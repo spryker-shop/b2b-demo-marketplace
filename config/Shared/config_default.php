@@ -333,6 +333,18 @@ $config[PropelConstants::ZED_DB_USERNAME] = getenv('SPRYKER_DB_USERNAME');
 $config[PropelConstants::ZED_DB_PASSWORD] = getenv('SPRYKER_DB_PASSWORD');
 $config[PropelConstants::ZED_DB_DATABASE] = getenv('SPRYKER_DB_DATABASE');
 $config[PropelConstants::ZED_DB_REPLICAS] = json_decode(getenv('SPRYKER_DB_REPLICAS') ?: '[]', true);
+
+// PaaS with the multi-DB feature on: SPRYKER_DB_DATABASE is the string "null" and the database comes
+// from SPRYKER_PAAS_SERVICES, per store, or under "_default" for a region with one database (DMS).
+$paasDatabases = json_decode(getenv('SPRYKER_PAAS_SERVICES') ?: '[]', true)['databases'] ?? [];
+$paasDatabase = $paasDatabases[defined('APPLICATION_STORE') ? APPLICATION_STORE : ''] ?? $paasDatabases['_default'] ?? null;
+if ($paasDatabase && in_array(getenv('SPRYKER_DB_DATABASE'), [false, '', 'null'], true)) {
+    $config[PropelConstants::ZED_DB_HOST] = $paasDatabase['host'];
+    $config[PropelConstants::ZED_DB_PORT] = $paasDatabase['port'];
+    $config[PropelConstants::ZED_DB_USERNAME] = $paasDatabase['username'];
+    $config[PropelConstants::ZED_DB_PASSWORD] = $paasDatabase['password'];
+    $config[PropelConstants::ZED_DB_DATABASE] = $paasDatabase['database'];
+}
 $config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 
 // >>> DATABASE REPLICA CACHE
