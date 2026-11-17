@@ -1,7 +1,7 @@
 # Set up the data of ONE new store in the non-DMS multi-DB setup, after the normal deploy
 # that introduced it (that deploy created its database schema, vhost queues and search sources).
 # Run once, from the Jenkins container or a one-off task:
-#   vendor/bin/install -s FR -r SHARED/setup-store
+#   vendor/bin/install -r SHARED/setup-store FR
 # Touches only the given store: its database, vhost, key-value namespace and search namespace.
 env:
     NEW_RELIC_ENABLED: 0

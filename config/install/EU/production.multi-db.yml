@@ -2,7 +2,7 @@
 # Only idempotent per-store steps: migrate each store database, declare missing queues,
 # create missing search sources, (re)register the store's Jenkins jobs. No data is deleted.
 # A store that is new in this deploy gets its schema and queues here; its data is loaded
-# afterwards with: vendor/bin/install -s <STORE> -r SHARED/setup-store
+# afterwards with: vendor/bin/install -r SHARED/setup-store <STORE>
 env:
     NEW_RELIC_ENABLED: 0
     SPRYKER_CURRENT_REGION: EU

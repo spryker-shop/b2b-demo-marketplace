@@ -83,9 +83,11 @@ regions:
           email: no-reply@ptest.cloud.spryker.toys
       # Multi-DB: one logical database per store on the same RDS instance.
       # No region-level "database" block: with one, the platform provisions only the default DB.
+      # Name each database like its store: the platform keys SPRYKER_PAAS_SERVICES by the
+      # upper-cased database name, and the app looks it up by APPLICATION_STORE.
       databases:
-        de_database:
-        at_database:
+        de:
+        at:
     stores:
       DE:
         services:
@@ -96,7 +98,7 @@ regions:
           search:
             namespace: de_search
           database:
-            name: de_database
+            name: de
       AT:
         services:
           broker:
@@ -106,7 +108,7 @@ regions:
           search:
             namespace: at_search
           database:
-            name: at_database
+            name: at
 
 groups:
   EU:
