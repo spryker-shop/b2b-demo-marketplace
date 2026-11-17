@@ -71,9 +71,8 @@ sections:
             command: 'vendor/bin/console product:check-validity'
             stores: true
 
-        stripe:
-            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
-            stores: true
+        # No stripe demo data: vendor/spryker-eco/stripe/data/import has rows for every store,
+        # which fail in a database that holds only one store ('Store not found').
 
         punchout:
             command: 'vendor/bin/console punchout-gateway:demo-connection:create'
