@@ -13,7 +13,7 @@
 #
 # Usage (Jenkins shell step):
 #   . /envs/<region-or-store>.env; cd /data
-#   DATA_SET=gen-icp-v2-s001 DATA_URL='<presigned S3 URL of the .tgz>' RUN_ID=s001-1 tools/ps-metrics/run-cloud.sh
+#   DATA_SET=gen-icp-v2-s001 DATA_URL='<presigned S3 URL of the .tgz>' RUN_ID=s001-1 bash data/ps-metrics/run-cloud.sh
 #
 # Environment:
 #   DATA_SET          directory name under data/import, holding import.yml (required)
@@ -150,7 +150,7 @@ search_docs >/dev/null || fail "search ${SEARCH} not reachable"
 kv_keys >/dev/null || fail "key-value store not reachable"
 php -m | grep -qi opentelemetry || fail "opentelemetry extension missing, no hook can register"
 [ "$(consumer_total)" -gt 0 ] || fail "no queue has a consumer: the scheduler workers are not running"
-php tools/ps-metrics/sync-mode.php --control > "${OUT}/sync-mode.json" 2> "${OUT}/sync-mode.err" \
+php data/ps-metrics/sync-mode.php --control > "${OUT}/sync-mode.json" 2> "${OUT}/sync-mode.err" \
     || fail "sync-mode probe failed: $(tail -3 "${OUT}/sync-mode.err")"
 SYNC_MODE=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("sync_mode",""))' "${OUT}/sync-mode.json")
 rm -f "${SETTINGS_FILE}"   # a file left by an interrupted run would instrument the next workers
@@ -220,7 +220,7 @@ fi
 say "samplers"
 OUT_FILE="${OUT}/queue-samples.jsonl" RABBITMQ_HOST="${SPRYKER_BROKER_API_HOST}" RABBITMQ_MANAGEMENT_PORT="${SPRYKER_BROKER_API_PORT:-15672}" \
     RABBITMQ_USER="${SPRYKER_BROKER_API_USERNAME}" RABBITMQ_PASS="${SPRYKER_BROKER_API_PASSWORD}" SAMPLE_INTERVAL_SECONDS="${SAMPLE_S}" \
-    bash tools/ps-metrics/queue-sampler.sh > "${OUT}/queue-sampler.log" 2>&1 &
+    bash data/ps-metrics/queue-sampler.sh > "${OUT}/queue-sampler.log" 2>&1 &
 SAMPLER_PIDS="$!"
 ( while :; do printf '{"ts":%s,"kv_keys":%s,"search_docs":%s}\n' "$(date +%s.%N)" "$(kv_keys 2>/dev/null || echo null)" "$(search_docs 2>/dev/null || echo null)"; sleep 5; done ) \
     >> "${OUT}/storage-samples.jsonl" 2>/dev/null &
