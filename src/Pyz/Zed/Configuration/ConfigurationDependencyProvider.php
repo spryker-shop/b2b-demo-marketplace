@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Configuration;
 
+use Pyz\Zed\Configuration\Communication\Plugin\Configuration\GlobalScopeIdentifierNormalizerPreSavePlugin;
 use Spryker\Zed\Configuration\ConfigurationDependencyProvider as SprykerConfigurationDependencyProvider;
 use Spryker\Zed\Store\Communication\Plugin\Configuration\StoreConfigurationScopeIdentifierProviderPlugin;
 use SprykerEco\Zed\Algolia\Communication\Plugin\Configuration\AlgoliaCredentialsPreSavePlugin;
@@ -33,6 +34,7 @@ class ConfigurationDependencyProvider extends SprykerConfigurationDependencyProv
     protected function getConfigurationValuePreSavePlugins(): array
     {
         return [
+            new GlobalScopeIdentifierNormalizerPreSavePlugin(),
             new AlgoliaCredentialsPreSavePlugin(),
             new StripeCredentialsPreSavePlugin(),
             new VertexTaxProviderPreSavePlugin(),
