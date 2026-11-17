@@ -1,0 +1,21 @@
+{
+    "name": "ishakuta/spryker-ps-metrics",
+    "type": "library",
+    "description": "Import and Publish & Synchronize metrics for Spryker projects: OpenTelemetry-hook instrumentation plus the campaign runner and report tooling",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.3",
+        "spryker/data-import": "^1.0.0",
+        "spryker/event": "^2.0.0",
+        "spryker/queue": "^1.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\Shared\\PublishAndSynchronizeMetrics\\": "src/Spryker/Shared/PublishAndSynchronizeMetrics/"
+        },
+        "files": [
+            "_register.php"
+        ]
+    },
+    "minimum-stability": "dev"
+}

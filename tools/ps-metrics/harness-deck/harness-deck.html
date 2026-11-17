@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>P&amp;S measurement harness</title>
+<!--
+SOL-629 measurement harness explainer. Hand-authored source of truth: edit this file, then copy it to the
+reports folder under a new version name (reports are immutable). Look and navigation are the same as the
+decks from tools/ps-metrics/render-deck.py, so the deck-film kit reads both: ?slide=N opens slide N,
+?shot=1 hides the navigation, the visible slide has the classes "slide on", each slide has one h1 and
+one aside.notes with the sources of its claims.
+-->
+<style>
+:root{--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--page:#eeeeea;--slide:#ffffff;
+--s1:#2a78d6;--s1l:#e6f0fc;--crit:#d03b3b;--ok:#1f8a4c;--okl:#e4f4ea;--warn:#fab219;--warnl:#fff1d6;--card:#f7f7f4;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--page);color:var(--ink);
+font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden}
+#deck{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--slide);padding:56px 72px 0;display:none;flex-direction:column;
+overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.slide.on{display:flex}
+.slide h1{font-size:46px;line-height:1.12;font-weight:680;margin:0 0 6px;letter-spacing:-.01em;max-width:1400px}
+.sub{font-size:22px;color:var(--ink2);margin:4px 0 0;max-width:1350px;line-height:1.35}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:12px 0}
+.foot{height:52px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:15px;
+border-top:1px solid var(--grid);margin-top:10px;flex:none}
+svg.viz{display:block;max-width:100%;height:auto;overflow:visible}
+svg.viz text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.hero .eyebrow{font-size:18px;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.steps.four{grid-template-columns:repeat(4,1fr)}
+.step{background:var(--card);border-radius:16px;padding:24px 24px 26px;border-top:6px solid var(--s1)}
+.step .num{font-size:48px;font-weight:700;color:var(--s1);line-height:1}
+.step .st{font-size:27px;font-weight:650;margin-top:12px;line-height:1.2}
+.step .sd{font-size:19px;color:var(--ink2);margin-top:10px;line-height:1.4;overflow-wrap:anywhere}
+.step.green{border-top-color:var(--ok)}.step.green .num{color:var(--ok)}
+.step.amber{border-top-color:var(--warn)}.step.amber .num{color:#b57a00}
+.step.red{border-top-color:var(--crit)}.step.red .num{color:var(--crit)}
+table.t{border-collapse:collapse;width:100%;font-size:19px;line-height:1.3}
+table.t th{text-align:left;font-weight:650;color:var(--ink2);background:#f2f2ee;padding:9px 14px;font-size:16px;
+text-transform:uppercase;letter-spacing:.04em}
+table.t td{padding:9px 14px;border-bottom:1px solid var(--grid);vertical-align:top}
+table.t td:first-child{white-space:nowrap}
+table.t.tight td{padding:7px 14px}
+code,.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.92em}
+td code{background:#f2f2ee;border-radius:5px;padding:1px 6px}
+pre.code{margin:0;background:var(--card);border:1px solid rgba(11,11,11,.08);border-radius:14px;padding:18px 22px;
+font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:19px;line-height:1.5;white-space:pre;overflow:hidden}
+pre.code .c{color:var(--muted)}
+pre.code .k{color:var(--s1);font-weight:600}
+pre.code .g{color:var(--ok);font-weight:600}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.cols.wide-left{grid-template-columns:1.25fr 1fr}
+.minihead{font-size:18px;color:var(--ink2);margin:0 0 10px;font-weight:650;text-transform:uppercase;letter-spacing:.05em}
+ul.pts{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+ul.pts li{font-size:23px;line-height:1.35;padding-left:30px;position:relative}
+ul.pts li::before{content:'';position:absolute;left:4px;top:12px;width:12px;height:12px;border-radius:50%;background:var(--s1)}
+ul.pts.small li{font-size:20px}
+ul.pts li.warn::before{background:var(--warn)}
+ul.pts li.bad::before{background:var(--crit)}
+ul.pts li.good::before{background:var(--ok)}
+.callouts{display:flex;gap:56px;margin:4px 0 0}
+.co .v{font-size:34px;font-weight:680;line-height:1.1;font-variant-numeric:tabular-nums}
+.co .l{font-size:17px;color:var(--ink2);margin-top:2px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.tl{background:var(--card);border:1px solid rgba(11,11,11,.08);border-radius:14px;padding:18px 20px}
+.tlv{font-size:40px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums;color:var(--s1)}
+.tll{font-size:18px;color:var(--ink2);margin-top:4px;line-height:1.3}
+.box{border-radius:14px;padding:16px 20px;font-size:20px;line-height:1.4}
+.box.warn{background:var(--warnl)}
+.box.ok{background:var(--okl)}
+.box.info{background:var(--s1l)}
+.tag{display:inline-block;font-size:14px;font-weight:650;text-transform:uppercase;letter-spacing:.05em;border-radius:999px;
+padding:2px 10px;margin-left:8px;vertical-align:2px;background:var(--warnl);color:#8a5a00}
+aside.notes{display:none}
+#nav{position:fixed;right:16px;bottom:56px;display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink2);z-index:5}
+#nav button{font:inherit;border:1px solid rgba(11,11,11,.15);background:#fff;border-radius:8px;padding:4px 12px;cursor:pointer}
+body.shot #nav{display:none}
+#counter{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@page{size:1600px 900px;margin:0}
+@media print{
+ html,body{overflow:visible;height:auto;background:#fff}
+ #deck{position:static;transform:none!important;width:1600px;height:auto}
+ .slide{display:flex!important;position:relative;width:1600px;height:900px;box-shadow:none;break-after:page;page-break-after:always}
+ #nav{display:none}
+}
+</style></head><body><div id='deck'>
+
+<!-- 1 -->
+<section class='slide' data-name='title'><div class='hero' style='margin:0 0 10px'><div class='eyebrow'>SOL-629 &middot; how the measurement harness works</div></div><h1>The SOL-629 harness measures import and P&amp;S with no change to core code.</h1>
+<div class='body'>
+<svg class='viz' viewBox='0 0 1456 380' width='1456' height='380' role='img' aria-label='the pipeline and where the harness records'>
+<defs><marker id='ar1' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='8' markerHeight='8' orient='auto'><path d='M0,0 L10,5 L0,10z' fill='#52514e'/></marker></defs>
+<g font-size='24' text-anchor='middle'>
+<rect x='0' y='150' width='240' height='110' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'><title>Data import</title></rect>
+<text x='120' y='198' font-weight='650'>Data import</text><text x='120' y='230' font-size='18' fill='#52514e'>CSV rows into tables</text>
+<rect x='304' y='150' width='240' height='110' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'><title>Publish events</title></rect>
+<text x='424' y='198' font-weight='650'>Publish events</text><text x='424' y='230' font-size='18' fill='#52514e'>"this row changed"</text>
+<rect x='608' y='150' width='240' height='110' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'><title>Queue messages</title></rect>
+<text x='728' y='198' font-weight='650'>Queue messages</text><text x='728' y='230' font-size='18' fill='#52514e'>work items in RabbitMQ</text>
+<rect x='912' y='150' width='240' height='110' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'><title>Workers</title></rect>
+<text x='1032' y='198' font-weight='650'>Workers</text><text x='1032' y='230' font-size='18' fill='#52514e'>PHP processes, in batches</text>
+<rect x='1216' y='150' width='240' height='110' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'><title>Storage and search</title></rect>
+<text x='1336' y='198' font-weight='650'>Storage + search</text><text x='1336' y='230' font-size='18' fill='#52514e'>what the shop reads</text>
+</g>
+<g stroke='#52514e' stroke-width='2.5' marker-end='url(#ar1)'>
+<line x1='242' y1='205' x2='300' y2='205'/><line x1='546' y1='205' x2='604' y2='205'/><line x1='850' y1='205' x2='908' y2='205'/><line x1='1154' y1='205' x2='1212' y2='205'/>
+</g>
+<rect x='0' y='20' width='1456' height='64' rx='14' fill='#fff1d6'/>
+<text x='24' y='61' font-size='23' font-weight='650'>Module hooks record every step</text>
+<text x='420' y='61' font-size='20' fill='#52514e'>time, CPU, memory, queries, storage and search calls, message bytes</text>
+<g stroke='#fab219' stroke-width='3' stroke-dasharray='6 6'>
+<line x1='120' y1='86' x2='120' y2='148'/><line x1='424' y1='86' x2='424' y2='148'/><line x1='728' y1='86' x2='728' y2='148'/><line x1='1032' y1='86' x2='1032' y2='148'/>
+</g>
+<rect x='0' y='300' width='1456' height='64' rx='14' fill='#e4f4ea'/>
+<text x='24' y='341' font-size='23' font-weight='650'>Samplers watch from outside</text>
+<text x='420' y='341' font-size='20' fill='#52514e'>queue depth, key and document counts, container CPU and memory, once per second</text>
+<g stroke='#1f8a4c' stroke-width='3' stroke-dasharray='6 6'>
+<line x1='728' y1='262' x2='728' y2='298'/><line x1='1336' y1='262' x2='1336' y2='298'/><line x1='1032' y1='262' x2='1032' y2='298'/>
+</g>
+</svg>
+</div>
+<div class='callouts'><div class='co'><div class='v'>0 lines</div><div class='l'>of core code changed</div></div>
+<div class='co'><div class='v'>4 record files</div><div class='l'>one JSON object per line</div></div>
+<div class='co'><div class='v'>1 command</div><div class='l'>runs a full measured campaign</div></div></div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Terms used in this deck. Publish event: a note that a database row changed and the shop data must follow. Queue message: one unit of work in RabbitMQ. Worker: a PHP process that takes a batch (chunk) of messages from one queue and processes it. Storage: the key-value store (Valkey or Redis) the shop reads. Search: OpenSearch. Drain: the time until all queues are empty. Sources: tools/ps-metrics/README.md:1-30; src/Spryker/PublishAndSynchronizeMetrics/_register.php:19-43 (all hooks are registered from outside core); campaign layout README.md:204-237.</aside>
+</section>
+
+<!-- 2 -->
+<section class='slide' data-name='parts'><h1>Three parts: a module records, scripts run, renderers report.</h1>
+<div class='body'>
+<div class='steps'>
+<div class='step'><div class='num'>1</div><div class='st'>Module</div><div class='sd'><code>src/Spryker/PublishAndSynchronizeMetrics</code><br>PHP, about 20 classes. Hooks into core methods and writes records. Off by default.</div></div>
+<div class='step green'><div class='num'>2</div><div class='st'>Runner and samplers</div><div class='sd'><code>tools/ps-metrics/*.sh, *-sampler.py</code><br>Run import, publish and sync in a fixed order. Sample the broker, the stores and the containers. Collect one bundle per run.</div></div>
+<div class='step amber'><div class='num'>3</div><div class='st'>Model and renderers</div><div class='sd'><code>capacity-model.py, render-*.py</code><br>Turn bundles into a capacity model, a report, a deck and a sweep report. Never need the environment.</div></div>
+</div>
+<div style='height:34px'></div>
+<div class='box info'>Collection and reporting are separate. A run writes raw records once. A report can be rendered again at any time from the same records, and a rendered page is never overwritten.</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Module file list: src/Spryker/PublishAndSynchronizeMetrics/src/Spryker/Shared/PublishAndSynchronizeMetrics (Instrumentation and Metrics folders, 26 PHP files including interfaces). Off by default: _register.php:27-29. Tools: tools/ps-metrics (run-baseline.sh, run-campaign.sh, queue-sampler.sh, storage-sampler.py, service-sampler.py, capacity-model.py, render-campaign.py, render-deck.py, render-sweep.py, publish-report.py). Collection versus reporting split: render-report.py docstring lines 1-5. Never overwritten: README.md:163-168.</aside>
+</section>
+
+<!-- 3 -->
+<section class='slide' data-name='hook'><h1>OpenTelemetry hook() wraps core methods from the outside.</h1>
+<div class='body'>
+<svg class='viz' viewBox='0 0 1456 330' width='1456' height='330' role='img' aria-label='how a hook is installed and runs'>
+<defs><marker id='ar3' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='8' markerHeight='8' orient='auto'><path d='M0,0 L10,5 L0,10z' fill='#52514e'/></marker></defs>
+<g font-size='21' text-anchor='middle'>
+<rect x='0' y='20' width='330' height='100' rx='14' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/>
+<text x='165' y='62' font-weight='650'>composer autoload.files</text><text x='165' y='94' font-size='18' fill='#52514e'>loaded by every PHP process</text>
+<rect x='390' y='20' width='330' height='100' rx='14' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/>
+<text x='555' y='62' font-weight='650'>_register.php</text><text x='555' y='94' font-size='18' fill='#52514e'>switched on? then register</text>
+<rect x='780' y='20' width='330' height='100' rx='14' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/>
+<text x='945' y='62' font-weight='650'>hook(class, method,</text><text x='945' y='92' font-weight='650'>pre, post)</text>
+<rect x='1170' y='20' width='286' height='100' rx='14' fill='#fff1d6'/>
+<text x='1313' y='62' font-weight='650'>ext-opentelemetry</text><text x='1313' y='94' font-size='18' fill='#52514e'>PHP extension</text>
+</g>
+<g stroke='#52514e' stroke-width='2.5' marker-end='url(#ar3)'><line x1='332' y1='70' x2='386' y2='70'/><line x1='722' y1='70' x2='776' y2='70'/><line x1='1112' y1='70' x2='1166' y2='70'/></g>
+<g font-size='21' text-anchor='middle'>
+<rect x='0' y='200' width='300' height='96' rx='14' fill='#e4f4ea'/><text x='150' y='240' font-weight='650'>pre callback</text><text x='150' y='272' font-size='18' fill='#52514e'>start clock, CPU, memory</text>
+<rect x='330' y='200' width='796' height='96' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='728' y='240' font-weight='650'>Core method runs unchanged</text><text x='728' y='272' font-size='18' fill='#52514e'>for example TaskManager::run() processes one batch</text>
+<rect x='1156' y='200' width='300' height='96' rx='14' fill='#e4f4ea'/><text x='1306' y='240' font-weight='650'>post callback</text><text x='1306' y='272' font-size='18' fill='#52514e'>stop, write one record</text>
+</g>
+<text x='0' y='182' font-size='18' fill='#898781'>AT RUN TIME</text>
+</svg>
+<div style='height:22px'></div>
+<div class='cols'>
+<ul class='pts small'><li class='good'>No core class, plugin or config is changed. The hooks attach by class and method name.</li>
+<li class='good'>One copy of the module works in any Spryker project with the extension.</li></ul>
+<ul class='pts small'><li class='bad'>Without the extension each <code>register()</code> returns at once. No hook, no record, <b>no error</b>.</li>
+<li class='warn'>So the first check in a new project is: extension loaded and <code>hook()</code> exists.</li></ul>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>autoload.files: suite composer.json:199-201 lists src/Spryker/PublishAndSynchronizeMetrics/_register.php. _register.php:31-43 calls register() of each instrumentation. Each register() starts with: if registered or !function_exists('OpenTelemetry\Instrumentation\hook') then return (QueueTaskInstrumentation.php:59, EventListenerInstrumentation.php:51, ImportInstrumentation.php:47, MessagePublishInstrumentation.php:35, RetryInstrumentation.php:44, SyncFlushInstrumentation.php:59, BreakdownInstrumentation.php:66). hook(class:, function:, pre:, post:) call shape: BreakdownInstrumentation.php:119-128. Extension version seen in the suite cli container: PHP 8.5.12, opentelemetry 1.2.1 (local brief section 4 step C6).</aside>
+</section>
+
+<!-- 4 -->
+<section class='slide' data-name='targets'><h1>Seven hook groups cover the whole pipeline.</h1>
+<div class='body'>
+<table class='t tight'>
+<tr><th>Hook group</th><th>Core method it wraps</th><th>What it records</th></tr>
+<tr><td>Message publish</td><td><code>QueueProxy::sendMessage</code>, <code>sendMessages</code></td><td>A publish time stamp on every outgoing message</td></tr>
+<tr><td>Queue task</td><td><code>TaskManager::run</code>, <code>getChunkSize</code>; <code>processMessages</code> of the event, storage and search processors</td><td>One task run per batch</td></tr>
+<tr><td>Event listener</td><td><code>EventQueueConsumer::handleBulk</code>, <code>handleBulkItemsIndividually</code>, <code>createErrorMessage</code></td><td>Cost per listener and event</td></tr>
+<tr><td>Retry</td><td><code>EventQueueConsumer::markMessageAsRetry</code></td><td>Time stamp of the retry attempt</td></tr>
+<tr><td>Import</td><td><code>DataImporter::import</code>, <code>DataImporterCollection::import</code>, <code>DataImporterPublisher::triggerEvents</code>, <code>DataSetStepBroker::execute</code></td><td>Import runs, events emitted, messages sent</td></tr>
+<tr><td>Direct sync flush</td><td><code>InMemoryMessageSynchronizer::flushSynchronizationMessages</code></td><td>Storage and search writes done in the process</td></tr>
+<tr><td>Breakdown <span class='tag'>own switch</span></td><td><code>PDO</code>, <code>PDOStatement</code>, Redis adapters, <code>Elastica\Client::request</code>, <code>AMQPChannel</code></td><td>Calls and time: database, key-value, search, broker</td></tr>
+</table>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>MessagePublishInstrumentation.php:41-63 (QueueProxy sendMessage, sendMessages, stamp at :77). QueueTaskInstrumentation.php:36-38 (EventQueueMessageProcessorPlugin, SynchronizationStorageQueueMessageProcessorPlugin, SynchronizationSearchQueueMessageProcessorPlugin), :75-111 (TaskManager run, getChunkSize, processMessages). EventListenerInstrumentation.php:26,33,42 and :69-126. RetryInstrumentation.php:35,50-52. ImportInstrumentation.php:71-173 (also hooks QueueProxy at :147-157 to count messages sent by the import). SyncFlushInstrumentation.php:35 (Spryker\Zed\Synchronization\Business\Synchronizer\InMemoryMessageSynchronizer), :66-86 (also TaskManager::run and DataImporter::import, for the context of the flush). BreakdownInstrumentation.php HOOK_TARGETS: PDOStatement::execute; PDO exec, query, beginTransaction, commit, rollBack; VersionAgnosticPhpredisAdapter and VersionAgnosticPredisAdapter get, mget, set, setex, mset, del, eval and others; Elastica\Client::request; AMQPChannel basic_publish, publish_batch, basic_ack, basic_reject, basic_nack. Breakdown switch: _register.php:39-41.</aside>
+</section>
+
+<!-- 5 -->
+<section class='slide' data-name='switch'><h1>Nothing records until a process is switched on.</h1>
+<div class='body'>
+<div class='cols wide-left'>
+<svg class='viz' viewBox='0 0 780 560' width='780' height='560' role='img' aria-label='decision at process start'>
+<defs><marker id='ar5' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='8' markerHeight='8' orient='auto'><path d='M0,0 L10,5 L0,10z' fill='#52514e'/></marker></defs>
+<g font-size='20' text-anchor='middle'>
+<rect x='190' y='0' width='400' height='64' rx='32' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='390' y='40' font-weight='650'>A PHP process starts</text>
+<rect x='150' y='110' width='480' height='80' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='390' y='145' font-weight='650'>QUEUE_METRICS_ENABLED set</text><text x='390' y='174' font-size='17' fill='#52514e'>in the process environment?</text>
+<rect x='150' y='240' width='480' height='116' rx='14' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='390' y='284' font-weight='650'>Settings file exists and</text><text x='390' y='312' font-weight='650'>expires_at is in the future?</text><text x='390' y='342' font-size='17' fill='#52514e'>then copy its QUEUE_METRICS_* values</text>
+<rect x='0' y='440' width='360' height='96' rx='14' fill='#e4f4ea'/><text x='180' y='480' font-weight='650'>Register the hooks</text><text x='180' y='510' font-size='17' fill='#52514e'>records go to the output files</text>
+<rect x='420' y='440' width='360' height='96' rx='14' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='600' y='480' font-weight='650'>Return</text><text x='600' y='510' font-size='17' fill='#52514e'>no hook, no cost</text>
+</g>
+<g stroke='#52514e' stroke-width='2.5' fill='none' marker-end='url(#ar5)'>
+<line x1='390' y1='66' x2='390' y2='106'/>
+<line x1='390' y1='192' x2='390' y2='236'/>
+<path d='M150,150 H60 V436'/>
+<path d='M300,358 V400 H180 V436'/>
+<path d='M480,358 V400 H600 V436'/>
+</g>
+<g font-size='17' fill='#52514e' font-weight='650'><text x='70' y='140'>yes</text><text x='404' y='222'>no</text><text x='190' y='392'>yes</text><text x='560' y='392'>no</text></g>
+</svg>
+<div>
+<div class='minihead'>Switches</div>
+<table class='t tight' style='font-size:18px'>
+<tr><td><code>QUEUE_METRICS_ENABLED</code></td><td>master switch</td></tr>
+<tr><td><code>QUEUE_METRICS_BREAKDOWN</code></td><td>per-call hooks</td></tr>
+<tr><td><code>QUEUE_METRICS_IMPORT_ROWS</code></td><td>per-row histogram</td></tr>
+<tr><td><code>QUEUE_METRICS_*_OUTPUT_FILE</code></td><td>where records go</td></tr>
+<tr><td><code>QUEUE_METRICS_SETTINGS_FILE</code></td><td>settings file path</td></tr>
+</table>
+<div style='height:18px'></div>
+<div class='box warn'>The scheduler starts workers itself, so the runner cannot pass them variables. It writes the settings file, valid for 3 hours, and deletes it at start and end.</div>
+</div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>_register.php:24-29: if QUEUE_METRICS_ENABLED is not set, SettingsFile::apply(), then check again and return. SettingsFile.php:12-24 (purpose and format {"expires_at": ts, "env": {...}}), :53-77 (ignored without a future expires_at; only QUEUE_METRICS_ keys; a variable already set wins). Default path: system temp dir + queue-metrics.settings.json (SettingsFile.php:35-45). Switches: PublishAndSynchronizeMetricsConstants.php:44 ENABLED, :52 OUTPUT_FILE, :62 IMPORT_OUTPUT_FILE, :71 IMPORT_ROWS, :81 BREAKDOWN, :90 SYNC_FLUSH_OUTPUT_FILE, :101 SETTINGS_FILE. Runner: run-baseline.sh:66-83 (SCHEDULER=1, SETTINGS_TTL default 10800 s = 3 h), :143-144 (delete a left-over file at start), step 6b at :348-360 (write and check the file).</aside>
+</section>
+
+<!-- 6 -->
+<section class='slide' data-name='overhead'><h1>The cost of measuring is small next to run-to-run noise.</h1>
+<div class='body'>
+<div class='tiles'>
+<div class='tl'><div class='tll'>Per hooked call, breakdown</div><div class='tlv'>0.2-0.3 &micro;s</div><div class='tll'>pre plus post callback</div></div>
+<div class='tl'><div class='tll'>Import, 3 x 3 runs</div><div class='tlv'>+1.1 s</div><div class='tll'>11.2 s plain, 12.5 s with metrics (about 10%)</div></div>
+<div class='tl'><div class='tll'>Breakdown on top</div><div class='tlv'>0</div><div class='tll'>12.4 s: no measurable extra cost</div></div>
+<div class='tl'><div class='tll'>Run-to-run spread seen</div><div class='tlv'>2.3x</div><div class='tll'>same input, same machine</div></div>
+</div>
+<div style='height:34px'></div>
+<div class='cols'>
+<div><div class='minihead'>How the harness checks itself</div>
+<ul class='pts small'><li>Every campaign mixes instrumented runs and plain runs, interleaved: I, U, I, I, U, I.</li>
+<li>Plain runs have no metrics variable at all. The runner fails if a record file appears anyway.</li>
+<li>The report shows the overhead only when the difference is larger than the spread.</li></ul></div>
+<div><div class='minihead'>Round B, 2026-10-29</div>
+<ul class='pts small'><li class='warn'>End-to-end overhead: not distinguishable from noise.</li>
+<li class='warn'>The cause of the 10% import overhead is still open (plan A-30).</li></ul></div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Per-call cost: STREAMS.md log 2026-10-28 S8, "Overhead per hooked call (pre+post) 0.29 us inside a span, 0.19-0.23 us outside, no allocation growth". Import overhead: STREAMS.md log 2026-10-28 S5, "3x3 interleaved imports: 11.2 s none, 12.5 s metrics, 12.4 s metrics + breakdown ... cause open". 2.3x variance: README.md:206. Interleaving: run-campaign.sh:4-9. Plain runs: README.md:221-222 (INSTRUMENTED=0, runner fails if task-run file appears). Round B: report sol-629-report-2026-10-29-run-B-2f6ee41db03.html, section Instrumentation overhead: "not distinguishable from noise". A-30: plan revision 6, section 14.</aside>
+</section>
+
+<!-- 7 -->
+<section class='slide' data-name='records'><h1>Four record files, one JSON object per line.</h1>
+<div class='body'>
+<table class='t'>
+<tr><th>File</th><th>One record per</th><th>Main fields</th></tr>
+<tr><td><code>task-runs.jsonl</code></td><td>batch a worker processed (idle polls are skipped)</td><td>queue, chunk configured and received, processed, failed, ms total and process, CPU, memory, bytes, retries, breakdown</td></tr>
+<tr><td><code>listener-runs.jsonl</code></td><td>listener and event, per worker process</td><td>calls, messages, ms, ms per message histogram, errors, memory, breakdown</td></tr>
+<tr><td><code>import-runs.jsonl</code></td><td>importer, import collection, event flush, and (optional) row histogram</td><td>import type, rows expected and imported, ms, peak memory, events by name, messages sent</td></tr>
+<tr><td><code>sync-flush-runs.jsonl</code></td><td>direct-sync flush at the end of a console command</td><td>context, queue, command, ms, messages, breakdown, memory</td></tr>
+</table>
+<div style='height:26px'></div>
+<div class='box info'>Records are appended, never rewritten. A flush is joined to its task run by the process id (<code>pid</code>). Fields that were not measured are absent or <code>null</code>, never 0.</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Task run: TaskRunCollector.php:230-275 (buildRecord), idle polls skipped QueueTaskInstrumentation.php:174 and TaskRunCollector.php:285. Default file task-runs.jsonl: QueueTaskInstrumentation.php:246. Listener: ListenerMetricsCollector.php:141-152, file ListenerMetricsWriter.php:24, written at process shutdown ListenerMetricsWriter.php:31-42 with ts, queue, pid at :68. Import: ImportRunCollector.php:32-47 (kinds importer, collection, publish_emit, rows), fields :464-498, file :52. Sync flush: SyncFlushCollector.php:201-213, file SyncFlushInstrumentation.php:48. Join by pid: README.md:226-227. Null, never 0: README.md:185, 262.</aside>
+</section>
+
+<!-- 8 -->
+<section class='slide' data-name='fields'><h1>Each batch record holds time, CPU, memory, calls and bytes.</h1>
+<div class='body'>
+<div class='cols wide-left'>
+<pre class='code'>{<span class='k'>"queue"</span>: "publish.product_concrete",
+ <span class='k'>"pid"</span>: 4412,
+ <span class='k'>"chunk_configured"</span>: 500, <span class='k'>"chunk_received"</span>: 500,
+ <span class='k'>"processed"</span>: 500, <span class='k'>"failed"</span>: 0,
+ <span class='k'>"ms_total"</span>: 512.4, <span class='k'>"ms_process"</span>: 498.1,
+ <span class='k'>"cpu_user_ms"</span>: 371, <span class='k'>"cpu_sys_ms"</span>: 22,
+ <span class='k'>"peak_mb"</span>: 96, <span class='k'>"mem_peak_incr_mb"</span>: 21,
+ <span class='k'>"ms_per_msg"</span>: 0.996, <span class='k'>"fill_ratio"</span>: 1.0,
+ <span class='k'>"bytes"</span>: 191000, <span class='k'>"bytes_per_msg"</span>: 382,
+ <span class='k'>"retried"</span>: 0, <span class='k'>"exception"</span>: null,
+ <span class='k'>"breakdown"</span>: {<span class='g'>"db_calls"</span>: 512, <span class='g'>"db_ms"</span>: 141,
+   <span class='g'>"kv_calls"</span>: 0, <span class='g'>"search_calls"</span>: 0,
+   <span class='g'>"broker_calls"</span>: 3, ...}}</pre>
+<div>
+<div class='minihead'>How each value is taken</div>
+<ul class='pts small'><li><b>Time</b>: wall clock around the hooked call.</li>
+<li><b>CPU</b>: <code>getrusage()</code> at start and end, user and system.</li>
+<li><b>Memory</b>: <code>memory_reset_peak_usage()</code> at start, so the peak belongs to this batch.</li>
+<li><b>Calls</b>: one counter per database, key-value, search and broker call.</li>
+<li><b>Bytes</b>: size of the message bodies the batch received.</li></ul>
+<div style='height:16px'></div>
+<div class='box warn' style='font-size:18px'>Example values. Field names are exact.</div>
+</div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Field names: TaskRunCollector.php:233-275 (ts, queue, pid, chunk_configured, chunk_received, processed, failed, ms_total, ms_process, peak_mb, mem_start_mb, mem_peak_incr_mb, msg_per_sec, ms_per_msg, bytes, bytes_per_msg, fill_ratio, age_hist, attempt_age_hist, retried, failed_after_retry, routed_error, exception, breakdown). CPU fields cpu_user_ms, cpu_sys_ms: CpuTracker.php:29,34, getrusage at :146-150. Memory: MemoryTracker.php:14, :105-109, :185. Breakdown keys db_ms, db_calls, kv_ms, kv_calls, search_ms, search_calls, broker_ms, broker_calls: BreakdownCollector.php:51-54. The values on the slide are illustrative, not from a run. age_hist is empty under Symfony Messenger (README.md:150-151).</aside>
+</section>
+
+<!-- 9 -->
+<section class='slide' data-name='samplers'><h1>Samplers watch the broker, the stores and the containers once per second.</h1>
+<div class='body'>
+<table class='t'>
+<tr><th>Sampler</th><th>Reads</th><th>Writes</th></tr>
+<tr><td><code>queue-sampler.sh</code></td><td>RabbitMQ management API: depth, published, acked, consumers, redelivered per queue</td><td><code>queue-samples.jsonl</code></td></tr>
+<tr><td><code>storage-sampler.py</code></td><td>Key count from <code>INFO keyspace</code> over all databases, search <code>_count</code></td><td><code>storage-samples.jsonl</code></td></tr>
+<tr><td><code>service-sampler.py</code></td><td><code>docker stats</code> stream: CPU, memory, processes of database, key-value, search, broker, cli</td><td><code>service-samples.jsonl</code></td></tr>
+<tr><td><code>storage-size.sh</code></td><td>Key-value <code>used_memory</code>, index sizes at drain end</td><td><code>storage-size.json</code></td></tr>
+<tr><td><code>source-inventory.py</code></td><td>CSV rows and bytes per import action, catalog row counts before and after</td><td><code>source-inventory.json</code></td></tr>
+</table>
+<div style='height:22px'></div>
+<div class='box info'>The runner adds <code>meta.json</code>: scenario flags, sync mode (direct or queue), worker source, scale, import path, import check, and the names of the files in the bundle.</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>queue-sampler.sh:1-11 (standalone, broker only, works locally and in the cloud); record shape README.md:123-133. storage-sampler.py:1-12 (INFO keyspace summed, never DBSIZE). service-sampler.py:1-8 and README.md:257-259 (one streaming docker stats child, 1 Hz). Started in run-baseline.sh step 6 with --interval 1 --duration 7200. storage-size.json and source-inventory.json: README.md:244-249. meta.json: run-baseline.sh step 9 (collect) and README.md:251-253; sync mode README.md:194-202.</aside>
+</section>
+
+<!-- 10 -->
+<section class='slide' data-name='bundle'><h1>One run is one bundle; a campaign repeats it.</h1>
+<div class='body'>
+<div class='cols'>
+<pre class='code'><span class='c'>data/metrics/</span>
+  campaign-2026-10-29-run-B-full-republish/
+    campaign.json      <span class='c'># runs, order, status</span>
+    companions.json    <span class='c'># other scenarios</span>
+    story.md           <span class='c'># the human reading</span>
+    r01-instr/         <span class='c'># one bundle</span>
+      meta.json  stages.csv
+      task-runs.jsonl  listener-runs.jsonl
+      import-runs.jsonl  sync-flush-runs.jsonl
+      queue-samples.jsonl  storage-samples.jsonl
+      service-samples.jsonl  storage-size.json
+      source-inventory.json  import-check.json
+      stage-import.log  stage-publish.log ...
+    r02-plain/         <span class='c'># same stages, no metrics</span>
+    r03-instr/ ...</pre>
+<div>
+<ul class='pts'><li>A campaign runs N instrumented and M plain runs, interleaved, of the same input.</li>
+<li>A failed run is recorded with its reason. The campaign continues. The report lists it and leaves it out.</li>
+<li><code>stages.csv</code> has the start and end of import, publish, sync and drain.</li>
+<li>The full console output of each stage is kept. It is the only proof of an import error.</li></ul>
+</div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Layout: README.md:217-229; listing of data/metrics/campaign-2026-10-29-run-B-full-republish/r01-instr in the suite repo. companions.json joins the scenarios of one round (local brief step G). stages.csv: run-baseline.sh stage() writes name,started,ended,seconds; drain row at the drain step. Full logs kept: run-baseline.sh stage() comment "piping a stage through tail -3 once discarded the only copy of an import failure". data/metrics/ is git-ignored (README.md:298).</aside>
+</section>
+
+<!-- 11 -->
+<section class='slide' data-name='runner'><h1>run-baseline.sh runs one measurement in a fixed order.</h1>
+<div class='body'>
+<svg class='viz' viewBox='0 0 1456 300' width='1456' height='300' role='img' aria-label='runner steps'>
+<defs><marker id='ar11' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0,0 L10,5 L0,10z' fill='#52514e'/></marker></defs>
+<g font-size='19' text-anchor='middle'>
+<rect x='0' y='30' width='160' height='110' rx='12' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='80' y='76' font-weight='650'>Checks</text><text x='80' y='104' font-size='16' fill='#52514e'>broker, jobs,</text><text x='80' y='124' font-size='16' fill='#52514e'>sync mode</text>
+<rect x='186' y='30' width='160' height='110' rx='12' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='266' y='76' font-weight='650'>Wait empty</text><text x='266' y='104' font-size='16' fill='#52514e'>scheduler</text><text x='266' y='124' font-size='16' fill='#52514e'>drains first</text>
+<rect x='372' y='30' width='160' height='110' rx='12' fill='#fff1d6'/><text x='452' y='76' font-weight='650'>Switch on</text><text x='452' y='104' font-size='16' fill='#52514e'>settings file,</text><text x='452' y='124' font-size='16' fill='#52514e'>samplers start</text>
+<rect x='558' y='30' width='160' height='110' rx='12' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='638' y='76' font-weight='650'>Import</text><text x='638' y='104' font-size='16' fill='#52514e'>data:import</text>
+<rect x='744' y='30' width='160' height='110' rx='12' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='824' y='76' font-weight='650'>Publish</text><text x='824' y='104' font-size='16' fill='#52514e'>publish:trigger-</text><text x='824' y='124' font-size='16' fill='#52514e'>events</text>
+<rect x='930' y='30' width='160' height='110' rx='12' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='1010' y='76' font-weight='650'>Sync</text><text x='1010' y='104' font-size='16' fill='#52514e'>sync:data</text>
+<rect x='1116' y='30' width='160' height='110' rx='12' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='1196' y='76' font-weight='650'>Drain</text><text x='1196' y='104' font-size='16' fill='#52514e'>3 quiet polls,</text><text x='1196' y='124' font-size='16' fill='#52514e'>max 2 h</text>
+<rect x='1302' y='30' width='154' height='110' rx='12' fill='#e4f4ea'/><text x='1379' y='76' font-weight='650'>Collect</text><text x='1379' y='104' font-size='16' fill='#52514e'>control, files,</text><text x='1379' y='124' font-size='16' fill='#52514e'>meta.json</text>
+</g>
+<g stroke='#52514e' stroke-width='2' marker-end='url(#ar11)'><line x1='162' y1='85' x2='182' y2='85'/><line x1='348' y1='85' x2='368' y2='85'/><line x1='534' y1='85' x2='554' y2='85'/><line x1='720' y1='85' x2='740' y2='85'/><line x1='906' y1='85' x2='926' y2='85'/><line x1='1092' y1='85' x2='1112' y2='85'/><line x1='1278' y1='85' x2='1298' y2='85'/></g>
+<rect x='558' y='170' width='718' height='56' rx='12' fill='#e4f4ea'/>
+<text x='917' y='205' font-size='19' text-anchor='middle'>Workers from the regular scheduler consume all the time (SCHEDULER=1)</text>
+<g font-size='17' fill='#52514e'><text x='0' y='262'>IMPORT=0, PUBLISH_TRIGGER=0, SYNC_DATA=0 skip a stage. PUBLISH_RESOURCES limits publish to some resources.</text></g>
+</svg>
+<div class='cols'>
+<ul class='pts small'><li>It fails fast on a precondition, so it never produces a number that cannot be trusted.</li>
+<li>Positive control: keys and documents must be above 0 at the end.</li></ul>
+<ul class='pts small'><li class='warn'>Production rule: the scheduler is never paused, settings stay regular. A chunk size override is refused.</li>
+<li>The runner only waits for empty queues. It touches no worker and no queue.</li></ul>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>run-baseline.sh:1-9 (fail fast), steps: 0 preconditions :108-121 (container, import config, broker API, Jenkins jobs), 0b sync mode :123-140, 1-2 scheduler keeps running and wait for empty queues :145-150, 6 samplers, 6b settings file :348-360, stages import/publish/sync via stage(), 7 drain (3 quiet polls, fail after 2 hours, about 7200 polls), 8 positive control, 9 collect, Done :545. SCHEDULER=1 rule and chunk map refusal :66-81. IMPORT, PUBLISH_TRIGGER, SYNC_DATA, PUBLISH_RESOURCES :31-65.</aside>
+</section>
+
+<!-- 12 -->
+<section class='slide' data-name='scenarios'><h1>Five scenarios answer five different questions.</h1>
+<div class='body'>
+<table class='t'>
+<tr><th>Run</th><th>Scenario</th><th>Question</th><th>Flags</th></tr>
+<tr><td><b>A</b></td><td>Import update</td><td>How does import cost grow with catalog size?</td><td><code>PUBLISH_TRIGGER=0 SYNC_DATA=0</code>, scales 0.25 to 1.0</td></tr>
+<tr><td><b>B</b></td><td>Full republish</td><td>How long does a full import, publish and sync take?</td><td><code>PUBLISH_TRIGGER=1 SYNC_DATA=1</code></td></tr>
+<tr><td><b>C</b></td><td>First load</td><td>How long into an empty database?</td><td><code>RESET_DB=1</code> (destructive, dump first)</td></tr>
+<tr><td><b>D</b></td><td>P&amp;S only</td><td>What do publish and sync cost alone?</td><td><code>IMPORT=0 PUBLISH_TRIGGER=1 SYNC_DATA=0</code></td></tr>
+<tr><td><b>E</b></td><td>P&amp;S, one resource</td><td>What does each entity type cost?</td><td>D plus <code>PUBLISH_RESOURCES=&lt;resource&gt;</code></td></tr>
+</table>
+<div style='height:22px'></div>
+<div class='cols'>
+<div class='box info'><code>scale-import.py</code> builds referentially complete subsets of an import set, so run A can show if cost is linear in size.</div>
+<div class='box info'>All scenarios use <code>SCHEDULER=1</code>. Campaign IDs: <code>2026-10-29-run-B-full-republish</code>.</div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Flag sets: local brief step E (taken from the suite meta files data/metrics/campaign-2026-10-29-run-*/*/meta.json). RESET_DB and reset-db.sh: reset-db.sh:1-8 (destructive). scale-import.py: README.md:271-310 and scale-import.py:1-8. Campaign flags pass through: run-campaign.sh:20-23. Campaign ID form: memory rule campaign-naming.</aside>
+</section>
+
+<!-- 13 -->
+<section class='slide' data-name='pipeline'><h1>From records to pages: model, report, deck and sweep.</h1>
+<div class='body'>
+<svg class='viz' viewBox='0 0 1456 520' width='1456' height='520' role='img' aria-label='tool pipeline'>
+<defs><marker id='ar13' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0,0 L10,5 L0,10z' fill='#52514e'/></marker></defs>
+<g font-size='15' fill='#898781' font-weight='650' letter-spacing='1'><text x='0' y='18'>RUN</text><text x='380' y='18'>STORE</text><text x='740' y='18'>MODEL AND RENDER</text><text x='1176' y='18'>PUBLISH</text></g>
+<g font-size='19' text-anchor='middle'>
+<rect x='0' y='40' width='300' height='70' rx='12' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='150' y='82'>scale-import.py</text>
+<rect x='0' y='140' width='300' height='70' rx='12' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='150' y='182' font-weight='650'>run-campaign.sh</text>
+<rect x='0' y='240' width='300' height='70' rx='12' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='150' y='282'>run-baseline.sh + samplers</text>
+<rect x='380' y='140' width='290' height='170' rx='12' fill='#fff1d6'/><text x='525' y='196' font-weight='650'>data/metrics/</text><text x='525' y='226'>campaign-&lt;id&gt;/</text><text x='525' y='256' font-size='16' fill='#52514e'>bundles + story.md</text>
+<rect x='740' y='40' width='360' height='70' rx='12' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='920' y='82'>capacity-model.py &#8594; model.json</text>
+<rect x='740' y='140' width='360' height='70' rx='12' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='920' y='182'>render-campaign.py &#8594; report</text>
+<rect x='740' y='240' width='360' height='70' rx='12' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='920' y='282'>render-deck.py &#8594; deck</text>
+<rect x='1176' y='140' width='280' height='170' rx='12' fill='#e4f4ea'/><text x='1316' y='196' font-weight='650'>publish-report.py</text><text x='1316' y='226'>reports folder</text><text x='1316' y='256' font-size='16' fill='#52514e'>index.json, index.html</text>
+<rect x='0' y='400' width='300' height='70' rx='12' fill='#e6f0fc' stroke='#2a78d6' stroke-width='2'/><text x='150' y='442' font-weight='650'>batch-sweep.py</text>
+<rect x='380' y='400' width='290' height='70' rx='12' fill='#fff1d6'/><text x='525' y='442'>sweep-&lt;id&gt;/</text>
+<rect x='740' y='400' width='360' height='70' rx='12' fill='#f7f7f4' stroke='#c3c2b7' stroke-width='2'/><text x='920' y='442'>render-sweep.py &#8594; sweep report</text>
+</g>
+<g stroke='#52514e' stroke-width='2' fill='none' marker-end='url(#ar13)'>
+<line x1='150' y1='112' x2='150' y2='136'/><line x1='150' y1='212' x2='150' y2='236'/>
+<line x1='302' y1='275' x2='376' y2='240'/>
+<line x1='672' y1='190' x2='736' y2='80'/><line x1='672' y1='225' x2='736' y2='175'/><line x1='672' y1='260' x2='736' y2='275'/>
+<line x1='1102' y1='175' x2='1172' y2='210'/><line x1='1102' y1='275' x2='1172' y2='250'/>
+<line x1='920' y1='112' x2='920' y2='136'/>
+<line x1='302' y1='435' x2='376' y2='435'/><line x1='672' y1='435' x2='736' y2='435'/><path d='M1102,435 H1316 V314'/>
+</g>
+<text x='0' y='380' font-size='17' fill='#52514e'>Lab only: the sweep suspends the scheduler, runs one consumer per chunk size, and resumes it at the end.</text>
+</svg>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>capacity-model.py:1-5 (contract C9, writes model-&lt;stamp&gt;-&lt;sha&gt;.json beside the first campaign, never overwritten). render-campaign.py:1-6. render-deck.py:1-6 (one headline per slide, notes in aside.notes). batch-sweep.py:1-6 (lab measurement, suspends the scheduler and puts it back, also after a failure). render-sweep.py:1-6. publish-report.py:1-5 (reports immutable, index.json and index.html regenerated). The model also feeds the report and the deck (render-deck.py takes --model). All renderers are stdlib Python and need no environment (README.md:187).</aside>
+</section>
+
+<!-- 14 -->
+<section class='slide' data-name='local-module'><h1>A local customer project needs one folder copy and 2 composer entries.</h1>
+<div class='body'>
+<div class='cols'>
+<pre class='code' style='font-size:17px'><span class='c'># 1. copy the module</span>
+M=src/Spryker/PublishAndSynchronizeMetrics
+rsync -a suite/$M/ project/$M/
+
+<span class='c'># 2. composer.json "autoload": add 2 entries ($M as above)</span>
+<span class='k'>"psr-4"</span>: {
+  "Spryker\\Shared\\PublishAndSynchronizeMetrics\\":
+    "$M/src/Spryker/Shared/PublishAndSynchronizeMetrics/" },
+<span class='k'>"files"</span>: [ "$M/_register.php" ]
+
+<span class='c'># 3. regenerate the autoloader, check the lock</span>
+docker/sdk cli composer dump-autoload
+docker/sdk cli composer validate --no-check-publish
+
+<span class='c'># 4. check the extension and the hook function</span>
+php -r 'echo phpversion("opentelemetry"),
+  function_exists("OpenTelemetry\\Instrumentation\\hook");'</pre>
+<div>
+<ul class='pts small'><li class='good'>No dependency solve and no <code>composer.lock</code> change: <code>autoload</code> is not in the lock hash.</li>
+<li>The project needs <code>otel</code> in <code>image.php.enabled-extensions</code> of its deploy file.</li>
+<li>Live check: run one small import with <code>QUEUE_METRICS_ENABLED=1</code> and look for an <code>importer</code> record in <code>import-runs.jsonl</code>.</li>
+<li class='warn'>Do not commit it. Keep it as a local change.</li></ul>
+<div style='height:16px'></div>
+<div class='box ok'><b>Remove it:</b> delete the 2 entries, run <code>dump-autoload</code>, delete the module folder, <code>tools/ps-metrics</code> and the settings file.</div>
+</div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Source: next-session-b2b-demoshop-local.md step C, option 3 (recommended), sub-steps C1-C8. Lock hash claim: the brief says composer's content-hash covers require, repositories, extra, config.platform and similar keys, not autoload; NOT VERIFIED on a customer repo, step C5 checks it with composer validate. Effect of spryker/composer-autoload-plugin on the new entries: NOT VERIFIED (brief C4). otel extension in deploy file: b2b deploy.dev.yml:9-12 enables otel and amqp. Removal: the brief says "Revert is 2 lines and one dump-autoload"; the settings file lives in the container temp dir (SettingsFile.php:35-45).</aside>
+</section>
+
+<!-- 15 -->
+<section class='slide' data-name='local-tools'><h1>The tools run in a customer project with a few environment variables.</h1>
+<div class='body'>
+<div class='cols wide-left'>
+<div>
+<table class='t tight' style='font-size:18px'>
+<tr><th>Variable</th><th>Suite default</th><th>Set to</th></tr>
+<tr><td><code>CLI_CONTAINER</code></td><td><code>spryker_cli_1</code></td><td><code>&lt;namespace&gt;_cli_1</code></td></tr>
+<tr><td><code>SCHEDULER_CONTAINER</code></td><td><code>spryker_scheduler_1</code></td><td><code>&lt;namespace&gt;_scheduler_1</code></td></tr>
+<tr><td><code>RABBITMQ_HOST</code>, <code>_PORT</code></td><td><code>queue.spryker.local</code>, 80</td><td>from the deploy file</td></tr>
+<tr><td><code>RABBITMQ_USER</code>, <code>_PASS</code></td><td><code>spryker</code>, <code>secret</code></td><td>from the deploy file</td></tr>
+<tr><td><code>IMPORT_CONFIG</code></td><td><code>data/import/local/full_EU.yml</code></td><td>the project import set</td></tr>
+<tr><td><code>DB_NAME</code>, <code>DB_*</code></td><td><code>eu-docker</code>, <code>database</code></td><td>from the deploy file</td></tr>
+</table>
+<div style='height:16px'></div>
+<div class='box info' style='font-size:18px'>Copy <code>tools/ps-metrics</code> into the project tree. The scripts run <code>php tools/ps-metrics/sync-mode.php</code> inside the container at <code>/data</code>.</div>
+</div>
+<div>
+<div class='minihead'>Checks before the first run</div>
+<ul class='pts small'><li>Only one Spryker stack runs. Both stacks use the same host ports.</li>
+<li><code>sync-mode.php --control</code> answers direct or queue.</li>
+<li><code>service-sampler.py --list</code> shows only this project.</li>
+<li>The broker API answers.</li>
+<li>Jenkins has jobs.</li>
+<li><code>run-campaign.sh --dry-run</code> prints the plan.</li>
+<li>Self-tests of the renderers pass.</li></ul>
+</div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Source: next-session-b2b-demoshop-local.md step D (D1 copy, D2 variable table with tool line references: run-baseline.sh:15-20 and :115, reset-db.sh:17-21, storage-size.sh:23, storage-sampler.py:72, source-inventory.py:124 and :168, scale-import.py:51), D3 checks, D4 Jenkins jobs, D5 self-tests. Port clash: brief section 2.4 (3306, 5672, 16379, 9200, 80). Sampler finds containers by compose service name: service-sampler.py:6-8.</aside>
+</section>
+
+<!-- 16 -->
+<section class='slide' data-name='traps'><h1>Six traps give a confident wrong number.</h1>
+<div class='body'>
+<div class='steps'>
+<div class='step red'><div class='num'>1</div><div class='st'>Exit code 0</div><div class='sd'><code>docker/sdk cli</code> exits 0 also when the command failed. Read the output or a result file.</div></div>
+<div class='step red'><div class='num'>2</div><div class='st'>Zero keys</div><div class='sd'><code>DBSIZE</code> returns 0 on KVrocks, and <code>--scan</code> without <code>-n</code> sees only db 0. Count from <code>INFO keyspace</code>.</div></div>
+<div class='step red'><div class='num'>3</div><div class='st'>Files lag</div><div class='sd'>Files written in the container reach the macOS host late. Check inside the container or use <code>docker cp</code>.</div></div>
+<div class='step amber'><div class='num'>4</div><div class='st'>Slow broker name</div><div class='sd'>Each lookup of <code>queue.spryker.local</code> costs about 5 s on macOS. Use <code>127.0.0.1</code> with a Host header.</div></div>
+<div class='step amber'><div class='num'>5</div><div class='st'>No Jenkins jobs</div><div class='sd'>No worker starts, so the queues never drain. Run <code>scheduler:setup</code>.</div></div>
+<div class='step amber'><div class='num'>6</div><div class='st'>Old settings file</div><div class='sd'>A file left behind instruments later workers until it expires. The runner deletes it at start and end.</div></div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>1: run-baseline.sh stage() comment and local brief section 6. 2: README.md:59-71. 3: README.md:89-96 and local brief section 6. 4: found while building the sweep (2026-10-29): batch-sweep.py uses API = http://127.0.0.1:80/api with a Host header; plan revision 6, section 17. 5: run-baseline.sh:113-120. 6: run-baseline.sh:143-144 and SettingsFile.php:21-23 (TTL limits the damage). Also in the brief: a drained queue is not proof of delivery (README.md:73-74) and run-to-run variance of 2.3x.</aside>
+</section>
+
+<!-- 17 -->
+<section class='slide' data-name='cloud-image'><h1>In the cloud, the module and the extension must be in the image.</h1>
+<div class='body'>
+<div class='cols'>
+<div>
+<div class='minihead'>Build</div>
+<ul class='pts small'><li>A project branch with the module and the 2 autoload entries. A baked image cannot load a local copy.</li>
+<li><code>otel</code> in the deploy file extensions. The temporary-environment deploy file does not enable it today.</li>
+<li><code>SPRYKER_DYNAMIC_STORE_MODE</code> in the image, so the sync mode matches the local runs.</li>
+<li>An <code>arm64</code> image for the Graviton hosts.</li></ul>
+</div>
+<div>
+<div class='minihead'>Switch on</div>
+<ul class='pts small'><li>Queue workers run inside the Jenkins container, so the switch must reach that container.</li>
+<li><b>Route A</b>: write the settings file to its <code>/tmp</code> with ECS Exec. It expires. A restart loses it.</li>
+<li><b>Route B</b>: metrics variables on the task definition, then redeploy. Needs a sa-toolkit change.</li>
+<li>Write records under <code>/tmp</code>. <code>/data</code> can be read-only in a baked image.</li></ul>
+</div>
+</div>
+<div style='height:20px'></div>
+<div class='box warn'><b>Not verified:</b> Jenkins job processes get the container environment; <code>sys_get_temp_dir()</code> there; <code>/data</code> is writable; the build platform of <code>build-push.sh</code>.</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Source: next-session-b2b-demoshop-cloud.md. Branch: section 4 step 2 and Q2. otel missing in deploy.tmp-env.yml:24-28 (section 2.7). Sync mode and SPRYKER_DYNAMIC_STORE_MODE: section 2.5 and Q4. ARM c6g: sections 2.4 and 2.7. Workers in the Jenkins container: section 2.6 (job template runs the command in the Jenkins container; the Jenkins image is built on the app image). Routes A and B: section 4 step 5; spryker-env _build_env_vars has no hook for extra variables (section 2.5). /tmp and read-only /data: section 4 step 5 and section 6. Not verified items: section 8.</aside>
+</section>
+
+<!-- 18 -->
+<section class='slide' data-name='cloud-tools'><h1>The cloud needs a new runner and CloudWatch instead of docker stats.</h1>
+<div class='body'>
+<table class='t tight'>
+<tr><th>Part</th><th>Local</th><th>Cloud</th></tr>
+<tr><td>Control</td><td><code>docker/sdk</code>, <code>docker exec</code></td><td>ECS Exec, SSM tunnels</td></tr>
+<tr><td>Runner</td><td><code>run-baseline.sh</code>, <code>run-campaign.sh</code></td><td>New thin runner (<code>run-baseline-aws.sh</code>), same order and checks</td></tr>
+<tr><td>Record files</td><td><code>docker cp</code> from the cli container</td><td>From the Jenkins container: <code>tar | base64</code> over ECS Exec, or S3</td></tr>
+<tr><td>Container samples</td><td><code>service-sampler.py</code></td><td>CloudWatch: ECS, RDS, ElastiCache, OpenSearch metrics</td></tr>
+<tr><td>Broker samples</td><td><code>queue-sampler.sh</code></td><td>Same script, through the broker tunnel</td></tr>
+<tr><td>Key and document counts</td><td>in the cli container</td><td>Same commands, through tunnels</td></tr>
+<tr><td>Renderers</td><td colspan='2'>Unchanged, if the cloud bundle writes the same <code>meta.json</code> keys</td></tr>
+</table>
+<div style='height:18px'></div>
+<div class='cols'>
+<div class='box info' style='font-size:18px'><b>Ask the cloud team:</b> which environment, IAM permissions for ECS Exec, SSM and ECR, broker type, and whether a metrics variable can reach Jenkins jobs.</div>
+<div class='box warn' style='font-size:18px'><b>Effort:</b> not estimated yet. New code: the cloud runner, the CloudWatch pull, the file transfer.</div>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Source: next-session-b2b-demoshop-cloud.md section 3 (local versus cloud table), section 4 step 6 (cloud runner: wait empty, settings file, samplers on the laptop through tunnels, stages via ECS Exec, collect with tar and base64 or aws s3 cp, CloudWatch metrics list, meta.json with the same keys), Q6 (runner script name run-baseline-aws.sh), section 2.8 (permissions, tunnels, ports), section 8 (broker type in a real PaaS environment not verified). queue-sampler.sh:10-11 says it works unchanged in a cloud environment. The brief gives no effort estimate.</aside>
+</section>
+
+<!-- 19 -->
+<section class='slide' data-name='limits'><h1>The harness has six known limits.</h1>
+<div class='body'>
+<div class='cols'>
+<ul class='pts' style='gap:22px'>
+<li class='warn'><b>Message age</b> is empty under Symfony Messenger. Only the RabbitMQ adapter carries the headers back. All other values work.</li>
+<li class='warn'><b>Local is not cloud.</b> Process start and database calls are faster on a laptop. Cloud fixed costs are larger.</li>
+<li class='warn'><b>One scale.</b> Linear growth is assumed until larger data is measured (customer-size files are ready).</li>
+</ul>
+<ul class='pts' style='gap:22px'>
+<li class='warn'><b>Noise.</b> Single runs differ up to 2.3x. Only campaigns are compared.</li>
+<li class='warn'><b>Samplers need Docker.</b> Service and storage samplers use <code>docker stats</code> and <code>docker exec</code>.</li>
+<li class='warn'><b>Lab sweep.</b> The batch-size sweep pauses the scheduler. Its figures are the cost of the work alone.</li>
+</ul>
+</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Message age: README.md:150-151; b2b always uses Symfony Messenger (local brief section 3). Local versus cloud: sweep story.md, "Local machine". One scale: report run B, capacity model validity "Measured scales 1. Linearity ... assumed"; customer-size files ~/Documents/sa-toolkit/data-generator/icp-2026-10-29 (local brief section 2a). Noise: README.md:206. Docker-only samplers: service-sampler.py:1-8, storage-sampler.py:1-8. Lab sweep: batch-sweep.py:1-6.</aside>
+</section>
+
+<!-- 20 -->
+<section class='slide' data-name='close'><h1>Measure, change one thing, then measure again.</h1>
+<div class='body'>
+<div class='steps four'>
+<div class='step'><div class='num'>1</div><div class='st'>Install</div><div class='sd'>Copy the module, 2 autoload entries, check <code>hook()</code>.</div></div>
+<div class='step'><div class='num'>2</div><div class='st'>Measure</div><div class='sd'><code>run-campaign.sh</code> with the scheduler on, plain and instrumented runs.</div></div>
+<div class='step'><div class='num'>3</div><div class='st'>Read</div><div class='sd'>Report, deck and sweep report from the same records.</div></div>
+<div class='step green'><div class='num'>4</div><div class='st'>Change one thing</div><div class='sd'>One setting or one fix per campaign, then compare.</div></div>
+</div>
+<div style='height:34px'></div>
+<div class='box info'>Code: <code>src/Spryker/PublishAndSynchronizeMetrics</code> and <code>tools/ps-metrics</code> on branch <code>feature/sol-629-ps-metrics-v2</code>. How-to: <code>tools/ps-metrics/README.md</code>.</div>
+</div>
+<div class='foot'><span>SOL-629 &middot; measurement harness &middot; v1</span><span class='pg'></span></div>
+<aside class='notes'>Branch and paths: suite repo, branch feature/sol-629-ps-metrics-v2. Next steps in the plan revision 6: b2b demo shop port (A-23), customer-size data (A-27), cloud run. One change per campaign: brief Q2 "Change one variable at a time".</aside>
+</section>
+
+</div><div id='nav'><button id='prev' type='button' aria-label='previous slide'>&larr;</button><span id='counter'></span><button id='next' type='button' aria-label='next slide'>&rarr;</button></div><script>
+(function(){
+var slides=[].slice.call(document.querySelectorAll('.slide'));var n=slides.length;var deck=document.getElementById('deck');
+slides.forEach(function(s,k){s.id='s'+(k+1);s.setAttribute('data-slide',k+1);var p=s.querySelector('.pg');if(p)p.textContent=(k+1)+' / '+n;});
+var counter=document.getElementById('counter');var cur=0;
+function fromUrl(){var m=location.hash.match(/^#(\d+)$/);var q=new URLSearchParams(location.search);
+ var v=m?+m[1]:(q.get('slide')?+q.get('slide'):1);if(q.get('shot'))document.body.classList.add('shot');
+ return Math.min(Math.max(v||1,1),n)-1;}
+function show(i,push){cur=Math.min(Math.max(i,0),n-1);slides.forEach(function(s,k){s.classList.toggle('on',k===cur);});
+ counter.textContent=(cur+1)+' / '+n;if(push&&history.replaceState)history.replaceState(null,'','#'+(cur+1));}
+function fit(){var s=Math.min(window.innerWidth/1600,window.innerHeight/900);
+ deck.style.transform='translate(-50%,-50%) scale('+s+')';}
+document.addEventListener('keydown',function(e){
+ if(['ArrowRight','PageDown',' ','ArrowDown'].indexOf(e.key)>=0){show(cur+1,true);e.preventDefault();}
+ else if(['ArrowLeft','PageUp','ArrowUp'].indexOf(e.key)>=0){show(cur-1,true);e.preventDefault();}
+ else if(e.key==='Home'){show(0,true);}else if(e.key==='End'){show(n-1,true);}});
+deck.addEventListener('click',function(e){if(e.target.closest('a,button'))return;
+ show(e.clientX<window.innerWidth/3?cur-1:cur+1,true);});
+document.getElementById('prev').addEventListener('click',function(){show(cur-1,true);});
+document.getElementById('next').addEventListener('click',function(){show(cur+1,true);});
+var x0=null;document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;
+ if(Math.abs(dx)>50)show(dx<0?cur+1:cur-1,true);x0=null;});
+window.addEventListener('hashchange',function(){show(fromUrl(),false);});
+window.addEventListener('resize',fit);fit();show(fromUrl(),false);})();
+</script></body></html>

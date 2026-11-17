@@ -1,0 +1,21 @@
+namespace: SprykerTest\Shared\PublishAndSynchronizeMetrics
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Unit:
+        path: .
+        actor: PublishAndSynchronizeMetricsUnitTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
