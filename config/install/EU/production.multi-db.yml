@@ -15,17 +15,20 @@ stores:
     - FR
 
 sections:
-    clean-oms:
-        clear-oms-locks:
-            command: 'vendor/bin/console oms:clear-locks -vvv --no-ansi'
-            stores: true
-
+    # Migrate first. A store that is new in this deploy has an empty database, and any
+    # other database step (for example oms:clear-locks) fails on it until the schema exists.
     diff:
         propel-migration-delete:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
 
         propel-diff-and-migrate:
             command: 'vendor/bin/console propel:diff -vvv --no-ansi && (ls -al ./src/Orm/Propel/Migration_*/*.php 2>/dev/null || true) && vendor/bin/console propel:migrate -vvv --no-ansi && vendor/bin/console propel:migration:delete -vvv --no-ansi'
+            stores: true
+
+    # After the migration: a store added in this deploy has an empty database until its schema exists.
+    clean-oms:
+        clear-oms-locks:
+            command: 'vendor/bin/console oms:clear-locks -vvv --no-ansi'
             stores: true
 
     configuration:
