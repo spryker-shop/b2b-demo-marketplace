@@ -153,9 +153,16 @@ kv_keys >/dev/null || fail "key-value store not reachable"
 php -m | grep -qi opentelemetry || fail "opentelemetry extension missing, no hook can register"
 # On PaaS a worker connects only while a task runs, so an idle broker shows 0 consumers: check the process.
 pgrep -f 'queue:worker:start' >/dev/null || fail "no queue:worker:start process in this container: the scheduler workers are not running"
-php "${TOOLS_DIR}/sync-mode.php" --control > "${OUT}/sync-mode.json" 2> "${OUT}/sync-mode.err" \
-    || fail "sync-mode probe failed: $(tail -3 "${OUT}/sync-mode.err")"
-SYNC_MODE=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("sync_mode",""))' "${OUT}/sync-mode.json")
+# The probe can exit non-zero after printing a complete result (seen on PaaS, no stderr), so the
+# result is judged by its content: a known mode, and both controls answering "queue".
+php "${TOOLS_DIR}/sync-mode.php" --control > "${OUT}/sync-mode.json" 2> "${OUT}/sync-mode.err"
+SYNC_PROBE_RC=$?
+SYNC_MODE=$(python3 -c '
+import json,sys
+d=json.load(open(sys.argv[1])); c=d.get("control",{})
+ok=d.get("sync_mode") in ("direct","queue") and set(c.values())=={"queue"}
+print(d["sync_mode"] if ok else "")' "${OUT}/sync-mode.json" 2>/dev/null)
+[ -n "${SYNC_MODE}" ] || fail "sync-mode probe gave no valid result (exit ${SYNC_PROBE_RC}): $(tail -3 "${OUT}/sync-mode.err")"
 rm -f "${SETTINGS_FILE}"   # a file left by an interrupted run would instrument the next workers
 
 # --- 2. data --------------------------------------------------------------------------------------
@@ -273,7 +280,7 @@ import json
 json.dump({
  "run_id": "${RUN_ID}", "environment": "${SPRYKER_PROJECT_NAME:-sa-internal-ptest}", "data_set": "${DATA_SET}",
  "instrumented": ${INSTRUMENTED} == 1, "breakdown": ${BREAKDOWN} == 1, "import_split": ${IMPORT_SPLIT} == 1,
- "scheduler_mode": True, "sync_mode": "${SYNC_MODE}",
+ "scheduler_mode": True, "sync_mode": "${SYNC_MODE}", "sync_probe_exit_code": ${SYNC_PROBE_RC},
  "branch": "${GIT_BRANCH_NAME:-unknown}", "git_sha": "${GIT_SHA:-unknown}",
  "window_start": ${WINDOW_T0}, "window_end": ${WINDOW_T1}, "window_seconds": round(${WINDOW_T1} - ${WINDOW_T0}, 3),
  "import_exit_code": ${IMPORT_RC}, "drain_exit_code": ${DRAIN_RC},
