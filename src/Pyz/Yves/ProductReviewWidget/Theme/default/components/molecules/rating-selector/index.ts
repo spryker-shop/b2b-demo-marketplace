@@ -6,6 +6,6 @@ export default register(
         import(
             /* webpackMode: "lazy" */
             /* webpackChunkName: "rating-selector" */
-            './rating-selector'
+            'ProductReviewWidget/components/molecules/rating-selector/rating-selector'
         ),
 );
