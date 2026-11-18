@@ -19,12 +19,22 @@ use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\DisplayProd
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\DisplaySetupToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\OfferChoicesToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductDetailsToolPlugin;
+use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductKnowledgeSearchToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductRelationsToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductSetsToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ReadShopPageToolPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\AiFoundation\SspAssetCompatibleProductsToolPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\AiFoundation\SspAssetDetailsToolPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\AiFoundation\SspAssetSearchToolPlugin;
 
 class AiCommerceConfig extends PyzAiCommerceConfig
 {
+    protected const string PAGE_CONTEXT_FIELD_PLACEHOLDER = '%%%s%%';
+
+    protected const string ASSET_PAGE_PROMPT_LINE_WITH_NAME = 'The customer is viewing a page of their asset with the reference %s (shown name %s): its details page or its compatible spare parts or services. "This asset", "it" or "this machine" means this asset. Pass this reference to every tool that takes an asset reference.';
+
+    protected const string ASSET_PAGE_PROMPT_LINE = 'The customer is viewing a page of their asset with the reference %s: its details page or its compatible spare parts or services. "This asset", "it" or "this machine" means this asset. Pass this reference to every tool that takes an asset reference.';
+
     public function getStorefrontAssistantAiConfigurationName(): string
     {
         return (string)$this->getModuleConfig(AiCommerceConstants::CONFIGURATION_KEY_STOREFRONT_ASSISTANT_AI_CONFIGURATION);
@@ -47,7 +57,36 @@ class AiCommerceConfig extends PyzAiCommerceConfig
             ProductSetsToolPlugin::TOOL_NAME,
             OfferChoicesToolPlugin::TOOL_NAME,
             DisplaySetupToolPlugin::TOOL_NAME,
+            ProductKnowledgeSearchToolPlugin::TOOL_NAME,
+            SspAssetSearchToolPlugin::TOOL_NAME,
+            SspAssetDetailsToolPlugin::TOOL_NAME,
+            SspAssetCompatibleProductsToolPlugin::TOOL_NAME,
         ];
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public function getStorefrontAssistantCustomPageContextPromptLines(): array
+    {
+        return [
+            AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_TYPE_ASSET => [
+                sprintf(
+                    static::ASSET_PAGE_PROMPT_LINE_WITH_NAME,
+                    $this->createPageContextFieldPlaceholder(AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_CONTEXT_FIELD_ASSET_REFERENCE),
+                    $this->createPageContextFieldPlaceholder(AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_CONTEXT_FIELD_ASSET_NAME),
+                ),
+                sprintf(
+                    static::ASSET_PAGE_PROMPT_LINE,
+                    $this->createPageContextFieldPlaceholder(AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_CONTEXT_FIELD_ASSET_REFERENCE),
+                ),
+            ],
+        ];
+    }
+
+    protected function createPageContextFieldPlaceholder(string $fieldName): string
+    {
+        return sprintf(static::PAGE_CONTEXT_FIELD_PLACEHOLDER, $fieldName);
     }
 
     /**

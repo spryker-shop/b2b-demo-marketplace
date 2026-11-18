@@ -95,6 +95,11 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'schedule' => '30 2 * * *',
                 'priority' => 200,
             ],
+            'knowledge-document-status-refresh' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console knowledge-document:status:refresh',
+                'schedule' => '*/5 * * * *',
+                'priority' => 150,
+            ],
             'event-trigger-timeout' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console event:trigger:timeout',
                 'schedule' => '*/5 * * * *',

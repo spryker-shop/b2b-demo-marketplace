@@ -21,6 +21,9 @@ use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\DiscountManagementA
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\FormFillAgentPlugin;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\GeneralAgentPlugin;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\OrderManagementAgentPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\KnowledgeDocument\ProductAttachmentKnowledgeDocumentSourcePlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\KnowledgeStore\BedrockKnowledgeBaseKnowledgeStorePlugin;
+use SprykerFeature\Zed\AiCommerce\Dependency\KnowledgeStore\KnowledgeStorePluginInterface;
 
 class AiCommerceDependencyProvider extends SprykerFeatureAiCommerceDependencyProvider
 {
@@ -152,6 +155,21 @@ class AiCommerceDependencyProvider extends SprykerFeatureAiCommerceDependencyPro
             new FormFillAgentPlugin(),
             new PlaceOrderAgentPlugin(),
         ];
+    }
+
+    /**
+     * @return list<\SprykerFeature\Zed\AiCommerce\Dependency\KnowledgeDocument\KnowledgeDocumentSourcePluginInterface>
+     */
+    protected function getKnowledgeDocumentSourcePlugins(): array
+    {
+        return [
+            new ProductAttachmentKnowledgeDocumentSourcePlugin(),
+        ];
+    }
+
+    protected function getKnowledgeStorePlugin(): KnowledgeStorePluginInterface
+    {
+        return new BedrockKnowledgeBaseKnowledgeStorePlugin();
     }
 
     /**

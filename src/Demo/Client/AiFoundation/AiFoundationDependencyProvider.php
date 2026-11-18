@@ -23,9 +23,13 @@ use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\DisplayProd
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\DisplaySetupToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\OfferChoicesToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductDetailsToolPlugin;
+use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductKnowledgeSearchToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductRelationsToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ProductSetsToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\ReadShopPageToolPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\AiFoundation\SspAssetCompatibleProductsToolPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\AiFoundation\SspAssetDetailsToolPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\AiFoundation\SspAssetSearchToolPlugin;
 
 class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvider
 {
@@ -46,6 +50,10 @@ class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvid
             new ProductSetsToolPlugin(),
             new OfferChoicesToolPlugin(),
             new DisplaySetupToolPlugin(),
+            new ProductKnowledgeSearchToolPlugin(),
+            new SspAssetSearchToolPlugin(),
+            new SspAssetDetailsToolPlugin(),
+            new SspAssetCompatibleProductsToolPlugin(),
         ];
     }
 

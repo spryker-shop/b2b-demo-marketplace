@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use Demo\Shared\AiCommerce\AiCommerceConstants;
 use Spryker\Shared\AiFoundation\AiFoundationConstants;
+use SprykerFeature\Shared\AiCommerce\AiCommerceConfig;
 
 $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
     AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI => [
@@ -368,3 +369,11 @@ $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
         'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_SYSTEM_PROMPT,
     ],
 ];
+
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_AWS_REGION] = getenv('SPRYKER_AI_KNOWLEDGE_BASE_AWS_REGION') ?: (getenv('AWS_REGION') ?: '');
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_ID] = getenv('SPRYKER_AI_KNOWLEDGE_BASE_ID') ?: '';
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_DATA_SOURCE_IDS] = [
+    AiCommerceConfig::KNOWLEDGE_DOCUMENT_SOURCE_TYPE_PRODUCT_ATTACHMENT => getenv('SPRYKER_AI_KNOWLEDGE_BASE_DATA_SOURCE_ID') ?: '',
+];
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_RERANKING_MODEL_TYPE] = getenv('SPRYKER_AI_KNOWLEDGE_BASE_RERANKING_MODEL_TYPE') ?: '';
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_RERANKING_MODEL_ARN] = getenv('SPRYKER_AI_KNOWLEDGE_BASE_RERANKING_MODEL_ARN') ?: '';

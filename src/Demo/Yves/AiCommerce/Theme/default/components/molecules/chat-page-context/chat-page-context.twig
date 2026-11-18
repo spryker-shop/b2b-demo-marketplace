@@ -1,0 +1,27 @@
+{% extends molecule('chat-page-context', '@SprykerFeature:AiCommerce') %}
+
+{% set assetReferenceField = constant('Demo\\Shared\\AiCommerce\\AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_CONTEXT_FIELD_ASSET_REFERENCE') %}
+{% set assetNameField = constant('Demo\\Shared\\AiCommerce\\AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_CONTEXT_FIELD_ASSET_NAME') %}
+
+{% define data = {
+    additionalRules: [
+        {
+            pageType: constant('Demo\\Shared\\AiCommerce\\AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_TYPE_ASSET'),
+            label: '%' ~ assetNameField ~ '%',
+            when: '.asset-details-title',
+            fields: {
+                (assetReferenceField): { read: 'queryParameter', parameter: 'reference', required: true },
+                (assetNameField): { read: 'text', selector: '.asset-details-title .action-bar__title', required: true },
+            },
+        },
+        {
+            pageType: constant('Demo\\Shared\\AiCommerce\\AiCommerceConstants::STOREFRONT_ASSISTANT_PAGE_TYPE_ASSET'),
+            label: '%' ~ assetNameField ~ '%',
+            when: '.js-asset-filter-name',
+            fields: {
+                (assetReferenceField): { read: 'queryParameter', parameter: 'ssp-asset-reference', required: true },
+                (assetNameField): { read: 'attribute', selector: '.js-asset-filter-name', attribute: 'data-asset-name', required: true },
+            },
+        },
+    ],
+} %}

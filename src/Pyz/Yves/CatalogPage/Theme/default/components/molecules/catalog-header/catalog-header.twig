@@ -24,7 +24,7 @@
                         } only %}
                             {% block content %}
                                 {% if data.assetName is not empty %}
-                                    <strong>
+                                    <strong class="js-asset-filter-name" data-asset-name="{{ data.assetName }}">
                                         {{ 'catalog.ssp.itemsFound' | trans( {'%num_found%': count, '%ssp_asset_name%': data.assetName}) }}
                                     </strong>
                                 {% else %}
