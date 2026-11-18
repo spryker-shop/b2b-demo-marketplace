@@ -26,5 +26,5 @@ class SecurityMerchantPortalGuiConfig extends SprykerSecurityMerchantPortalGuiCo
     /**
      * @var string
      */
-    protected const IGNORABLE_PATH_PATTERN = '^/(security-merchant-portal-gui|multi-factor-auth-merchant-portal|_profiler|stripe|security-oauth-knpu/oauth-merchant-user-initiate)';
+    protected const IGNORABLE_PATH_PATTERN = '^/(security-merchant-portal-gui|multi-factor-auth-merchant-portal|_profiler|stripe|security-oauth-knpu/oauth-merchant-user-initiate|captcha/merchant-portal-challenge$)';
 }
