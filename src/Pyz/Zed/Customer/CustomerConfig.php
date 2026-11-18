@@ -13,6 +13,8 @@ use Spryker\Zed\Customer\CustomerConfig as SprykerCustomerConfig;
 
 class CustomerConfig extends SprykerCustomerConfig
 {
+    // Trigger PHP rebuild (no asset changes).
+
     /**
      * @var bool
      */
