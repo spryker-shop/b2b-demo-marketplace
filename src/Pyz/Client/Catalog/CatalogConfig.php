@@ -24,5 +24,5 @@ class CatalogConfig extends SprykerCatalogConfig
     /**
      * @var int
      */
-    protected const PAGINATION_CATALOG_SEARCH_DEFAULT_ITEMS_PER_PAGE = 12;
+    protected const PAGINATION_CATALOG_SEARCH_DEFAULT_ITEMS_PER_PAGE = 24;
 }
