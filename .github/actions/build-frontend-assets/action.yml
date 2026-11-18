@@ -25,24 +25,33 @@ runs:
             shell: bash
             run: npm ci --no-audit --no-fund
 
-        # The same builds the pipelines ran in the container before (frontend:yves:build etc.).
+        # The frontend:* console commands write each application's build configuration
+        # (namespaces, themes) before they run the npm build, as the install recipes do.
+        # A plain `npm run <app>` skips that step and builds from src/ only.
+        -   name: Generate transfers
+            shell: bash
+            env:
+                APPLICATION_ENV: devtest
+            run: vendor/bin/console transfer:generate --quiet-meta
+
         -   name: Yves
             shell: bash
-            run: npm run yves
+            env:
+                APPLICATION_ENV: devtest
+            run: vendor/bin/console frontend:yves:build
 
-        -   name: Back Office
+        -   name: Backoffice
             shell: bash
-            run: npm run zed
+            env:
+                APPLICATION_ENV: devtest
+            run: vendor/bin/console frontend:zed:build --environment production
 
         -   name: Merchant Portal
             if: ${{ inputs.variant == 'b2b-mp' }}
             shell: bash
             env:
                 APPLICATION_ENV: devtest
-            run: |
-                mkdir -p data/logs
-                vendor/bin/console transfer:generate
-                vendor/bin/console frontend:mp:build
+            run: vendor/bin/console frontend:mp:build
 
         -   name: Save frontend assets
             uses: actions/cache/save@v4
