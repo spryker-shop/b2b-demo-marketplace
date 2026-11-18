@@ -9,13 +9,16 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\CompanyUser;
 
+use Spryker\Zed\Company\Communication\Plugin\CompanyUser\CompanyExistsCompanyUserSavePreCheckPlugin;
 use Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser\AssignDefaultBusinessUnitToCompanyUserPlugin;
 use Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser\CheckCompanyUserUniquenessCompanyUserSavePreCheckPlugin;
+use Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser\CompanyBusinessUnitBelongsToCompanyCompanyUserSavePreCheckPlugin;
 use Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser\CompanyBusinessUnitHydratePlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser\AssignDefaultCompanyUserRolePlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser\AssignRolesCompanyUserPostCreatePlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser\AssignRolesCompanyUserPostSavePlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser\CompanyRoleCollectionHydratePlugin;
+use Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser\CompanyRolesBelongToCompanyCompanyUserSavePreCheckPlugin;
 use Spryker\Zed\CompanyUser\CompanyUserDependencyProvider as SprykerCompanyUserDependencyProvider;
 use Spryker\Zed\Customer\Communication\Plugin\CompanyUser\CustomerInvalidationCompanyUserPostUpdatePlugin;
 use Spryker\Zed\MerchantRelationRequest\Communication\Plugin\CompanyUser\MerchantRelationRequestCompanyUserPreDeletePlugin;
@@ -90,6 +93,9 @@ class CompanyUserDependencyProvider extends SprykerCompanyUserDependencyProvider
     {
         return [
             new CheckCompanyUserUniquenessCompanyUserSavePreCheckPlugin(),
+            new CompanyExistsCompanyUserSavePreCheckPlugin(),
+            new CompanyBusinessUnitBelongsToCompanyCompanyUserSavePreCheckPlugin(),
+            new CompanyRolesBelongToCompanyCompanyUserSavePreCheckPlugin(),
         ];
     }
 

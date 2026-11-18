@@ -17,4 +17,9 @@ class OmsConfig extends SprykerOmsConfig
     {
         return 'oms.state.';
     }
+
+    public function isDeferredNewOrderItemProcessingEnabled(): bool
+    {
+        return true;
+    }
 }

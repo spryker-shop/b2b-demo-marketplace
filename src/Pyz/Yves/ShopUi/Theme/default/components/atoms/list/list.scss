@@ -1,8 +1,13 @@
 @include shop-ui-list {
     line-height: 1.25;
 
+    &--error,
     &--alert {
         color: var(--text-state-error);
+    }
+
+    &--error {
+        @include typography(label-sm);
     }
 
     &--checkout {

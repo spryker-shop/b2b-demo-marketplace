@@ -52,6 +52,17 @@ sections:
         provider-processor-glue-storefront:
             command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
 
+        # api:generate's own boot compiles each container before the generated classes exist, and
+        # with debug=false nothing recompiles it (see the ApiPlatform README for the full contract).
+        cache-glue-api-clear:
+            command: 'vendor/bin/glue cache:clear'
+
+        cache-storefront-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
+
+        cache-backend-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
+
         configuration-sync:
             command: 'vendor/bin/console configuration:sync'
 
@@ -90,6 +101,9 @@ sections:
 
         init-database:
             command: 'vendor/bin/console setup:init-db'
+
+        captcha-altcha-hmac-secret-generate:
+            command: 'vendor/bin/console captcha-altcha:hmac-secret:generate'
 
         import-demodata:
             command: 'vendor/bin/console data:import --config=data/import/common/minimal.yml'

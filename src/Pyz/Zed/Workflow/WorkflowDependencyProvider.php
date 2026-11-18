@@ -13,6 +13,9 @@ use Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine\CompanyCreateState
 use Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine\CompanyHasCompanyUserInCustomerGroupConditionPlugin;
 use Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine\CompanyIsBusinessVerifiedConditionPlugin;
 use Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine\CompanyMarkActiveAndApprovedCommandPlugin;
+use Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine\MerchantCreateStateMachineProcessTriggerPlugin;
+use Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine\MerchantProductCreateStateMachineProcessTriggerPlugin;
+use Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine\MerchantRelationshipCreateStateMachineProcessTriggerPlugin;
 use Spryker\Zed\Workflow\WorkflowDependencyProvider as SprykerWorkflowDependencyProvider;
 
 class WorkflowDependencyProvider extends SprykerWorkflowDependencyProvider
@@ -45,6 +48,9 @@ class WorkflowDependencyProvider extends SprykerWorkflowDependencyProvider
     {
         return [
             new CompanyCreateStateMachineProcessTriggerPlugin(),
+            new MerchantCreateStateMachineProcessTriggerPlugin(),
+            new MerchantRelationshipCreateStateMachineProcessTriggerPlugin(),
+            new MerchantProductCreateStateMachineProcessTriggerPlugin(),
         ];
     }
 }

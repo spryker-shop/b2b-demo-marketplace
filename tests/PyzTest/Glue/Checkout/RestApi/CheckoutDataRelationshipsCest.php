@@ -24,6 +24,7 @@ use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
  * @group RestApi
  * @group CheckoutDataRelationshipsCest
  * Add your own group annotations below this line
+ * @group EndToEnd
  */
 class CheckoutDataRelationshipsCest
 {
@@ -129,13 +130,13 @@ class CheckoutDataRelationshipsCest
             ->whenI()
             ->seeIncludesContainsResourceByTypeAndId(
                 ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS,
-                $shipmentMethodTransfer->getIdShipmentMethod(),
+                (string)$shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             );
         $I->amSure('The included shipment-methods resource contains correct attributes')
             ->whenI()
             ->seeIncludedResourceByTypeAndIdContainsAttributes(
                 ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS,
-                $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
+                (string)$shipmentMethodTransfer->getIdShipmentMethodOrFail(),
                 [
                     'name' => $shipmentMethodTransfer->getNameOrFail(),
                     'carrierName' => $shipmentMethodTransfer->getCarrierNameOrFail(),

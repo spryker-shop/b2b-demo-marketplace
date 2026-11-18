@@ -9,14 +9,13 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ChartGui;
 
-use Pyz\Zed\ExampleChart\Plugin\ExampleChart;
 use Spryker\Zed\ChartGui\ChartGuiDependencyProvider as SprykerChartGuiDependencyProvider;
 use Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\BarChartTwigPlugin;
 use Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartTwigPlugin;
 use Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\LineChartTwigPlugin;
 use Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\PieChartTwigPlugin;
-use Spryker\Zed\SalesStatistics\Communication\Plugin\CountOrderChartPlugin;
-use Spryker\Zed\SalesStatistics\Communication\Plugin\StatusOrderChartPlugin;
+use Spryker\Zed\SalesStatistics\Communication\Plugin\DailyOrderCountChartPlugin;
+use Spryker\Zed\SalesStatistics\Communication\Plugin\OrderItemCountByStatusChartPlugin;
 use Spryker\Zed\SalesStatistics\Communication\Plugin\TopOrdersChartPlugin;
 
 class ChartGuiDependencyProvider extends SprykerChartGuiDependencyProvider
@@ -27,10 +26,9 @@ class ChartGuiDependencyProvider extends SprykerChartGuiDependencyProvider
     protected function getChartPlugins(): array
     {
         return [
-            new CountOrderChartPlugin(),
-            new StatusOrderChartPlugin(),
+            new DailyOrderCountChartPlugin(),
+            new OrderItemCountByStatusChartPlugin(),
             new TopOrdersChartPlugin(),
-            new ExampleChart(),
         ];
     }
 

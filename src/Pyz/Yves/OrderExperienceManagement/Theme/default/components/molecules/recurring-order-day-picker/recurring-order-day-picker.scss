@@ -1,0 +1,78 @@
+@mixin order-experience-management-recurring-order-day-picker($name: '.recurring-order-day-picker') {
+    #{$name} {
+        &__days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--scale-4);
+        }
+
+        &__day {
+            position: relative;
+        }
+
+        &__input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            margin: 0;
+            pointer-events: none;
+        }
+
+        &__label {
+            @include typography(label-md);
+            @include helper-effect-transition(background-color border-color color box-shadow);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: rem(80);
+            min-height: var(--scale-24);
+            padding: var(--scale-4) var(--scale-16);
+            border: 1px solid var(--input-border-default);
+            border-radius: var(--radius-md);
+            background-color: var(--input-background-default);
+            color: var(--text-primary);
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+                border-color: var(--input-border-hover);
+            }
+
+            &--error {
+                border-color: var(--input-border-error);
+            }
+        }
+
+        &__input:checked + &__label {
+            border-color: var(--border-brand);
+            background-color: var(--background-brand-primary);
+            color: var(--text-inverse);
+
+            &:hover {
+                border-color: var(--background-brand-hover);
+                background-color: var(--background-brand-hover);
+            }
+        }
+
+        &__input:focus-visible + &__label {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        &__input:focus-visible + &__label--error {
+            box-shadow: 0 0 0 3px var(--focus-ring-error);
+        }
+
+        &__input:disabled + &__label {
+            border-color: var(--input-border-disabled);
+            background-color: var(--input-background-disabled);
+            color: var(--input-text-disabled);
+            cursor: not-allowed;
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-recurring-order-day-picker;

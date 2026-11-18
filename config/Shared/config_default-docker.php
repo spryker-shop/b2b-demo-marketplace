@@ -5,7 +5,6 @@ declare(strict_types = 1);
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\Cms\CmsConstants;
@@ -22,7 +21,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -77,7 +75,7 @@ $config[ApplicationConstants::BASE_URL_SSL_ZED] = sprintf(
     $backofficePort,
 );
 $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
-    '%s:%s',
+    '%s%s',
     getenv('SPRYKER_ZED_HOST'),
     $config[ApplicationConstants::PORT_ZED],
 );
@@ -117,13 +115,6 @@ if (interface_exists(WebProfilerWidgetConstants::class)) {
     $config[WebProfilerWidgetConstants::IS_WEB_PROFILER_ENABLED] = false;
 }
 
-$config[AclConstants::ACL_USER_RULE_WHITELIST][] = [
-    'bundle' => 'wdt',
-    'controller' => '*',
-    'action' => '*',
-    'type' => 'allow',
-];
-
 $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',
 ];
@@ -132,11 +123,6 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
 ];
 
 $config[EventConstants::LOGGER_ACTIVE] = true;
-
-//Check how to generate https://oauth2.thephpleague.com/installation/
-$config[OauthConstants::PRIVATE_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_private.key';
-$config[OauthConstants::PUBLIC_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_public.key';
-$config[OauthConstants::ENCRYPTION_KEY] = 'lxZFUEsBCJ2Yb14IF2ygAHI5N4+ZAUXXaSeeJm6+twsUmIen';
 
 $config[OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER] = 'frontend';
 $config[OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET] = 'abc123';
@@ -253,9 +239,6 @@ $defaultKey = reset($connectionKeys);
 if (getenv('SPRYKER_CURRENT_REGION')) {
     $defaultKey = getenv('SPRYKER_CURRENT_REGION');
 }
-if (getenv('APPLICATION_STORE') && (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
-    $defaultKey = getenv('APPLICATION_STORE');
-}
 
 foreach ($rabbitConnections as $key => $connection) {
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key] = $defaultConnection;
@@ -299,7 +282,7 @@ $config[StorageConstants::STORAGE_KV_SOURCE] = strtolower(getenv('SPRYKER_KEY_VA
  */
 //$config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = [];
 
-$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
+$namespaceKey = getenv('SPRYKER_CURRENT_REGION');
 $config[StorageRedisConstants::STORAGE_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
@@ -360,7 +343,7 @@ $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GE
 $config[KernelConstants::DOMAIN_WHITELIST] = [];
 
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'files';
-$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = array_merge($config[FileSystemConstants::FILESYSTEM_SERVICE] ?? [], [
     'files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/',
@@ -381,4 +364,4 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/ssp-model-image',
     ],
-];
+]);

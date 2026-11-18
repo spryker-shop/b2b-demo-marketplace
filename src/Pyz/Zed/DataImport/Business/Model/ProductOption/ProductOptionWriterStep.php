@@ -20,10 +20,10 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Pyz\Zed\DataImport\Business\Model\Product\ProductLocalizedAttributesExtractorStep;
 use Pyz\Zed\DataImport\Business\Model\Tax\TaxSetNameToIdTaxSetStep;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 
 /**
@@ -158,6 +158,6 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
             ->setValue($translation)
             ->save();
 
-        $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryTranslationEntity->getFkGlossaryKey());
+        $this->addPublishEvents(GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE, $glossaryTranslationEntity->getFkGlossaryKey());
     }
 }

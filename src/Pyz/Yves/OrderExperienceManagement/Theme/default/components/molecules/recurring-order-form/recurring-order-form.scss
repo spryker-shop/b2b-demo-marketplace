@@ -6,17 +6,6 @@
             @include order-experience-management-recurring-order-form-base-hook;
         }
 
-        &__tooltip-trigger {
-            position: relative;
-
-            &:hover,
-            &:focus-within {
-                #{$name}__tooltip-message {
-                    @include helper-visibility-visible;
-                }
-            }
-        }
-
         @content;
     }
 }

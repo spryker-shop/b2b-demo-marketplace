@@ -29,6 +29,10 @@ sections:
         configuration-sync:
             command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
 
+    init-configuration:
+        captcha-altcha-hmac-secret-generate:
+            command: 'vendor/bin/console captcha-altcha:hmac-secret:generate -vvv --no-ansi'
+
     scheduler-start:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
@@ -40,7 +44,6 @@ sections:
     acl:
         acl-entity-synchronize:
             command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'
-            stores: true
 
     api-router-cache-warmup:
         storefront:

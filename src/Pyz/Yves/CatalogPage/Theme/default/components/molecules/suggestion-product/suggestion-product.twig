@@ -24,7 +24,7 @@
                 {% endif %}
             </span>
 
-            {% if can('SeePricePermissionPlugin') %}
+            {% if can('SeePricePermissionPlugin') and data.price is not empty %}
                 {% include molecule('money-price') with {
                     class: config.name ~ '__price',
                     modifiers: ['sm'],

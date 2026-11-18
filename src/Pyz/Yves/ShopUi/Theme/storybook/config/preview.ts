@@ -25,7 +25,9 @@ fetch('/icons/sprite.svg')
         div.style.display = 'none';
         document.body.prepend(div);
     })
-    .catch(() => {});
+    .catch(() => {
+        // Stories still render without the sprite; only the icons are missing.
+    });
 
 // --- 1. Vendor components FIRST (base styles + web component registration) ---
 const vendorComponents = require.context(
@@ -36,7 +38,7 @@ const vendorComponents = require.context(
 vendorComponents.keys().forEach((key) => {
     try {
         vendorComponents(key);
-    } catch (e) {
+    } catch {
         /* swallow — vendor components without runnable index are expected */
     }
 });
@@ -72,7 +74,7 @@ widgetComponents.keys().forEach((key: string) => {
     }
     try {
         widgetComponents(key);
-    } catch (e) {
+    } catch {
         /* swallow — many widget-module index.ts files only register web components */
     }
 });

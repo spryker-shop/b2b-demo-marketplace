@@ -13,6 +13,7 @@ use Spryker\Zed\DiscountMerchantSalesOrder\Communication\Plugin\MerchantSalesOrd
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantOms\Communication\Plugin\MerchantSalesOrder\EventTriggerMerchantOrderPostCreatePlugin;
 use Spryker\Zed\MerchantOms\Communication\Plugin\MerchantSalesOrder\MerchantOmsMerchantOrderExpanderPlugin;
+use Spryker\Zed\MerchantSalesInvoice\Communication\Plugin\MerchantSalesOrder\OrderInvoicesMerchantOrderExpanderPlugin;
 use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider as SprykerMerchantSalesOrderDependencyProvider;
 use Spryker\Zed\MerchantSalesOrderSalesMerchantCommission\Communication\Plugin\MerchantSalesOrder\UpdateMerchantCommissionTotalsMerchantOrderPostCreatePlugin;
 use Spryker\Zed\SalesDiscountConnector\Communication\Plugin\MerchantSalesOrder\CopyOrderContextMerchantOrderTotalsPreRecalculatePlugin;
@@ -46,6 +47,7 @@ class MerchantSalesOrderDependencyProvider extends SprykerMerchantSalesOrderDepe
     {
         return [
         new MerchantOmsMerchantOrderExpanderPlugin(),
+        new OrderInvoicesMerchantOrderExpanderPlugin(),
         ];
     }
 

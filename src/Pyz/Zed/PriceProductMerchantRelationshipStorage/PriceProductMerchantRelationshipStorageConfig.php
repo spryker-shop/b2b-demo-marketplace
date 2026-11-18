@@ -42,4 +42,9 @@ class PriceProductMerchantRelationshipStorageConfig extends SprykerPriceProductM
     {
         return SprykerSharedPriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_QUEUE;
     }
+
+    public function getMerchantRelationBusinessUnitSynchronizationPoolName(): ?string
+    {
+        return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
+    }
 }

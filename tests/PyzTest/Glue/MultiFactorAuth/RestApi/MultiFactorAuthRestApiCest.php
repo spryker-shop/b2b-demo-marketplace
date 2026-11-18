@@ -23,6 +23,7 @@ use Spryker\Glue\MultiFactorAuth\MultiFactorAuthConfig;
  * @group RestApi
  * @group MultiFactorAuthRestApiCest
  * Add your own group annotations below this line
+ * @group EndToEnd
  */
 class MultiFactorAuthRestApiCest
 {

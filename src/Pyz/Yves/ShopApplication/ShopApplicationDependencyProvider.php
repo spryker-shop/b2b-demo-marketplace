@@ -23,6 +23,7 @@ use Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin;
 use Spryker\Yves\MultiFactorAuth\Widget\MultiFactorAuthHandlerWidget;
 use Spryker\Yves\MultiFactorAuth\Widget\SetMultiFactorAuthMenuItemWidget;
 use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
+use Spryker\Yves\SalesInvoice\Widget\OrderInvoicesWidget;
 use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
 use Spryker\Yves\SecurityOauthKnpu\Plugin\Application\OauthKnpuApplicationPlugin;
 use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
@@ -457,6 +458,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             CostCenterMenuItemWidget::class, #PurchasingControlFeature
             CostCenterBudgetFilterWidget::class, #PurchasingControlFeature
             CostCenterOrderDetailWidget::class, #PurchasingControlFeature
+            OrderInvoicesWidget::class,
             PunchoutCartWidget::class,
             OauthAuthenticationLinksWidget::class,
             QuoteRequestCostCenterSelectorWidget::class,

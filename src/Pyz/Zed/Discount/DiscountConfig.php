@@ -17,4 +17,9 @@ class DiscountConfig extends SprykerDiscountConfig
      * @var bool
      */
     protected const IS_MONEY_COLLECTION_FORM_TYPE_PLUGIN_ENABLED = true;
+
+    public function isDiscountUuidEnabled(): bool
+    {
+        return true;
+    }
 }

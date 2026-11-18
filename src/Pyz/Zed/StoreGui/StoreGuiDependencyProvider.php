@@ -25,6 +25,8 @@ use Spryker\Zed\LocaleGui\Communication\Plugin\StoreGui\LocaleStoreFormExpanderP
 use Spryker\Zed\LocaleGui\Communication\Plugin\StoreGui\LocaleStoreFormTabExpanderPlugin;
 use Spryker\Zed\LocaleGui\Communication\Plugin\StoreGui\LocaleStoreFormViewExpanderPlugin;
 use Spryker\Zed\LocaleGui\Communication\Plugin\StoreGui\LocaleStoreTableExpanderPlugin;
+use Spryker\Zed\Store\Communication\Plugin\StoreGui\StoreVisibilityFormExpanderPlugin;
+use Spryker\Zed\Store\Communication\Plugin\StoreGui\StoreVisibilityTableExpanderPlugin;
 use Spryker\Zed\StoreContextGui\Communication\Plugin\StoreGui\ContextStoreFormExpanderPlugin;
 use Spryker\Zed\StoreContextGui\Communication\Plugin\StoreGui\ContextStoreFormTabExpanderPlugin;
 use Spryker\Zed\StoreGui\StoreGuiDependencyProvider as SprykerStoreGuiDependencyProvider;
@@ -41,6 +43,7 @@ class StoreGuiDependencyProvider extends SprykerStoreGuiDependencyProvider
             new CurrencyStoreFormExpanderPlugin(),
             new CountryStoreFormExpanderPlugin(),
             new ContextStoreFormExpanderPlugin(),
+            new StoreVisibilityFormExpanderPlugin(),
         ];
     }
 
@@ -91,6 +94,7 @@ class StoreGuiDependencyProvider extends SprykerStoreGuiDependencyProvider
             new LocaleStoreTableExpanderPlugin(),
             new CurrencyStoreTableExpanderPlugin(),
             new CountryStoreTableExpanderPlugin(),
+            new StoreVisibilityTableExpanderPlugin(),
         ];
     }
 }

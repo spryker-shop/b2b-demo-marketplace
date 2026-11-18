@@ -1,0 +1,38 @@
+namespace: PyzTest\Glue\ProductExperienceManagement
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    output: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    BackendApiIntegration:
+        path: BackendApi/Integration
+        actor: ProductExperienceManagementBackendApiIntegrationTester
+        modules:
+            enabled:
+                - \SprykerTest\ApiPlatform\Helper\BackendApiIntegrationHelper:
+                      environmentModule: '\PyzTest\Shared\Testify\Helper\Environment'
+                      projectNamespaces: ['Pyz']
+                - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
+                - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
+                - \PyzTest\Glue\CategoriesBackend\Helper\CategoriesBackendApiHelper
+                - \PyzTest\Glue\ProductExperienceManagement\Helper\ProductExperienceManagementBackendApiHelper
+                - \SprykerTest\ApiPlatform\Helper\BackendApiLoginHelper
+                - \SprykerTest\ApiPlatform\Helper\ApiPlatformHelper:
+                      mode: 'project'
+                      apiType: 'Backend'
+                      bootOnce: true
+                      reuseApplicationContainer: true

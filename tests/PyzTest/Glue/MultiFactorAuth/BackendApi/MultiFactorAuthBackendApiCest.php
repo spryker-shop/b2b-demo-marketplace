@@ -23,6 +23,7 @@ use Spryker\Glue\MultiFactorAuth\MultiFactorAuthConfig;
  * @group BackendApi
  * @group MultiFactorAuthBackendApiCest
  * Add your own group annotations below this line
+ * @group EndToEnd
  */
 class MultiFactorAuthBackendApiCest
 {
@@ -225,6 +226,9 @@ class MultiFactorAuthBackendApiCest
         $this->deactivateMultiFactorAuth($I);
     }
 
+    /**
+     * @skip The warehouse-user-assignments Backend API resource is not installed in this project.
+     */
     public function requestCreateWarehouseUserAssignmentsWithActivatedMultiFactorAuth(MultiFactorAuthBackendApiTester $I): void
     {
         // Arrange
@@ -249,6 +253,9 @@ class MultiFactorAuthBackendApiCest
         $this->deactivateMultiFactorAuth($I);
     }
 
+    /**
+     * @skip The warehouse-user-assignments Backend API resource is not installed in this project.
+     */
     public function requestCreateWarehouseUserAssignmentsWithActivatedMultiFactorAuthButInvalidCode(MultiFactorAuthBackendApiTester $I): void
     {
         // Arrange
@@ -273,6 +280,9 @@ class MultiFactorAuthBackendApiCest
         $this->deactivateMultiFactorAuth($I);
     }
 
+    /**
+     * @skip The warehouse-user-assignments Backend API resource is not installed in this project.
+     */
     public function requestCreateWarehouseUserAssignmentsWithActivatedMultiFactorAuthWithoutCode(MultiFactorAuthBackendApiTester $I): void
     {
         // Arrange

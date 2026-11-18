@@ -57,6 +57,7 @@ image:
         SPRYKER_YVES_HOST_US: yves.us.icp.cloud.spryker.toys
         SPRYKER_DYNAMIC_STORE_MODE: true
         SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.icp.cloud.spryker.toys
+        IS_QA_ATTRIBUTES_ENABLED: true
     php:
         enabled-extensions:
             - otel
@@ -181,7 +182,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '4.1'
+        version: '4.2'
         api:
             username: 'spryker'
             password: 'secret'
@@ -204,7 +205,7 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.516.3'
+        version: '2.568.1'
         csrf-protection-enabled: false
         endpoints:
             scheduler.icp.cloud.spryker.toys:

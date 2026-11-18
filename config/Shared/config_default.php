@@ -39,13 +39,13 @@ use Spryker\Glue\Log\Plugin\Log\GlueSecurityAuditLoggerConfigPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\IamAws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Agent\AgentConstants;
 use Spryker\Shared\AgentSecurityBlockerMerchantPortal\AgentSecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConstants;
+use Spryker\Shared\Captcha\CaptchaConstants;
 use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\Cms\CmsConstants;
@@ -196,7 +196,7 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[SecurityBlockerPageConstants::IS_STORE_ROUTING_ENABLED]
-    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = true;
 
 // >>> DEV TOOLS
 
@@ -316,94 +316,7 @@ $config[SecuritySystemUserConstants::AUTH_DEFAULT_CREDENTIALS] = [
 
 $config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv('SPRYKER_URI_SIGNER_SECRET_KEY') ?: null;
 
-// ACL: Special rules for specific users
-$config[AclConstants::ACL_DEFAULT_CREDENTIALS] = [
-    'yves_system' => [
-        'rules' => [
-            [
-                'bundle' => '*',
-                'controller' => 'gateway',
-                'action' => '*',
-                'type' => 'allow',
-            ],
-        ],
-    ],
-];
-
 // >> BACKOFFICE
-
-// ACL: Allow or disallow of urls for Zed Admin GUI for ALL users
-$config[AclConstants::ACL_DEFAULT_RULES] = [
-    [
-        'bundle' => 'security-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'multi-factor-auth',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'multi-factor-auth-merchant-portal',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'acl',
-        'controller' => 'index',
-        'action' => 'denied',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'health-check',
-        'controller' => 'index',
-        'action' => 'index',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'api',
-        'controller' => 'rest',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-merchant-portal-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'agent-security-merchant-portal-gui',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => '_profiler',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-    [
-        'bundle' => 'security-oauth-knpu',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
-// ACL: Allow or disallow of urls for Zed Admin GUI
-$config[AclConstants::ACL_USER_RULE_WHITELIST] = [
-    [
-        'bundle' => 'application',
-        'controller' => '*',
-        'action' => '*',
-        'type' => 'allow',
-    ],
-];
 
 // ----------------------------------------------------------------------------
 // ------------------------------ SERVICES ------------------------------------
@@ -443,7 +356,7 @@ $config[RedisConstants::REDIS_SSL_CA_FILE_PATH] = getenv('SPRYKER_REDIS_SSL_CA_F
 $config[RedisConstants::REDIS_KEY_PREFIX] = getenv('SPRYKER_KEY_VALUE_PREFIX') ?: '';
 
 $keyValueRegionNamespaces = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTIONS') ?: '[]', true);
-$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
+$namespaceKey = getenv('SPRYKER_CURRENT_REGION');
 $config[StorageConstants::STORAGE_KV_SOURCE] = getenv('SPRYKER_KEY_VALUE_STORE_ENGINE') ? strtolower(getenv('SPRYKER_KEY_VALUE_STORE_ENGINE')) : 'redis';
 $config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION] = true;
 $config[StorageRedisConstants::STORAGE_REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
@@ -530,6 +443,15 @@ $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE] = 7;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 600;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR] = 300;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS] = 10;
+
+// >>> CAPTCHA (login forms, ALTCHA proof-of-work)
+$config[CaptchaConstants::REDIS_PERSISTENT_CONNECTION] = true;
+$config[CaptchaConstants::REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
+$config[CaptchaConstants::REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
+$config[CaptchaConstants::REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
+$config[CaptchaConstants::REDIS_USER] = getenv('SPRYKER_KEY_VALUE_USERNAME');
+$config[CaptchaConstants::REDIS_PASSWORD] = getenv('SPRYKER_KEY_VALUE_STORE_PASSWORD');
+$config[CaptchaConstants::REDIS_DATABASE] = 7;
 
 // >>> Security Blocker Storefront Agent
 $config[SecurityBlockerStorefrontAgentConstants::AGENT_BLOCK_FOR_SECONDS] = 360;
@@ -648,9 +570,6 @@ $defaultKey = reset($connectionKeys);
 if (getenv('SPRYKER_CURRENT_REGION')) {
     $defaultKey = getenv('SPRYKER_CURRENT_REGION');
 }
-if (getenv('APPLICATION_STORE') && (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
-    $defaultKey = getenv('APPLICATION_STORE');
-}
 foreach ($rabbitConnections as $key => $connection) {
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key] = $defaultConnection;
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_CONNECTION_NAME] = $key . '-connection';
@@ -671,6 +590,13 @@ foreach ($rabbitConnections as $key => $connection) {
     $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
     $config[SymfonyMessengerConstants::QUEUE_AMQP_PROTOCOL] = getenv('SPRYKER_BROKER_PROTOCOL') ?: null;
     $config[SymfonyMessengerConstants::QUEUE_AMQP_SSL_CA_CERT_PATH] = getenv('SPRYKER_SSL_CA_CERT') ?: null;
+
+    // Symfony Scheduler connection for jobs queue
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_HOST] = $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_PORT] = $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_USERNAME] = $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_PASSWORD] = $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD];
+    $config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_AMQP_VIRTUAL_HOST] = $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST];
 }
 
 // >>> SYNCHRONIZATION
@@ -1197,5 +1123,7 @@ $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECOND
 $config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENABLE_LOGGING') ?? false;
 
 $config[ProductPageSearchConstants::PRODUCT_CONCRETE_SEARCH_IN_STORAGE_ENABLED] = true;
+
+$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = (bool)getenv('IS_QA_ATTRIBUTES_ENABLED') ?? false;
 
 require 'config_ai.php';

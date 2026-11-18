@@ -186,8 +186,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
      */
     protected function getQuoteCalculatorPluginStack(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
-        /** @var array<\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface> $pluginStack */
-        $pluginStack = [
+        return [
             new RemoveTotalsCalculatorPlugin(),
             new RemoveAllCalculatedDiscountsCalculatorPlugin(),
             new RemovePromotionItemsCalculatorPlugin(),
@@ -229,8 +228,6 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
 
             new PaymentCalculatorPlugin(),
         ];
-
-        return $pluginStack;
     }
 
     /**

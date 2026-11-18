@@ -11,6 +11,7 @@ namespace Pyz\Yves\Router;
 
 use Pyz\Yves\ExampleProductSalePage\Plugin\Router\ExampleProductSaleRouteProviderPlugin;
 use Pyz\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin;
+use Spryker\Yves\Captcha\Plugin\Router\CaptchaRouteProviderPlugin;
 use Spryker\Yves\CustomerDataChangeRequest\Plugin\Router\CustomerDataChangeRequestRouteProviderPlugin;
 use Spryker\Yves\HealthCheck\Plugin\Router\HealthCheckRouteProviderPlugin;
 use Spryker\Yves\MultiFactorAuth\Plugin\Router\Agent\MultiFactorAuthAgentRouteProviderPlugin;
@@ -23,6 +24,7 @@ use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\RouterDependencyProvider as SprykerRouterDependencyProvider;
+use Spryker\Yves\SalesInvoice\Plugin\Router\SalesInvoiceRouteProviderPlugin;
 use Spryker\Yves\SecurityOauthKnpu\Plugin\Router\SecurityOauthKnpuRouteProviderPlugin;
 use Spryker\Yves\Sitemap\Plugin\Router\SitemapRouteProviderPlugin;
 use SprykerEco\Yves\PunchoutGateway\Plugin\Router\PunchoutGatewayRouteProviderPlugin;
@@ -127,6 +129,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new NewsletterPageRouteProviderPlugin(),
             new CartPageRouteProviderPlugin(),
             new HealthCheckRouteProviderPlugin(),
+            new CaptchaRouteProviderPlugin(),
             new NewsletterWidgetRouteProviderPlugin(),
             new CatalogPageRouteProviderPlugin(),
             new CalculationPageRouteProviderPlugin(),
@@ -187,6 +190,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new ShoppingListWidgetAsyncRouteProviderPlugin(),
             new PaymentAppWidgetRouteProviderPlugin(),
             new CustomerDataChangeRequestRouteProviderPlugin(),
+            new SalesInvoiceRouteProviderPlugin(),
             new MultiFactorAuthCustomerRouteProviderPlugin(),
             new MultiFactorAuthAgentRouteProviderPlugin(),
             new SitemapRouteProviderPlugin(),

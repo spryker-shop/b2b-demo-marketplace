@@ -11,6 +11,7 @@ namespace Pyz\Yves\EventDispatcher;
 
 use Spryker\Shared\Http\Plugin\EventDispatcher\ResponseListenerEventDispatcherPlugin;
 use Spryker\Yves\Application\Communication\Plugin\EventDispatcher\HeadersSecurityEventDispatcherPlugin;
+use Spryker\Yves\Captcha\Plugin\EventDispatcher\LoginCaptchaEventDispatcherPlugin;
 use Spryker\Yves\Customer\Plugin\EventDispatcher\AnonymousIdSessionAssignEventDispatcherPlugin;
 use Spryker\Yves\EventDispatcher\EventDispatcherDependencyProvider as SprykerEventDispatcherDependencyProvider;
 use Spryker\Yves\Http\Plugin\EventDispatcher\CacheControlHeaderEventDispatcherPlugin;
@@ -26,6 +27,7 @@ use Spryker\Yves\Profiler\Plugin\EventDispatcher\ProfilerRequestEventDispatcherP
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterLocaleEventDispatcherPlugin;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin;
+use Spryker\Yves\Router\Plugin\EventDispatcher\StoreLocaleRedirectEventDispatcherPlugin;
 use Spryker\Yves\Session\Plugin\EventDispatcher\SaveSessionEventDispatcherPlugin;
 use Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin;
 use Spryker\Yves\Storage\Plugin\EventDispatcher\StorageCacheEventDispatcherPlugin;
@@ -57,6 +59,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new LastVisitCookieEventDispatcherPlugin(),
             new RouterListenerEventDispatcherPlugin(),
             new RouterSslRedirectEventDispatcherPlugin(),
+            new StoreLocaleRedirectEventDispatcherPlugin(),
             new CookieEventDispatcherPlugin(),
             new FragmentEventDispatcherPlugin(),
             new CacheControlHeaderEventDispatcherPlugin(),
@@ -68,6 +71,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new SaveSessionEventDispatcherPlugin(),
             new RedirectUrlValidationEventDispatcherPlugin(),
             new ResponseListenerEventDispatcherPlugin(),
+            new LoginCaptchaEventDispatcherPlugin(),
             new SecurityBlockerCustomerEventDispatcherPlugin(),
             new SecurityBlockerAgentEventDispatcherPlugin(),
             new SecurityBlockerCartCodeEventDispatcherPlugin(),

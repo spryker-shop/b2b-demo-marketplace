@@ -6,8 +6,8 @@
 # rebuilds the codebase in the container and restores that dump instead of
 # re-importing demodata.
 #
-# Build / build-static sections are b2b's own (from docker.ci.acceptance.yml) —
-# b2b has no separate _build-frontend artifact, so frontend is built here.
+# Build sections are b2b's own (from docker.ci.acceptance.yml). The frontend assets come from
+# _build-frontend.yml (restored before the boot), so build-static only copies the configurator.
 # The demodata section mirrors suite's ci.restore-db.stage2.yml: load the dump,
 # fix auth/permissions, recreate search sources, sync storage from DB, then drain
 # the publish queue. NO data:import. NO cost-center hack — full_EU data is real.
@@ -78,6 +78,17 @@ sections:
         provider-processor-glue-storefront:
             command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
 
+        # api:generate's own boot compiles each container before the generated classes exist, and
+        # with debug=false nothing recompiles it (see the ApiPlatform README for the full contract).
+        cache-glue-api-clear:
+            command: 'vendor/bin/glue cache:clear'
+
+        cache-storefront-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
+
+        cache-backend-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
+
         configuration-sync:
             command: 'vendor/bin/console configuration:sync'
 
@@ -91,38 +102,10 @@ sections:
         rest-api-generate-documentation:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
-    build-static:
-        dependencies-install:
-            command: 'vendor/bin/console frontend:project:install-dependencies'
-
-    build-static-production:
-        excluded: true
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build -e production'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build -e production'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
-        water-treatment-product-configurator:
-            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
-
-    build-static-development:
-        yves-build-frontend:
-            command: 'vendor/bin/console frontend:yves:build'
-
-        zed-build-frontend:
-            command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
-
-        water-treatment-product-configurator:
-            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
+    # No build-static section: the Yves, Back Office and Merchant Portal assets are built once by
+    # _build-frontend.yml and restored into public/*/assets before `docker/sdk up`, and docker/sdk then
+    # skips the whole static phase ("Checking assets are built... [BUILT]"). The water-treatment
+    # configurator copy runs at the end of demodata instead.
 
     init-storages-per-store:
         queue-setup:
@@ -143,6 +126,12 @@ sections:
 
         fix-auth-permissions:
             command: 'vendor/bin/console setup:init-db'
+
+        captcha-altcha-hmac-secret-generate:
+            command: 'vendor/bin/console captcha-altcha:hmac-secret:generate'
+
+        import-ci-cypress-configuration:
+            command: 'vendor/bin/console data:import --config=data/import/local/ci_cypress_configuration.yml'
 
         # requires `spy_store` table
         setup-search-create-sources:
@@ -175,3 +164,9 @@ sections:
         # requires DB
         api-generate-documentation:
             command: 'vendor/bin/glue api:generate:documentation'
+
+        # Copies the prebuilt configurator app into public/WaterTreatmentConfigurator/dist (PHP, no npm).
+        # Here and not in build-static, because docker/sdk skips the static phase when the restored
+        # assets exist.
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'

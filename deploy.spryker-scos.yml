@@ -57,6 +57,7 @@ image:
         SPRYKER_YVES_HOST_US: yves.us.scos.sh01.demo-spryker.com
         SPRYKER_DYNAMIC_STORE_MODE: true
         AWS_REGION: eu-central-1
+        IS_QA_ATTRIBUTES_ENABLED: true
     php:
         enabled-extensions:
             - otel
@@ -176,7 +177,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '4.1'
+        version: '4.2'
         api:
             username: 'spryker'
             password: 'secret'
@@ -199,7 +200,7 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.516.3'
+        version: '2.568.1'
         csrf-protection-enabled: true
         endpoints:
             scheduler.scos.sh01.demo-spryker.com:

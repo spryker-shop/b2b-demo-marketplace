@@ -48,3 +48,66 @@
         {% endblock %}
     {% endwidget %}
 {% endblock %}
+
+{% block priceTolerance %}
+    {% set orderTolerance = data.schedule.priceTolerancePercent %}
+    {% set isOrderToleranceSet = orderTolerance and orderTolerance.isPositive() %}
+    {% set isProductCheckIgnored = data.schedule.isProductPriceChangeIgnored and isOrderToleranceSet %}
+    {% set productsSetCount = isProductCheckIgnored ? 0 : (data.schedule.items | filter(item => item.priceTolerancePercent is not null and item.priceTolerancePercent.isPositive()) | length) %}
+
+    <dt class="{{ definitionListKeyClassName }}">{{ 'recurring_orders.detail.sidebar.price_tolerance' | trans }}</dt>
+    <dd class="{{ definitionListValueClassName }}" data-qa="recurring-order-price-tolerance">
+        <div class="grid grid--gap-smaller grid--nowrap">
+            <div class="col col--expand">
+                {% if isProductCheckIgnored %}
+                    {{ 'recurring_orders.detail.sidebar.price_tolerance.order_total_ignored' | trans({'%tolerance%': orderTolerance.trim() ~ '%'}) }}
+                {% elseif isOrderToleranceSet and productsSetCount %}
+                    {{ ((productsSetCount == 1 ? 'recurring_orders.detail.sidebar.price_tolerance.order_total_and_product' : 'recurring_orders.detail.sidebar.price_tolerance.order_total_and_products')) | trans({'%tolerance%': orderTolerance.trim() ~ '%', '%count%': productsSetCount}) }}
+                {% elseif isOrderToleranceSet %}
+                    {{ 'recurring_orders.detail.sidebar.price_tolerance.order_total' | trans({'%tolerance%': orderTolerance.trim() ~ '%'}) }}
+                {% elseif productsSetCount %}
+                    {{ (productsSetCount == 1 ? 'recurring_orders.detail.sidebar.price_tolerance.products_only_one' : 'recurring_orders.detail.sidebar.price_tolerance.products_only') | trans({'%count%': productsSetCount}) }}
+                {% else %}
+                    {% include molecule('status') with {
+                        data: {
+                            label: 'recurring_orders.detail.sidebar.price_tolerance.off' | trans,
+                        },
+                    } only %}
+                    {{ 'recurring_orders.detail.sidebar.price_tolerance.off_note' | trans }}
+                {% endif %}
+            </div>
+
+            {% if not data.isPriceToleranceLocked %}
+                <div class="col">
+                    <a href="{{ url('recurring-orders/price-tolerances', {uuid: data.schedule.uuid}) }}"
+                        class="link"
+                        {{ qa('recurring-order-edit-tolerances-button') }}>
+                        {% include atom('icon') with {
+                            data: {
+                                name: 'edit',
+                            },
+                        } only %}
+                        {{ 'general.edit.button' | trans }}
+                    </a>
+                </div>
+            {% else %}
+                {% set lockedHintTooltipId = "#{config.name}__price-tolerance-locked-tooltip" %}
+                <div class="col">
+                    {% include molecule('tooltip-message') with {
+                        attributes: {
+                            id: lockedHintTooltipId,
+                        },
+                        data: {
+                            text: 'recurring_orders.price_tolerance.locked_notice' | trans,
+                            hasTrigger: true,
+                            triggerLabel: 'recurring_orders.detail.sidebar.price_tolerance.locked_label' | trans,
+                            triggerAttributes: {
+                                'data-qa': 'recurring-order-price-tolerance-locked',
+                            },
+                        },
+                    } only %}
+                </div>
+            {% endif %}
+        </div>
+    </dd>
+{% endblock %}

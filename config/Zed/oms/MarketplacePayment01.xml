@@ -108,12 +108,6 @@
             </transition>
 
             <transition happy="true">
-                <source>shipped by merchant</source>
-                <target>delivered</target>
-                <event>deliver</event>
-            </transition>
-
-            <transition happy="true">
                 <source>delivered</source>
                 <target>closed</target>
                 <event>close</event>
@@ -130,7 +124,6 @@
             <event name="send to merchant" onEnter="true" command="MerchantSalesOrder/CreateOrders"/>
             <event name="submit tax invoice" onEnter="true" command="Vertex/SubmitPaymentTaxInvoice"/>
             <event name="ship by merchant"/>
-            <event name="deliver"/>
             <event name="close" manual="true" command="MerchantOms/CloseOrderItem"/>
         </events>
 
@@ -139,6 +132,7 @@
             <process>MarketplaceRefund</process>
             <process>DummyMarketplaceMerchantCommission</process>
             <process>DummyOrderAmendment</process>
+            <process>MarketplaceInvoice</process>
         </subprocesses>
     </process>
 
@@ -146,5 +140,6 @@
     <process name="MarketplaceRefund" file="MarketplaceSubprocess/MarketplaceRefund01.xml"/>
     <process name="DummyMarketplaceMerchantCommission" file="DummySubprocess/DummyMarketplaceMerchantCommission01.xml"/>
     <process name="DummyOrderAmendment" file="DummySubprocess/DummyOrderAmendment01.xml"/>
+    <process name="MarketplaceInvoice" file="MarketplaceSubprocess/MarketplaceInvoice01.xml"/>
 
 </statemachine>

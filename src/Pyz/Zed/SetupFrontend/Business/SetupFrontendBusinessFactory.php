@@ -20,6 +20,9 @@ class SetupFrontendBusinessFactory extends SprykerSetupFrontendBusinessFactory
 {
     public function createStorybookBuilder(): BuilderInterface
     {
-        return new Builder($this->getConfig()->getStorybookBuildCommand());
+        return new Builder(
+            $this->getConfig()->getStorybookBuildCommand(),
+            $this->createYvesBuildConfigWriter(),
+        );
     }
 }

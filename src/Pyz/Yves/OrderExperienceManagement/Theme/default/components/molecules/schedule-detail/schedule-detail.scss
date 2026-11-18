@@ -2,12 +2,29 @@
     #{$name} {
         &__grid {
             margin-bottom: var(--scale-24);
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-20);
+
+            @include helper-breakpoint(lg) {
+                flex-direction: row;
+            }
+        }
+
+        &__content-column {
+            flex: 1;
+        }
+
+        &__sidebar-column {
+            @include helper-breakpoint(lg) {
+                width: rem(260);
+            }
         }
 
         &__order-info {
             border: rem(1) solid var(--border-subtle);
             border-radius: var(--radius-md);
-            padding: var(--scale-16);
+            padding-top: var(--scale-16);
         }
 
         &__flash-content {

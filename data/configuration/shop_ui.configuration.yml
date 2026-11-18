@@ -343,3 +343,29 @@ features:
                               options:
                                   max: 50000
                         sanitize_xss: {}
+
+                - key: custom_scripts
+                  order: 11
+                  name: Custom Scripts
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: yves_head_scripts
+                        name: Storefront Head Scripts
+                        description: HTML embed snippets injected into the storefront page head. Use with caution — the markup is rendered as-is and scripts run with full access to every storefront page.
+                        help_text: 'Paste the full embed snippet, e.g. <script async defer src="https://example.com/loader.js"></script>'
+                        type: text
+                        default_value: ''
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: max
+                              message: 'Head scripts must not exceed 10000 characters'
+                              options:
+                                  max: 10000

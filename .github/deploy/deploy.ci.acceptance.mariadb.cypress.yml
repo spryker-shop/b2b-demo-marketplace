@@ -119,7 +119,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '4.1'
+        version: '4.2'
         api:
             username: 'spryker'
             password: 'secret'
@@ -149,7 +149,3 @@ docker:
         native:
             platforms:
                 - linux
-
-    compose:
-        yamls:
-            - tests/cypress-tests/docker-compose.cypress.yml

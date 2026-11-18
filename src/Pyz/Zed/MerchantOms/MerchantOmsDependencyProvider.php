@@ -14,7 +14,7 @@ use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\CancelReturnMarketplaceOrderIte
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\DeliverMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\DeliverReturnMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ExecuteReturnMarketplaceOrderItemCommandPlugin;
-use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\RefundMarketplaceOrderItemCommandPlugin;
+use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\RefundMarketplaceOrderCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ShipByMerchantMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ShipReturnMarketplaceOrderItemCommandPlugin;
 use Spryker\Zed\Kernel\Container;
@@ -36,7 +36,7 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
 
     /**
-     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface|\Spryker\Zed\StateMachine\Dependency\Plugin\CommandByItemsPluginInterface>
      */
     protected function getStateMachineCommandPlugins(): array
     {
@@ -44,7 +44,7 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
             'MarketplaceOrder/ShipOrderItem' => new ShipByMerchantMarketplaceOrderItemCommandPlugin(),
             'MarketplaceOrder/DeliverOrderItem' => new DeliverMarketplaceOrderItemCommandPlugin(),
             'MarketplaceOrder/CancelOrderItem' => new CancelMarketplaceOrderItemCommandPlugin(),
-            'MarketplaceOrder/Refund' => new RefundMarketplaceOrderItemCommandPlugin(),
+            'MarketplaceOrder/Refund' => new RefundMarketplaceOrderCommandPlugin(),
             'MarketplaceReturn/CancelReturnForOrderItem' => new CancelReturnMarketplaceOrderItemCommandPlugin(),
             'MarketplaceReturn/DeliverReturnForOrderItem' => new DeliverReturnMarketplaceOrderItemCommandPlugin(),
             'MarketplaceReturn/ExecuteReturnForOrderItem' => new ExecuteReturnMarketplaceOrderItemCommandPlugin(),

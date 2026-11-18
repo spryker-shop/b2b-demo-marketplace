@@ -1,7 +1,48 @@
 import PackagingUnitQuantitySelectorCore from 'ProductPackagingUnitWidget/components/molecules/packaging-unit-quantity-selector/packaging-unit-quantity-selector';
-import { VolumePrice } from 'PriceProductVolumeWidget/components/molecules/volume-price/volume-price';
+import VolumePrice from 'PriceProductVolumeWidget/components/molecules/volume-price/volume-price';
 
 export default class PackagingUnitQuantitySelector extends PackagingUnitQuantitySelectorCore {
+    protected readonly priceFractionDigits = 2;
+    protected quantityNote: HTMLElement | null;
+    protected quantityMaxNote: HTMLElement | null;
+
+    protected async init(): Promise<void> {
+        this.quantityNote = this.querySelector<HTMLElement>(`.${this.jsName}__quantity-note`);
+        this.quantityMaxNote = this.querySelector<HTMLElement>(`.${this.jsName}__quantity-max-note`);
+
+        await super.init();
+
+        if (this.qtyInSalesUnitInput && this.currentSalesUnit) {
+            this.toggleQuantityMaxNote(
+                this.multiply(Number(this.qtyInSalesUnitInput.value), Number(this.currentSalesUnit.conversion)),
+            );
+        }
+    }
+
+    protected qtyInputChange(qtyInSalesUnits?: number): void {
+        super.qtyInputChange(qtyInSalesUnits);
+
+        const qtyInSalesUnitsValue = qtyInSalesUnits ?? this.formattedQtyInSalesUnitInput.unformattedValue;
+
+        this.toggleQuantityMaxNote(this.multiply(qtyInSalesUnitsValue, Number(this.currentSalesUnit.conversion)));
+    }
+
+    protected selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number): void {
+        super.selectQty(qtyInBaseUnits, qtyInSalesUnits);
+        this.toggleQuantityMaxNote(qtyInBaseUnits);
+    }
+
+    protected toggleQuantityMaxNote(qtyInBaseUnits: number): void {
+        if (!this.quantityMaxNote) {
+            return;
+        }
+
+        const isMaxQuantityReached = this.getMaxQuantity() > 0 && qtyInBaseUnits >= this.getMaxQuantity();
+
+        this.quantityMaxNote.classList.toggle('is-hidden', !isMaxQuantityReached);
+        this.quantityNote?.classList.toggle('is-hidden', isMaxQuantityReached);
+    }
+
     protected multiply(a: number, b: number): number {
         const result = a * b;
         const precision = 1000;
@@ -53,7 +94,7 @@ export default class PackagingUnitQuantitySelector extends PackagingUnitQuantity
         const amount = price.match(/[\d.,]+/)?.[0] ?? '';
         const decimalSeparator = this.getPriceDecimalSeparator(amount) ?? '.';
 
-        return price.replace(/[\d.,]+/, value.toFixed(2).replace('.', decimalSeparator));
+        return price.replace(/[\d.,]+/, value.toFixed(this.priceFractionDigits).replace('.', decimalSeparator));
     }
 
     protected getPriceDecimalSeparator(amount: string): string | null {

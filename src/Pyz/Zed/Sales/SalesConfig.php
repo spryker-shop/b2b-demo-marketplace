@@ -37,6 +37,7 @@ class SalesConfig extends SprykerSalesConfig
             'discount' => '/discount/sales/list',
             'refund' => '/refund/sales/list',
             'inquiries' => '/self-service-portal/list-order-inquiry',
+            'documents' => '/sales-invoice/sales/list',
         ];
 
         $externalBlocks = parent::getSalesDetailExternalBlocksUrls();

@@ -87,7 +87,7 @@ services:
             password: 'secret'
     broker:
         engine: rabbitmq
-        version: '4.1'
+        version: '4.2'
         api:
             username: 'spryker'
             password: 'secret'
@@ -112,4 +112,6 @@ docker:
         region: EU
 
     mount:
-        baked:
+        native:
+            platforms:
+                - linux

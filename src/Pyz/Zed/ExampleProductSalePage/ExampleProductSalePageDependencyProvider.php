@@ -24,11 +24,33 @@ class ExampleProductSalePageDependencyProvider extends AbstractBundleDependencyP
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
+    /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductLabelQueryContainer($container);
         $container = $this->addProductQueryContainer($container);
+
+        return $container;
+    }
+
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductLabelFacade($container);
+
+        return $container;
+    }
+
+    protected function addProductLabelFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
+            return $container->getLocator()->productLabel()->facade();
+        });
 
         return $container;
     }

@@ -20,6 +20,7 @@ use PyzTest\Glue\SelfServicePortalBackend\JsonApi\Fixtures\SspAssetsBackendJsonA
  * @group SelfServicePortalBackend
  * @group CreateSspAssetBackendJsonApiCest
  * Add your own group annotations below this line
+ * @group EndToEnd
  */
 class CreateSspAssetBackendJsonApiCest
 {

@@ -23,7 +23,7 @@ actions:
       source: data/import/common/common/workflow.csv
     - data_entity: customer-group
       source: data/import/common/common/customer_group.csv
-    - data_entity: customer-group-to-customer
+    - data_entity: customer-group-customer
       source: data/import/common/common/customer_group_to_customer.csv
     - data_entity: glossary
       source: data/import/common/common/glossary.csv
@@ -198,6 +198,10 @@ actions:
       source : data/import/common/common/company.csv
     - data_entity: company-business-unit
       source : data/import/common/common/company_business_unit.csv
+    - data_entity: customer-group-company
+      source: data/import/common/common/customer_group_to_company.csv
+    - data_entity: customer-group-company-business-unit
+      source: data/import/common/common/customer_group_to_company_business_unit.csv
     - data_entity: company-unit-address
       source : data/import/common/common/company_unit_address.csv
     - data_entity: company-unit-address-label

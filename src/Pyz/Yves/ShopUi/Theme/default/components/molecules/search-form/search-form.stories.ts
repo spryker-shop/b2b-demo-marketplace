@@ -19,6 +19,7 @@ const meta: Meta = { title: 'Molecules/Search Form' };
 export default meta;
 
 const SUGGEST_URL = '/storybook-mock/search';
+const MOCK_RESPONSE_DELAY_IN_MILLISECONDS = 50;
 
 function buildSuggestionHtml() {
     return renderTemplateById('@CatalogPage/views/suggestion-results/suggestion-results.twig', {
@@ -124,7 +125,7 @@ function installXhrMock() {
             this.dispatchEvent(new Event('readystatechange'));
             this.dispatchEvent(new Event('load'));
             this.dispatchEvent(new Event('loadend'));
-        }, 50);
+        }, MOCK_RESPONSE_DELAY_IN_MILLISECONDS);
     };
 }
 

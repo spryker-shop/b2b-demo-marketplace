@@ -65,13 +65,11 @@
             <transition condition="RecurringOrders/IsScheduleValid">
                 <source>validation</source>
                 <target>confirmed</target>
-                <event>validate</event>
             </transition>
 
             <transition>
                 <source>validation</source>
                 <target>review_required</target>
-                <event>validate</event>
             </transition>
 
             <transition condition="RecurringOrders/IsPlacementDue">
@@ -182,7 +180,6 @@
             <event name="notify-buyer" onEnter="true" command="RecurringOrders/NotifyBuyer"/>
             <event name="confirm" manual="true"/>
             <event name="skip" manual="true"/>
-            <event name="validate" onEnter="true"/>
             <event name="place-order" onEnter="true" command="RecurringOrders/PlaceOrder"/>
             <event name="finalise-placement" onEnter="true"/>
             <event name="complete-placement" onEnter="true" command="RecurringOrders/CompletePlacement"/>
