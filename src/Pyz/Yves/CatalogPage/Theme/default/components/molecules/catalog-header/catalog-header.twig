@@ -16,7 +16,7 @@
                 <h1 class="{{ config.name }}__title">{{ data.title }}</h1>
             {% endif %}
 
-            {% if app.request.query.get('q') is not empty %}
+            {% if app.request.query.get('q') is not empty or app.request.query.get('ssp-asset-reference') is not empty %}
                 <p class="{{ config.name }}__count is-hidden-sm-md">
                     {% block count %}
                         {% widget 'SspAssetFilterNameWidget' args [data.numFound] with {
