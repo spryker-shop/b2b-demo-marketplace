@@ -159,4 +159,32 @@ interface AiCommerceConstants extends PyzFeatureAiCommerceConstants
      * @api
      */
     public const string AI_CONFIGURATION_STOREFRONT_ASSISTANT_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_STOREFRONT_ASSISTANT_ANTHROPIC';
+
+    /**
+     * Storefront Assistant page type of the Self-Service Portal asset pages: the asset details page and the catalog pages of the compatible products of an asset.
+     *
+     * @api
+     */
+    public const string STOREFRONT_ASSISTANT_PAGE_TYPE_ASSET = 'asset';
+
+    /**
+     * Storefront Assistant page context field of the asset page type that holds the asset reference.
+     *
+     * @api
+     */
+    public const string STOREFRONT_ASSISTANT_PAGE_CONTEXT_FIELD_ASSET_REFERENCE = 'assetReference';
+
+    /**
+     * Storefront Assistant page context field of the asset page type that holds the shown asset name.
+     *
+     * @api
+     */
+    public const string STOREFRONT_ASSISTANT_PAGE_CONTEXT_FIELD_ASSET_NAME = 'assetName';
+
+    /**
+     * Configuration key for the suggested prompts of the asset page type.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_STOREFRONT_ASSISTANT_ASSET_PAGE_PROMPTS = 'ai_commerce:storefront_assistant:suggested_prompts:asset_page_prompts';
 }

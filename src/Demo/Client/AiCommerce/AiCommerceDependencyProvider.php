@@ -12,6 +12,9 @@ namespace Demo\Client\AiCommerce;
 use Spryker\Client\MerchantProductOfferSearch\Plugin\Search\MerchantNameSearchConfigExpanderPlugin;
 use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
 use SprykerFeature\Client\AiCommerce\AiCommerceDependencyProvider as SprykerFeatureAiCommerceDependencyProvider;
+use SprykerFeature\Client\AiCommerce\Dependency\KnowledgeSearch\KnowledgeSearchPluginInterface;
+use SprykerFeature\Client\AiCommerce\Plugin\KnowledgeDocument\ProductAttachmentKnowledgeDocumentScopeResolverPlugin;
+use SprykerFeature\Client\AiCommerce\Plugin\KnowledgeSearch\BedrockKnowledgeBaseKnowledgeSearchPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\ProductDiscoveryAgentPlugin;
 
 class AiCommerceDependencyProvider extends SprykerFeatureAiCommerceDependencyProvider
@@ -24,6 +27,21 @@ class AiCommerceDependencyProvider extends SprykerFeatureAiCommerceDependencyPro
         return [
             new ProductDiscoveryAgentPlugin(),
         ];
+    }
+
+    /**
+     * @return list<\SprykerFeature\Client\AiCommerce\Dependency\KnowledgeDocument\KnowledgeDocumentScopeResolverPluginInterface>
+     */
+    protected function getKnowledgeDocumentScopeResolverPlugins(): array
+    {
+        return [
+            new ProductAttachmentKnowledgeDocumentScopeResolverPlugin(),
+        ];
+    }
+
+    protected function getKnowledgeSearchPlugin(): KnowledgeSearchPluginInterface
+    {
+        return new BedrockKnowledgeBaseKnowledgeSearchPlugin();
     }
 
     /**

@@ -16,7 +16,7 @@
                 <h1 class="{{ config.name }}__title">{{ data.title }}</h1>
             {% endif %}
 
-            {% if app.request.query.get('q') is not empty %}
+            {% if app.request.query.get('q') is not empty or app.request.query.get('ssp-asset-reference') is not empty %}
                 <p class="{{ config.name }}__count is-hidden-sm-md">
                     {% block count %}
                         {% widget 'SspAssetFilterNameWidget' args [data.numFound] with {
@@ -24,7 +24,7 @@
                         } only %}
                             {% block content %}
                                 {% if data.assetName is not empty %}
-                                    <strong>
+                                    <strong class="js-asset-filter-name" data-asset-name="{{ data.assetName }}">
                                         {{ 'catalog.ssp.itemsFound' | trans( {'%num_found%': count, '%ssp_asset_name%': data.assetName}) }}
                                     </strong>
                                 {% else %}

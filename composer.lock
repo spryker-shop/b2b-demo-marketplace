@@ -1685,16 +1685,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.402.1",
+            "version": "3.405.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8c7d9eb8d8baa92ce13ba875ceac7da89597ad8e"
+                "reference": "7e8a4a8ed7b812a9ae9fc6e921fe3ee5ed7ce8b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8c7d9eb8d8baa92ce13ba875ceac7da89597ad8e",
-                "reference": "8c7d9eb8d8baa92ce13ba875ceac7da89597ad8e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7e8a4a8ed7b812a9ae9fc6e921fe3ee5ed7ce8b0",
+                "reference": "7e8a4a8ed7b812a9ae9fc6e921fe3ee5ed7ce8b0",
                 "shasum": ""
             },
             "require": {
@@ -1776,9 +1776,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.402.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.405.0"
             },
-            "time": "2026-10-26T18:06:02+00:00"
+            "time": "2026-11-18T19:30:10+00:00"
         },
         {
             "name": "beberlei/assert",
@@ -10293,15 +10293,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ai-commerce.git",
-                "reference": "366cde4f62a5b3bb0428f9468d22556d9b953868"
+                "reference": "b8ac4cc338d91926f4c619b39b0ec46867755abb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/366cde4f62a5b3bb0428f9468d22556d9b953868",
-                "reference": "366cde4f62a5b3bb0428f9468d22556d9b953868",
+                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/b8ac4cc338d91926f4c619b39b0ec46867755abb",
+                "reference": "b8ac4cc338d91926f4c619b39b0ec46867755abb",
                 "shasum": ""
             },
             "require": {
+                "aws/aws-sdk-php": "^3.403.0",
                 "php": ">=8.3",
                 "spryker-shop/quick-order-page-extension": "^1.3.0",
                 "spryker-shop/shop-ui": "^2.7.0",
@@ -10322,6 +10323,7 @@
                 "spryker/discount": "^9.0.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/gui": "^5.14.0",
+                "spryker/http": "^1.15.0",
                 "spryker/kernel": "^3.72.0",
                 "spryker/locale": "^4.12.0",
                 "spryker/log": "^3.0.0",
@@ -10334,6 +10336,8 @@
                 "spryker/price-product": "^4.40.0",
                 "spryker/price-product-storage": "^4.0.0",
                 "spryker/product-alternative-storage": "^1.0.0",
+                "spryker/product-attachment": "^1.2.0",
+                "spryker/product-attachment-storage": "^1.0.0",
                 "spryker/product-bundle-storage": "^1.0.0",
                 "spryker/product-category-storage": "^1.11.0 || ^2.6.0",
                 "spryker/product-discontinued-storage": "^1.0.0",
@@ -10348,6 +10352,8 @@
                 "spryker/product-set-storage": "^1.0.0",
                 "spryker/product-storage": "^1.53.0",
                 "spryker/propel-orm": "^1.20.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/queue": "^1.0.0",
                 "spryker/sales": "^11.0.0",
                 "spryker/search-extension": "^1.0.0",
                 "spryker/session": "^4.0.0",
@@ -10366,6 +10372,7 @@
                 "spryker/container": "*",
                 "spryker/content-banner-gui": "*",
                 "spryker/country": "*",
+                "spryker/guzzle": "*",
                 "spryker/product": "*",
                 "spryker/product-label": "*",
                 "spryker/product-search-config-storage": "*",
@@ -10405,7 +10412,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/ai-commerce/tree/master"
             },
-            "time": "2026-11-13T12:42:31+00:00"
+            "time": "2026-11-18T13:09:39+00:00"
         },
         {
             "name": "spryker-feature/alternative-products",
@@ -14723,12 +14730,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/self-service-portal.git",
-                "reference": "00a7e22931499b06e2d48cdfa3fd3a0f9808aade"
+                "reference": "ab36eb4828ff79a88ef09597dd509797f816ae98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/00a7e22931499b06e2d48cdfa3fd3a0f9808aade",
-                "reference": "00a7e22931499b06e2d48cdfa3fd3a0f9808aade",
+                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/ab36eb4828ff79a88ef09597dd509797f816ae98",
+                "reference": "ab36eb4828ff79a88ef09597dd509797f816ae98",
                 "shasum": ""
             },
             "require": {
@@ -14739,8 +14746,10 @@
                 "spryker-shop/shop-application": "^1.0.0",
                 "spryker-shop/shop-application-extension": "^1.2.0",
                 "spryker-shop/shop-ui": "^1.110.0 || ^2.9.0",
+                "spryker/ai-foundation-extension": "^1.0.0",
                 "spryker/availability-storage-extension": "^1.0.0",
                 "spryker/cart-extension": "^4.2.0",
+                "spryker/catalog": "^5.0.0",
                 "spryker/cms-block-storage-extension": "^1.0.0",
                 "spryker/comment": "^1.6.0",
                 "spryker/company": "^1.0.0",
@@ -14830,7 +14839,6 @@
             "require-dev": {
                 "spryker-shop/service-point-widget": "*",
                 "spryker/api-platform": "*",
-                "spryker/catalog": "*",
                 "spryker/cms-block": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/company-business-unit-sales-connector": "*",
@@ -14860,7 +14868,6 @@
                 "spryker-feature/order-experience-management": "If you want to use the order experience management functionality, you need to install this module.",
                 "spryker-shop/service-point-widget": "If you want to use the service point geo coordinates functionality, you need to install this module.",
                 "spryker/api-platform": "Required to expose SSP assets, inquiries, and booked services via the API Platform (storefront and backend REST endpoints).",
-                "spryker/catalog": "If you want to use the product class catalog feature, you need to install this module.",
                 "spryker/container": "Add this module when you want to use the Container."
             },
             "default-branch": true,
@@ -14885,8 +14892,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/self-service-portal/tree/master"
             },
-            "time": "2026-11-16T21:49:24+00:00",
-            "published-time": "2026-11-16T21:53:59+00:00"
+            "time": "2026-11-18T13:09:39+00:00"
         },
         {
             "name": "spryker-feature/service-points",
@@ -22216,8 +22222,7 @@
             "support": {
                 "source": "https://github.com/spryker-shop/quick-order-page/tree/4.16.2"
             },
-            "time": "2026-11-16T21:49:24+00:00",
-            "published-time": "2026-11-16T21:54:54+00:00"
+            "time": "2026-11-16T21:49:24+00:00"
         },
         {
             "name": "spryker-shop/quick-order-page-extension",
@@ -23460,8 +23465,7 @@
             "support": {
                 "source": "https://github.com/spryker-shop/service-point-widget/tree/1.8.2"
             },
-            "time": "2026-11-16T21:49:24+00:00",
-            "published-time": "2026-11-16T21:54:55+00:00"
+            "time": "2026-11-16T21:49:24+00:00"
         },
         {
             "name": "spryker-shop/session-agent-validation",
@@ -24335,8 +24339,7 @@
             "support": {
                 "source": "https://github.com/spryker-shop/shop-ui/tree/2.9.0"
             },
-            "time": "2026-11-16T21:49:24+00:00",
-            "published-time": "2026-11-16T21:55:01+00:00"
+            "time": "2026-11-16T21:49:24+00:00"
         },
         {
             "name": "spryker-shop/shopping-list-note-widget",
@@ -43454,8 +43457,7 @@
             "support": {
                 "source": "https://github.com/spryker/gui/tree/5.15.0"
             },
-            "time": "2026-11-16T21:49:24+00:00",
-            "published-time": "2026-11-16T21:54:53+00:00"
+            "time": "2026-11-16T21:49:24+00:00"
         },
         {
             "name": "spryker/gui-extension",
@@ -68679,8 +68681,7 @@
             "support": {
                 "source": "https://github.com/spryker/sales-merchant-portal-gui/tree/4.3.1"
             },
-            "time": "2026-11-16T21:16:39+00:00",
-            "published-time": "2026-11-16T21:20:36+00:00"
+            "time": "2026-11-16T21:16:39+00:00"
         },
         {
             "name": "spryker/sales-merchant-portal-gui-extension",
@@ -80291,8 +80292,7 @@
             "support": {
                 "source": "https://github.com/spryker/zed-ui/tree/4.8.0"
             },
-            "time": "2026-11-16T21:49:24+00:00",
-            "published-time": "2026-11-16T21:55:05+00:00"
+            "time": "2026-11-16T21:49:24+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -89995,8 +89995,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-11T14:48:56+00:00",
-            "published-time": "2026-02-11T14:49:09+00:00"
+            "time": "2026-02-11T14:48:56+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -92275,14 +92274,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "1704ad48abe7a75351f8c408e132c4e16081bae9"
+                "reference": "41d7ecbe39b5ede11ddf18addc7b07ea62daf7fc"
             },
             "type": "spryker-test",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-11-18T15:28:59+00:00"
+            "time": "2026-11-19T09:28:06+00:00"
         },
         {
             "name": "spryker/development",
@@ -93198,5 +93197,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

@@ -12,6 +12,9 @@ namespace Demo\Zed\Console;
 use Pyz\Zed\Console\ConsoleDependencyProvider as PyzConsoleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerEco\Zed\AmazonQuicksight\Communication\Console\QuicksightUserSyncSaveConsole;
+use SprykerFeature\Zed\AiCommerce\Communication\Console\KnowledgeDocumentReindexConsole;
+use SprykerFeature\Zed\AiCommerce\Communication\Console\KnowledgeDocumentSetupConsole;
+use SprykerFeature\Zed\AiCommerce\Communication\Console\KnowledgeDocumentStatusRefreshConsole;
 
 class ConsoleDependencyProvider extends PyzConsoleDependencyProvider
 {
@@ -23,6 +26,9 @@ class ConsoleDependencyProvider extends PyzConsoleDependencyProvider
         $commands = parent::getConsoleCommands($container);
 
         $commands[] = new QuicksightUserSyncSaveConsole();
+        $commands[] = new KnowledgeDocumentReindexConsole();
+        $commands[] = new KnowledgeDocumentStatusRefreshConsole();
+        $commands[] = new KnowledgeDocumentSetupConsole();
 
         return $commands;
     }

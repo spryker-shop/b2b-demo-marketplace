@@ -20,6 +20,7 @@ use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Redis\RedisConstants;
+use SprykerFeature\Shared\AiCommerce\AiCommerceConstants;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\ShopUi\ShopUiConstants;
 
@@ -130,3 +131,6 @@ $config[FlysystemConstants::FLYSYSTEM_OPTIONS] = [
     'public_url' => $publicUrl,
 ];
 $config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = true;
+
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_ID] = '';
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_DATA_SOURCE_IDS] = [];
