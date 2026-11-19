@@ -47,6 +47,7 @@ use Spryker\Shared\SymfonyScheduler\SymfonySchedulerConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
+use SprykerFeature\Shared\AiCommerce\AiCommerceConstants;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
@@ -413,3 +414,6 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
 ];
 
 $config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = true;
+
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_ID] = '';
+$config[AiCommerceConstants::BEDROCK_KNOWLEDGE_BASE_DATA_SOURCE_IDS] = [];
