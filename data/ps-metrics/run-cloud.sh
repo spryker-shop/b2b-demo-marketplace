@@ -28,6 +28,8 @@
 #   STORE_SETUP       1 (default): create the stores of the set before the measured window
 #   MAX_WAIT_S        drain limit, default 14400
 #   STALL_S           fail when work is queued and no ack happens for this long, default 1800
+#   LIVELOCK_S        fail the drain when one queue holds messages, gets no ack and is redelivered for this
+#                     long, default 900. Checked per queue, during the import and the drain.
 #   SAMPLE_S          sampler interval, default 2
 #   WORK_QUEUE_EXCLUDE  comma list of queues not counted as P&S work, default scheduler-jobs
 #   GIT_BRANCH_NAME, GIT_SHA  recorded in meta.json (the image has no .git)
@@ -47,6 +49,7 @@ IMPORT_MEMORY_LIMIT="${IMPORT_MEMORY_LIMIT:--1}"
 STORE_SETUP="${STORE_SETUP:-1}"
 MAX_WAIT_S="${MAX_WAIT_S:-14400}"
 STALL_S="${STALL_S:-1800}"
+LIVELOCK_S="${LIVELOCK_S:-900}"
 SAMPLE_S="${SAMPLE_S:-2}"
 WORK_QUEUE_EXCLUDE="${WORK_QUEUE_EXCLUDE:-scheduler-jobs}"
 TOOLS_DIR="${TOOLS_DIR:-data/ps-metrics}"
@@ -67,7 +70,7 @@ STAGES="${OUT}/stages.jsonl"
 
 # --- helpers ------------------------------------------------------------------------------------
 
-queues_json() { curl -sf -u "${API_AUTH}" "${API}/queues?columns=name,vhost,messages,consumers,message_stats.ack_details,message_stats.ack" ; }
+queues_json() { curl -sf -u "${API_AUTH}" "${API}/queues?columns=name,vhost,messages,consumers,message_stats.ack_details,message_stats.ack,message_stats.redeliver" ; }
 
 # Work = messages in queues a worker consumes: no error queues, no excluded queues.
 work_total() {
@@ -106,11 +109,64 @@ stage_end() {
         "${STAGE_NAME}" "${STAGE_T0}" "${t1}" "$(awk "BEGIN{print ${t1} - ${STAGE_T0}}")" "${rc}" >> "${STAGES}"
 }
 
-# Wait until the P&S work queues are empty. Fails on a stall: work queued and no ack for STALL_S.
+# Livelock: one queue holds messages, gets no new ack, and its messages are redelivered, for LIVELOCK_S.
+# The total-ack stall check cannot see it while other queues still ack. Seen in s010-cloud-1 (2026-11-18):
+# a batch that fans out to the whole catalog ran out of memory, was redelivered and died again, and
+# publish.page_product_abstract made no progress for 5.5 h; nothing reached an error queue.
+# One check: updates the per-queue state, writes livelock.json while a queue is stuck (removes it when no
+# queue is stuck any more) and appends each detection to livelock-events.jsonl. Returns 0 when stuck.
+LIVELOCK_STATE="${OUT}/.livelock-state.json"
+LIVELOCK_FILE="${OUT}/livelock.json"
+livelock_check() {
+    local q
+    q=$(queues_json) || return 1
+    printf '%s' "${q}" | python3 -c '
+import json, os, sys, time
+state_file, out_file, events_file, limit = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4])
+excluded = set(sys.argv[5].split(","))
+now = time.time()
+try:
+    state = json.load(open(state_file))
+except (OSError, ValueError):
+    state = {}
+new, stuck = {}, []
+for q in json.load(sys.stdin):
+    name = q["name"]
+    if name.endswith(".error") or name in excluded or not q.get("messages"):
+        continue
+    stats = q.get("message_stats") or {}
+    acked, redelivered = stats.get("ack", 0), stats.get("redeliver", 0)
+    old = state.get(name)
+    if old and old["acked"] == acked:
+        since = old["since"]
+        if now - since >= limit and redelivered > old["redelivered_at_since"]:
+            stuck.append({"queue": name, "messages": q["messages"], "acked": acked,
+                          "redelivered_since": redelivered - old["redelivered_at_since"], "seconds": round(now - since)})
+        new[name] = {"acked": acked, "since": since, "redelivered_at_since": old["redelivered_at_since"]}
+    else:
+        new[name] = {"acked": acked, "since": now, "redelivered_at_since": redelivered}
+json.dump(new, open(state_file, "w"))
+if not stuck:
+    if os.path.exists(out_file):
+        os.remove(out_file)
+    sys.exit(1)
+first = json.load(open(out_file))["first_detected_at"] if os.path.exists(out_file) else round(now)
+report = {"detected_at": round(now), "first_detected_at": first, "limit_s": limit, "queues": stuck}
+json.dump(report, open(out_file, "w"))
+open(events_file, "a").write(json.dumps(report) + "\n")
+sys.exit(0)' "${LIVELOCK_STATE}" "${LIVELOCK_FILE}" "${OUT}/livelock-events.jsonl" "${LIVELOCK_S}" "${WORK_QUEUE_EXCLUDE}"
+}
+# Background watcher for the measured window (import and drain), one check a minute. It only records:
+# the import goes on, because its numbers stay valid; drain() fails fast on the file.
+livelock_watch() { while :; do livelock_check >/dev/null 2>&1; sleep 60; done; }
+
+# Wait until the P&S work queues are empty. Fails on a stall: work queued and no ack for STALL_S
+# (return 2), on the limit (1), or on a livelock confirmed by the watcher (3).
 drain() {
     local limit="$1" t0 last_ack last_move w a
     t0=$(date +%s); last_ack=$(ack_total); last_move=$t0
     while :; do
+        [ -s "${LIVELOCK_FILE}" ] && { echo "livelock: $(cat "${LIVELOCK_FILE}")"; return 3; }
         w=$(work_total) || w=""
         [ -n "$w" ] || { sleep 5; continue; }
         [ "$w" -eq 0 ] && { sleep 10; w=$(work_total); [ "$w" -eq 0 ] && return 0; }
@@ -239,6 +295,9 @@ SAMPLER_PIDS="${SAMPLER_PIDS} $!"
 ( while :; do printf '{"ts":%s,"load1":%s,"mem_used_mb":%s,"php_procs":%s}\n' "$(date +%s.%N)" "$(cut -d' ' -f1 /proc/loadavg)" \
     "$(free -m | awk '/^Mem:/{print $3}')" "$(pgrep -c php || echo 0)"; sleep 5; done ) >> "${OUT}/service-samples.jsonl" 2>/dev/null &
 SAMPLER_PIDS="${SAMPLER_PIDS} $!"
+rm -f "${LIVELOCK_STATE}" "${LIVELOCK_FILE}"
+livelock_watch &
+SAMPLER_PIDS="${SAMPLER_PIDS} $!"
 
 WINDOW_T0=$(date +%s.%N)
 stage_start import
@@ -276,7 +335,7 @@ KV1=$(kv_keys); ES1=$(search_docs); ERR1=$(error_total)
 TASKS=$( [ -f "${OUT}/task-runs.jsonl" ] && wc -l < "${OUT}/task-runs.jsonl" || echo 0 )
 IMPORTS=$( [ -f "${OUT}/import-runs.jsonl" ] && wc -l < "${OUT}/import-runs.jsonl" || echo 0 )
 python3 - "${OUT}/meta.json" <<PY
-import json
+import json, os
 json.dump({
  "run_id": "${RUN_ID}", "environment": "${SPRYKER_PROJECT_NAME:-sa-internal-ptest}", "data_set": "${DATA_SET}",
  "instrumented": ${INSTRUMENTED} == 1, "breakdown": ${BREAKDOWN} == 1, "import_split": ${IMPORT_SPLIT} == 1,
@@ -288,6 +347,9 @@ json.dump({
  "error_messages_before": ${ERR0:-0}, "error_messages": ${ERR1:-0},
  "task_run_records": ${TASKS}, "import_run_records": ${IMPORTS},
  "host_cpus": $(nproc), "host_mem_mb": $(free -m | awk '/^Mem:/{print $2}'),
+ "livelock_s": ${LIVELOCK_S},
+ "drain_livelock": json.load(open("${LIVELOCK_FILE}")) if os.path.exists("${LIVELOCK_FILE}") else None,
+ "livelock_events": sum(1 for _ in open("${OUT}/livelock-events.jsonl")) if os.path.exists("${OUT}/livelock-events.jsonl") else 0,
 }, open("${OUT}/meta.json", "w"), indent=1)
 PY
 cat "${OUT}/meta.json"
