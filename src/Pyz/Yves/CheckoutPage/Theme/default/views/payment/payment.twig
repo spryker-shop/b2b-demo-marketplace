@@ -38,109 +38,97 @@
         },
     } only %}
         {% block fieldset %}
-            {{ form_errors(data.form.paymentSelection) }}
+            {% set paymentSelection = data.form.paymentSelection %}
+            {% set hasError = paymentSelection.vars.errors | length > 0 %}
 
-            {% for name, choices in data.form.paymentSelection.vars.choices %}
+            {{ form_errors(paymentSelection) }}
+
+            {% for groupName, choices in paymentSelection.vars.choices %}
                 {% embed molecule('payment-method-group', 'CheckoutPage') with {
                     data: {
-                        title: name | trans,
+                        title: groupName | trans,
                     },
                     embed: {
                         form: data.form,
                         customForms: embed.customForms,
-                        paymentProviderIndex: loop.index0,
+                        groupIndex: loop.index0,
                         choices: choices,
-                        hasError: data.form.paymentSelection.vars.errors | length > 0,
+                        hasError: hasError,
                     },
                 } only %}
                     {% block list %}
-                        {% embed molecule('checkout-list', 'CheckoutPage') with {
-                            modifiers: ['payment'],
-                            data: {
-                                form: null,
-                                choices: embed.choices,
-                                checkedValue: embed.form.paymentSelection.vars.name,
-                            },
-                            embed: {
-                                form: embed.form,
-                                customForms: embed.customForms,
-                                paymentProviderIndex: embed.paymentProviderIndex,
-                                hasError: embed.hasError,
-                            },
-                        } only %}
-                            {% block contentItem %}
-                                {% embed molecule('form') with {
-                                    modifiers: ['checkout-form', 'hidden-actions'],
-                                    data: {
-                                        form: embed.form[embed.form.paymentSelection[key].vars.name],
-                                        enableStart: false,
-                                        enableEnd: false,
-                                        layout: {
-                                            'card_expires_month': 'col col--sm-4',
-                                            'card_expires_year': 'col col--sm-8',
+                        <ul class="checkout-list checkout-list--payment">
+                            {% for choiceKey in embed.choices | keys %}
+                                {% set toggler = embed.form.paymentSelection[choiceKey] %}
+
+                                <li class="checkout-list__item">
+                                    {% embed molecule('form') with {
+                                        modifiers: ['checkout-form', 'hidden-actions'],
+                                        data: {
+                                            form: embed.form[toggler.vars.name],
+                                            enableStart: false,
+                                            enableEnd: false,
                                         },
-                                    },
-                                    embed: {
-                                        customForms: embed.customForms,
-                                        index: loop.index ~ '-' ~ embed.paymentProviderIndex,
-                                        toggler: embed.form.paymentSelection[key],
-                                        hasError: embed.hasError,
-                                    },
-                                } only %}
-                                    {% block fieldset %}
-                                        {% set hasCustomForm = embed.customForms[data.form.vars.template_path] is defined %}
-                                        {% set hasDetails = hasCustomForm or data.form | length > 0 %}
+                                        embed: {
+                                            customForms: embed.customForms,
+                                            index: loop.index ~ '-' ~ embed.groupIndex,
+                                            toggler: toggler,
+                                            hasError: embed.hasError,
+                                        },
+                                    } only %}
+                                        {% block fieldset %}
+                                            {% set customForm = embed.customForms[data.form.vars.template_path] ?? null %}
+                                            {% set hasDetails = customForm is not null or data.form | length > 0 %}
 
-                                        {# Details are rendered here because parent() is only available in this block #}
-                                        {% set detailsContent %}
-                                            {% if hasCustomForm %}
-                                                {% set viewName = embed.customForms[data.form.vars.template_path] | first %}
-                                                {% set moduleName = embed.customForms[data.form.vars.template_path] | last %}
-                                                {% include view(viewName, moduleName) with {
-                                                    form: data.form.parent,
-                                                } only %}
-                                            {% elseif hasDetails %}
-                                                {{ parent() }}
-                                            {% endif %}
-                                        {% endset %}
+                                            {# Details are rendered here because parent() is only available in this block #}
+                                            {% set detailsContent %}
+                                                {% if customForm is not null %}
+                                                    {% include view(customForm | first, customForm | last) with {
+                                                        form: data.form.parent,
+                                                    } only %}
+                                                {% elseif hasDetails %}
+                                                    {{ parent() }}
+                                                {% endif %}
+                                            {% endset %}
 
-                                        {% embed molecule('payment-method-option', 'CheckoutPage') with {
-                                            modifiers: embed.hasError ? ['error'] : [],
-                                            data: {
-                                                hasDetails: hasDetails,
-                                                detailsClass: 'js-payment-method-' ~ embed.index,
-                                            },
-                                            embed: {
-                                                toggler: embed.toggler,
-                                                index: embed.index,
-                                                detailsContent: detailsContent,
-                                            },
-                                        } only %}
-                                            {% block toggler %}
-                                                {{ form_row(embed.toggler, {
-                                                    required: false,
-                                                    component: molecule('toggler-radio'),
-                                                    attributes: {
-                                                        'target-class-name': 'js-payment-method-' ~ embed.index,
-                                                        'class-to-toggle': 'is-hidden',
-                                                        'aria-label': 'checkout_page.aria_label.choose.as.active' | trans({
-                                                            '%optionValue%': embed.toggler.vars.label | trans,
-                                                        }),
-                                                    },
-                                                    rowAttr: {
-                                                        class: 'toggler-radio toggler-radio--checkout',
-                                                    },
-                                                }) }}
-                                            {% endblock %}
+                                            {% embed molecule('payment-method-option', 'CheckoutPage') with {
+                                                modifiers: embed.hasError ? ['error'] : [],
+                                                data: {
+                                                    hasDetails: hasDetails,
+                                                    detailsClass: 'js-payment-method-' ~ embed.index,
+                                                },
+                                                embed: {
+                                                    toggler: embed.toggler,
+                                                    index: embed.index,
+                                                    detailsContent: detailsContent,
+                                                },
+                                            } only %}
+                                                {% block toggler %}
+                                                    {{ form_row(embed.toggler, {
+                                                        required: false,
+                                                        component: molecule('toggler-radio'),
+                                                        attributes: {
+                                                            'target-class-name': 'js-payment-method-' ~ embed.index,
+                                                            'class-to-toggle': 'is-hidden',
+                                                            'aria-label': 'checkout_page.aria_label.choose.as.active' | trans({
+                                                                '%optionValue%': embed.toggler.vars.label | trans,
+                                                            }),
+                                                        },
+                                                        rowAttr: {
+                                                            class: 'toggler-radio toggler-radio--checkout',
+                                                        },
+                                                    }) }}
+                                                {% endblock %}
 
-                                            {% block details %}
-                                                {{ embed.detailsContent }}
-                                            {% endblock %}
-                                        {% endembed %}
-                                    {% endblock %}
-                                {% endembed %}
-                            {% endblock %}
-                        {% endembed %}
+                                                {% block details %}
+                                                    {{ embed.detailsContent }}
+                                                {% endblock %}
+                                            {% endembed %}
+                                        {% endblock %}
+                                    {% endembed %}
+                                </li>
+                            {% endfor %}
+                        </ul>
                     {% endblock %}
                 {% endembed %}
             {% endfor %}
