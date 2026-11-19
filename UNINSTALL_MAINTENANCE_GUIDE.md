@@ -24,7 +24,7 @@ project-root/
 ├── uninstall-frontend-marketplace.sh       # Frontend cleanup script
 ├── UNINSTALL_MAINTENANCE_GUIDE.md          # This guide
 └── data/import/
-    ├── b2b_common/                         # B2B mode demo data (the scripts switch the install recipes to it)
+    ├── b2b_common/                         # B2B-only demo data (files that differ from common/)
     └── local/b2b_full_EU.yml
 ```
 
@@ -904,7 +904,19 @@ Known limitation: the B2B dataset is EU-only, so B2B mode imports `b2b_full_EU.y
 
 ## Keeping the B2B Datasets in Sync
 
-B2B mode imports its demo data from `data/import/b2b_common`, not from `data/import/common`. When a feature adds data that B2B mode also renders, add it to the B2B datasets as well, otherwise
+B2B mode imports `data/import/local/b2b_full_EU.yml` (the scripts switch the install recipes to it). That manifest takes
+files from two places:
+
+- `data/import/common/...` for files whose content is the same in both modes (stores, locales, customers, companies,
+  CMS pages, taxes, shipment, workflow and so on). A change to such a file applies to both modes, so do not add
+  marketplace-only rows to it; copy the file to `data/import/b2b_common/` and repoint its `source:` instead.
+- `data/import/b2b_common/...` for files that differ: products, prices, merchants, offers, glossary, navigation and
+  the B2B variants of discounts, CMS blocks and product lists.
+
+`b2b_common` holds no copies of identical files. If a B2B file becomes identical to its `common` counterpart, point the
+manifest at `common` and delete the B2B copy.
+
+When a feature adds data that B2B mode also renders and the file lives in `b2b_common`, add it there as well, otherwise
 the storefront shows raw glossary keys (`catalog.filter.by`, `customer.login.submit`, `product.attribute.steamoutput`)
 only in B2B mode:
 

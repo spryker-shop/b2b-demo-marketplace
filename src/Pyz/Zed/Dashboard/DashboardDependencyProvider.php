@@ -10,8 +10,8 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Dashboard;
 
 use Spryker\Zed\Dashboard\DashboardDependencyProvider as SprykerDashboardDependencyProvider;
-use Spryker\Zed\SalesStatistics\Communication\Plugin\CountOrderChartPlugin;
-use Spryker\Zed\SalesStatistics\Communication\Plugin\StatusOrderChartPlugin;
+use Spryker\Zed\SalesStatistics\Communication\Plugin\DailyOrderCountChartPlugin;
+use Spryker\Zed\SalesStatistics\Communication\Plugin\OrderItemCountByStatusChartPlugin;
 use Spryker\Zed\SalesStatistics\Communication\Plugin\TopOrdersChartPlugin;
 
 class DashboardDependencyProvider extends SprykerDashboardDependencyProvider
@@ -22,8 +22,8 @@ class DashboardDependencyProvider extends SprykerDashboardDependencyProvider
     protected function getDashboardPlugins(): array
     {
         return [
-            new CountOrderChartPlugin(),
-            new StatusOrderChartPlugin(),
+            new DailyOrderCountChartPlugin(),
+            new OrderItemCountByStatusChartPlugin(),
             new TopOrdersChartPlugin(),
         ];
     }
