@@ -54,6 +54,8 @@
             line-height: normal;
             margin: 0 rem(15);
             position: relative;
+            display: inline-flex;
+            gap: var(--scale-4);
 
             @include helper-breakpoint-media-min($md) {
                 font-size: rem(18);

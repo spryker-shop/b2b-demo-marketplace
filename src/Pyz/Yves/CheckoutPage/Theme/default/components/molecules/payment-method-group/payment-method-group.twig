@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'payment-method-group',
+} %}
+
+{% define data = {
+    title: required,
+} %}
+
+{% block body %}
+    <h5 class="{{ config.name }}__title">{{ data.title }}</h5>
+
+    {% block list %}{% endblock %}
+{% endblock %}

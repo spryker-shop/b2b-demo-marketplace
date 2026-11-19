@@ -22,6 +22,21 @@
             position: relative;
         }
 
+        &--payment {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+            margin-bottom: 0;
+            padding: 0;
+            list-style: none;
+
+            #{$name}__item {
+                margin-bottom: 0;
+                padding: 0;
+                background-color: transparent;
+            }
+        }
+
         @content;
     }
 }
