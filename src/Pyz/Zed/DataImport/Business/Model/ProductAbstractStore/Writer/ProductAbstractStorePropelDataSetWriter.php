@@ -16,7 +16,7 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Pyz\Zed\DataImport\Business\Model\ProductAbstractStore\ProductAbstractStoreHydratorStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
-use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
+use Pyz\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 
 class ProductAbstractStorePropelDataSetWriter implements DataSetWriterInterface
 {

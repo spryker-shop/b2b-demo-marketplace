@@ -22,7 +22,7 @@ use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
-use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
+use Pyz\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 
