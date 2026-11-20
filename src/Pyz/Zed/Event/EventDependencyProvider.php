@@ -13,6 +13,7 @@ use Pyz\Zed\ExampleWorkflow\Communication\Plugin\Event\Subscriber\StateMachineCo
 use Pyz\Zed\ExampleWorkflow\Communication\Plugin\Event\Subscriber\StateMachineMerchantEventSubscriberPlugin;
 use Pyz\Zed\ExampleWorkflow\Communication\Plugin\Event\Subscriber\StateMachineMerchantProductEventSubscriberPlugin;
 use Pyz\Zed\ExampleWorkflow\Communication\Plugin\Event\Subscriber\StateMachineMerchantRelationshipEventSubscriberPlugin;
+use Pyz\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber\ProductPageSearchEventSubscriber;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Event\Subscriber\AvailabilityNotificationSubscriber;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Subscriber\AvailabilityStorageEventSubscriber;
 use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Subscriber\CategoryImageStorageEventSubscriber;
@@ -54,7 +55,6 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber\ProductC
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber\ProductConcretePageSearchProductEventSubscriber;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber\ProductConcretePageSearchProductImageEventSubscriber;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber\ProductConcretePageSearchProductLocalizedAttributesEventSubscriber;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber\ProductPageSearchEventSubscriber;
 use Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Event\Subscriber\ProductQuantityStorageEventSubscriber;
 use Spryker\Zed\ProductReviewSearch\Communication\Plugin\Event\Subscriber\ProductReviewSearchEventSubscriber;
 use Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event\Subscriber\ProductReviewStorageEventSubscriber;
