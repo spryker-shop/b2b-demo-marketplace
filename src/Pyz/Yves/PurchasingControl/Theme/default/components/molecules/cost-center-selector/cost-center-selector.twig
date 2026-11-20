@@ -1,0 +1,171 @@
+{% extends molecule('cost-center-selector', '@SprykerFeature:PurchasingControl') %}
+
+{% block body %}
+    <div class="{{ config.name }}__header">
+        {{ block('title') }}
+        {{ block('status_badges') }}
+    </div>
+
+    {{ block('content') }}
+{% endblock %}
+
+{% block title %}
+    <h5 class="{{ config.name }}__title">{{ 'purchasing_control.selector.title' | trans }}</h5>
+{% endblock %}
+
+{% block status_badges %}
+    {% if not data.isLocked %}
+        {% set badges = [
+            {
+                name: 'applied',
+                modifier: 'success',
+                icon: 'check_circle',
+                label: 'purchasing_control.budget.status.applied' | trans,
+                isVisible: data.selectedBudget is not null,
+            },
+            {
+                name: 'not-applied',
+                modifier: 'warning',
+                icon: 'info',
+                label: 'purchasing_control.budget.status.not_applied' | trans,
+                isVisible: false,
+            },
+            {
+                name: 'over-budget',
+                modifier: 'error',
+                icon: 'error',
+                label: 'purchasing_control.budget.status.over_budget' | trans,
+                isVisible: false,
+            },
+        ] %}
+
+        {% for badge in badges %}
+            <span class="badge badge--md badge--{{ badge.modifier }} {{ config.name }}__badge {{ config.jsName }}__badge-{{ badge.name }}{{ badge.isVisible ? '' : ' is-hidden' }}">
+                {% include atom('font-icon') with {
+                    class: config.name ~ '__badge-icon',
+                    data: { name: badge.icon },
+                } only %}
+                {{ badge.label }}
+            </span>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block cost_center_selector_locked %}
+    {% if data.selectedCostCenter %}
+        <div class="{{ config.name }}__locked-row">
+            <span class="{{ config.name }}__locked-label">{{ 'purchasing_control.selector.label' | trans }}</span>
+            <strong>{{ data.selectedCostCenter.name }}</strong>
+        </div>
+    {% endif %}
+
+    {% if data.selectedBudget %}
+        <div class="{{ config.name }}__locked-row">
+            <span class="{{ config.name }}__locked-label">{{ 'purchasing_control.budget.selector.label' | trans }}</span>
+            <strong>{{ data.selectedBudget.name }}</strong>
+        </div>
+
+        {{ block('budget_status') }}
+    {% endif %}
+{% endblock %}
+
+{% block cost_center_selector_form %}
+    {{ form_start(data.form, {
+        action: formAction,
+        attr: { class: config.name ~ '__form' },
+    }) }}
+        <div class="{{ config.name }}__fields">
+            {{ block('cost_center_field') }}
+            {{ block('budget_field') }}
+        </div>
+
+        {% if data.form.idBudget.vars.choices | length > 0 %}
+            {{ block('budget_status') }}
+        {% endif %}
+
+        {{ block('apply_field') }}
+    {{ form_end(data.form) }}
+{% endblock %}
+
+{% block cost_center_field %}
+    {% set costCenterAttributes = data.form.idCostCenter.vars.attr | merge({
+        'class': "#{data.form.idCostCenter.vars.attr.class | default('')} #{config.jsName}__cost-center-control",
+    }) %}
+
+    <div class="{{ config.name }}__field">
+        {{ form_row(data.form.idCostCenter, { 'attr': costCenterAttributes }) }}
+    </div>
+{% endblock %}
+
+{% block budget_field %}
+    {% if data.form.idBudget.vars.choices | length > 0 %}
+        {% set budgetAttributes = data.form.idBudget.vars.attr | merge({
+            'class': "#{data.form.idBudget.vars.attr.class | default('')} #{config.jsName}__budget-control",
+        }) %}
+
+        <div class="{{ config.name }}__field {{ config.jsName }}__budget-field-row">
+            {{ form_row(data.form.idBudget, { 'attr': budgetAttributes }) }}
+        </div>
+        {# The select offers the budgets of every cost center, so this covers a cost center filtered down to none. #}
+        <p class="{{ config.name }}__field {{ config.name }}__no-budgets {{ config.jsName }}__no-budgets is-hidden">
+            {{ 'purchasing_control.budget.no_budgets_found' | trans }}
+        </p>
+    {% else %}
+        {% do data.form.idBudget.setRendered() %}
+        <p class="{{ config.name }}__field {{ config.name }}__no-budgets">
+            {{ 'purchasing_control.budget.no_budgets_found' | trans }}
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block budget_status %}
+    {% set budget = data.selectedBudget %}
+    {% set currencyCode = data.quote.currency.code %}
+    {% set isOverBudget = budget and budget.remainingAmount < 0 %}
+    {% set usedPercent = budget and budget.amount > 0 ? min((budget.consumedAmount / budget.amount * 100) | round, 100) : 0 %}
+
+    <div class="{{ config.name }}__status {{ config.jsName }}__budget-remaining-row{{ isOverBudget ? ' ' ~ config.name ~ '__status--over-budget' : '' }}{{ budget ? '' : ' is-hidden' }}">
+        <div class="{{ config.name }}__status-row">
+            <div class="{{ config.name }}__remaining">
+                <span class="{{ config.name }}__remaining-label">{{ 'purchasing_control.budget.remaining_short' | trans }}</span>
+                <strong class="{{ config.name }}__remaining-value {{ config.jsName }}__budget-remaining">{{ budget ? budget.remainingAmount | money(true, currencyCode) : '' }}</strong>
+            </div>
+
+            {# Used and total amounts are known for the applied budget only, see the toggling in the TS file. #}
+            <span class="{{ config.name }}__usage {{ config.jsName }}__budget-usage{{ budget ? '' : ' is-hidden' }}">
+                {% if budget %}
+                    {{ 'purchasing_control.budget.used_of_total' | trans({
+                        '%used%': budget.consumedAmount | money(true, currencyCode),
+                        '%total%': budget.amount | money(true, currencyCode),
+                    }) }}
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="{{ config.name }}__progress {{ config.jsName }}__budget-progress{{ budget ? '' : ' is-hidden' }}" aria-hidden="true">
+            <div class="{{ config.name }}__progress-bar" style="width: {{ usedPercent }}%"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block apply_field %}
+    <div class="{{ config.name }}__footer {{ config.jsName }}__footer{{ data.selectedBudget ? '' : ' is-hidden' }}">
+        <div class="{{ config.name }}__hints">
+            {% if data.selectedBudget %}
+                <p class="{{ config.name }}__hint {{ config.jsName }}__hint-applied">
+                    {{ 'purchasing_control.budget.hint.applied' | trans({'%budget%': data.selectedBudget.name}) }}
+                </p>
+            {% endif %}
+            <p class="{{ config.name }}__hint {{ config.jsName }}__hint-not-applied is-hidden">
+                {{ 'purchasing_control.budget.hint.not_applied' | trans }}
+            </p>
+            <p class="{{ config.name }}__hint {{ config.jsName }}__hint-over-budget is-hidden">
+                {{ 'purchasing_control.budget.hint.over_budget' | trans }}
+            </p>
+        </div>
+
+        <div class="{{ config.name }}__apply {{ config.jsName }}__apply is-hidden">
+            {{ form_widget(data.form.apply) }}
+        </div>
+    </div>
+{% endblock %}

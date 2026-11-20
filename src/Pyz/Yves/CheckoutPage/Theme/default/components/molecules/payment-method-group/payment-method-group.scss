@@ -1,0 +1,16 @@
+@mixin checkout-page-payment-method-group($name: '.payment-method-group') {
+    #{$name} {
+        display: block;
+        margin-bottom: var(--scale-24);
+
+        &__title {
+            @include typography(label-md-semibold);
+            margin: 0 0 var(--scale-12);
+            color: var(--text-secondary);
+        }
+
+        @content;
+    }
+}
+
+@include checkout-page-payment-method-group();
