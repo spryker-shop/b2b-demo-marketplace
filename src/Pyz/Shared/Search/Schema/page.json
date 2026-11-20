@@ -1,5 +1,12 @@
 {
     "settings": {
+        "index": {
+            "mapping": {
+                "total_fields": {
+                    "limit": 5000
+                }
+            }
+        },
         "analysis": {
             "analyzer": {
                 "fulltext_index_analyzer": {
