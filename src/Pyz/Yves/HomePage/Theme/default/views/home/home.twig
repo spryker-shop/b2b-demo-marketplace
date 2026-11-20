@@ -34,6 +34,8 @@
 {% endblock %}
 
 {% block content %}
+    <h2 class="title title--h2 spacing-top--medium" data-qa="home-page-greeting">{{ 'home_page.greeting.title' | trans }}</h2>
+
     {% cms_slot 'slt-3' %}
 
     <div class="grid grid--stretch grid--gap grid--sm-scroll spacing-top--medium spacing-bottom--large">
