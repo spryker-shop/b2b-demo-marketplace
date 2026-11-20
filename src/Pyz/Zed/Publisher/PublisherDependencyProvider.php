@@ -55,6 +55,7 @@ use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\Merch
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin;
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\MerchantProductOfferSearchPublisherTriggerPlugin;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\Product\MerchantSearchPublisherPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\ProductOffer\ProductConcreteWritePublisherPlugin as ProductOfferProductConcreteWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\ProductOfferStore\ProductConcreteWritePublisherPlugin as ProductOfferStoreProductConcreteWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Publisher\Merchant\MerchantProductOfferWritePublisherPlugin;
@@ -610,6 +611,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
         return [
             new ProductOfferProductConcreteWritePublisherPlugin(),
             new ProductOfferStoreProductConcreteWritePublisherPlugin(),
+            new MerchantSearchPublisherPlugin(),
         ];
     }
 
