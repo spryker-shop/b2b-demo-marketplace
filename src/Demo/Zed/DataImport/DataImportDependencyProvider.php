@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
+namespace Demo\Zed\DataImport;
+
+use Pyz\Zed\DataImport\DataImportDependencyProvider as PyzDataImportDependencyProvider;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\DataImport\ProductAttachmentKnowledgeSelectionDataImportPlugin;
+
+class DataImportDependencyProvider extends PyzDataImportDependencyProvider
+{
+    /**
+     * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
+     */
+    protected function getDataImporterPlugins(): array
+    {
+        $dataImporterPlugins = parent::getDataImporterPlugins();
+
+        $dataImporterPlugins[] = new ProductAttachmentKnowledgeSelectionDataImportPlugin();
+
+        return $dataImporterPlugins;
+    }
+}
