@@ -12,6 +12,7 @@ namespace Pyz\Yves\ShopApplication;
 use Pyz\Yves\CompanyPage\Plugin\ShopApplication\CompanyUserRestrictionHandlerPlugin;
 use Pyz\Yves\CompanyWidget\Widget\MenuItemCompanyWidget;
 use Pyz\Yves\CustomerFullNameWidget\Widget\CustomerFullNameWidget;
+use Pyz\Yves\FreeShippingHintWidget\Widget\FreeShippingHintWidget;
 use Pyz\Yves\ProductSetWidget\Widget\ProductSetIdsWidget;
 use Spryker\Yves\CustomerDataChangeRequest\Widget\CustomerEmailChangeRequestWidget;
 use Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin;
@@ -316,6 +317,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductReviewDisplayWidget::class,
             QuickOrderPageWidget::class,
             SalesOrderThresholdWidget::class,
+            FreeShippingHintWidget::class,
             ShareCartByLinkWidget::class,
             SharedCartDetailsWidget::class,
             SharedCartOperationsWidget::class,

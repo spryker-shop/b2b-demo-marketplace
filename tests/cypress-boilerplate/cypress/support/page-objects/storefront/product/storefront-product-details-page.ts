@@ -23,6 +23,19 @@ export class StorefrontProductDetailsPage extends AbstractPage {
     return cy.get('.quantity-counter__button--decrement"')
   }
 
+  getAddToCartQuantityInput = (): Cypress.Chainable => {
+    return this.getAddToCartButton()
+      .closest('form')
+      .find('[data-qa="quantity-input"]')
+  }
+
+  increaseAddToCartQuantity = (): void => {
+    this.getAddToCartButton()
+      .closest('form')
+      .find('[data-qa="quantity-counter__button--increment"]')
+      .click()
+  }
+
   addProductToCart = (): void => {
     this.getAddToCartButton().click()
     cy.get('flash-message.flash-message--success').should('exist')

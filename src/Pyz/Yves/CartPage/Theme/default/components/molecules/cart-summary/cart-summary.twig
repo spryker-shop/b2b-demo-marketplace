@@ -41,6 +41,7 @@
                 </li>
 
                 {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}{% endwidget %}
+                {% widget 'FreeShippingHintWidget' args [data.cart] only %}{% endwidget %}
                 {% block cartTotal %}
                     <li class="list__item {{ config.name }}__item {{ config.name }}__item--top-space">
                         {{ 'cart.price.subtotal' | trans }}

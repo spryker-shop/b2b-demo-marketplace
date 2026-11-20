@@ -1,0 +1,26 @@
+{% extends template('widget') %}
+
+{% define data = {
+    freeShippingHint: _widget.freeShippingHint | default(null),
+} %}
+
+{% block template %}
+    {% if data.freeShippingHint is not empty %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% set hint = data.freeShippingHint %}
+    <li class="list__item" data-qa="free-shipping-hint">
+        {% if hint.isReached %}
+            <strong data-qa="free-shipping-hint-reached">{{ 'free_shipping_hint.reached' | trans }}</strong>
+        {% else %}
+            <span data-qa="free-shipping-hint-remaining">
+                {{ 'free_shipping_hint.remaining' | trans({
+                    '%amount%': hint.remainingAmount | money(true, hint.currencyCode),
+                }) }}
+            </span>
+        {% endif %}
+    </li>
+{% endblock %}

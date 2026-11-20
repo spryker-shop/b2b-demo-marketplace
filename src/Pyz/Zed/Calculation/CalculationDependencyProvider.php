@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Calculation;
 
+use Pyz\Zed\FreeShippingHint\Communication\Plugin\Calculation\FreeShippingHintCalculatorPlugin;
 use Spryker\Zed\Calculation\CalculationDependencyProvider as SprykerCalculationDependencyProvider;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\CanceledTotalCalculationPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorForGenericAmountPlugin;
@@ -225,6 +226,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
             new TaxTotalCalculatorPlugin(),
             new GrandTotalCalculatorPlugin(),
             new NetTotalCalculatorPlugin(),
+            new FreeShippingHintCalculatorPlugin(),
 
             new PaymentCalculatorPlugin(),
         ];

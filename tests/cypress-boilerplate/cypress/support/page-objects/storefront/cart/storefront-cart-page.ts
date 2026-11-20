@@ -19,6 +19,22 @@ export class StorefrontCartPage extends AbstractPage {
     return this.getCartItem(concreteSku).find('[itemprop="price"]')
   }
 
+  getFreeShippingHint = (): Cypress.Chainable => {
+    return cy.get('[data-qa="free-shipping-hint"]', { timeout: 20000 })
+  }
+
+  getFreeShippingHintRemaining = (): Cypress.Chainable => {
+    return this.getFreeShippingHint().find(
+      '[data-qa="free-shipping-hint-remaining"]'
+    )
+  }
+
+  getFreeShippingHintReached = (): Cypress.Chainable => {
+    return this.getFreeShippingHint().find(
+      '[data-qa="free-shipping-hint-reached"]'
+    )
+  }
+
   getCheckoutButton = (): Cypress.Chainable => {
     return cy.get('[data-qa="cart-go-to-checkout"]')
   }
