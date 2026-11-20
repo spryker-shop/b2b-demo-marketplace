@@ -8,9 +8,12 @@
 {% define data = {
     priceModifiers: ['cart', 'block'],
     imageModifiers: ['cart'],
+    canSeePrice: null,
+    isLazyDetails: false,
 } %}
 
 {% set listItem = data.listItem %}
+{% set canSeePrice = data.canSeePrice is null ? can('SeePricePermissionPlugin') : data.canSeePrice %}
 {% set metaSku = listItem.sku is defined ? listItem.sku : (listItem.abstract_sku is defined ? listItem.abstract_sku : '') %}
 {% set price = listItem.unitPrice is defined ? listItem.unitPrice : listItem.price %}
 
@@ -19,7 +22,7 @@
         sku: listItem.add_to_cart_sku
             | default((listItem.attributeMap is defined ? listItem.attributeMap.productConcreteIds | keys | first)
             | default(metaSku)),
-        price: can('SeePricePermissionPlugin') ? price | default : null,
+        price: canSeePrice ? price | default : null,
     } | json_encode,
 } %}
 
@@ -46,7 +49,7 @@
                                 {% set soldByMerchant = findWidget('SoldByMerchantWidget', [listItem]) %}
                                 {% if soldByMerchant and soldByMerchant.merchant %}
                                     <span class="{{ config.name }}__meta-item {{ config.name }}__meta-item--merchant">
-                                        {{ block('soldBy') }}
+                                        {% widget soldByMerchant only %}{% endwidget %}
                                     </span>
                                 {% endif %}
                             {% endblock %}
@@ -182,7 +185,7 @@
                     {% endblock %}
 
                     {% block priceZone %}
-                        {% if can('SeePricePermissionPlugin') %}
+                        {% if canSeePrice %}
                             {% set totalPrice = listItem.unitPrice is defined ? listItem.sumSubtotalAggregation : listItem.price %}
                             <div class="{{ config.name }}__price-zone" data-qa="cart-item-summary">
                                 {% include molecule('money-price') with {
@@ -229,37 +232,23 @@
             </div>
 
             <div class="{{ config.name }}__panel" data-qa="cart-item-panel">
-                <div class="{{ config.name }}__panel-inner">
-                    {% block panelExtras %}
-                        {% block productOptions %}
-                            {% if listItem.productOptions ?? false %}
-                                {% include molecule('product-item-options') with {
-                                    modifiers: modifiers,
-                                    data: { productItem: listItem },
-                                } only %}
-                            {% endif %}
-
-                            {% if data.options %}
-                                {% include molecule('product-item-options') with {
-                                    data: { options: data.options },
-                                } only %}
-                            {% endif %}
-                        {% endblock %}
-
-                        {% block bundle %}
-                            {% widget 'ProductBundleCartItemsListWidget' args [listItem, data.list] only %}{% endwidget %}
-                        {% endblock %}
-                    {% endblock %}
-
-                    {% include molecule('cart-item-details', 'CartPage') with {
-                        data: {
-                            listItem: listItem,
-                            list: data.list,
-                            canEdit: data.canEdit,
-                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
-                        },
-                    } only %}
-                </div>
+                {% if data.isLazyDetails and listItem.groupKey %}
+                    <div
+                        class="{{ config.name }}__panel-inner {{ config.jsName }}__panel-inner"
+                        data-details-url="{{ url('cart/item-details', { groupKey: listItem.groupKey }) }}"
+                    ></div>
+                {% else %}
+                    <div class="{{ config.name }}__panel-inner">
+                        {% include molecule('cart-item-details', 'CartPage') with {
+                            data: {
+                                listItem: listItem,
+                                list: data.list,
+                                canEdit: data.canEdit,
+                                ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                            },
+                        } only %}
+                    </div>
+                {% endif %}
             </div>
     </div>
 {% endblock %}
