@@ -66,3 +66,11 @@ runs:
                     public/Backoffice/assets
                     public/MerchantPortal/assets
                 key: ${{ inputs.cache-key }}
+
+        # The transfer:generate step above creates src/Generated on the runner. docker/sdk (mount mode)
+        # skips the whole install `build` section (propel:model:build and the rest) when src/Generated
+        # already exists, so a consumer job that builds inline would boot without Propel models and
+        # fail in setup:init-db. Remove it, so the container build always runs.
+        -   name: Remove generated code of the host build
+            shell: bash
+            run: rm -rf src/Generated
