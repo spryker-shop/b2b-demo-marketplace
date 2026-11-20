@@ -45,6 +45,7 @@ use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConstants;
+use Spryker\Shared\Captcha\CaptchaConstants;
 use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\Cms\CmsConstants;
@@ -442,6 +443,15 @@ $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE] = 7;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 600;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR] = 300;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS] = 10;
+
+// >>> CAPTCHA (login forms, ALTCHA proof-of-work)
+$config[CaptchaConstants::REDIS_PERSISTENT_CONNECTION] = true;
+$config[CaptchaConstants::REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
+$config[CaptchaConstants::REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
+$config[CaptchaConstants::REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
+$config[CaptchaConstants::REDIS_USER] = getenv('SPRYKER_KEY_VALUE_USERNAME');
+$config[CaptchaConstants::REDIS_PASSWORD] = getenv('SPRYKER_KEY_VALUE_STORE_PASSWORD');
+$config[CaptchaConstants::REDIS_DATABASE] = 7;
 
 // >>> Security Blocker Storefront Agent
 $config[SecurityBlockerStorefrontAgentConstants::AGENT_BLOCK_FOR_SECONDS] = 360;

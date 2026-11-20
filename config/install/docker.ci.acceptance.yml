@@ -127,12 +127,18 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db'
 
+        captcha-altcha-hmac-secret-generate:
+            command: 'vendor/bin/console captcha-altcha:hmac-secret:generate'
+
     demodata:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
 
         import-eu-region-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+
+        import-ci-cypress-configuration:
+            command: 'vendor/bin/console data:import --config=data/import/local/ci_cypress_configuration.yml'
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'

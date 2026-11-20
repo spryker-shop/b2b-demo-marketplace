@@ -2778,8 +2778,8 @@ agent.control_bar.switch_customer_confirm_body,"Your session will end with %curr
 agent.control_bar.switch_customer_confirm_body,"Ihre Sitzung mit %currentName% wird beendet, wenn Sie zu %newName% wechseln. Bitte bestätigen Sie, ob Sie fortfahren möchten.",de_DE
 agent.autocomplete.no_results,No results found,en_US
 agent.autocomplete.no_results,Keine Ergebnisse gefunden,de_DE
-agent_security_blocker_merchant_portal_gui.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-agent_security_blocker_merchant_portal_gui.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+agent_security_blocker_merchant_portal_gui.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+agent_security_blocker_merchant_portal_gui.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
 autocomplete.placeholder,Search,en_US
 autocomplete.placeholder,Suche,de_DE
 bundle.title,Bundle includes,en_US
@@ -3969,12 +3969,22 @@ customer.password.error.character_set,"Password must contain at least 1 characte
 customer.password.error.character_set,"Passwort muss mindestens 1 Zeichen von jeder erlaubten Zeichengruppe enthalten: Großschreibung, Kleinschreibung, Zahl und ein Sonderzeichen.",de_DE
 error.429,Zu viele Anfragen,de_DE
 error.429,Too Many Requests,en_US
-security_blocker_page.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-security_blocker_page.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
-security_blocker_backoffice_gui.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-security_blocker_backoffice_gui.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
-security_blocker_merchant_portal_gui.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-security_blocker_merchant_portal_gui.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+security_blocker_page.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+security_blocker_page.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+security_blocker_backoffice_gui.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+security_blocker_backoffice_gui.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+security_blocker_merchant_portal_gui.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+security_blocker_merchant_portal_gui.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+captcha.error.required,"Please complete the security check.",en_US
+captcha.error.required,"Bitte schließen Sie die Sicherheitsprüfung ab.",de_DE
+captcha.error.invalid,"The security check could not be verified. Please try again.",en_US
+captcha.error.invalid,"Die Sicherheitsprüfung konnte nicht bestätigt werden. Bitte versuchen Sie es erneut.",de_DE
+captcha.error.expired,"The security check has expired. Please try again.",en_US
+captcha.error.expired,"Die Sicherheitsprüfung ist abgelaufen. Bitte versuchen Sie es erneut.",de_DE
+captcha.error.unavailable,"The security check is currently unavailable. Please try again later.",en_US
+captcha.error.unavailable,"Die Sicherheitsprüfung ist derzeit nicht verfügbar. Bitte versuchen Sie es später erneut.",de_DE
+captcha.noscript,"Please enable JavaScript to complete the security check.",en_US
+captcha.noscript,"Bitte aktivieren Sie JavaScript, um die Sicherheitsprüfung abzuschließen.",de_DE
 payment_foreign.thank_you,Danke,de_DE
 payment_foreign.thank_you,Thank you,en_US
 payment_foreign.go_to_my_account,Gehe zum "Benutzerkonto",de_DE
@@ -7766,3 +7776,21 @@ product.quantity-note.hvv-dn32,"Sold in pairs — one valve for flow, one for re
 product.quantity-note.hvv-dn32,"Paarweise verkauft — ein Ventil für den Vorlauf, eines für den Rücklauf.",de_DE
 product.quantity-max-note.hvv-dn32,Need more than 10 pairs? Request a quote.,en_US
 product.quantity-max-note.hvv-dn32,Sie benötigen mehr als 10 Paare? Fordern Sie ein Angebot an.,de_DE
+purchasing_control.selector.title,Cost center & budget,en_US
+purchasing_control.selector.title,Kostenstelle & Budget,de_DE
+purchasing_control.budget.remaining_short,Remaining,en_US
+purchasing_control.budget.remaining_short,Verbleibend,de_DE
+purchasing_control.budget.used_of_total,Used %used% / %total%,en_US
+purchasing_control.budget.used_of_total,Verwendet %used% / %total%,de_DE
+purchasing_control.budget.status.applied,Applied,en_US
+purchasing_control.budget.status.applied,Übernommen,de_DE
+purchasing_control.budget.status.not_applied,Not applied,en_US
+purchasing_control.budget.status.not_applied,Nicht übernommen,de_DE
+purchasing_control.budget.status.over_budget,Over budget · not applied,en_US
+purchasing_control.budget.status.over_budget,Budget überschritten · nicht übernommen,de_DE
+purchasing_control.budget.hint.applied,%budget% is linked to this order.,en_US
+purchasing_control.budget.hint.applied,%budget% ist mit dieser Bestellung verknüpft.,de_DE
+purchasing_control.budget.hint.not_applied,Select Apply to link this budget to the order.,en_US
+purchasing_control.budget.hint.not_applied,"Wählen Sie Übernehmen, um dieses Budget mit der Bestellung zu verknüpfen.",de_DE
+purchasing_control.budget.hint.over_budget,This budget is over its limit. Select Apply to use it for this order.,en_US
+purchasing_control.budget.hint.over_budget,"Dieses Budget hat sein Limit überschritten. Wählen Sie Übernehmen, um es für diese Bestellung zu verwenden.",de_DE
