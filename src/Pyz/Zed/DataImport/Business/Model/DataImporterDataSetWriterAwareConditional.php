@@ -11,7 +11,6 @@ namespace Pyz\Zed\DataImport\Business\Model;
 
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Pyz\Zed\DataImport\Business\Model\DataSet\DataSetConditionInterface;
-use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class DataImporterDataSetWriterAwareConditional extends DataImporterDataSetWriterAware

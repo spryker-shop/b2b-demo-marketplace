@@ -15,7 +15,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
-use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
+use Pyz\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 
 class ProductStockAfterImportPublishHook implements DataImporterAfterImportInterface
 {

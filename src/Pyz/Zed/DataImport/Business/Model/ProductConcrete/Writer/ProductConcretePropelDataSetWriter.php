@@ -23,7 +23,7 @@ use Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterf
 use Pyz\Zed\DataImport\Business\Model\ProductConcrete\ProductConcreteHydratorStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
-use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
+use Pyz\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 

@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\DataImport\Business\Model\ProductSearchAttribute\Hook;
 
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
-use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
+use Pyz\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 
 class ProductSearchAfterImportHook implements DataImporterAfterImportInterface

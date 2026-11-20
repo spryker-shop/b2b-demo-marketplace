@@ -42,7 +42,9 @@ use Pyz\Zed\DataImport\Business\Model\Country\Repository\CountryRepositoryInterf
 use Pyz\Zed\DataImport\Business\Model\Currency\CurrencyWriterStep;
 use Pyz\Zed\DataImport\Business\Model\Customer\CustomerWriterStep;
 use Pyz\Zed\DataImport\Business\Model\DataImporterConditional;
+use Pyz\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
 use Pyz\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareConditional;
+use Pyz\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware;
 use Pyz\Zed\DataImport\Business\Model\DataSet\DataSetConditionInterface;
 use Pyz\Zed\DataImport\Business\Model\Discount\DiscountWriterStep;
 use Pyz\Zed\DataImport\Business\Model\DiscountAmount\DiscountAmountWriterStep;
@@ -953,6 +955,27 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     public function createDataImporterConditional(string $importType, DataReaderInterface $reader): DataImporterConditional
     {
         return new DataImporterConditional($importType, $reader, $this->getGracefulRunnerFacade());
+    }
+
+    /**
+     * @param int|null $bulkSize
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
+     */
+    public function createTransactionAwareDataSetStepBroker($bulkSize = null)
+    {
+        return new DataSetStepBrokerTransactionAware($this->getPropelConnection(), $bulkSize);
+    }
+
+    /**
+     * @param string $importType
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $reader
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware
+     */
+    public function createDataImporterWriterAware($importType, DataReaderInterface $reader)
+    {
+        return new DataImporterDataSetWriterAware($importType, $reader, $this->getGracefulRunnerFacade(), $this->getConfig());
     }
 
     /**
