@@ -68,6 +68,7 @@ use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Sales\AmountSalesUnitO
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\SalesExtension\AmountSalesUnitOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\SalesExtension\ProductPackagingUnitOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\Refund\Communication\Plugin\Sales\RefundSalesListBlockRendererPlugin;
+use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\SelectedVariantAttributesOrderItemExpanderPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\Sales\CommentsSalesOrderDetailDataExpanderPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\Sales\CurrencyIsoCodeOrderItemExpanderPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\Sales\OrderTransferBlockRendererPlugin;
@@ -279,6 +280,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
         return [
             new StateHistoryOrderItemExpanderPlugin(),
             new ProductIdOrderItemExpanderPlugin(),
+            new SelectedVariantAttributesOrderItemExpanderPlugin(),
             new ProductOptionsOrderItemExpanderPlugin(),
             new MetadataOrderItemExpanderPlugin(),
             new UpdateOrderItemIsReturnableByItemStatePlugin(),

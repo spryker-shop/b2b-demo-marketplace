@@ -4,7 +4,7 @@
     isQuantityVisible: true,
 } %}
 
-{%- block extraClass %}{% endblock -%}
+{%- block extraClass %} {{ config.jsName }}{% endblock -%}
 
 {% block body %}
     {% block bundle %}

@@ -13,6 +13,7 @@ use Pyz\Yves\CompanyPage\Plugin\ShopApplication\CompanyUserRestrictionHandlerPlu
 use Pyz\Yves\CompanyWidget\Widget\MenuItemCompanyWidget;
 use Pyz\Yves\CustomerFullNameWidget\Widget\CustomerFullNameWidget;
 use Pyz\Yves\ProductSetWidget\Widget\ProductSetIdsWidget;
+use SprykerShop\Yves\TraceableEventWidget\Widget\ProductTrackingDetailsWidget;
 use Spryker\Yves\CustomerDataChangeRequest\Widget\CustomerEmailChangeRequestWidget;
 use Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
@@ -398,6 +399,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             MerchantRelationshipMenuItemWidget::class,
             MerchantRelationshipLinkListWidget::class,
             TraceableEventWidget::class,
+            ProductTrackingDetailsWidget::class,
             ExpressCheckoutPaymentWidget::class,
             CustomerEmailChangeRequestWidget::class,
             SetMultiFactorAuthMenuItemWidget::class,
