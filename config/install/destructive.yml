@@ -16,6 +16,18 @@ sections:
                 vendor/bin/console configuration:export
                 integrations:google_analytics:tracking:measurement_id
                 integrations:google_analytics:connection:property_id
+                integrations:google_analytics:product_events:view_item_event_enabled
+                integrations:google_analytics:product_events:view_item_list_event_enabled
+                integrations:google_analytics:product_events:select_item_event_enabled
+                integrations:google_analytics:product_events:search_event_enabled
+                integrations:google_analytics:cart_events:add_to_cart_event_enabled
+                integrations:google_analytics:cart_events:remove_from_cart_event_enabled
+                integrations:google_analytics:cart_events:view_cart_event_enabled
+                integrations:google_analytics:customer_list_events:add_to_wishlist_event_enabled
+                integrations:google_analytics:checkout_events:begin_checkout_event_enabled
+                integrations:google_analytics:checkout_events:add_shipping_info_event_enabled
+                integrations:google_analytics:checkout_events:add_payment_info_event_enabled
+                integrations:google_analytics:checkout_events:purchase_event_enabled
                 -vvv --no-ansi
 
     scheduler-clean:
@@ -66,6 +78,18 @@ sections:
                 vendor/bin/console configuration:restore
                 integrations:google_analytics:tracking:measurement_id
                 integrations:google_analytics:connection:property_id
+                integrations:google_analytics:product_events:view_item_event_enabled
+                integrations:google_analytics:product_events:view_item_list_event_enabled
+                integrations:google_analytics:product_events:select_item_event_enabled
+                integrations:google_analytics:product_events:search_event_enabled
+                integrations:google_analytics:cart_events:add_to_cart_event_enabled
+                integrations:google_analytics:cart_events:remove_from_cart_event_enabled
+                integrations:google_analytics:cart_events:view_cart_event_enabled
+                integrations:google_analytics:customer_list_events:add_to_wishlist_event_enabled
+                integrations:google_analytics:checkout_events:begin_checkout_event_enabled
+                integrations:google_analytics:checkout_events:add_shipping_info_event_enabled
+                integrations:google_analytics:checkout_events:add_payment_info_event_enabled
+                integrations:google_analytics:checkout_events:purchase_event_enabled
                 -vvv --no-ansi
 
         configuration-import-environment:

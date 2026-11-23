@@ -68,7 +68,6 @@ use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Sales\AmountSalesUnitO
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\SalesExtension\AmountSalesUnitOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\SalesExtension\ProductPackagingUnitOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\Refund\Communication\Plugin\Sales\RefundSalesListBlockRendererPlugin;
-use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\SelectedVariantAttributesOrderItemExpanderPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\Sales\CommentsSalesOrderDetailDataExpanderPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\Sales\CurrencyIsoCodeOrderItemExpanderPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\Sales\OrderTransferBlockRendererPlugin;
@@ -101,6 +100,7 @@ use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\ItemMetadataSal
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\ItemMetadataSearchOrderExpanderPlugin;
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\MetadataOrderItemExpanderPlugin;
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\ProductIdOrderItemExpanderPlugin;
+use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\SelectedVariantAttributesOrderItemExpanderPlugin;
 use Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension\IsQuantitySplittableOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension\NonSplittableItemTransformerStrategyPlugin;
 use Spryker\Zed\SalesQuoteRequestConnector\Communication\Plugin\Sales\QuoteRequestVersionReferenceOrderPostSavePlugin;
@@ -118,7 +118,8 @@ use Spryker\Zed\Shipment\Communication\Plugin\Sales\ShipmentOrderItemExpanderPlu
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 use Spryker\Zed\ShipmentGui\Communication\Plugin\Sales\ShipmentExpensesSalesOrderDetailDataExpanderPlugin;
 use Spryker\Zed\ShipmentGui\Communication\Plugin\Sales\ShipmentSalesOrderDetailDataExpanderPlugin;
-use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderExpanderPlugin;
+#PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderSearchQueryExpanderPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableCriteriaFilterExpanderPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableFilterFormExpanderPlugin; #PurchasingControlFeature
