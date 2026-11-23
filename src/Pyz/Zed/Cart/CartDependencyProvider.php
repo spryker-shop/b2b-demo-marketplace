@@ -122,7 +122,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
     {
         return [
             new ProductCartPlugin(),
-            new CategoryPathItemExpanderPlugin(),
+//            new CategoryPathItemExpanderPlugin(),
             new AvailabilityItemExpanderPlugin(),
             new IsQuantitySplittableItemExpanderPlugin(),
             new CartItemPricePlugin(),
