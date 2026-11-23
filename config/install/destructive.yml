@@ -74,6 +74,9 @@ sections:
                 integrations:google_analytics:connection:service_account_credentials_json=SPRYKER_GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON
                 -vvv --no-ansi
 
+        captcha-altcha-hmac-secret-generate:
+            command: 'vendor/bin/console captcha-altcha:hmac-secret:generate -vvv --no-ansi'
+
     setup-queue:
         queue-setup:
             command: 'vendor/bin/console queue:setup'

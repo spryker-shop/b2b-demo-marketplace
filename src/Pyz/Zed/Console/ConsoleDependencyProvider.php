@@ -207,6 +207,7 @@ use Spryker\Zed\Workflow\WorkflowConfig;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
+use SprykerEco\Zed\CaptchaAltcha\Communication\Console\CaptchaAltchaHmacSecretGenerateConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerFeature\Zed\CustomerExperienceManagement\CustomerExperienceManagementConfig;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderForecastRefreshConsole;
@@ -471,6 +472,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new SitemapGenerateConsole(),
             new DataImportMerchantImportConsole(),
             new ImportJobRunConsole(),
+            new CaptchaAltchaHmacSecretGenerateConsole(),
 
             // Container commands
             new ContainerBuilderConsole(),

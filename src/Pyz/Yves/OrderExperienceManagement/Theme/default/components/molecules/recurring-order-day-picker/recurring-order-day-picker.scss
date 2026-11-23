@@ -3,7 +3,7 @@
         &__days {
             display: flex;
             flex-wrap: wrap;
-            gap: var(--scale-4);
+            gap: var(--scale-8);
         }
 
         &__day {
@@ -22,36 +22,70 @@
         &__label {
             @include typography(label-md);
             @include helper-effect-transition(background-color border-color color box-shadow);
+            position: relative;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            min-width: rem(80);
-            min-height: var(--scale-24);
-            padding: var(--scale-4) var(--scale-16);
-            border: 1px solid var(--input-border-default);
+            gap: var(--scale-8);
+            box-sizing: border-box;
+            padding: var(--scale-8) var(--scale-12);
+            border: var(--stroke-sm) solid var(--border-default);
             border-radius: var(--radius-md);
-            background-color: var(--input-background-default);
             color: var(--text-primary);
             cursor: pointer;
             user-select: none;
 
+            &::before {
+                @include helper-effect-transition(background-color border-color);
+                content: '';
+                flex-shrink: 0;
+                box-sizing: border-box;
+                width: rem(16);
+                height: rem(16);
+                border: var(--stroke-sm) solid var(--input-border-default);
+                border-radius: var(--radius-xs);
+                background-color: var(--input-background-default);
+            }
+
+            &::after {
+                content: 'check';
+                position: absolute;
+                top: 50%;
+                left: calc(var(--scale-12) + rem(8));
+                translate: -50% -50%;
+                font-family: 'Material Symbols Outlined', sans-serif;
+                font-size: var(--font-size-16);
+                line-height: 1;
+                color: var(--text-inverse);
+                opacity: 0;
+                pointer-events: none;
+            }
+
             &:hover {
-                border-color: var(--input-border-hover);
+                &::before {
+                    border-color: var(--input-border-hover);
+                }
             }
 
             &--error {
-                border-color: var(--input-border-error);
+                border-color: var(--border-state-error);
+
+                &::before {
+                    border-color: var(--input-border-error);
+                }
             }
         }
 
         &__input:checked + &__label {
             border-color: var(--border-brand);
-            background-color: var(--background-brand-primary);
-            color: var(--text-inverse);
 
-            &:hover {
-                border-color: var(--background-brand-hover);
-                background-color: var(--background-brand-hover);
+            &::before,
+            &:hover::before {
+                border-color: var(--background-brand-primary);
+                background-color: var(--background-brand-primary);
+            }
+
+            &::after {
+                opacity: 1;
             }
         }
 
@@ -69,6 +103,15 @@
             background-color: var(--input-background-disabled);
             color: var(--input-text-disabled);
             cursor: not-allowed;
+
+            &::before {
+                border-color: var(--input-border-disabled);
+                background-color: var(--input-background-disabled);
+            }
+
+            &::after {
+                color: var(--icon-disabled);
+            }
         }
 
         @content;

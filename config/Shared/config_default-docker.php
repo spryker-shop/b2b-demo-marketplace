@@ -5,7 +5,6 @@ declare(strict_types = 1);
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\Cms\CmsConstants;
@@ -115,13 +114,6 @@ if (interface_exists(WebProfilerConstants::class)) {
 if (interface_exists(WebProfilerWidgetConstants::class)) {
     $config[WebProfilerWidgetConstants::IS_WEB_PROFILER_ENABLED] = false;
 }
-
-$config[AclConstants::ACL_USER_RULE_WHITELIST][] = [
-    'bundle' => 'wdt',
-    'controller' => '*',
-    'action' => '*',
-    'type' => 'allow',
-];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',
@@ -247,9 +239,6 @@ $defaultKey = reset($connectionKeys);
 if (getenv('SPRYKER_CURRENT_REGION')) {
     $defaultKey = getenv('SPRYKER_CURRENT_REGION');
 }
-if (getenv('APPLICATION_STORE') && (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
-    $defaultKey = getenv('APPLICATION_STORE');
-}
 
 foreach ($rabbitConnections as $key => $connection) {
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key] = $defaultConnection;
@@ -293,7 +282,7 @@ $config[StorageConstants::STORAGE_KV_SOURCE] = strtolower(getenv('SPRYKER_KEY_VA
  */
 //$config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = [];
 
-$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
+$namespaceKey = getenv('SPRYKER_CURRENT_REGION');
 $config[StorageRedisConstants::STORAGE_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;

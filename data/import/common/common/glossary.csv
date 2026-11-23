@@ -2503,6 +2503,8 @@ product_discontinued_widget.note,Note,en_US
 product_discontinued_widget.note,Notiz,de_DE
 product_discontinued.super_attribute_discontinued,Discontinued,en_US
 product_discontinued.super_attribute_discontinued,Abgesetzt,de_DE
+product_discontinued.label,Discontinued,en_US
+product_discontinued.label,Eingestellt,de_DE
 product_discontinued.message.product_discontinued,"Product is discontinued, please choose an alternative one.",en_US
 product_discontinued.message.product_discontinued,"Produkt ist nicht mehr verfügbar, bitte wählen Sie eine Alternative.",de_DE
 shopping_list.pre.check.product_discontinued,"Product %sku% is discontinued, please choose an alternative one.",en_US
@@ -2776,8 +2778,8 @@ agent.control_bar.switch_customer_confirm_body,"Your session will end with %curr
 agent.control_bar.switch_customer_confirm_body,"Ihre Sitzung mit %currentName% wird beendet, wenn Sie zu %newName% wechseln. Bitte bestätigen Sie, ob Sie fortfahren möchten.",de_DE
 agent.autocomplete.no_results,No results found,en_US
 agent.autocomplete.no_results,Keine Ergebnisse gefunden,de_DE
-agent_security_blocker_merchant_portal_gui.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-agent_security_blocker_merchant_portal_gui.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+agent_security_blocker_merchant_portal_gui.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+agent_security_blocker_merchant_portal_gui.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
 autocomplete.placeholder,Search,en_US
 autocomplete.placeholder,Suche,de_DE
 bundle.title,Bundle includes,en_US
@@ -3361,22 +3363,6 @@ shipping.address.country.validation.not_found,Shipping address country not found
 shipping.address.country.validation.not_found,Lieferadresse Land für Ländercode nicht gefunden: %code%,de_DE
 product_search_widget.search.product_discontinued_prefix,[Discontinued],en_US
 product_search_widget.search.product_discontinued_prefix,[Abgesetzt],de_DE
-configurable_bundle.template.name.1,"Office bundle",en_US
-configurable_bundle.template.name.1,Office-Bundle,de_DE
-configurable_bundle.template.name.2,"Presentation bundle",en_US
-configurable_bundle.template.name.2,Präsentations-Bundle,de_DE
-configurable_bundle.template_slots.slot-1.name,Slot 1,en_US
-configurable_bundle.template_slots.slot-1.name,Slot 1,de_DE
-configurable_bundle.template_slots.slot-2.name,Slot 2,en_US
-configurable_bundle.template_slots.slot-2.name,Slot 2,de_DE
-configurable_bundle.template_slots.slot-3.name,Slot 3,en_US
-configurable_bundle.template_slots.slot-3.name,Slot 3,de_DE
-configurable_bundle.template_slots.slot-4.name,Slot 4,en_US
-configurable_bundle.template_slots.slot-4.name,Slot 4,de_DE
-configurable_bundle.template_slots.slot-5.name,Slot 5,en_US
-configurable_bundle.template_slots.slot-5.name,Slot 5,de_DE
-configurable_bundle.template_slots.slot-6.name,Slot 6,en_US
-configurable_bundle.template_slots.slot-6.name,Slot 6,de_DE
 configurable_bundle.template.validation.error.not_exists,Configurable bundle template does not exist.,en_US
 configurable_bundle.template.validation.error.not_exists,Vorlage des konfigurierbaren Bündels existiert nicht.,de_DE
 configurable_bundle.slot.validation.error.not_exists,Configurable bundle template slot does not exist.,en_US
@@ -3643,8 +3629,10 @@ order_invoice.invoice_template.table.subtotal,Subtotal,en_US
 order_invoice.invoice_template.table.subtotal,Zwischensumme,de_DE
 order_invoice.invoice_template.table.discount,Discount,en_US
 order_invoice.invoice_template.table.discount,Rabatt,de_DE
-order_invoice.invoice_template.table.tax.included,this includes %tax_rate%% VAT net,en_US
-order_invoice.invoice_template.table.tax.included,darin enthalten %tax_rate%% MwSt. Netto,de_DE
+order_invoice.invoice_template.table.shipment,Shipment: %name%,en_US
+order_invoice.invoice_template.table.shipment,Versand: %name%,de_DE
+order_invoice.invoice_template.table.tax.included,this includes %tax_rate%% VAT,en_US
+order_invoice.invoice_template.table.tax.included,darin enthalten %tax_rate%% MwSt.,de_DE
 order_invoice.invoice_template.table.tax.name,VAT,en_US
 order_invoice.invoice_template.table.tax.name,MwSt.,de_DE
 order_invoice.invoice_template.table.grandtotal,Grand total,en_US
@@ -3663,8 +3651,10 @@ order_invoice.invoice_template.merchant.name,Spryker Systems GmbH Berlin,en_US
 order_invoice.invoice_template.merchant.name,Spryker Systems GmbH Berlin,de_DE
 order_invoice.invoice_template.merchant.address,Julie-Wolfthorn-Straße 1 + 10115 Berlin,en_US
 order_invoice.invoice_template.merchant.address,Julie-Wolfthorn-Straße 1 + 10115 Berlin,de_DE
-order_invoice.invoice_template.table.total.net,Total net,en_US
-order_invoice.invoice_template.table.total.net,Gesamt Netto,de_DE
+order_invoice.invoice_template.merchant.registration_number,Registration number:,en_US
+order_invoice.invoice_template.merchant.registration_number,Registernummer:,de_DE
+order_invoice.invoice_template.table.total.net,Total net amount,en_US
+order_invoice.invoice_template.table.total.net,Nettobetrag gesamt,de_DE
 return_page.list.title,Returns,en_US
 return_page.list.title,Retouren,de_DE
 return_page.account.no_return,No returns found!,en_US
@@ -3979,12 +3969,22 @@ customer.password.error.character_set,"Password must contain at least 1 characte
 customer.password.error.character_set,"Passwort muss mindestens 1 Zeichen von jeder erlaubten Zeichengruppe enthalten: Großschreibung, Kleinschreibung, Zahl und ein Sonderzeichen.",de_DE
 error.429,Zu viele Anfragen,de_DE
 error.429,Too Many Requests,en_US
-security_blocker_page.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-security_blocker_page.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
-security_blocker_backoffice_gui.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-security_blocker_backoffice_gui.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
-security_blocker_merchant_portal_gui.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
-security_blocker_merchant_portal_gui.error.account_blocked,"Warten Sie bitte %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+security_blocker_page.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+security_blocker_page.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+security_blocker_backoffice_gui.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+security_blocker_backoffice_gui.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+security_blocker_merchant_portal_gui.error.account_blocked,"Too many login attempts. Please wait %minutes% minutes before trying again.",en_US
+security_blocker_merchant_portal_gui.error.account_blocked,"Zu viele Anmeldeversuche. Bitte warten Sie %minutes% Minuten, bevor Sie es erneut versuchen.",de_DE
+captcha.error.required,"Please complete the security check.",en_US
+captcha.error.required,"Bitte schließen Sie die Sicherheitsprüfung ab.",de_DE
+captcha.error.invalid,"The security check could not be verified. Please try again.",en_US
+captcha.error.invalid,"Die Sicherheitsprüfung konnte nicht bestätigt werden. Bitte versuchen Sie es erneut.",de_DE
+captcha.error.expired,"The security check has expired. Please try again.",en_US
+captcha.error.expired,"Die Sicherheitsprüfung ist abgelaufen. Bitte versuchen Sie es erneut.",de_DE
+captcha.error.unavailable,"The security check is currently unavailable. Please try again later.",en_US
+captcha.error.unavailable,"Die Sicherheitsprüfung ist derzeit nicht verfügbar. Bitte versuchen Sie es später erneut.",de_DE
+captcha.noscript,"Please enable JavaScript to complete the security check.",en_US
+captcha.noscript,"Bitte aktivieren Sie JavaScript, um die Sicherheitsprüfung abzuschließen.",de_DE
 payment_foreign.thank_you,Danke,de_DE
 payment_foreign.thank_you,Thank you,en_US
 payment_foreign.go_to_my_account,Gehe zum "Benutzerkonto",de_DE
@@ -7768,3 +7768,29 @@ sales_invoice.order_documents.pdf,PDF,en_US
 sales_invoice.order_documents.pdf,PDF,de_DE
 sales_invoice.order_documents.save_as_pdf,Save as PDF,en_US
 sales_invoice.order_documents.save_as_pdf,Als PDF speichern,de_DE
+customer.change_customer_email_limit_exceeded,"You reached the limit of email change requests. Please try again later.",en_US
+customer.change_customer_email_limit_exceeded,"Sie haben das Limit für Anfragen zur Änderung der E-Mail-Adresse erreicht. Bitte versuchen Sie es später erneut.",de_DE
+customer.password.change_limit_exceeded,"You reached the limit of password change attempts. Please try again later.",en_US
+customer.password.change_limit_exceeded,"Sie haben das Limit für Versuche zur Änderung des Passworts erreicht. Bitte versuchen Sie es später erneut.",de_DE
+product.quantity-note.hvv-dn32,"Sold in pairs — one valve for flow, one for return.",en_US
+product.quantity-note.hvv-dn32,"Paarweise verkauft — ein Ventil für den Vorlauf, eines für den Rücklauf.",de_DE
+product.quantity-max-note.hvv-dn32,Need more than 10 pairs? Request a quote.,en_US
+product.quantity-max-note.hvv-dn32,Sie benötigen mehr als 10 Paare? Fordern Sie ein Angebot an.,de_DE
+purchasing_control.selector.title,Cost center & budget,en_US
+purchasing_control.selector.title,Kostenstelle & Budget,de_DE
+purchasing_control.budget.remaining_short,Remaining,en_US
+purchasing_control.budget.remaining_short,Verbleibend,de_DE
+purchasing_control.budget.used_of_total,Used %used% / %total%,en_US
+purchasing_control.budget.used_of_total,Verwendet %used% / %total%,de_DE
+purchasing_control.budget.status.applied,Applied,en_US
+purchasing_control.budget.status.applied,Übernommen,de_DE
+purchasing_control.budget.status.not_applied,Not applied,en_US
+purchasing_control.budget.status.not_applied,Nicht übernommen,de_DE
+purchasing_control.budget.status.over_budget,Over budget · not applied,en_US
+purchasing_control.budget.status.over_budget,Budget überschritten · nicht übernommen,de_DE
+purchasing_control.budget.hint.applied,%budget% is linked to this order.,en_US
+purchasing_control.budget.hint.applied,%budget% ist mit dieser Bestellung verknüpft.,de_DE
+purchasing_control.budget.hint.not_applied,Select Apply to link this budget to the order.,en_US
+purchasing_control.budget.hint.not_applied,"Wählen Sie Übernehmen, um dieses Budget mit der Bestellung zu verknüpfen.",de_DE
+purchasing_control.budget.hint.over_budget,This budget is over its limit. Select Apply to use it for this order.,en_US
+purchasing_control.budget.hint.over_budget,"Dieses Budget hat sein Limit überschritten. Wählen Sie Übernehmen, um es für diese Bestellung zu verwenden.",de_DE

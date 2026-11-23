@@ -53,6 +53,7 @@ use Spryker\Zed\Scheduler\Communication\Plugin\Twig\SchedulerTwigPlugin;
 use Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\FilesystemTwigLoaderPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\FormFilesystemTwigLoaderPlugin;
+use Spryker\Zed\Twig\Communication\Plugin\SharedThemeTwigLoaderPlugin;
 use Spryker\Zed\Twig\TwigDependencyProvider as SprykerTwigDependencyProvider;
 use Spryker\Zed\User\Communication\Plugin\Twig\UserTwigPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\Twig\WebProfilerTwigLoaderPlugin;
@@ -135,6 +136,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new FormFilesystemTwigLoaderPlugin(),
             new GuiTwigLoaderPlugin(),
             new CmsBlockTemplateTwigLoaderPlugin(),
+            new SharedThemeTwigLoaderPlugin(),
         ];
 
         if (class_exists(WebProfilerTwigLoaderPlugin::class)) {

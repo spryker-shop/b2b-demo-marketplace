@@ -31,6 +31,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Sales\SalesDiscountSalesExpensePre
 use Spryker\Zed\MerchantOms\Communication\Plugin\Sales\MerchantStateOrderItemExpanderPlugin;
 use Spryker\Zed\MerchantOmsGui\Communication\Plugin\Sales\MerchantOmsStateOrderItemsTableExpanderPlugin;
 use Spryker\Zed\MerchantProfile\Communication\Plugin\Sales\MerchantDataOrderHydratePlugin;
+use Spryker\Zed\MerchantSalesInvoice\Communication\Plugin\Sales\MerchantOrderInvoiceSalesListBlockRendererPlugin;
 use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantOrderDataOrderExpanderPlugin;
 use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantReferenceOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantReferencesOrderExpanderPlugin;
@@ -78,7 +79,6 @@ use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\ConfiguredBun
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\SalesConfigurableBundleSalesOrderItemCollectionPreDeletePlugin;
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\SalesConfiguredBundlesSalesOrderItemCollectionPostUpdatePlugin;
 use Spryker\Zed\SalesInvoice\Communication\Plugin\Sales\OrderInvoiceOrderExpanderPlugin;
-use Spryker\Zed\SalesInvoice\Communication\Plugin\Sales\OrderInvoiceSalesListBlockRendererPlugin;
 use Spryker\Zed\SalesMerchantCommission\Communication\Plugin\Sales\MerchantCommissionOrderPostCancelPlugin;
 use Spryker\Zed\SalesOms\Communication\Plugin\OrderItemReferenceExpanderPreSavePlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Sales\CreateSalesOrderAmendmentOrderPostSavePlugin;
@@ -461,7 +461,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
     protected function getSalesDetailBlockRendererPlugins(): array
     {
         return [
-            new OrderInvoiceSalesListBlockRendererPlugin(),
+            new MerchantOrderInvoiceSalesListBlockRendererPlugin(),
             new OrderTransferBlockRendererPlugin(),
             new SalesCommentBlockRendererPlugin(),
             new SalesReturnListBlockRendererPlugin(),

@@ -1,6 +1,6 @@
 {% extends template('page-layout-auth') %}
 
-{% set authErrors = app.session.flashbag.peek('flash.messages.error') %}
+{% set authErrors = app.session.flashbag.get('flash.messages.error') %}
 
 {% block content %}
     {% include molecule('auth-login', 'CustomerPage') with {
@@ -8,7 +8,8 @@
             form: _view.loginForm,
             subtitle: 'agent.login',
             formQa: 'agent-login-form',
-            hasFlashError: authErrors is not empty,
+            errorMessages: authErrors,
+            authenticationFailedMessage: 'agent.authentication.failed',
             mfaUrl: 'multiFactorAuth/getUserEnabledTypes',
         },
     } only %}

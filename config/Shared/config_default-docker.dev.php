@@ -58,39 +58,41 @@ use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
 // ----------------------------------------------------------------------------
 
 // >>> Debug
+$debug = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+$testing = (bool)getenv('SPRYKER_TESTING_ENABLED');
 
-$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = !(bool)getenv('SPRYKER_TESTING_ENABLED');
-$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = !(bool)getenv('SPRYKER_TESTING_ENABLED');
+$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = !$testing;
+$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = !$testing;
 
 $config[ApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[ShopApplicationConstants::ENABLE_APPLICATION_DEBUG]
-    = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+    = $debug;
 
-$config[PropelConstants::PROPEL_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
-$config[CalculationPageConstants::ENABLE_CART_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
-$config[ErrorPageConstants::ENABLE_ERROR_404_STACK_TRACE] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
-$config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+$config[PropelConstants::PROPEL_DEBUG] = $debug;
+$config[CalculationPageConstants::ENABLE_CART_DEBUG] = $debug;
+$config[ErrorPageConstants::ENABLE_ERROR_404_STACK_TRACE] = $debug;
+$config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = $debug;
 $config[GlueApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[GlueBackendApiApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[GlueStorefrontApiApplicationConstants::ENABLE_APPLICATION_DEBUG]
-    = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+    = $debug;
 
 // >>> Dev tools
 
 if (interface_exists(WebProfilerConstants::class, true)) {
     $config[WebProfilerConstants::IS_WEB_PROFILER_ENABLED]
         = $config[WebProfilerWidgetConstants::IS_WEB_PROFILER_ENABLED]
-        = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+        = $debug;
 }
-$config[KernelConstants::ENABLE_CONTAINER_OVERRIDING] = (bool)getenv('SPRYKER_TESTING_ENABLED');
+$config[KernelConstants::ENABLE_CONTAINER_OVERRIDING] = $testing;
 $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GENERATION] = true;
 
 // >>> Error handler
 
 $config[ErrorHandlerConstants::DISPLAY_ERRORS] = true;
-$config[ErrorHandlerConstants::ERROR_RENDERER] = getenv('SPRYKER_DEBUG_ENABLED') ? WebExceptionErrorRenderer::class : WebHtmlErrorRenderer::class;
-$config[ErrorHandlerConstants::API_ERROR_RENDERER] = getenv('SPRYKER_DEBUG_ENABLED') ? ApiDebugErrorRenderer::class : ApiErrorRenderer::class;
-$config[ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+$config[ErrorHandlerConstants::ERROR_RENDERER] = $debug ? WebExceptionErrorRenderer::class : WebHtmlErrorRenderer::class;
+$config[ErrorHandlerConstants::API_ERROR_RENDERER] = $debug ? ApiDebugErrorRenderer::class : ApiErrorRenderer::class;
+$config[ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED] = $debug;
 $config[ErrorHandlerConstants::ERROR_LEVEL] = getenv('SPRYKER_DEBUG_DEPRECATIONS_ENABLED') ? E_ALL : $config[ErrorHandlerConstants::ERROR_LEVEL];
 
 // ----------------------------------------------------------------------------
@@ -110,12 +112,12 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION][EventConstants::EVENT_QUEUE
 
 $config[EventConstants::LOGGER_ACTIVE] = true;
 $config[PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION] = true;
-$config[LogConstants::LOG_LEVEL] = getenv('SPRYKER_DEBUG_ENABLED') ? Logger::INFO : Logger::DEBUG;
+$config[LogConstants::LOG_LEVEL] = $debug ? Logger::INFO : Logger::DEBUG;
 
 // >>> ZED REQUEST
 
-$config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = getenv('SPRYKER_DEBUG_ENABLED') && filter_has_var(INPUT_COOKIE, 'XDEBUG_SESSION');
-$config[ZedRequestConstants::SET_REPEAT_DATA] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+$config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = $debug && filter_has_var(INPUT_COOKIE, 'XDEBUG_SESSION');
+$config[ZedRequestConstants::SET_REPEAT_DATA] = $debug;
 
 $isTestifyConstantsClassExists = class_exists(TestifyConstants::class);
 

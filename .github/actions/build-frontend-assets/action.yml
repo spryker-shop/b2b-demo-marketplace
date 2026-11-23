@@ -1,0 +1,76 @@
+name: "Build frontend assets"
+description: >
+    Build the Yves, Back Office and (b2b-mp only) Merchant Portal assets on the runner and save them
+    under the key restore-frontend-assets resolved. Used by build-frontend (the producer) and by the
+    consumer jobs as a fallback when their restore misses, so the build lives in one place.
+    Needs vendor/ (composer install) and, for the b2b variant, the apply-b2b-changes action first.
+
+inputs:
+    variant:
+        description: "Frontend variant: b2b-mp or b2b."
+        required: true
+    cache-key:
+        description: "Cache key to save under (the key output of restore-frontend-assets)."
+        required: true
+
+runs:
+    using: composite
+    steps:
+        -   uses: actions/setup-node@v5
+            with:
+                node-version: 24
+                cache: npm
+
+        -   name: Install NPM packages
+            shell: bash
+            run: npm ci --no-audit --no-fund
+
+        # The frontend:* console commands write each application's build configuration
+        # (namespaces, themes) before they run the npm build, as the install recipes do.
+        # A plain `npm run <app>` skips that step and builds from src/ only.
+        # data/logs is created first: without it the Propel log path falls back to the
+        # store-based one, and the console stops on the undefined APPLICATION_STORE.
+        -   name: Generate transfers
+            shell: bash
+            env:
+                APPLICATION_ENV: devtest
+            run: |
+                mkdir -p data/logs
+                vendor/bin/console transfer:generate --quiet-meta
+
+        -   name: Yves
+            shell: bash
+            env:
+                APPLICATION_ENV: devtest
+            run: vendor/bin/console frontend:yves:build
+
+        -   name: Backoffice
+            shell: bash
+            env:
+                APPLICATION_ENV: devtest
+            run: vendor/bin/console frontend:zed:build --environment production
+
+        -   name: Merchant Portal
+            if: ${{ inputs.variant == 'b2b-mp' }}
+            shell: bash
+            env:
+                APPLICATION_ENV: devtest
+            run: vendor/bin/console frontend:mp:build
+
+        -   name: Save frontend assets
+            uses: actions/cache/save@v4
+            with:
+                path: |
+                    public/Yves/assets
+                    public/Zed/assets
+                    public/Backoffice/assets
+                    public/MerchantPortal/assets
+                key: ${{ inputs.cache-key }}
+
+        # The transfer:generate step above creates src/Generated on the runner. docker/sdk (mount mode)
+        # skips the whole install `build` section (propel:model:build and the rest) when src/Generated
+        # already exists, so a consumer job that builds inline would boot without Propel models and
+        # fail in setup:init-db. Remove it, so the container build always runs.
+        -   name: Remove generated code of the host build
+            shell: bash
+            run: rm -rf src/Generated

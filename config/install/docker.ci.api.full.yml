@@ -110,6 +110,9 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db'
 
+        captcha-altcha-hmac-secret-generate:
+            command: 'vendor/bin/console captcha-altcha:hmac-secret:generate'
+
     demodata:
         queue-setup:
             command: 'vendor/bin/console queue:setup'

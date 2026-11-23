@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\CustomerPage;
 
+use Spryker\Yves\Captcha\Plugin\CustomerPage\CustomerLoginFormCaptchaExpanderPlugin;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\MerchantShipment\Plugin\CustomerPage\MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin;
 use Spryker\Yves\MultiFactorAuth\Plugin\AuthenticationHandler\Customer\CustomerMultiFactorAuthenticationHandlerPlugin;
@@ -190,6 +191,16 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         return [
             new KnpuCustomerAuthenticationLinkPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerLoginFormExpanderPluginInterface>
+     */
+    protected function getCustomerLoginFormExpanderPlugins(): array
+    {
+        return [
+            new CustomerLoginFormCaptchaExpanderPlugin(),
         ];
     }
 }

@@ -2,29 +2,31 @@
 <statemachine
     xmlns="spryker:oms-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
+    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd"
+>
 
     <process name="MarketplaceInvoice">
         <states>
-            <state name="invoice generated" display="oms.state.invoice-generated"/>
+            <state name="invoice generated" reserved="true" display="oms.state.shipped-by-merchant"/>
         </states>
 
         <transitions>
-            <transition>
-                <source>delivered</source>
+            <transition happy="true">
+                <source>shipped by merchant</source>
                 <target>invoice generated</target>
                 <event>invoice-generate</event>
             </transition>
-            <transition>
+
+            <transition happy="true">
                 <source>invoice generated</source>
                 <target>delivered</target>
-                <event>invoice-generated</event>
+                <event>deliver</event>
             </transition>
         </transitions>
 
         <events>
-            <event name="invoice-generate" manual="true" command="Invoice/Generate"/>
-            <event name="invoice-generated" onEnter="true"/>
+            <event name="invoice-generate" onEnter="true" command="MerchantInvoice/Generate"/>
+            <event name="deliver"/>
         </events>
     </process>
 

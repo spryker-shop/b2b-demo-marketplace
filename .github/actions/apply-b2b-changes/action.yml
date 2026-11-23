@@ -1,0 +1,17 @@
+name: "Apply b2b changes"
+description: >
+    Apply the marketplace uninstall that the Prepare B2B job (_prepare-b2b.yml) saved as the run
+    artifact b2b-uninstall. Run it right after the checkout: before `composer install` (it changes
+    composer.json and composer.lock) and before restore-frontend-assets (part of its key).
+
+runs:
+    using: composite
+    steps:
+        -   uses: actions/download-artifact@v6
+            with:
+                name: b2b-uninstall
+                path: ${{ runner.temp }}
+
+        -   name: Apply the b2b changes
+            shell: bash
+            run: git apply --binary "$RUNNER_TEMP/b2b-uninstall.patch"

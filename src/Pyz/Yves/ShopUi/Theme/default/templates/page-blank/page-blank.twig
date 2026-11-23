@@ -24,6 +24,16 @@
     {% endif %}
 {% endblock %}
 
+{% block headScripts %}
+    {{ parent() }}
+
+    {% set customHeadScripts = configurationValue('theme:storefront:custom_scripts:yves_head_scripts') %}
+
+    {% if customHeadScripts is not empty %}
+        {{ customHeadScripts | raw }}
+    {% endif %}
+{% endblock %}
+
 {% block template %}
     {% set isCssLazyLoadSupported = true %}
     {% set viewportUserScaleable = 'yes' %}

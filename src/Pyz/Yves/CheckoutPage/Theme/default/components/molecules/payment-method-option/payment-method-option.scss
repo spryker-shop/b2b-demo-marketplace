@@ -1,0 +1,68 @@
+@mixin checkout-page-payment-method-option($name: '.payment-method-option') {
+    $toggler: '.toggler-radio';
+
+    #{$name} {
+        @include helper-effect-transition(border-color background-color box-shadow);
+        display: block;
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-md);
+
+        #{$toggler} {
+            display: block;
+        }
+
+        #{$toggler}__container {
+            gap: var(--scale-12);
+            padding: var(--scale-12) var(--scale-16);
+        }
+
+        #{$toggler}__label,
+        #{$toggler}__input:checked ~ #{$toggler}__label {
+            @include typography(label-md);
+            color: var(--text-primary);
+        }
+
+        #{$toggler}__input:checked ~ #{$toggler}__box {
+            background: none;
+        }
+
+        &:hover {
+            border-color: var(--border-brand);
+        }
+
+        &:not(#{$name}--error):hover #{$toggler}__box {
+            border-color: var(--input-border-hover);
+        }
+
+        &--error {
+            border-color: var(--border-state-error);
+
+            #{$toggler}__box {
+                border-color: var(--input-border-error);
+            }
+        }
+
+        &:has(#{$toggler}__input:focus-visible) {
+            border-color: var(--border-brand);
+        }
+
+        &:has(#{$toggler}__input:checked) {
+            border-color: var(--border-brand);
+        }
+
+        &:has(#{$toggler}__input:checked) #{$toggler}__box {
+            border-color: var(--border-brand);
+        }
+
+        &__details {
+            @include typography(body-md);
+            margin: var(--scale-4) var(--scale-16) var(--scale-16) calc(var(--scale-16) + rem(18) + var(--scale-12));
+            padding-top: var(--scale-16);
+            border-top: var(--stroke-sm) solid var(--border-subtle);
+        }
+
+        @content;
+    }
+}
+
+@include checkout-page-payment-method-option();

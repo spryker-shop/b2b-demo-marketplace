@@ -108,12 +108,6 @@
             </transition>
 
             <transition happy="true">
-                <source>shipped by merchant</source>
-                <target>delivered</target>
-                <event>deliver</event>
-            </transition>
-
-            <transition happy="true">
                 <source>delivered</source>
                 <target>closed</target>
                 <event>close</event>
@@ -130,7 +124,6 @@
             <event name="send to merchant" onEnter="true" command="MerchantSalesOrder/CreateOrders"/>
             <event name="submit tax invoice" onEnter="true" command="Vertex/SubmitPaymentTaxInvoice"/>
             <event name="ship by merchant"/>
-            <event name="deliver"/>
             <event name="close" manual="true" command="MerchantOms/CloseOrderItem"/>
         </events>
 

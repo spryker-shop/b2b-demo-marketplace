@@ -243,7 +243,7 @@ class SspInquiriesRestApiFixtures implements FixturesBuilderInterface, FixturesC
     protected function createAsset(SelfServicePortalApiTester $I): void
     {
         $this->assetTransfer = $I->haveAsset([
-            SspAssetTransfer::REFERENCE => 'ASSET-00100001123',
+            SspAssetTransfer::REFERENCE => 'ASSET-INQUIRY-00100001',
             SspAssetTransfer::EXTERNAL_IMAGE_URL => 'https://example.com/asset.pdf',
             SspAssetTransfer::COMPANY_BUSINESS_UNIT => $this->companyBusinessUnitTransfer,
             SspAssetTransfer::SERIAL_NUMBER => 'test-serial-123',
