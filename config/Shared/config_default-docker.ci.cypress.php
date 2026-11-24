@@ -14,6 +14,7 @@ use Spryker\Shared\SecurityBlockerBackoffice\SecurityBlockerBackofficeConstants;
 use Spryker\Shared\SecurityBlockerMerchantPortal\SecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\SecurityBlockerStorefrontAgent\SecurityBlockerStorefrontAgentConstants;
 use Spryker\Shared\SecurityBlockerStorefrontCustomer\SecurityBlockerStorefrontCustomerConstants;
+use SprykerEco\Shared\CaptchaAltcha\CaptchaAltchaConstants;
 use SprykerShop\Shared\ShopUi\ShopUiConstants;
 
 require 'config_default-docker.ci.php';
@@ -34,4 +35,7 @@ $config[SecurityBlockerStorefrontCustomerConstants::CUSTOMER_BLOCKING_NUMBER_OF_
 $config[SecurityBlockerBackofficeConstants::BACKOFFICE_USER_BLOCKING_NUMBER_OF_ATTEMPTS] = 1000;
 $config[SecurityBlockerMerchantPortalConstants::MERCHANT_PORTAL_USER_BLOCKING_NUMBER_OF_ATTEMPTS] = 1000;
 $config[AgentSecurityBlockerMerchantPortalConstants::AGENT_MERCHANT_PORTAL_BLOCKING_NUMBER_OF_ATTEMPTS] = 1000;
+$config[CaptchaAltchaConstants::COST] = 1;
+$config[CaptchaAltchaConstants::MEMORY_COST] = 1024;
+$config[CaptchaAltchaConstants::MINIMUM_COUNTER] = 2;
 $config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = true;

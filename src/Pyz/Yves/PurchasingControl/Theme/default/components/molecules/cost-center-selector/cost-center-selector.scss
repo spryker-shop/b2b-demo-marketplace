@@ -1,7 +1,157 @@
-.cost-center-selector {
-    .select2-selection__rendered {
-        height: fit-content;
-        min-height: rem(36);
-        padding-block: var(--scale-6);
+@mixin purchasing-control-cost-center-selector($name: '.cost-center-selector') {
+    #{$name} {
+        --status-bar-color: var(--background-state-success-bold);
+        --status-value-color: var(--text-primary);
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-16);
+        padding: var(--scale-16);
+        border: var(--stroke-sm) solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+
+        &__header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--scale-8);
+        }
+
+        &__title {
+            @include typography(heading-sm);
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        &__badge-icon {
+            font-size: rem(14);
+        }
+
+        &__form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-16);
+        }
+
+        &__fields {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--scale-16);
+
+            @include helper-breakpoint-media-min($md) {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        &__field {
+            min-width: 0;
+            margin: 0;
+        }
+
+        &__no-budgets {
+            @include typography(body-md);
+            color: var(--text-secondary);
+        }
+
+        &__locked-row {
+            @include typography(body-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--scale-8);
+            color: var(--text-primary);
+        }
+
+        &__locked-label {
+            color: var(--text-secondary);
+        }
+
+        &__status {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+            padding: var(--scale-12);
+            border-radius: var(--radius-md);
+            border: var(--stroke-sm) solid var(--border-subtle);
+
+            &--over-budget {
+                --status-bar-color: var(--background-state-error-bold);
+                --status-value-color: var(--text-state-error);
+            }
+        }
+
+        &__status-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--scale-4) var(--scale-16);
+        }
+
+        &__remaining {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+        }
+
+        &__remaining-label {
+            @include typography(label-md);
+            color: var(--text-secondary);
+        }
+
+        &__remaining-value {
+            font-size: var(--font-size-16);
+            font-weight: var(--font-weight-semibold);
+            line-height: var(--font-line-height-24);
+            letter-spacing: var(--font-letter-spacing-tight);
+            color: var(--status-value-color);
+        }
+
+        &__usage {
+            @include typography(body-sm);
+            color: var(--text-secondary);
+        }
+
+        &__progress {
+            height: var(--scale-8);
+            border-radius: var(--radius-full);
+            background: var(--background-muted);
+            overflow: hidden;
+        }
+
+        &__progress-bar {
+            height: 100%;
+            border-radius: var(--radius-full);
+            background: var(--status-bar-color);
+            transition: width 0.24s ease-out;
+        }
+
+        &__footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--scale-16);
+        }
+
+        &__hints {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        &__hint {
+            @include typography(body-md);
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        &__apply {
+            flex-shrink: 0;
+
+            .button {
+                min-height: rem(40);
+            }
+        }
     }
 }
+
+@include purchasing-control-cost-center-selector();

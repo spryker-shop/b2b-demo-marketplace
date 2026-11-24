@@ -21,12 +21,19 @@
                 { "type": "remove_array_entry", "key": "agent-merchant@spryker.com" },
                 { "type": "remove_constant", "constant_name": "MERCHANT_PORTAL_ACCESS_DENIED_URI" },
                 { "type": "remove_constant", "constant_name": "APPLICATION_MERCHANT_PORTAL" },
-                { "type": "remove_method", "method_name": "getAccessDeniedUri" }
+                { "type": "remove_method", "method_name": "getAccessDeniedUri" },
+                {
+                    "type": "regex_replace",
+                    "pattern": "\\n            \\[\\n                'bundle' => 'captcha',\\n                'controller' => 'merchant-portal-challenge',\\n                'action' => 'index',\\n                'type' => AclConstants::ALLOW,\\n            \\],",
+                    "replacement": "",
+                    "flags": ""
+                }
             ],
             "success_messages": [
                 "✓ AclConfig cleaned from marketplace-specific code",
                 "✓ Removed agent-merchant@spryker.com user",
-                "✓ Removed Merchant Portal access-denied URI override"
+                "✓ Removed Merchant Portal access-denied URI override",
+                "✓ Removed the Merchant Portal CAPTCHA challenge endpoint rule"
             ]
         },
         "src/Pyz/Zed/Acl/AclDependencyProvider.php": {
@@ -86,6 +93,21 @@
                 }
             ],
             "success_messages": ["✓ AvailabilityGuiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Captcha/CaptchaDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "SecurityBlockerMerchantPortalUserCaptchaRequirementPlugin" },
+                { "type": "remove_use", "class_name": "SecurityBlockerAgentMerchantPortalCaptchaRequirementPlugin" },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "SecurityBlockerMerchantPortalUserCaptchaRequirementPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "SecurityBlockerAgentMerchantPortalCaptchaRequirementPlugin"
+                }
+            ],
+            "success_messages": ["✓ CaptchaDependencyProvider cleaned from Merchant Portal CAPTCHA requirement plugins"]
         },
         "src/Pyz/Zed/Calculation/CalculationDependencyProvider.php": {
             "operations": [
@@ -1403,6 +1425,7 @@
         "src/Pyz/Zed/AclEntity:AclEntity",
         "src/Pyz/Zed/AclMerchantAgent:AclMerchantAgent",
         "src/Pyz/Zed/AgentDashboardMerchantPortalGui:AgentDashboardMerchantPortalGui",
+        "src/Pyz/Zed/AgentSecurityBlockerMerchantPortalGui:AgentSecurityBlockerMerchantPortalGui",
         "src/Pyz/Zed/AgentSecurityMerchantPortalGui:AgentSecurityMerchantPortalGui",
         "src/Pyz/Zed/DashboardMerchantPortalGui:DashboardMerchantPortalGui",
         "src/Pyz/Zed/DataImportMerchantPortalGui:DataImportMerchantPortalGui",
@@ -1429,6 +1452,7 @@
         "src/Pyz/Zed/SalesMerchantPortalGui:SalesMerchantPortalGui",
         "src/Pyz/Zed/SalesPaymentMerchant:SalesPaymentMerchant",
         "src/Pyz/Zed/SalesPaymentMerchantSalesMerchantCommission:SalesPaymentMerchantSalesMerchantCommission",
+        "src/Pyz/Zed/SecurityBlockerMerchantPortalGui:SecurityBlockerMerchantPortalGui",
         "src/Pyz/Zed/SecurityMerchantPortalGui:SecurityMerchantPortalGui",
         "src/Pyz/Zed/UserMerchantPortalGui:UserMerchantPortalGui",
         "src/Pyz/Glue/MerchantsRestApi:MerchantsRestApi",
@@ -1499,6 +1523,28 @@
         }
     },
     "test_files": {
+        "tests/PyzTest/Zed/Acl/Communication/AclConfigTest.php": {
+            "operations": [
+                {
+                    "type": "remove_method",
+                    "method_name": "testGetRulesAllowsTheMerchantPortalCaptchaChallengeEndpoint"
+                }
+            ],
+            "success_messages": ["✓ Removed the Merchant Portal CAPTCHA challenge endpoint rule test"]
+        },
+        "tests/PyzTest/Zed/Security/Communication/CaptchaChallengeEndpointAccessTest.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConfig" },
+                { "type": "remove_constant", "constant_name": "MERCHANT_PORTAL_CHALLENGE_PATH" },
+                { "type": "remove_method", "method_name": "testMerchantPortalChallengeEndpointIsPublic" },
+                {
+                    "type": "remove_method",
+                    "method_name": "testMerchantPortalPathsBesideTheChallengeEndpointAreNotPublic"
+                },
+                { "type": "remove_method", "method_name": "provideMerchantPortalPathsBesideTheChallengeEndpoint" }
+            ],
+            "success_messages": ["✓ Removed the Merchant Portal CAPTCHA challenge endpoint tests"]
+        },
         "tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml": {
             "operations": [
                 {

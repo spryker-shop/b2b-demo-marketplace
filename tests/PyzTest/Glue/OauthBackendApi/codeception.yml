@@ -21,6 +21,7 @@ suites:
                       environmentModule: '\PyzTest\Shared\Testify\Helper\Environment'
                       projectNamespaces: ['Pyz']
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Client\SecurityBlocker\Helper\SecurityBlockerRedisHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantUser\Helper\MerchantUserHelper
                 - \SprykerTest\ApiPlatform\Helper\BackendApiLoginHelper

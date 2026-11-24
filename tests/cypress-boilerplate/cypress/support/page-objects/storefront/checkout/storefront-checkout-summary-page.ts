@@ -59,7 +59,13 @@ export class StorefrontCheckoutSummaryPage extends AbstractPage {
   }
 
   applyCostCenterAndBudget = (): void => {
-    this.getCostCenterApplyButton().click()
+    // the apply button is shown only when the selection differs from the one already applied
+    // to the quote, so a hidden button means there is nothing left to apply
+    this.getCostCenterApplyButton().then(($button) => {
+      if ($button.is(':visible')) {
+        cy.wrap($button).click()
+      }
+    })
   }
 
   submitSummaryForm = (): void => {

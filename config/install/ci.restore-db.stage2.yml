@@ -127,6 +127,12 @@ sections:
         fix-auth-permissions:
             command: 'vendor/bin/console setup:init-db'
 
+        captcha-altcha-hmac-secret-generate:
+            command: 'vendor/bin/console captcha-altcha:hmac-secret:generate'
+
+        import-ci-cypress-configuration:
+            command: 'vendor/bin/console data:import --config=data/import/local/ci_cypress_configuration.yml'
+
         # requires `spy_store` table
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
