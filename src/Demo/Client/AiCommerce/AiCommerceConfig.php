@@ -15,6 +15,7 @@ use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\CatalogSear
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\CatalogSuggestToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\CategoryTreeToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\CompareProductsToolPlugin;
+use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\DisplayKnowledgeSourcesToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\DisplayProductsToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\DisplaySetupToolPlugin;
 use SprykerFeature\Client\AiCommerce\Plugin\StorefrontAssistant\Tool\OfferChoicesToolPlugin;
@@ -58,6 +59,7 @@ class AiCommerceConfig extends PyzAiCommerceConfig
             OfferChoicesToolPlugin::TOOL_NAME,
             DisplaySetupToolPlugin::TOOL_NAME,
             ProductKnowledgeSearchToolPlugin::TOOL_NAME,
+            DisplayKnowledgeSourcesToolPlugin::TOOL_NAME,
             SspAssetSearchToolPlugin::TOOL_NAME,
             SspAssetDetailsToolPlugin::TOOL_NAME,
             SspAssetCompatibleProductsToolPlugin::TOOL_NAME,
@@ -99,6 +101,7 @@ class AiCommerceConfig extends PyzAiCommerceConfig
             CompareProductsToolPlugin::TOOL_NAME,
             OfferChoicesToolPlugin::TOOL_NAME,
             DisplaySetupToolPlugin::TOOL_NAME,
+            DisplayKnowledgeSourcesToolPlugin::TOOL_NAME,
         ];
     }
 }

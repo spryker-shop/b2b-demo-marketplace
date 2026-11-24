@@ -28,6 +28,17 @@ class AiCommerceConfig extends PyzAiCommerceConfig
     }
 
     /**
+     * @return list<string>
+     */
+    public function getKnowledgeSourceLinkOrigins(): array
+    {
+        return [
+            'spryker.s3.eu-central-1.amazonaws.com',
+            'd2s0ynfc62ej12.cloudfront.net',
+        ];
+    }
+
+    /**
      * @return array<string, string>
      */
     protected function getSuggestedPromptConfigurationKeysByGroup(): array
