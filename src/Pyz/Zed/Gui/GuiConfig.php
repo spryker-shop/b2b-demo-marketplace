@@ -16,4 +16,14 @@ class GuiConfig extends SprykerGuiConfig
     protected const string NAVIGATION_ICONS_TYPE_DEFAULT = 'google-material';
 
     protected const string HOME_PATH = '/dashboard';
+
+    /**
+     * @return array<string>
+     */
+    public function getDefaultTemplateFileNames(): array
+    {
+        return array_merge(parent::getDefaultTemplateFileNames(), [
+            '@Captcha/Form/Type/captcha-full-width.twig',
+        ]);
+    }
 }

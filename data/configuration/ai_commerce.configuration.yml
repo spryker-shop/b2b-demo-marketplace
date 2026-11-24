@@ -100,11 +100,21 @@ features:
                                         value: 'AI_COMMERCE:AI_CONFIGURATION_BACKOFFICE_ASSISTANT_ANTHROPIC'
                 - key: general
                   settings:
+                      - key: is_enabled
+                        name: Enable Backoffice Assistant
+                        description: When enabled, the AI-powered Backoffice Assistant chat widget is available in the Backoffice.
+                        type: boolean
+                        default_value: 'true'
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        scopes:
+                            - global
                       - key: is_place_order_agent_enabled
                         name: Enable Place Order Agent
                         description: When enabled, the Place Order Agent is available in the Backoffice Assistant.
                         type: boolean
-                        default_value: 'false'
+                        default_value: 'true'
                         enabled: true
                         secret: false
                         storefront: false
@@ -212,6 +222,18 @@ features:
           - key: smart_cms
             enabled: true
             groups:
+                - key: general
+                  settings:
+                      - key: is_enabled
+                        name: Enable Smart CMS
+                        description: When enabled, the Smart CMS panel is available on the CMS Page and CMS Block glossary editors in the Backoffice.
+                        type: boolean
+                        default_value: 'true'
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        scopes:
+                            - global
                 - key: ai_vendor
                   name: AI Vendor
                   description: AI configuration and vendor model used for the Smart CMS feature. Only the model field matching the selected AI Configuration is shown.
@@ -307,6 +329,20 @@ features:
           - key: quick_order
             enabled: true
             groups:
+                - key: visual_add_to_cart
+                  settings:
+                      - key: enabled
+                        name: Enabled
+                        description: Enables or disables the image to cart feature for quick order.
+                        type: boolean
+                        default_value: true
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        order: 0
+                        scopes:
+                            - global
+                            - store
                 - key: ai_vendor
                   name: AI Vendor
                   description: AI configuration and vendor model used for the Quick Order Image-to-Cart feature. Only the model field matching the selected AI Configuration is shown.
@@ -402,6 +438,19 @@ features:
           - key: search_by_image
             enabled: true
             groups:
+                - key: search_by_image
+                  settings:
+                      - key: enabled
+                        name: Enable Search by Image
+                        description: Enable or disable the Search by Image feature on the storefront.
+                        type: boolean
+                        default_value: true
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        order: 0
+                        scopes:
+                            - global
                 - key: ai_vendor
                   name: AI Vendor
                   description: AI configuration and vendor model used for the Search by Image feature. Only the model field matching the selected AI Configuration is shown.
