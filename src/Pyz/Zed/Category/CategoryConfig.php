@@ -30,4 +30,14 @@ class CategoryConfig extends CategoryCategoryConfig
     {
         return true;
     }
+
+    /**
+     * Same URL prefix as the category data import, see {@link \Pyz\Zed\CategoryDataImport\CategoryDataImportConfig}.
+     *
+     * @return bool
+     */
+    public function isFullLocaleNamesInUrlEnabled(): bool
+    {
+        return true;
+    }
 }
