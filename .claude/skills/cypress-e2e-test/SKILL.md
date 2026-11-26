@@ -601,6 +601,16 @@ This must return nothing (besides intercept-glob strings like `'**/path/**'`, wh
 ENV_REPOSITORY_ID=b2b-mp npx cypress run --spec "cypress/e2e/<group>/<feature>.cy.ts" --headless --browser chrome
 ```
 
+**Guard every run that you do not watch (background, long suites) against a stuck run.** A headless Cypress run can hang forever with no new output: Cypress command timeouts do not fire when the browser is blocked (for example by a native `window.confirm()`/`alert()`). Run it through the stall watchdog, which kills the run when the log does not grow for `STALL_MINUTES` and exits **124**:
+
+```bash
+# from tests/cypress-tests
+ENV_REPOSITORY_ID=b2b-mp STALL_MINUTES=10 sh ../../.claude/skills/cypress-e2e-test/run-with-stall-watchdog.sh <scratchpad>/cy.log -- \
+  npx cypress run --spec "cypress/e2e/<group>/<feature>.cy.ts" --headless --browser chrome
+```
+
+On exit 124 the script prints the last spec and the last passed test. The stuck test is the **next** `it(...)` in that spec. Reproduce that step in a real browser and record native dialogs (`page.on('dialog', …)` in Playwright) before you change the test. A native dialog that only opens because of local data (for example a stored custom value in `spy_configuration_value`) is a local-data problem: fix the data. A dialog that opens on a fresh seed is a test problem: stub it (`cy.stub(win, 'confirm').returns(true)` before the action).
+
 If the spec uses a `repositoryId` guard (the variant pattern, not the demo group — which is unguarded), also run it under a different `ENV_REPOSITORY_ID` to confirm it **skips cleanly** (pending, not erroring) rather than throwing during DI/`container.get` resolution.
 
 ---

@@ -153,7 +153,7 @@
                 {% endblock %}
 
                 {% if data.products %}
-                    <div class="grid grid--stretch grid--gap-medium">
+                    <div class="grid grid--stretch grid--gap-medium" data-item-list-id="{{ itemListId }}" data-item-list-name="{{ itemListName }}" data-item-list-index-offset="{{ itemListIndexOffset }}">
                         {% for product in data.products %}
                             {% widget 'CatalogPageProductWidget' args [
                                 product,
@@ -181,6 +181,10 @@
                         } only %}
                     {% endblock %}
                 {% endif %}
+
+                {% block productTrackingDetails %}
+                    {% widget 'ProductTrackingDetailsWidget' args [data.products] only %}{% endwidget %}
+                {% endblock %}
 
                 {% include molecule('pagination') with {
                     data: data.pagination,

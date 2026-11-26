@@ -137,11 +137,31 @@ Log: `[upmerge 7a/12] DONE  FE scan: <N> Yves + <M> BO pages checked, <fixed X /
 
 `cypress/e2e/demo/` is the automated coverage for demo-only features (QuickSight and the other AI Commerce features) — exactly what an upmerge breaks via dropped demo config/wiring. Two tiers, both run on every upmerge:
 
+Always run both tiers through the **stall watchdog** (see "Stuck runs" below). Never run a bare `npm run cy:demo` in the background without it:
+
 ```bash
 cd tests/cypress-tests
-ENV_IS_SSP_ENABLED=true npm run cy:demo         # smoke tier: @demo-smoke only (script sets ENV_REPOSITORY_ID=b2b-mp itself)
-ENV_IS_SSP_ENABLED=true npm run cy:demo:full    # full tier: @demo-smoke ∪ @demo-full, real AI provider (script sets ENV_REPOSITORY_ID=b2b-mp + DEMO_AI_PROVIDER_ENABLED=1 itself)
+W=../../.claude/skills/cypress-e2e-test/run-with-stall-watchdog.sh
+ENV_IS_SSP_ENABLED=true STALL_MINUTES=10 sh $W <scratchpad>/cydemo.log -- npm run cy:demo           # smoke tier: @demo-smoke only (script sets ENV_REPOSITORY_ID=b2b-mp itself)
+ENV_IS_SSP_ENABLED=true STALL_MINUTES=15 sh $W <scratchpad>/cydemo-full.log -- npm run cy:demo:full # full tier: @demo-smoke ∪ @demo-full, real AI provider (script sets ENV_REPOSITORY_ID=b2b-mp + DEMO_AI_PROVIDER_ENABLED=1 itself)
 ```
+
+### Stuck runs — detect, do not wait
+
+A headless Cypress run can **hang forever with no new output and no timeout**. Cypress command timeouts do not fire when the browser itself is blocked. Real case (CC-41841): `00-ai-configuration.cy.ts` test 7 ("selecting the AWS Bedrock provider radio …") hung for 40 min, and then again for 10 min when it ran alone.
+
+- **Detect:** the watchdog kills the run when the log does not grow for `STALL_MINUTES`, prints the last spec and the last passed test, and exits **124**. The stuck test is the **next** `it(...)` in that spec after the last `✓` line. If you run Cypress without the watchdog, check the log's age yourself every few minutes (`ls -l <log>` against `date`). A log older than 10 min while the process is alive is a stuck run.
+- **Exit 124 is not a pass and not a normal failure.** Do not rerun the full suite blindly. First reproduce the stuck step in a real browser (Playwright `channel='chrome'`, see memory `reference_chrome_probe_playwright`). Register `page.on('dialog', …)` to record any native dialog.
+- **Known cause — native `confirm()` from a stale local DB value.** The Configuration Management UI (`spryker/configuration` `configuration-management.js` `#checkDependentsBeforeChange`) opens `window.confirm("Changing this setting will reset the following dependent settings: …")` when a dependent setting has a **stored custom value**. A local row in `spy_configuration_value` (for example `ai_commerce:backoffice_assistant:ai_vendor:openai_model`, left by an earlier local run of the "Save persists the value" test) opens the dialog. A fresh CI seed has no such row, so CI never sees it. **The row comes back after every local run:** test 8 ("… Save persists the value across a reload") restores the default model by saving it, which stores it as a custom value. So delete it **before each local `cy:demo` / `cy:demo:full` run** (local DB only, never a cloud env):
+
+```bash
+docker/sdk cli "mariadb -h database -u spryker -psecret -D eu-docker -e \"DELETE FROM spy_configuration_value WHERE setting_key='ai_commerce:backoffice_assistant:ai_vendor:openai_model'\""
+```
+
+Other stale rows can cause the same hang: compare `SELECT setting_key, value FROM spy_configuration_value WHERE setting_key LIKE 'ai_commerce:%'` with a fresh seed. The durable fix belongs in the cypress repo (test 7 must stub `confirm` with `acceptDependentResetConfirmation()`, or test 8 must restore with "use default"). That is a follow-up, not part of an upmerge.
+- **Known crash — `Error: * is not a valid URL` when the 2nd spec starts.** Cypress ≤ 15.21.1 with Chrome ≥ 158 stops `cypress run` as it opens the next spec (cypress #35195, fixed in 15.21.2 / 16.3.0). Every spec passes alone. While the pinned cypress-tests still uses ≤ 15.21.1, run each `cypress/e2e/demo/*.cy.ts` as its own `npx cypress run --spec <spec> --env grepTags=<tags> --headless --browser chrome` (each under the watchdog). Do not bump Cypress inside the upmerge; the bump arrives with the cypress pin.
+- After the fix, run the stuck spec alone under the watchdog first, then the full tier again.
+- Record a stuck run and its cause in the PR body even when the rerun is green.
 
 - **`cy:demo` (smoke, `@demo-smoke`)** — mocked/no-provider assertions, needs no API tokens. **Mandatory gate.** All specs must pass before pushing; supersedes the manual analytics-gui canary. A failure is a real regression — cross-reference Step 6e/6g (dropped demo block or wiring). If `cy:demo` doesn't exist on the branch, that itself is a finding: the demo group / CI step may have been lost in the merge — restore it (see the `cypress-e2e-test` skill's demo-group section) before pushing. The same `cy:demo` runs in CI as its own `Run Tests (Demo)` step, so a green local run predicts the green CI step.
 - **`cy:demo:full` (`@demo-smoke ∪ @demo-full`, real provider)** — runs the same smoke cases plus the `@demo-full` cases that hit **real** AI providers (OpenAI + AWS Bedrock), and needs the provider API tokens configured in Back Office AI Configuration (feature 1 in `demo-runtime-smoke`'s feature table). **Run it when tokens are present; the `@demo-full` cases self-skip gracefully when they aren't**, so an unattended upmerge with no tokens configured is not a hard failure on this tier — only `cy:demo` is the mandatory gate. Real-provider runs can be slower and occasionally need a rerun (rate limits, provider latency) — that's expected, not a regression signal by itself; only treat a `@demo-full` failure as real after a rerun still fails.

@@ -2,10 +2,19 @@
 
 {% define data = {
     productAbstractViewCollection: productAbstractViewCollection,
+    contentKey: contentKey | default(null),
 } %}
 
+{# Identifies the product list for the traceable events, e.g. GA4 view_item_list; the list has no title of its own.
+   The content key tells several lists of one page apart. #}
+{% set itemListId = 'cms_product_list' %}
+{% if data.contentKey is not empty %}
+    {% set itemListId = itemListId ~ '_' ~ data.contentKey %}
+{% endif %}
+{% set itemListName = 'Product list' %}
+
 {% block body %}
-    <div class="grid grid--stretch">
+    <div class="grid grid--stretch" data-item-list-id="{{ itemListId }}" data-item-list-name="{{ itemListName }}">
         {% for productAbstractView in data.productAbstractViewCollection %}
             <div class="col col--sm-12 col--md-6 col--lg-4 spacing-x spacing-x--big spacing-x--inner">
                 {% include molecule('product-item') with {
@@ -17,4 +26,8 @@
             </div>
         {% endfor %}
     </div>
+
+    {% block productTrackingDetails %}
+        {% widget 'ProductTrackingDetailsWidget' args [data.productAbstractViewCollection] only %}{% endwidget %}
+    {% endblock %}
 {% endblock %}

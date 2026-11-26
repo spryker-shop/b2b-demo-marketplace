@@ -100,6 +100,7 @@ use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\ItemMetadataSal
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\ItemMetadataSearchOrderExpanderPlugin;
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\MetadataOrderItemExpanderPlugin;
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\ProductIdOrderItemExpanderPlugin;
+use Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\SelectedVariantAttributesOrderItemExpanderPlugin;
 use Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension\IsQuantitySplittableOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension\NonSplittableItemTransformerStrategyPlugin;
 use Spryker\Zed\SalesQuoteRequestConnector\Communication\Plugin\Sales\QuoteRequestVersionReferenceOrderPostSavePlugin;
@@ -279,6 +280,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
         return [
             new StateHistoryOrderItemExpanderPlugin(),
             new ProductIdOrderItemExpanderPlugin(),
+            new SelectedVariantAttributesOrderItemExpanderPlugin(),
             new ProductOptionsOrderItemExpanderPlugin(),
             new MetadataOrderItemExpanderPlugin(),
             new UpdateOrderItemIsReturnableByItemStatePlugin(),

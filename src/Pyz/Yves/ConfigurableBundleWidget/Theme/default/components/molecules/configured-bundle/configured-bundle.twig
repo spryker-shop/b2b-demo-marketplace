@@ -4,7 +4,8 @@
     isQuantityVisible: true,
 } %}
 
-{%- block extraClass %}{% endblock -%}
+{# Without the core "box" styling, but with the JS class the cart's traceable events find the bundle by. #}
+{%- block extraClass %} {{ config.jsName }}{% endblock -%}
 
 {% block body %}
     {% block bundle %}
