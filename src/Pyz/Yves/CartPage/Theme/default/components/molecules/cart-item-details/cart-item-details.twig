@@ -14,6 +14,20 @@
 {% set listItem = data.listItem %}
 
 {% block body %}
+    {% block panelExtras %}
+        {% block productOptions %}
+            {% if listItem.productOptions ?? false %}
+                {% include molecule('product-item-options') with {
+                    data: { productItem: listItem },
+                } only %}
+            {% endif %}
+        {% endblock %}
+
+        {% block bundle %}
+            {% widget 'ProductBundleCartItemsListWidget' args [listItem, data.list] only %}{% endwidget %}
+        {% endblock %}
+    {% endblock %}
+
     <div class="{{ config.name }}__inner">
         {% block panelComments %}
             <section class="{{ config.name }}__section {{ config.name }}__section--comments">
