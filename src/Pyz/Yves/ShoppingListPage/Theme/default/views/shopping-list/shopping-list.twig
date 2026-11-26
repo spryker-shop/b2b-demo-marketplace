@@ -137,10 +137,99 @@
                     numberFormatConfig: numberFormatConfig,
                 },
             } only %}
+
+            {# The products of the list carry no category path: the traceable events add it to the tracking details of each row from here, read for the whole list at once. #}
+            {% block productTrackingDetails %}
+                {% widget 'ProductTrackingDetailsWidget' args [data.shoppingListItems] only %}{% endwidget %}
+            {% endblock %}
         {{ form(data.addItemToCartForm) }}
     {% else %}
         {{ 'customer.account.shopping_list.empty' | trans }}
     {% endif %}
 
     {% widget 'ShoppingListSubtotalWidget' args [data.shoppingListItems] only %}{% endwidget %}
+{% endblock %}
+
+{% block eventTracker %}
+    {# One form carries three add-to-cart actions, told apart by the submit button (the orchestrator matches triggers from the submitter), so each action reports exactly the items the server will add. #}
+    {# "Add all available" reports every row that can be added to the cart, which is the row with tracking details; it reads them from its form, as the button is outside the rows. #}
+    {# The rows are the product cards of the shopping-list-table molecule. #}
+    {% set events = {
+        list: events.list | merge([
+            {
+                event: 'ADD_TO_CART',
+                name: 'submit',
+                triggers: [
+                    {
+                        selector: '.product-card-item[tracking-details]',
+                        groupAs: {
+                            key: 'products',
+                            toArray: true,
+                        },
+                        data: {
+                            details: {
+                                selector: 'self',
+                                attribute: 'tracking-details',
+                                flatten: true,
+                            },
+                            quantity: {
+                                selector: 'input[name^="shoppingListItem[quantity]"]',
+                                attribute: 'value',
+                            },
+                        },
+                    },
+                    {
+                        selector: 'button[name="add-all-available"]',
+                        data: {
+                            shoppingListForm: {
+                                selector: 'form',
+                                closest: true,
+                                flatten: true,
+                                composed: {
+                                    products: {
+                                        multi: true,
+                                        selector: '.product-card-item[tracking-details]',
+                                        composed: {
+                                            details: {
+                                                selector: 'self',
+                                                attribute: 'tracking-details',
+                                                flatten: true,
+                                            },
+                                            quantity: {
+                                                selector: 'input[name^="shoppingListItem[quantity]"]',
+                                                attribute: 'value',
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        selector: 'form[action*="shopping-list/add-to-cart"]',
+                        data: {
+                            products: {
+                                multi: true,
+                                selector: '.product-card-item[tracking-details]:has(input[type="checkbox"]:checked)',
+                                composed: {
+                                    details: {
+                                        selector: 'self',
+                                        attribute: 'tracking-details',
+                                        flatten: true,
+                                    },
+                                    quantity: {
+                                        selector: 'input[name^="shoppingListItem[quantity]"]',
+                                        attribute: 'value',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ]),
+        data: events.data,
+    } %}
+
+    {{ parent() }}
 {% endblock %}

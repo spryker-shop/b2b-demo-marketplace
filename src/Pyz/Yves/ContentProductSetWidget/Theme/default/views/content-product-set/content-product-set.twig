@@ -62,4 +62,8 @@
             {% endembed %}
         {% endblock %}
     {% endembed %}
+
+    {% block productTrackingDetails %}
+        {% widget 'ProductTrackingDetailsWidget' args [data.products] only %}{% endwidget %}
+    {% endblock %}
 {% endblock %}

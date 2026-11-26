@@ -5,6 +5,31 @@ env:
 command-timeout: 7200
 
 sections:
+    configuration-export:
+        configuration-export:
+            # Off by default. An environment opts in with "-e configuration-restore" in its destructive
+            # install hook; only there do Back Office values survive the deployment.
+            excluded: true
+            groups:
+                - configuration-restore
+            command: >-
+                vendor/bin/console configuration:export
+                integrations:google_analytics:tracking:measurement_id
+                integrations:google_analytics:connection:property_id
+                integrations:google_analytics:product_events:view_item_event_enabled
+                integrations:google_analytics:product_events:view_item_list_event_enabled
+                integrations:google_analytics:product_events:select_item_event_enabled
+                integrations:google_analytics:product_events:search_event_enabled
+                integrations:google_analytics:cart_events:add_to_cart_event_enabled
+                integrations:google_analytics:cart_events:remove_from_cart_event_enabled
+                integrations:google_analytics:cart_events:view_cart_event_enabled
+                integrations:google_analytics:customer_list_events:add_to_wishlist_event_enabled
+                integrations:google_analytics:checkout_events:begin_checkout_event_enabled
+                integrations:google_analytics:checkout_events:add_shipping_info_event_enabled
+                integrations:google_analytics:checkout_events:add_payment_info_event_enabled
+                integrations:google_analytics:checkout_events:purchase_event_enabled
+                -vvv --no-ansi
+
     scheduler-clean:
         scheduler-clean:
             command: 'vendor/bin/console scheduler:clean -vvv --no-ansi'
@@ -44,6 +69,34 @@ sections:
     configuration:
         configuration-sync:
             command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+
+        configuration-restore:
+            excluded: true
+            groups:
+                - configuration-restore
+            command: >-
+                vendor/bin/console configuration:restore
+                integrations:google_analytics:tracking:measurement_id
+                integrations:google_analytics:connection:property_id
+                integrations:google_analytics:product_events:view_item_event_enabled
+                integrations:google_analytics:product_events:view_item_list_event_enabled
+                integrations:google_analytics:product_events:select_item_event_enabled
+                integrations:google_analytics:product_events:search_event_enabled
+                integrations:google_analytics:cart_events:add_to_cart_event_enabled
+                integrations:google_analytics:cart_events:remove_from_cart_event_enabled
+                integrations:google_analytics:cart_events:view_cart_event_enabled
+                integrations:google_analytics:customer_list_events:add_to_wishlist_event_enabled
+                integrations:google_analytics:checkout_events:begin_checkout_event_enabled
+                integrations:google_analytics:checkout_events:add_shipping_info_event_enabled
+                integrations:google_analytics:checkout_events:add_payment_info_event_enabled
+                integrations:google_analytics:checkout_events:purchase_event_enabled
+                -vvv --no-ansi
+
+        configuration-import-environment:
+            command: >-
+                vendor/bin/console configuration:import-environment
+                integrations:google_analytics:connection:service_account_credentials_json=SPRYKER_GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON
+                -vvv --no-ansi
 
         captcha-altcha-hmac-secret-generate:
             command: 'vendor/bin/console captcha-altcha:hmac-secret:generate -vvv --no-ansi'

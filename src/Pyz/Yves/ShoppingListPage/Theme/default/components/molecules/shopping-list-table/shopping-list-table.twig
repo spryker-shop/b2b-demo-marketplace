@@ -11,6 +11,8 @@
 } %}
 
 {% block body %}
+    {# Looked up once for the whole list: the tracking details are only worth building while the storefront tracks user actions. #}
+    {% set isUserActionTrackingEnabled = findWidget('TraceableEventWidget').parameters.isUserActionTrackingEnabled ?? false %}
     {% for item in data.shoppingListItems %}
         <input class="input" type="hidden"
                name="shoppingListItems[{{ item.idShoppingListItem }}]"
@@ -35,8 +37,30 @@
             {% set isItemAvailable = not productDiscontinuedNoteWidget.isDiscontinued and isItemAvailable %}
         {% endif %}
 
+        {# The row's product as tracked by the traceable events, only for a row that can be added to the cart; the price is in cents, the quantity is read live from the row's input. #}
+        {% set trackingDetails = null %}
+        {% if isItemAvailable and isUserActionTrackingEnabled %}
+            {% set trackingCategories = [] %}
+            {% for categoryName in item.categoryPath | default([]) %}
+                {% set trackingCategories = trackingCategories | merge([{ name: categoryName }]) %}
+            {% endfor %}
+            {% set trackingDetails %}{% include model('tracking-details') ignore missing with { product: {
+                sku: item.sku,
+                abstractSku: item.abstractSku | default(null),
+                name: item.name,
+                abstractName: item.abstractName | default(null),
+                brand: item.brand | default(null),
+                variant: item.selectedVariantAttributes | default([]) | reduce((values, value) => values | merge([value]), []),
+                categories: trackingCategories,
+                price: item.price | default(null),
+            } } only %}{% endset %}
+        {% endif %}
+
         {% embed molecule('product-card-item') with {
             modifiers: ['shopping-list', isItemAvailable ? 'shopping-list-available' : 'hidden'],
+            attributes: {
+                'tracking-details': trackingDetails ? trackingDetails : false,
+            },
             data: {
                 listItem: item,
                 imageModifiers: ['shopping-list'],

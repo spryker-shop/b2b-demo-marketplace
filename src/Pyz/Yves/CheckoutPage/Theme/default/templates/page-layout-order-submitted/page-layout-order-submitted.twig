@@ -41,7 +41,7 @@
                             {% endif %}
                         </p>
                     {% endif %}
-                    
+
                     <div class="grid grid--gap-smaller">
                         <div class="col col--sm-12 col--lg-auto spacing-bottom">
                             <a href="{{ functionExists('generatePath') ? generatePath('checkout.success.to_orders.url' | trans) : 'checkout.success.to_orders.url' | trans }}" class="button button--expand button--big">{{ 'checkout.success.to_orders.title' | trans }}</a>
@@ -67,10 +67,51 @@
 
 {% block eventTracker %}
     {% if data.quote is defined %}
+        {% set canSeePrices = can('SeePricePermissionPlugin') %}
+        {% set isUserActionTrackingEnabled = findWidget('TraceableEventWidget').parameters.isUserActionTrackingEnabled ?? false %}
+
+        {# The placed order as the traceable events report it, e.g. GA4 purchase: a product bundle counts as one product, so the products inside it
+           are left out; amounts in cents, a product's price is what was paid per unit without tax, as shipping and tax are reported on their own.
+           The products are built only while the storefront tracks user actions. #}
+        {% set purchaseProducts = [] %}
+        {% set purchasedItems = isUserActionTrackingEnabled ? data.quote.items | default([]) | filter(item => item.relatedBundleItemIdentifier is empty) | merge(data.quote.bundleItems | default([])) : [] %}
+        {% for item in purchasedItems %}
+            {# The bundle item itself carries no tax amount, so its price without tax is summed from the products inside it, per bundle unit. #}
+            {% set unitPriceWithoutTax = item.unitPriceToPayAggregation - item.unitTaxAmountFullAggregation %}
+            {% if item.bundleItemIdentifier is not empty %}
+                {% set bundledItems = data.quote.items | default([]) | filter(bundledItem => bundledItem.relatedBundleItemIdentifier == item.bundleItemIdentifier) %}
+                {% set bundlePriceWithoutTax = bundledItems | reduce((total, bundledItem) => total + bundledItem.sumPriceToPayAggregation - bundledItem.sumTaxAmountFullAggregation, 0) %}
+                {% set unitPriceWithoutTax = (bundlePriceWithoutTax / max(item.quantity, 1)) | round %}
+            {% endif %}
+            {% set purchaseProducts = purchaseProducts | merge([{
+                sku: item.sku,
+                abstractSku: item.abstractSku | default(null),
+                name: item.name,
+                abstractName: item.abstractName | default(null),
+                brand: item.brand | default(null),
+                variant: item.selectedVariantAttributes | default([]) | reduce((values, value) => values | merge([value]), []),
+                categories: item.categoryPath | default([]) | map(categoryName => { name: categoryName }),
+                price: canSeePrices ? unitPriceWithoutTax : null,
+                quantity: item.quantity,
+            }]) %}
+        {% endfor %}
+
+        {% set purchaseVoucherCodes = data.quote.voucherDiscounts | default([]) | map(discount => discount.voucherCode) | filter(voucherCode => voucherCode is not empty) %}
+
+        {# The products go in `purchaseProducts`, beside the order: the orchestrator adds product tracking details to the product lists of the page data, not to nested ones. #}
+        {% set purchase = {
+            transactionId: data.quote.orderReference,
+            shipping: canSeePrices ? data.quote.totals.shipmentTotal | default(null) : null,
+            tax: canSeePrices ? data.quote.totals.taxTotal.amount | default(null) : null,
+            coupon: purchaseVoucherCodes | join(','),
+        } %}
+
         {% set events = {
             list: events.list,
             data: events.data | merge({
                 page: 'CHECKOUT_SUCCESS',
+                purchase: purchase,
+                purchaseProducts: purchaseProducts,
                 products: ((data.quote.items | default([])) | merge(data.quote.bundleItems | default([]))) | map(item => {
                     sku: item.sku,
                     price: can('SeePricePermissionPlugin') ? item.sumSubtotalAggregation : null,
