@@ -6,10 +6,18 @@
 
 {% block body %}
     {% if data.products is not empty %}
-        {% include molecule('product-alternative-slider', 'ProductAlternativeWidget') with {
-            data: {
-                products: data.products
-            }
-        } only %}
+        {# The list as the traceable events identify it, e.g. GA4 view_item_list; a constant English name, as the title the shopper sees is translated
+           and would split the list by locale in the reports. #}
+        <div data-item-list-id="product_alternatives" data-item-list-name="Product alternatives">
+            {% include molecule('product-alternative-slider', 'ProductAlternativeWidget') with {
+                data: {
+                    products: data.products
+                }
+            } only %}
+
+            {% block productTrackingDetails %}
+                {% widget 'ProductTrackingDetailsWidget' args [data.products] only %}{% endwidget %}
+            {% endblock %}
+        </div>
     {% endif %}
 {% endblock %}

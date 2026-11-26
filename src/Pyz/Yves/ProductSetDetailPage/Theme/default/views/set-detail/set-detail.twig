@@ -94,4 +94,9 @@
             {% endembed %}
         {% endblock %}
     {% endembed %}
+
+    {# The product views carry no category path: the traceable events add it to the tracked products from here, read for the whole set at once. #}
+    {% block productTrackingDetails %}
+        {% widget 'ProductTrackingDetailsWidget' args [data.views] only %}{% endwidget %}
+    {% endblock %}
 {% endblock %}

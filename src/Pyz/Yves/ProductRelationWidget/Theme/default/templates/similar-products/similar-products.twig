@@ -1,12 +1,15 @@
 {% extends template('widget') %}
 
+{# itemListId, itemListName - identify the list for the traceable events, e.g. GA4 view_item_list; the list has no visible title. #}
 {% define data = {
-    products: []
+    products: [],
+    itemListId: null,
+    itemListName: null,
 } %}
 
 {% block body %}
     {% if data.products is not empty %}
-
+        <div{% if data.itemListId %} data-item-list-id="{{ data.itemListId }}" data-item-list-name="{{ data.itemListName }}"{% endif %}>
         {% embed molecule('slick-carousel') with {
             modifiers: ['full-width', 'equal-height', 'products'],
             data: {
@@ -48,5 +51,9 @@
 
         {% endembed %}
 
+        {% block productTrackingDetails %}
+            {% widget 'ProductTrackingDetailsWidget' args [data.products] only %}{% endwidget %}
+        {% endblock %}
+        </div>
     {% endif %}
 {% endblock %}
