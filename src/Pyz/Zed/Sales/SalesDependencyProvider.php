@@ -118,8 +118,7 @@ use Spryker\Zed\Shipment\Communication\Plugin\Sales\ShipmentOrderItemExpanderPlu
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 use Spryker\Zed\ShipmentGui\Communication\Plugin\Sales\ShipmentExpensesSalesOrderDetailDataExpanderPlugin;
 use Spryker\Zed\ShipmentGui\Communication\Plugin\Sales\ShipmentSalesOrderDetailDataExpanderPlugin;
-use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderExpanderPlugin;
-#PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderExpanderPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderSearchQueryExpanderPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableCriteriaFilterExpanderPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableFilterFormExpanderPlugin; #PurchasingControlFeature
