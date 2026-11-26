@@ -21,10 +21,12 @@ if (interface_exists(AiFoundationConstants::class)) {
             $config[AiFoundationConstants::AI_CONFIGURATIONS][$configName]['provider_config']['key'] = $openAiToken;
         }
 
-        if ($bedrockToken && $providerName === AiFoundationConstants::PROVIDER_BEDROCK) {
-            $config[AiFoundationConstants::AI_CONFIGURATIONS][$configName]['provider_config']['bedrockRuntimeClient']['token'] = $bedrockToken;
-            $config[AiFoundationConstants::AI_CONFIGURATIONS][$configName]['provider_config']['bedrockRuntimeClient']['region'] = $bedrockRegion;
+        if (!$bedrockToken || $providerName !== AiFoundationConstants::PROVIDER_BEDROCK) {
+            continue;
         }
+
+        $config[AiFoundationConstants::AI_CONFIGURATIONS][$configName]['provider_config']['bedrockRuntimeClient']['token'] = $bedrockToken;
+        $config[AiFoundationConstants::AI_CONFIGURATIONS][$configName]['provider_config']['bedrockRuntimeClient']['region'] = $bedrockRegion;
     }
 }
 
