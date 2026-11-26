@@ -135,6 +135,15 @@ sections:
         punchout:
             command: 'vendor/bin/console punchout-gateway:demo-connection:create'
 
+    knowledge-documents:
+        # The Storefront Assistant searches the Amazon Bedrock knowledge base. The setup checks the knowledge base
+        # and the data source; it does not stop the deployment of an environment without knowledge base access.
+        knowledge-document-setup:
+            command: 'vendor/bin/console knowledge-document:setup -vvv --no-ansi || true'
+        # The database is new, so queue all knowledge documents again. The queue workers index them after the scheduler starts.
+        knowledge-document-reindex:
+            command: 'vendor/bin/console knowledge-document:reindex --force -vvv --no-ansi'
+
     scheduler-start:
         trigger-events:
             command: 'vendor/bin/console publish:trigger-events'
