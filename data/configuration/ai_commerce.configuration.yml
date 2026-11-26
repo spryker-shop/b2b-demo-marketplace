@@ -333,7 +333,7 @@ features:
                   settings:
                       - key: enabled
                         name: Enabled
-                        description: Enables or disables the image to cart feature for quick order.
+                        description: Enables or disables the Visual add to cart feature for quick order.
                         type: boolean
                         default_value: true
                         enabled: true
@@ -345,7 +345,7 @@ features:
                             - store
                 - key: ai_vendor
                   name: AI Vendor
-                  description: AI configuration and vendor model used for the Quick Order Image-to-Cart feature. Only the model field matching the selected AI Configuration is shown.
+                  description: AI configuration and vendor model used for the Quick Order Visual add to cart feature. Only the model field matching the selected AI Configuration is shown.
                   enabled: true
                   order: 1
                   scopes:
@@ -353,7 +353,7 @@ features:
                   settings:
                       - key: ai_configuration
                         name: AI Configuration
-                        description: AI configuration used for the Quick Order Image-to-Cart feature.
+                        description: AI configuration used for the Quick Order Visual add to cart feature.
                         type: radio
                         default_value: 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI'
                         enabled: true
@@ -371,7 +371,7 @@ features:
                               label: Anthropic
                       - key: openai_model
                         name: OpenAI Model
-                        description: The OpenAI model used for the Quick Order Image-to-Cart AI configuration. Model must support image input and structured output.
+                        description: The OpenAI model used for the Quick Order Visual add to cart AI configuration. Model must support image and PDF input and structured output.
                         type: select
                         default_value: 'gpt-5-nano'
                         enabled: true
@@ -393,7 +393,7 @@ features:
                                         value: 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI'
                       - key: aws_model
                         name: AWS Bedrock Model
-                        description: The AWS Bedrock model identifier used for the Quick Order Image-to-Cart AI configuration. Model must support image input and structured output.
+                        description: The AWS Bedrock model identifier used for the Quick Order Visual add to cart AI configuration. Model must support image and PDF input and structured output.
                         type: select
                         default_value: 'eu.anthropic.claude-haiku-5-5'
                         enabled: true
@@ -415,7 +415,7 @@ features:
                                         value: 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_AWS'
                       - key: anthropic_model
                         name: Anthropic Model
-                        description: The Anthropic model used for the Quick Order Image-to-Cart AI configuration. Model must support image input and structured output.
+                        description: The Anthropic model used for the Quick Order Visual add to cart AI configuration. Model must support image and PDF input and structured output.
                         type: select
                         default_value: 'claude-haiku-5-5'
                         enabled: true

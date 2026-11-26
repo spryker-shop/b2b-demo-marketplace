@@ -70,32 +70,32 @@ interface AiCommerceConstants extends SprykerFeatureAiCommerceConstants
     public const string CONFIGURATION_KEY_SMART_PIM_ANTHROPIC_MODEL = 'ai_commerce:smart_pim:ai_vendor:anthropic_model';
 
     /**
-     * Configuration key for the Quick Order Image-to-Cart AI configuration name.
+     * Configuration key for the Quick Order Visual add to cart AI configuration name.
      *
      * @api
      */
-    public const string CONFIGURATION_KEY_QUICK_ORDER_IMAGE_TO_CART_AI_CONFIGURATION = 'ai_commerce:quick_order:ai_vendor:ai_configuration';
+    public const string CONFIGURATION_KEY_QUICK_ORDER_VISUAL_ADD_TO_CART_AI_CONFIGURATION = 'ai_commerce:quick_order:ai_vendor:ai_configuration';
 
     /**
-     * Configuration key for the model used by the Quick Order Image-to-Cart (OpenAI) AI configuration.
+     * Configuration key for the model used by the Quick Order Visual add to cart (OpenAI) AI configuration.
      *
      * @api
      */
-    public const string CONFIGURATION_KEY_QUICK_ORDER_IMAGE_TO_CART_OPENAI_MODEL = 'ai_commerce:quick_order:ai_vendor:openai_model';
+    public const string CONFIGURATION_KEY_QUICK_ORDER_VISUAL_ADD_TO_CART_OPENAI_MODEL = 'ai_commerce:quick_order:ai_vendor:openai_model';
 
     /**
-     * Configuration key for the model used by the Quick Order Image-to-Cart (AWS Bedrock) AI configuration.
+     * Configuration key for the model used by the Quick Order Visual add to cart (AWS Bedrock) AI configuration.
      *
      * @api
      */
-    public const string CONFIGURATION_KEY_QUICK_ORDER_IMAGE_TO_CART_AWS_MODEL = 'ai_commerce:quick_order:ai_vendor:aws_model';
+    public const string CONFIGURATION_KEY_QUICK_ORDER_VISUAL_ADD_TO_CART_AWS_MODEL = 'ai_commerce:quick_order:ai_vendor:aws_model';
 
     /**
-     * Configuration key for the model used by the Quick Order Image-to-Cart (Anthropic) AI configuration.
+     * Configuration key for the model used by the Quick Order Visual add to cart (Anthropic) AI configuration.
      *
      * @api
      */
-    public const string CONFIGURATION_KEY_QUICK_ORDER_IMAGE_TO_CART_ANTHROPIC_MODEL = 'ai_commerce:quick_order:ai_vendor:anthropic_model';
+    public const string CONFIGURATION_KEY_QUICK_ORDER_VISUAL_ADD_TO_CART_ANTHROPIC_MODEL = 'ai_commerce:quick_order:ai_vendor:anthropic_model';
 
     /**
      * Configuration key for the Search by Image AI configuration name.
@@ -196,25 +196,28 @@ interface AiCommerceConstants extends SprykerFeatureAiCommerceConstants
     public const string AI_CONFIGURATION_SMART_PIM_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_SMART_PIM_ANTHROPIC';
 
     /**
-     * AI configuration name used by the Quick Order Image-to-Cart feature backed by OpenAI.
+     * AI configuration name used by the Quick Order Visual add to cart feature backed by OpenAI.
+     * The value keeps the pre-rename IMAGE_TO_CART string: Configuration Management stores it when the AI Configuration setting is saved.
      *
      * @api
      */
-    public const string AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI';
+    public const string AI_CONFIGURATION_QUICK_ORDER_VISUAL_ADD_TO_CART_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI';
 
     /**
-     * AI configuration name used by the Quick Order Image-to-Cart feature backed by AWS Bedrock.
+     * AI configuration name used by the Quick Order Visual add to cart feature backed by AWS Bedrock.
+     * The value keeps the pre-rename IMAGE_TO_CART string: Configuration Management stores it when the AI Configuration setting is saved.
      *
      * @api
      */
-    public const string AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_AWS = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_AWS';
+    public const string AI_CONFIGURATION_QUICK_ORDER_VISUAL_ADD_TO_CART_AWS = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_AWS';
 
     /**
-     * AI configuration name used by the Quick Order Image-to-Cart feature backed by Anthropic.
+     * AI configuration name used by the Quick Order Visual add to cart feature backed by Anthropic.
+     * The value keeps the pre-rename IMAGE_TO_CART string: Configuration Management stores it when the AI Configuration setting is saved.
      *
      * @api
      */
-    public const string AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_ANTHROPIC';
+    public const string AI_CONFIGURATION_QUICK_ORDER_VISUAL_ADD_TO_CART_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_ANTHROPIC';
 
     /**
      * AI configuration name used by the Backoffice Assistant agents backed by OpenAI.

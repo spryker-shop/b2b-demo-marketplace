@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e901d988ec86531c3a773bea657bd69d",
+    "content-hash": "d4ffa63958029d8ce6c5731b080380ff",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -10396,12 +10396,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ai-commerce.git",
-                "reference": "c27bef88c38b2553cfac9738c16dbbfc404f662a"
+                "reference": "b0efe552d789cad5cb4a9a78f3c1c21faf759271"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/c27bef88c38b2553cfac9738c16dbbfc404f662a",
-                "reference": "c27bef88c38b2553cfac9738c16dbbfc404f662a",
+                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/b0efe552d789cad5cb4a9a78f3c1c21faf759271",
+                "reference": "b0efe552d789cad5cb4a9a78f3c1c21faf759271",
                 "shasum": ""
             },
             "require": {
@@ -10517,7 +10517,8 @@
             "support": {
                 "source": "https://github.com/spryker-feature/ai-commerce/tree/master"
             },
-            "time": "2026-11-24T12:37:23+00:00"
+            "time": "2026-11-26T09:33:48+00:00",
+            "published-time": "2026-11-26T09:38:02+00:00"
         },
         {
             "name": "spryker-feature/alternative-products",
@@ -92573,18 +92574,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-master-demo",
+            "version": "dev-feature/cc-41145-integration",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "73f914c20aab880b1d45cfb0e87b1650d9a75b83"
+                "reference": "480f3c725dcad8dcf5338ff088b32a2b75f243c5"
             },
             "type": "spryker-test",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-11-24T15:45:25+00:00"
+            "time": "2026-11-26T16:10:45+00:00"
         },
         {
             "name": "spryker/development",
@@ -93481,10 +93482,10 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/ai-commerce": 20,
+        "spryker-feature/development-tools": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker-feature/spryker-core": 20,
-        "spryker-feature/development-tools": 20,
         "spryker/architecture-sniffer": 20,
         "spryker/cypress-tests": 20
     },
@@ -93503,7 +93504,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },

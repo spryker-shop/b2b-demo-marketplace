@@ -16,15 +16,15 @@ class AiCommerceConfig extends SprykerAiCommerceConfig
 {
     /**
      * Specification:
-     * - Returns the AI configuration name used for image-to-cart product recognition.
+     * - Returns the AI configuration name used for Visual add to cart product recognition.
      *
      * @api
      */
-    public function getQuickOrderImageToCartAiConfigurationName(): ?string
+    public function getQuickOrderVisualAddToCartAiConfigurationName(): ?string
     {
         return $this->getModuleConfig(
-            AiCommerceConstants::CONFIGURATION_KEY_QUICK_ORDER_IMAGE_TO_CART_AI_CONFIGURATION,
-            AiCommerceConstants::AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI,
+            AiCommerceConstants::CONFIGURATION_KEY_QUICK_ORDER_VISUAL_ADD_TO_CART_AI_CONFIGURATION,
+            AiCommerceConstants::AI_CONFIGURATION_QUICK_ORDER_VISUAL_ADD_TO_CART_OPENAI,
         );
     }
 }
