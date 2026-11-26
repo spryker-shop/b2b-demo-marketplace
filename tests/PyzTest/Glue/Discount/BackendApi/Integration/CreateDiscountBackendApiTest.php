@@ -38,6 +38,13 @@ class CreateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
 
     protected const string UNKNOWN_ABSTRACT_SKU = 'CREATE-DISCOUNT-UNKNOWN-SKU';
 
+    protected const string UNKNOWN_CUSTOMER_GROUP_NAME = 'create-discount-unknown-customer-group';
+
+    /**
+     * @uses \Spryker\Zed\CustomerGroupDiscountConnector\Communication\Plugin\Discount\CustomerGroupSuggestDecisionRulePlugin::FIELD_NAME_CUSTOMER_GROUP
+     */
+    protected const string FIELD_CUSTOMER_GROUP = 'customer-group';
+
     /**
      * @uses \Spryker\Glue\Discount\DiscountConfig::RESPONSE_DETAILS_ERROR
      */
@@ -224,6 +231,17 @@ class CreateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
                 DiscountConfig::RESPONSE_CODE_QUERY_STRING_INVALID,
                 DiscountConfig::ATTRIBUTE_COLLECTOR . static::DETAIL_SEPARATOR,
                 null,
+            ],
+            'given a customer group name no group carries, when the discount is created, then the detail names decisionRule and the unknown group' => [
+                static fn ($tester): array => $tester->buildValidDiscountAttributes([
+                    'decisionRule' => $tester->buildRuleGroup([$tester->buildRule(self::FIELD_CUSTOMER_GROUP, '=', self::UNKNOWN_CUSTOMER_GROUP_NAME)]),
+                ]),
+                DiscountConfig::RESPONSE_CODE_QUERY_STRING_INVALID,
+                DiscountConfig::ATTRIBUTE_DECISION_RULE . static::DETAIL_SEPARATOR,
+                DiscountConfig::ATTRIBUTE_DECISION_RULE . static::DETAIL_SEPARATOR
+                    . strtr(SharedDiscountConfig::TRANSLATION_KEY_QUERY_STRING_INVALID, [
+                        '%message%' => sprintf('Could not find "%s" for field "%s".', self::UNKNOWN_CUSTOMER_GROUP_NAME, self::FIELD_CUSTOMER_GROUP),
+                    ]),
             ],
             'given a rule value with a quote, when the discount is created, then the detail names the quote limitation instead of a parser error' => [
                 static fn ($tester): array => $tester->buildValidDiscountAttributes([
