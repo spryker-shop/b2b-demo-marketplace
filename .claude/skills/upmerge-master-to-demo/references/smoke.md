@@ -159,6 +159,7 @@ docker/sdk cli "mariadb -h database -u spryker -psecret -D eu-docker -e \"DELETE
 ```
 
 Other stale rows can cause the same hang: compare `SELECT setting_key, value FROM spy_configuration_value WHERE setting_key LIKE 'ai_commerce:%'` with a fresh seed. The durable fix belongs in the cypress repo (test 7 must stub `confirm` with `acceptDependentResetConfirmation()`, or test 8 must restore with "use default"). That is a follow-up, not part of an upmerge.
+- **Known crash — `Error: * is not a valid URL` when the 2nd spec starts.** Cypress ≤ 15.21.1 with Chrome ≥ 158 stops `cypress run` as it opens the next spec (cypress #35195, fixed in 15.21.2 / 16.3.0). Every spec passes alone. While the pinned cypress-tests still uses ≤ 15.21.1, run each `cypress/e2e/demo/*.cy.ts` as its own `npx cypress run --spec <spec> --env grepTags=<tags> --headless --browser chrome` (each under the watchdog). Do not bump Cypress inside the upmerge; the bump arrives with the cypress pin.
 - After the fix, run the stuck spec alone under the watchdog first, then the full tier again.
 - Record a stuck run and its cause in the PR body even when the rerun is green.
 
