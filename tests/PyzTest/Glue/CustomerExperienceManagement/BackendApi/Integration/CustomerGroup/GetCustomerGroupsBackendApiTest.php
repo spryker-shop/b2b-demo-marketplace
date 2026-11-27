@@ -9,6 +9,9 @@ declare(strict_types = 1);
 
 namespace PyzTest\Glue\CustomerExperienceManagement\BackendApi\Integration\CustomerGroup;
 
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CustomerGroupToCompanyAssignmentTransfer;
+use Generated\Shared\Transfer\CustomerGroupToCompanyBusinessUnitAssignmentTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,6 +29,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GetCustomerGroupsBackendApiTest extends AbstractCustomerGroupBackendApiTestCase
 {
+    protected const string FILTER_CUSTOMER_REFERENCE = 'filter[customer-groups.customerReference]';
+
+    protected const string FILTER_COMPANY_UUID = 'filter[customer-groups.companyUuid]';
+
+    protected const string FILTER_COMPANY_BUSINESS_UNIT_UUID = 'filter[customer-groups.companyBusinessUnitUuid]';
+
     public function testReturnsSingleCustomerGroupByUuid(): void
     {
         // Arrange
@@ -299,6 +308,251 @@ class GetCustomerGroupsBackendApiTest extends AbstractCustomerGroupBackendApiTes
             $this->getResourceAttributes($response),
             'customerReferences is write-only and must never be serialized.',
         );
+    }
+
+    public function testFiltersCustomerGroupsByCustomerReference(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $customerGroupTransfer = $this->haveCustomerGroupWithCustomers([$customerTransfer]);
+        $this->haveCustomerGroupWithCustomers([$this->tester->haveCustomer()]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([
+                static::FILTER_CUSTOMER_REFERENCE => $customerTransfer->getCustomerReferenceOrFail(),
+            ]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $this->assertSame([$customerGroupTransfer->getUuidOrFail()], $this->getResourceIds($response));
+    }
+
+    public function testFiltersCustomerGroupsByCompanyUuid(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $customerGroupTransfer = $this->haveCustomerGroupWithCompanies([$companyTransfer]);
+        $this->haveCustomerGroupWithCompanies([$this->tester->haveCompany()]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([static::FILTER_COMPANY_UUID => $companyTransfer->getUuidOrFail()]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $this->assertSame([$customerGroupTransfer->getUuidOrFail()], $this->getResourceIds($response));
+    }
+
+    public function testCompanyUuidFilterDoesNotReturnTheGroupsOfItsBusinessUnits(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $this->haveCustomerGroupWithCompanyBusinessUnits([$this->haveCompanyBusinessUnitOf($companyTransfer)]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([static::FILTER_COMPANY_UUID => $companyTransfer->getUuidOrFail()]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $this->assertSame([], $this->getResourceIds($response));
+    }
+
+    public function testFiltersCustomerGroupsByCompanyBusinessUnitUuid(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnitOf($this->tester->haveCompany());
+        $customerGroupTransfer = $this->haveCustomerGroupWithCompanyBusinessUnits([$companyBusinessUnitTransfer]);
+        $this->haveCustomerGroupWithCompanyBusinessUnits([$this->haveCompanyBusinessUnitOf($this->tester->haveCompany())]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([
+                static::FILTER_COMPANY_BUSINESS_UNIT_UUID => $companyBusinessUnitTransfer->getUuidOrFail(),
+            ]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $this->assertSame([$customerGroupTransfer->getUuidOrFail()], $this->getResourceIds($response));
+    }
+
+    public function testReturnsTheGroupsOfAnyOfSeveralCompanyUuids(): void
+    {
+        // Arrange
+        $firstCompanyTransfer = $this->tester->haveCompany();
+        $secondCompanyTransfer = $this->tester->haveCompany();
+        $customerGroupUuids = [
+            $this->haveCustomerGroupWithCompanies([$firstCompanyTransfer])->getUuidOrFail(),
+            $this->haveCustomerGroupWithCompanies([$secondCompanyTransfer])->getUuidOrFail(),
+            $this->haveCustomerGroupWithCompanies([$firstCompanyTransfer, $secondCompanyTransfer])->getUuidOrFail(),
+        ];
+        $this->haveCustomerGroupWithCompanies([$this->tester->haveCompany()]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([
+                static::FILTER_COMPANY_UUID => [$firstCompanyTransfer->getUuidOrFail(), $secondCompanyTransfer->getUuidOrFail()],
+            ]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $resourceIds = $this->getResourceIds($response);
+        sort($resourceIds);
+        sort($customerGroupUuids);
+        $this->assertSame($customerGroupUuids, $resourceIds, 'A group assigned to both companies must be returned once.');
+        $this->assertSame(3, $this->getMetaPagination($response)[static::PAGINATION_KEY_NUM_FOUND]);
+    }
+
+    public function testPagesThroughTheGroupsOfSeveralCompanyUuidsWithoutRepeatingASharedGroup(): void
+    {
+        // Arrange
+        $firstCompanyTransfer = $this->tester->haveCompany();
+        $secondCompanyTransfer = $this->tester->haveCompany();
+        $namePrefix = uniqid('paged-', false);
+        $expectedCustomerGroupUuids = [
+            $this->haveCustomerGroup([
+                CustomerGroupTransfer::NAME => sprintf('%s-a', $namePrefix),
+                CustomerGroupTransfer::COMPANY_ASSIGNMENT => [
+                    CustomerGroupToCompanyAssignmentTransfer::IDS_COMPANY_TO_ASSIGN => [
+                        $firstCompanyTransfer->getIdCompanyOrFail(),
+                        $secondCompanyTransfer->getIdCompanyOrFail(),
+                    ],
+                    CustomerGroupToCompanyAssignmentTransfer::IDS_COMPANY_TO_DE_ASSIGN => [],
+                ],
+            ])->getUuidOrFail(),
+            $this->haveCustomerGroup([
+                CustomerGroupTransfer::NAME => sprintf('%s-b', $namePrefix),
+                CustomerGroupTransfer::COMPANY_ASSIGNMENT => $this->createCompanyAssignment($firstCompanyTransfer),
+            ])->getUuidOrFail(),
+            $this->haveCustomerGroup([
+                CustomerGroupTransfer::NAME => sprintf('%s-c', $namePrefix),
+                CustomerGroupTransfer::COMPANY_ASSIGNMENT => $this->createCompanyAssignment($secondCompanyTransfer),
+            ])->getUuidOrFail(),
+        ];
+        $this->haveCustomerGroupWithCompanies([$this->tester->haveCompany()]);
+
+        // Act
+        $responses = [];
+
+        foreach ([0, 1, 2] as $offset) {
+            $responses[] = $this->handleApiRequest(
+                'GET',
+                $this->tester->getCustomerGroupCollectionUrl([
+                    static::FILTER_COMPANY_UUID => [$firstCompanyTransfer->getUuidOrFail(), $secondCompanyTransfer->getUuidOrFail()],
+                    'sort' => 'name',
+                    'page' => ['limit' => 1, 'offset' => $offset],
+                ]),
+            );
+        }
+
+        // Assert
+        $pagedCustomerGroupUuids = [];
+
+        foreach ($responses as $response) {
+            $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+            $pagination = $this->getMetaPagination($response);
+            $this->assertSame(3, $pagination[static::PAGINATION_KEY_NUM_FOUND]);
+            $this->assertSame(3, $pagination[static::PAGINATION_KEY_MAX_PAGE]);
+            $pagedCustomerGroupUuids = array_merge($pagedCustomerGroupUuids, $this->getResourceIds($response));
+        }
+
+        $this->assertSame($expectedCustomerGroupUuids, $pagedCustomerGroupUuids);
+    }
+
+    public function testCombinesTheCompanyAndBusinessUnitFiltersWithAnd(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnitOf($companyTransfer);
+        $customerGroupOfBothTransfer = $this->haveCustomerGroup([
+            CustomerGroupTransfer::COMPANY_ASSIGNMENT => $this->createCompanyAssignment($companyTransfer),
+            CustomerGroupTransfer::COMPANY_BUSINESS_UNIT_ASSIGNMENT => [
+                CustomerGroupToCompanyBusinessUnitAssignmentTransfer::IDS_COMPANY_BUSINESS_UNIT_TO_ASSIGN => [
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+                ],
+                CustomerGroupToCompanyBusinessUnitAssignmentTransfer::IDS_COMPANY_BUSINESS_UNIT_TO_DE_ASSIGN => [],
+            ],
+        ]);
+        $this->haveCustomerGroupWithCompanies([$companyTransfer]);
+        $this->haveCustomerGroupWithCompanyBusinessUnits([$companyBusinessUnitTransfer]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([
+                static::FILTER_COMPANY_UUID => $companyTransfer->getUuidOrFail(),
+                static::FILTER_COMPANY_BUSINESS_UNIT_UUID => $companyBusinessUnitTransfer->getUuidOrFail(),
+            ]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $this->assertSame([$customerGroupOfBothTransfer->getUuidOrFail()], $this->getResourceIds($response));
+    }
+
+    public function testCombinesTheCustomerReferenceAndCompanyFiltersWithAnd(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $customerTransfer = $this->tester->haveCustomer();
+        $customerGroupOfBothTransfer = $this->haveCustomerGroupWithCustomers(
+            [$customerTransfer],
+            [CustomerGroupTransfer::COMPANY_ASSIGNMENT => $this->createCompanyAssignment($companyTransfer)],
+        );
+        $this->haveCustomerGroupWithCustomers([$customerTransfer]);
+        $this->haveCustomerGroupWithCompanies([$companyTransfer]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([
+                static::FILTER_CUSTOMER_REFERENCE => $customerTransfer->getCustomerReferenceOrFail(),
+                static::FILTER_COMPANY_UUID => $companyTransfer->getUuidOrFail(),
+            ]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $this->assertSame([$customerGroupOfBothTransfer->getUuidOrFail()], $this->getResourceIds($response));
+    }
+
+    public function testReturnsAnEmptyCollectionForAnUnknownCompanyUuid(): void
+    {
+        // Arrange
+        $this->haveCustomerGroupWithCompanies([$this->tester->haveCompany()]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'GET',
+            $this->tester->getCustomerGroupCollectionUrl([static::FILTER_COMPANY_UUID => static::UNKNOWN_WELL_FORMED_UUID]),
+        );
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode(), (string)$response->getContent());
+        $this->assertSame([], $this->getResourceIds($response));
+        $this->assertSame(0, $this->getMetaPagination($response)[static::PAGINATION_KEY_NUM_FOUND]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function createCompanyAssignment(CompanyTransfer $companyTransfer): array
+    {
+        return [
+            CustomerGroupToCompanyAssignmentTransfer::IDS_COMPANY_TO_ASSIGN => [$companyTransfer->getIdCompanyOrFail()],
+            CustomerGroupToCompanyAssignmentTransfer::IDS_COMPANY_TO_DE_ASSIGN => [],
+        ];
     }
 
     /**

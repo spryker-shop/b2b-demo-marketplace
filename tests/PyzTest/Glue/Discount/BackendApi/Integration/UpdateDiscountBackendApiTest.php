@@ -31,6 +31,13 @@ class UpdateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
 {
     protected const string UNKNOWN_STORE = 'UpdateDiscountUnknownStore';
 
+    protected const string UNKNOWN_CUSTOMER_GROUP_NAME = 'update-discount-unknown-customer-group';
+
+    /**
+     * @uses \Spryker\Zed\CustomerGroupDiscountConnector\Communication\Plugin\Discount\CustomerGroupSuggestDecisionRulePlugin::FIELD_NAME_CUSTOMER_GROUP
+     */
+    protected const string FIELD_CUSTOMER_GROUP = 'customer-group';
+
     protected const string UPDATED_DESCRIPTION = 'Updated by the discount backend api test suite.';
 
     protected const int UPDATED_PRIORITY = 42;
@@ -535,6 +542,21 @@ class UpdateDiscountBackendApiTest extends AbstractDiscountBackendApiTestCase
             'given an unknown store name, when the discount is patched, then the store code answers' => [
                 true, true, ['stores' => [self::UNKNOWN_STORE]],
                 Response::HTTP_UNPROCESSABLE_ENTITY, DiscountConfig::RESPONSE_CODE_STORE_UNKNOWN,
+            ],
+            'given a customer group name no group carries, when the decision rule is patched, then the query string code answers' => [
+                true,
+                true,
+                [
+                    self::ATTRIBUTE_DECISION_RULE => [
+                        'condition' => DiscountBackendApiHelper::CONDITION_AND,
+                        'rules' => [
+                            ['field' => self::FIELD_CUSTOMER_GROUP, 'attribute' => null, 'operator' => '=', 'value' => self::UNKNOWN_CUSTOMER_GROUP_NAME],
+                        ],
+                        'groups' => [],
+                    ],
+                ],
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+                DiscountConfig::RESPONSE_CODE_QUERY_STRING_INVALID,
             ],
             'given a priority above the configured maximum, when the discount is patched, then the framework validation code answers' => [
                 true, true, ['priority' => 10000],

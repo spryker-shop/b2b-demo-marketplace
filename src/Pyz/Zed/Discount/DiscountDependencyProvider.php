@@ -13,7 +13,7 @@ use Spryker\Zed\CategoryDiscountConnector\Communication\Plugin\Discount\Category
 use Spryker\Zed\CategoryDiscountConnector\Communication\Plugin\Discount\CategoryDiscountableItemCollectorPlugin;
 use Spryker\Zed\CustomerDiscountConnector\Communication\Plugin\Discount\CustomerMaximumOrderAmountDecisionRulePlugin;
 use Spryker\Zed\CustomerDiscountConnector\Communication\Plugin\Discount\CustomerReferenceDecisionRulePlugin;
-use Spryker\Zed\CustomerGroupDiscountConnector\Communication\Plugin\DecisionRule\CustomerGroupDecisionRulePlugin;
+use Spryker\Zed\CustomerGroupDiscountConnector\Communication\Plugin\Discount\CustomerGroupSuggestDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Discount\DeleteDiscountVoucherPoolDiscountPostUpdatePlugin;
 use Spryker\Zed\Discount\DiscountDependencyProvider as SprykerDiscountDependencyProvider;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionCalculationFormDataExpanderPlugin;
@@ -61,7 +61,7 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
             new ShipmentCarrierDecisionRulePlugin(),
             new ShipmentMethodDecisionRulePlugin(),
             new ShipmentPriceDecisionRulePlugin(),
-            new CustomerGroupDecisionRulePlugin(),
+            new CustomerGroupSuggestDecisionRulePlugin(),
             new ProductLabelListDecisionRulePlugin(),
             new ProductAttributeDecisionRulePlugin(),
             new CategoryDecisionRulePlugin(),
