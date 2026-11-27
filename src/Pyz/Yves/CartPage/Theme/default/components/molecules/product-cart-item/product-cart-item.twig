@@ -14,7 +14,10 @@
 {% set metaSku = listItem.sku is defined ? listItem.sku : (listItem.abstract_sku is defined ? listItem.abstract_sku : '') %}
 {% set price = listItem.unitPrice is defined ? listItem.unitPrice : listItem.price %}
 
+{% set cartItemTrackingDetails %}{% include view('cart-item-tracking-details', 'CartPage') with { item: listItem } only %}{% endset %}
+
 {% define attributes = {
+    'tracking-details': cartItemTrackingDetails ? cartItemTrackingDetails : false,
     details: {
         sku: listItem.add_to_cart_sku
             | default((listItem.attributeMap is defined ? listItem.attributeMap.productConcreteIds | keys | first)

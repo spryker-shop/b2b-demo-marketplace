@@ -9,6 +9,8 @@
                     images: productSet.productSet.imageSets.0.images | default([])
                 }
             } only %}
+            {# The product views carry no category path: the traceable events add it to the tracked products of the set from here. #}
+            {% widget 'ProductTrackingDetailsWidget' args [productSet.productViews] only %}{% endwidget %}
         {% endif %}
     {% endfor %}
 {% endif %}
@@ -22,4 +24,6 @@
             images: productSet.imageSets.0.images | default([])
         }
     } only %}
+    {# The product views carry no category path: the traceable events add it to the tracked products of the set from here. #}
+    {% widget 'ProductTrackingDetailsWidget' args [productViews] only %}{% endwidget %}
 {% endif %}

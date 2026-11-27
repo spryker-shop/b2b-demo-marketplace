@@ -2,9 +2,19 @@
 
 {% define data = {
     productAbstractViewCollection: productAbstractViewCollection | default([]),
+    contentKey: contentKey | default(null),
 } %}
 
+{# Identifies the product list for the traceable events, e.g. GA4 view_item_list, as the list template of the same content does;
+   the slider has no title of its own. The content key tells several lists of one page apart. #}
+{% set itemListId = 'cms_product_list' %}
+{% if data.contentKey is not empty %}
+    {% set itemListId = itemListId ~ '_' ~ data.contentKey %}
+{% endif %}
+{% set itemListName = 'Product list' %}
+
 {% block body %}
+    <div data-item-list-id="{{ itemListId }}" data-item-list-name="{{ itemListName }}">
     {% embed molecule('slick-carousel') with {
         modifiers: ['full-width', 'equal-height'],
         data: {
@@ -39,4 +49,9 @@
             {% endfor %}
         {% endblock %}
     {% endembed %}
+    </div>
+
+    {% block productTrackingDetails %}
+        {% widget 'ProductTrackingDetailsWidget' args [data.productAbstractViewCollection] only %}{% endwidget %}
+    {% endblock %}
 {% endblock %}

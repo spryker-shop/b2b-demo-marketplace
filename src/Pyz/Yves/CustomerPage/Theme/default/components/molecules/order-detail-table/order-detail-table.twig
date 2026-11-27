@@ -1,6 +1,10 @@
 {% extends molecule('order-detail-table', '@SprykerShop:CustomerPage') %}
 
 {% block body %}
+    {# Looked up once for the whole order. The selected attributes of an ordered item come with the order;
+       the ProductTrackingDetailsWidget below adds the abstract product name, brand and categories of the tracked items. #}
+    {% set isUserActionTrackingEnabled = findWidget('TraceableEventWidget').parameters.isUserActionTrackingEnabled ?? false %}
+    {% set trackedItems = [] %}
     {% for shipmentGroup in data.shipmentGroups %}
         <article class="grid grid--gap spacing-bottom spacing-bottom--big">
             <h3 class="col col--sm-12 col--xl-8 title title--second spacing-bottom spacing-bottom--small">
@@ -17,8 +21,25 @@
                     {% set isConfiguredBundle = cartItem.salesOrderConfiguredBundleItem is defined and cartItem.salesOrderConfiguredBundleItem is not empty %}
 
                     {% if not isConfiguredBundle %}
+                        {# The ordered item as a reorder adds it to the cart, for the traceable events; the price is the one of the order. #}
+                        {% set trackingDetails = null %}
+                        {% if isUserActionTrackingEnabled %}
+                            {% set trackedItems = trackedItems | merge([cartItem]) %}
+                            {% set trackingDetails %}{% include model('tracking-details') ignore missing with { product: {
+                                sku: cartItem.sku,
+                                abstractSku: cartItem.abstractSku | default(null),
+                                name: cartItem.name,
+                                variant: cartItem.selectedVariantAttributes | default([]) | reduce((values, value) => values | merge([value]), []),
+                                price: cartItem.unitPrice,
+                                quantity: cartItem.quantity,
+                            } } only %}{% endset %}
+                        {% endif %}
+
                         {% embed molecule('product-card-item') with {
                             modifiers: ['order-detail'],
+                            attributes: {
+                                'tracking-details': trackingDetails ? trackingDetails : false,
+                            },
                             data: {
                                 listItem: cartItem,
                                 quantity: cartItem.quantity,
@@ -136,7 +157,7 @@
                                 {% endwidget %}
 
                                 {% widget 'SspServiceChangeScheduledTimeLinkWidget' args [data.listItem] only %}{% endwidget %}
-                                
+
                                 {% widget 'SspServiceCancelWidget' args [data.listItem] only %}{% endwidget %}
                             {% endblock %}
 
@@ -183,4 +204,10 @@
             </div>
         </article>
     {% endfor %}
+
+    {% block productTrackingDetails %}
+        {% if trackedItems is not empty %}
+            {% widget 'ProductTrackingDetailsWidget' args [trackedItems] only %}{% endwidget %}
+        {% endif %}
+    {% endblock %}
 {% endblock %}

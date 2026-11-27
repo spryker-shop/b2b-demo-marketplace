@@ -92,7 +92,8 @@ If a genuine failure: "ahead" → reset cypress `master-demo` to its pre-merge t
 
 ```bash
 cd tests/cypress-tests
-ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true npm run cy:demo    # all specs must pass
+ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true STALL_MINUTES=10 \
+  sh ../../.claude/skills/cypress-e2e-test/run-with-stall-watchdog.sh <scratchpad>/cydemo.log -- npm run cy:demo   # all specs must pass; exit 124 = stuck run, see smoke.md "Stuck runs"
 git push origin master-demo                                         # protected shared branch — see below
 ```
 

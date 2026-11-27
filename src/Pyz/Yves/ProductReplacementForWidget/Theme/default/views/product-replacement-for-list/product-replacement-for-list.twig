@@ -2,7 +2,9 @@
 
 {% block body %}
     {% if data.products is not empty %}
-        <div class="product-replacement">
+        {# The list as the traceable events identify it, e.g. GA4 view_item_list; a constant English name, as the title the shopper sees is translated
+           and would split the list by locale in the reports. #}
+        <div class="product-replacement" data-item-list-id="product_replacements" data-item-list-name="Product replacements">
             <h2 class="product-replacement__title title title--h4">
                 {{ 'replacement_for_widget.replacement_for' | trans }}
             </h2>
@@ -27,6 +29,10 @@
                     {% endfor %}
                 {% endblock %}
             {% endembed %}
+
+            {% block productTrackingDetails %}
+                {% widget 'ProductTrackingDetailsWidget' args [data.products] only %}{% endwidget %}
+            {% endblock %}
         </div>
     {% endif %}
 {% endblock %}

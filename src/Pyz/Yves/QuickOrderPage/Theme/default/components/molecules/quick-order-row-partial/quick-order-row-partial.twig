@@ -1,7 +1,7 @@
 {% extends molecule('quick-order-row-partial', '@SprykerShop:QuickOrderPage') %}
 
 {% block body %}
-    <div class="grid grid--justify grid--middle">{{ parent() }}</div>
+    <div class="grid grid--justify grid--middle"{% if trackingDetails %} tracking-details="{{ trackingDetails }}"{% endif %}>{{ parent() }}</div>
 {% endblock %}
 
 {% block columns %}

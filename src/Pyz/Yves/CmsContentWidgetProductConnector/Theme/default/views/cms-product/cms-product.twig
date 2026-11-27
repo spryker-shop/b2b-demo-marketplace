@@ -6,48 +6,59 @@
     isUnavailableProductsDisplayed: isUnavailableProductsDisplayed | default(false),
 } %}
 
-{% block body %}
+{# Identifies the product list for the traceable events, e.g. GA4 view_item_list; a product list has no title of its own.
+   The CMS content function passes no list identifier, so all of these widgets on a page report as one list. #}
+{% set itemListId = 'cms_products' %}
+{% set itemListName = 'Products' %}
 
-    {% embed molecule('slick-carousel') with {
-        modifiers: ['full-width', 'equal-height'],
-        data: {
-            product: data.product,
-            products: data.products,
-            isUnavailableProductsDisplayed: data.isUnavailableProductsDisplayed,
-        },
-        attributes: {
-            'slider-config': '{
-                "slidesToShow": 3,
-                "dots": false,
-                "arrows": true,
-                "adaptiveHeight": true,
-                "responsive": [{
-                    "breakpoint": 768,
-                    "settings": {
-                        "slidesToShow": 2
-                    }
-                },
-                {
-                    "breakpoint": 375,
-                    "settings": {
-                        "slidesToShow": 1
-                    }
-                }]
-            }'
-        }
-    } only %}
-        {% block slides %}
-            {% for product in data.products %}
-                {% if data.isUnavailableProductsDisplayed or product.available  %}
-                    {% widget 'CmsProductWidget' args [product] use '@ProductWidget/views/cms-product-slider/cms-product-slider.twig' only %}{% endwidget %}
-                {% endif %}
-            {% endfor %}
-        {% endblock %}
-    {% endembed %}
+{% block body %}
+    <div data-item-list-id="{{ itemListId }}" data-item-list-name="{{ itemListName }}">
+        {% embed molecule('slick-carousel') with {
+            modifiers: ['full-width', 'equal-height'],
+            data: {
+                product: data.product,
+                products: data.products,
+                isUnavailableProductsDisplayed: data.isUnavailableProductsDisplayed,
+            },
+            attributes: {
+                'slider-config': '{
+                    "slidesToShow": 3,
+                    "dots": false,
+                    "arrows": true,
+                    "adaptiveHeight": true,
+                    "responsive": [{
+                        "breakpoint": 768,
+                        "settings": {
+                            "slidesToShow": 2
+                        }
+                    },
+                    {
+                        "breakpoint": 375,
+                        "settings": {
+                            "slidesToShow": 1
+                        }
+                    }]
+                }'
+            }
+        } only %}
+            {% block slides %}
+                {% for product in data.products %}
+                    {% if data.isUnavailableProductsDisplayed or product.available  %}
+                        {% widget 'CmsProductWidget' args [product] use '@ProductWidget/views/cms-product-slider/cms-product-slider.twig' only %}{% endwidget %}
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    </div>
 
     {% if data.product is not empty %}
         {% widget 'CmsProductWidget' args [data.product] only %}
         {% endwidget %}
     {% endif %}
+
+    {% block productTrackingDetails %}
+        {% set trackedProducts = data.product is not empty ? data.products | merge([data.product]) : data.products %}
+        {% widget 'ProductTrackingDetailsWidget' args [trackedProducts] only %}{% endwidget %}
+    {% endblock %}
 
 {% endblock %}

@@ -34,3 +34,39 @@
         {% endwidget %}
     </div>
 {% endblock %}
+
+{% block eventTracker %}
+    {# Reordering all items of the order: the core trigger reads the ordered items by the core table's item class, which the project's
+       order cards do not carry, so the project adds the trigger for its own markup. Reordering selected items, the order's currency
+       and the other order page events come from the core template. #}
+    {% set events = {
+        list: events.list | merge([
+            {
+                event: 'ADD_TO_CART',
+                name: 'click',
+                triggers: [
+                    {
+                        selector: '.js-cart-reorder-all',
+                        data: {
+                            orderPage: {
+                                selector: 'body',
+                                closest: true,
+                                flatten: true,
+                                composed: {
+                                    products: {
+                                        multi: true,
+                                        selector: '.order-detail-table [tracking-details]',
+                                        attribute: 'tracking-details',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ]),
+        data: events.data,
+    } %}
+
+    {{ parent() }}
+{% endblock %}
