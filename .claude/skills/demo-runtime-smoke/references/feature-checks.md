@@ -36,7 +36,7 @@ Detail for `@.claude/skills/demo-runtime-smoke/SKILL.md`. Each section: where to
 
 **Not a bug:** the storefront **always** uses OpenAI for this feature regardless of the BO vendor switch — `ai_commerce:search_by_image:ai_vendor:ai_configuration` is `storefront: false` in `data/configuration/ai_commerce.configuration.yml`, so the Redis-published config never carries the AWS switch to Yves. Don't flag "still logs OpenAI after switching to AWS in BO" as an anomaly here.
 
-## 3 — Quick Add by Image (Yves Quick Order image-to-cart)
+## 3 — Quick Add by Image (Yves Quick Order Visual add to cart)
 
 **Toggle:** `ai_commerce:quick_order:*` enable switch. Same "0×0/absent = toggle off" rule applies.
 
@@ -44,13 +44,13 @@ Detail for `@.claude/skills/demo-runtime-smoke/SKILL.md`. Each section: where to
 
 **PASS:**
 - "Add to cart from image" section exists with title "Add to cart from image".
-- File input: `type=file`, `name="image_order_form[uploadImageOrder]"`, `accept="image/jpeg,image/jpg,image/png"`.
-- "Browse file" label wired via `for=image_order_form_uploadImageOrder`; attaching a file shows the file name and an enabled Upload button.
+- File input: `type=file`, `name="visual_add_to_cart_form[orderFile]"`, `accept="image/jpeg,image/jpg,image/png,application/pdf"`; the description lists "PNG, JPEG, JPG, PDF".
+- "Browse file" label wired via `for=visual_add_to_cart_form_orderFile`; attaching a file shows the file name and an enabled Upload button.
 - Oversized files are rejected client-side (reads the real `max-file-size` attribute off the component wrapper, don't hardcode a number) and clear the input.
-- Submitting with no file shows a "no image" validation error; submitting a non-image file server-side shows the error dropzone, not a recognized SKU row.
-- A real multipart POST (`name="uploadImage"`) returns 200 even without a configured provider (graceful, not a 500).
+- Submitting with no file shows a "no file" validation error; submitting an unsupported file (e.g. `text/plain`) server-side shows the error dropzone, not a recognized SKU row.
+- A real multipart POST (`name="uploadOrderFile"`) with a PNG or a PDF returns 200 even without a configured provider (graceful, not a 500).
 
-**Anomaly:** section absent while toggle is ON; wrong `accept` attribute (would let users pick non-image files); a non-image upload accepted as if recognized; endpoint 5xx.
+**Anomaly:** section absent while toggle is ON; wrong `accept` attribute (missing PDF, or letting users pick other file types); an unsupported upload accepted as if recognized; endpoint 5xx.
 
 **Not a bug:** same storefront-always-OpenAI caveat as feature 2 — `ai_commerce:quick_order:ai_vendor:ai_configuration` is also `storefront: false`.
 

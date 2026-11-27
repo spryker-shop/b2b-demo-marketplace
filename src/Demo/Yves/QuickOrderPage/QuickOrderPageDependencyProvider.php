@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Demo\Yves\QuickOrderPage;
 
 use Pyz\Yves\QuickOrderPage\QuickOrderPageDependencyProvider as PyzQuickOrderPageDependencyProviderAlias;
-use SprykerFeature\Yves\AiCommerce\QuickOrderImageToCart\Plugin\QuickOrderPage\AiCommerceQuickOrderImageToCartFormPlugin;
+use SprykerFeature\Yves\AiCommerce\QuickOrderVisualAddToCart\Plugin\QuickOrderPage\AiCommerceQuickOrderVisualAddToCartFormPlugin;
 
 class QuickOrderPageDependencyProvider extends PyzQuickOrderPageDependencyProviderAlias
 {
@@ -20,7 +20,7 @@ class QuickOrderPageDependencyProvider extends PyzQuickOrderPageDependencyProvid
     protected function getQuickOrderFormPlugins(): array
     {
         return [
-            new AiCommerceQuickOrderImageToCartFormPlugin(),
+            new AiCommerceQuickOrderVisualAddToCartFormPlugin(),
         ];
     }
 }
