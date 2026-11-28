@@ -135,6 +135,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $this->productRepository->flush();
         static::$productConcreteSkus = [];
         static::$availabilityAbstractEntitiesIndexedByAbstractSkuAndIdStore = [];
+        static::$storeToWarehouseMapping = null;
     }
 
     protected function createOrUpdateStock(DataSetInterface $dataSet): SpyStock
@@ -285,7 +286,12 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function getStoreWarehouses(string $storeName): array
     {
-        return $this->stockFacade->getStoreToWarehouseMapping()[$storeName] ?? [];
+        // Read once per flush, not for every row and store: the mapping grows with the number of warehouses.
+        if (static::$storeToWarehouseMapping === null) {
+            static::$storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
+        }
+
+        return static::$storeToWarehouseMapping[$storeName] ?? [];
     }
 
     /**
