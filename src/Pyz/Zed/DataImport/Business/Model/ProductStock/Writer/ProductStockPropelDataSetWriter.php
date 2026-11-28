@@ -285,7 +285,13 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function getStoreWarehouses(string $storeName): array
     {
-        return $this->stockFacade->getStoreToWarehouseMapping()[$storeName] ?? [];
+        // The mapping is read once per process. Without the cache it was loaded for every row and store,
+        // and its size grows with the number of warehouses, so the import got slower as the catalog grew.
+        if (static::$storeToWarehouseMapping === null) {
+            static::$storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
+        }
+
+        return static::$storeToWarehouseMapping[$storeName] ?? [];
     }
 
     /**
